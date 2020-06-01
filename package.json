@@ -1,14 +1,18 @@
 {
 	"private": true,
-	"scripts": {
-		"format": "prettier --write **/**/*.{js,jsx,ts,tsx,json}"
-	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/aybadb/react-isomorphic-starterkit.git"
+		"url": "git+https://github.com/aybadb/init.git"
 	},
 	"author": "Ayoub Adib <adbayb@gmail.com>",
+	"prettier": "@adbayb/prettier-config",
+	"eslintConfig": {
+		"extends": "@adbayb"
+	},
 	"devDependencies": {
-		"prettier": "2.0.5"
+		"@adbayb/eslint-config": "0.1.0",
+		"@adbayb/prettier-config": "0.1.0",
+		"prettier": "2.0.5",
+		"typescript": "3.9.3"
 	}
 }

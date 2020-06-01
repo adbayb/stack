@@ -8,6 +8,15 @@ module.exports = {
 			jsx: true,
 		},
 	},
+	env: {
+		browser: true,
+		commonjs: true,
+		es2020: true,
+		jest: true,
+		node: true,
+		serviceworker: true,
+		worker: true,
+	},
 	settings: {
 		react: {
 			version: "detect",
