@@ -1,12 +1,16 @@
 {
 	"name": "@adbayb/prettier-config",
 	"version": "0.1.0",
+	"publishConfig": {
+		"access": "public"
+	},
 	"description": "Prettier configuration preset",
 	"main": "index.json",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"keywords": [],
+	"keywords": [
+		"prettier",
+		"format",
+		"development"
+	],
 	"author": "Ayoub Adib <adbayb@gmail.com>",
 	"license": "MIT",
 	"repository": {

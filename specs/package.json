@@ -15,8 +15,8 @@
 		"extends": "@adbayb"
 	},
 	"devDependencies": {
-		"@adbayb/eslint-config": "file:adbayb-eslint-config-0.1.0.tgz",
-		"@adbayb/prettier-config": "file:../packages/prettier-config",
+		"@adbayb/eslint-config": "0.1.0",
+		"@adbayb/prettier-config": "0.1.0",
 		"prettier": "2.0.5",
 		"typescript": "3.9.3"
 	}

@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from "react";
 import ReactDOM from "react-dom";
-import toto from "./titi.ts"
+import toto from "./titi.ts";
 
 interface Plop {}
 
