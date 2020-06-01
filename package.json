@@ -9,6 +9,9 @@
 	"eslintConfig": {
 		"extends": "@adbayb"
 	},
+	"scripts": {
+		"format": "prettier --write ."
+	},
 	"devDependencies": {
 		"@adbayb/eslint-config": "0.1.0",
 		"@adbayb/prettier-config": "0.1.0",

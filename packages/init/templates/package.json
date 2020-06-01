@@ -1,9 +1,0 @@
-{
-	"author": "Ayoub Adib <adbayb@gmail.com>",
-	"license": "MIT",
-	"engines": {
-		"node": ">=8.5.0"
-	},
-	// @todo: scripts format and lint
-	// @todo: install typescript as devDependencies ? Or create a ts-config package with typescript as dependencies ?
-}
