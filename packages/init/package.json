@@ -13,5 +13,9 @@
 		"type": "git",
 		"url": "https://github.com/adbayb/init.git",
 		"directory": "packages/init"
+	},
+	"dependencies": {
+		"@adbayb/eslint-config": "0.1.0",
+		"@adbayb/prettier-config": "0.1.0"
 	}
 }
