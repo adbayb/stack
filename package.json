@@ -1,0 +1,14 @@
+{
+	"private": true,
+	"scripts": {
+		"format": "prettier --write **/**/*.{js,jsx,ts,tsx,json}"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/aybadb/react-isomorphic-starterkit.git"
+	},
+	"author": "Ayoub Adib <adbayb@gmail.com>",
+	"devDependencies": {
+		"prettier": "2.0.5"
+	}
+}

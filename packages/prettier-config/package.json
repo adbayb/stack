@@ -1,0 +1,20 @@
+{
+	"name": "@adbayb/prettier-config",
+	"version": "0.1.0",
+	"description": "Prettier configuration preset",
+	"main": "index.json",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "Ayoub Adib <adbayb@gmail.com>",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/adbayb/init.git",
+		"directory": "packages/prettier-config"
+	},
+	"dependencies": {
+		"prettier": "2.0.5"
+	}
+}
