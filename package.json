@@ -10,9 +10,10 @@
 		"extends": "@adbayb"
 	},
 	"scripts": {
-		"format": "prettier --write .",
-		"check:format": "npm run format -- --check",
-		"check:lint": "eslint . --fix --ignore-path .gitignore"
+		"format": "prettier . --write",
+		"lint": "eslint . --fix --ignore-path .gitignore",
+		"check:format": "prettier . --check",
+		"check:lint": "eslint . --ignore-path .gitignore"
 	},
 	"devDependencies": {
 		"@adbayb/eslint-config": "0.1.1",

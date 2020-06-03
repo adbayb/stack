@@ -63,7 +63,7 @@ const processTemplates = async () => {
 };
 
 const processInstallation = () => {
-	exec("npm i");
+	exec("npm i @adbayb/init --save");
 };
 
 async function run() {
