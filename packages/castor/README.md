@@ -4,14 +4,14 @@
 </div>
 <p></p>
 
-Custom configuration presets including: 
+Custom configuration presets including:
 
-- [✍️ Linting](../eslint-config)
-- [💄 Formatting](../prettier-config)
-- [⚙️ Typing](../ts-config)
+-   [✍️ Linting](../eslint-config)
+-   [💄 Formatting](../prettier-config)
+-   [⚙️ Typing](../ts-config)
 
 ## Usage
 
-- `mkdir my-new-project && cd my-new-project`
-- `npm i @adbayb/castor --save-dev` 
-- `castor`  
+-   `mkdir my-new-project && cd my-new-project`
+-   `npm i @adbayb/castor --save-dev`
+-   `castor`

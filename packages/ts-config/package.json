@@ -1,24 +1,24 @@
 {
-  "name": "@adbayb/ts-config",
-  "version": "0.1.0",
-  "publishConfig": {
-    "access": "public"
-  },
-  "description": "My opinionated TypeScript configuration preset",
-  "main": "tsconfig.json",
-  "keywords": [
-    "eslint",
-    "lint",
-    "development"
-  ],
-  "author": "Ayoub Adib <adbayb@gmail.com>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/adbayb/castor.git",
-    "directory": "packages/ts-config"
-  },
-  "dependencies": {
-    "typescript": "3.9.3"
-  }
+	"name": "@adbayb/ts-config",
+	"version": "0.1.2",
+	"publishConfig": {
+		"access": "public"
+	},
+	"description": "My opinionated TypeScript configuration preset",
+	"main": "tsconfig.json",
+	"keywords": [
+		"typescript",
+		"types",
+		"development"
+	],
+	"author": "Ayoub Adib <adbayb@gmail.com>",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/adbayb/castor.git",
+		"directory": "packages/ts-config"
+	},
+	"dependencies": {
+		"typescript": "3.9.3"
+	}
 }
