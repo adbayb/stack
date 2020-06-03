@@ -4,7 +4,7 @@
 	"publishConfig": {
 		"access": "public"
 	},
-	"description": "My own ESLint configuration preset",
+	"description": "My opinionated ESLint configuration preset",
 	"main": "index.js",
 	"keywords": [
 		"eslint",

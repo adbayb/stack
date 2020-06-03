@@ -4,7 +4,7 @@
 	"publishConfig": {
 		"access": "public"
 	},
-	"description": "Prettier configuration preset",
+	"description": "My opinionated Prettier configuration preset",
 	"main": "index.json",
 	"keywords": [
 		"prettier",
@@ -15,7 +15,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/adbayb/init.git",
+		"url": "https://github.com/adbayb/castor.git",
 		"directory": "packages/prettier-config"
 	},
 	"dependencies": {

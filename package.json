@@ -2,7 +2,7 @@
 	"private": true,
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/aybadb/init.git"
+		"url": "git+https://github.com/aybadb/castor.git"
 	},
 	"author": "Ayoub Adib <adbayb@gmail.com>",
 	"prettier": "@adbayb/prettier-config",
