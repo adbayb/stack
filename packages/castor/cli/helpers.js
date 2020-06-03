@@ -32,12 +32,21 @@ const merge = (target, ...sources) => {
 };
 
 const exec = (command) => {
-	return childProcess
-		.execSync(command, {
-			cwd: PROJECT_FOLDER,
-		})
-		.toString()
-		.replace(/(\r?\n|\r)$/, "");
+	return new Promise((resolve, reject) => {
+		try {
+			resolve(
+				childProcess
+					.execSync(command, {
+						cwd: PROJECT_FOLDER,
+						stdio: "pipe",
+					})
+					.toString()
+					.replace(/(\r?\n|\r)$/, "")
+			);
+		} catch (error) {
+			reject(error);
+		}
+	});
 };
 
 const writeFileToProject = (baseName, content, checkIfExists) => {
@@ -45,7 +54,7 @@ const writeFileToProject = (baseName, content, checkIfExists) => {
 		const destFileName = path.join(PROJECT_FOLDER, baseName);
 
 		if (fs.existsSync(destFileName)) {
-			throw new Error(
+			console.warn(
 				`File ${baseName} already exists, please consider reviewing it manually`
 			);
 		}

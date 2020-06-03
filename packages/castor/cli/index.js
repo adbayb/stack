@@ -2,13 +2,17 @@
 
 const path = require("path");
 const fs = require("fs");
-const fsPromises = fs.promises;
+const ora = require("ora");
 const { exec, merge, writeFileToProject } = require("./helpers");
 const { PROJECT_FOLDER, TEMPLATES_FOLDER } = require("./constants");
 
+const fsPromises = fs.promises;
+
 const processPkg = async () => {
-	const repositoryUrl = exec("git remote get-url --push origin");
-	const rootPath = exec("git rev-parse --show-toplevel");
+	const [repositoryUrl, rootPath] = await Promise.all([
+		exec("git remote get-url --push origin"),
+		exec("git rev-parse --show-toplevel"),
+	]);
 	const isMonorepo = rootPath !== PROJECT_FOLDER;
 	const directory = isMonorepo
 		? PROJECT_FOLDER.replace(new RegExp(`^${rootPath}/`), "")
@@ -41,13 +45,13 @@ const processPkg = async () => {
 		pkgConfig = merge(require(targetPkg), pkgConfig);
 	}
 
-	await writeFileToProject(
+	return writeFileToProject(
 		"package.json",
 		JSON.stringify(pkgConfig, null, 2)
 	);
 };
 
-const processTemplates = async () => {
+const copyTemplates = async () => {
 	const files = await fsPromises.readdir(TEMPLATES_FOLDER);
 
 	return Promise.all(
@@ -62,17 +66,31 @@ const processTemplates = async () => {
 	);
 };
 
-const processInstallation = () => {
-	exec("npm i @adbayb/init --save");
+const install = () => {
+	return exec("npm i @adbayb/castor --save-dev");
 };
 
-async function run() {
-	// @todo: future version => add possibility to specifiy language source (typescript / javascript / ...) via cli args ?
-	// @todo: cli feedback
+const run = async () => {
+	const spinner = ora().start();
 
-	await processTemplates();
-	await processPkg();
-	processInstallation();
-}
+	const runStep = async (message, asyncFunction) => {
+		try {
+			spinner.text = message;
+			await asyncFunction();
+			spinner.succeed();
+		} catch (error) {
+			spinner.fail();
+			console.error(error);
+			process.exit(1);
+		}
+	};
 
+	await runStep("Apply templates", copyTemplates);
+	await runStep("Process `package.json`", processPkg);
+	await runStep("Install dependencies", install);
+
+	spinner.stop();
+};
+
+// @todo: future version => add possibility to specifiy language source (typescript / javascript / ...) via cli args ?
 run();
