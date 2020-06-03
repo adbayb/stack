@@ -31,7 +31,7 @@ const processPkg = async () => {
 		},
 		scripts: {
 			format: "prettier --write .",
-			lint: "eslint --fix",
+			lint: "eslint . --fix --ignore-path .gitignore",
 		},
 	};
 	const targetPkg = path.join(PROJECT_FOLDER, "package.json");

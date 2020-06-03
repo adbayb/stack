@@ -10,10 +10,12 @@
 		"extends": "@adbayb"
 	},
 	"scripts": {
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"check:format": "npm run format -- --check",
+		"check:lint": "eslint . --fix --ignore-path .gitignore"
 	},
 	"devDependencies": {
-		"@adbayb/eslint-config": "0.1.0",
+		"@adbayb/eslint-config": "0.1.1",
 		"@adbayb/prettier-config": "0.1.0",
 		"prettier": "2.0.5",
 		"typescript": "3.9.3"
