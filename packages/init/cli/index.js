@@ -66,6 +66,7 @@ async function run() {
 
 	// @todo: cli feedback
 	// @todo: ts-config
+	// @todo: run final npm i
 
 	await processTemplates();
 	await processPkg();

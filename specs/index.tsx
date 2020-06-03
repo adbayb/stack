@@ -6,7 +6,15 @@ interface Plop {}
 
 const titi = { plop: true };
 
+let plop;
+
+function g() {
+	return plop;
+}
+
 eval("plop");
+
+console.log(plop);
 
 const toto = (titi: string) => {
 	titi = "45";
