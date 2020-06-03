@@ -33,7 +33,9 @@ const merge = (target, ...sources) => {
 
 const exec = (command) => {
 	return childProcess
-		.execSync(command)
+		.execSync(command, {
+			cwd: PROJECT_FOLDER,
+		})
 		.toString()
 		.replace(/(\r?\n|\r)$/, "");
 };

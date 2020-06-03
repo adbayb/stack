@@ -17,6 +17,7 @@
 	"devDependencies": {
 		"@adbayb/eslint-config": "0.1.1",
 		"@adbayb/prettier-config": "0.1.0",
+		"@adbayb/ts-config": "0.1.0",
 		"prettier": "2.0.5",
 		"typescript": "3.9.3"
 	}

@@ -27,6 +27,7 @@ const processPkg = async () => {
 		license: "MIT",
 		prettier: "@adbayb/prettier-config",
 		eslintConfig: {
+			...(isMonorepo && { root: true }), // https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
 			extends: "@adbayb",
 		},
 		scripts: {
@@ -61,15 +62,17 @@ const processTemplates = async () => {
 	);
 };
 
+const processInstallation = () => {
+	exec("npm i");
+};
+
 async function run() {
 	// @todo: future version => add possibility to specifiy language source (typescript / javascript / ...) via cli args ?
-
 	// @todo: cli feedback
-	// @todo: ts-config
-	// @todo: run final npm i
 
 	await processTemplates();
 	await processPkg();
+	processInstallation();
 }
 
 run();
