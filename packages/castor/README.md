@@ -12,6 +12,5 @@ Custom configuration presets including:
 
 ## Usage
 
--   `mkdir my-new-project && cd my-new-project`
--   `npm i @adbayb/castor --save-dev`
--   `castor`
+-   `cd my-project-root-folder`
+-   `npx @adbayb/castor`
