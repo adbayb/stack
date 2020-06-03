@@ -1,5 +1,5 @@
 {
-	"name": "@adbayb/plop",
+	"name": "@adbayb/castor",
 	"version": "0.1.0",
 	"description": "My opinionated scaffolding tool",
 	"bin": "cli/index.js",

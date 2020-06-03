@@ -1,13 +1,17 @@
-<h1 style="text-align: center;">⚙ My opinionated scaffolding tool</h1>
+<div align="center">
+    <h1>🦦 Castor</h1>
+    <strong>My opinionated scaffolding tool</strong>
+</div>
+<p></p>
 
 Custom configuration presets including: 
 
 - [✍️ Linting](../eslint-config)
 - [💄 Formatting](../prettier-config)
-- [🧹 Typing](../ts-config)
+- [⚙️ Typing](../ts-config)
 
-# Usage
+## Usage
 
-- `npm i @adbayb/castor --save-dev` 
 - `mkdir my-new-project && cd my-new-project`
+- `npm i @adbayb/castor --save-dev` 
 - `castor`  
