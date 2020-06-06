@@ -3,7 +3,7 @@
 const path = require("path");
 const fs = require("fs");
 const ora = require("ora");
-const { exec, merge, writeFileToProject } = require("./helpers");
+const { exec, merge, writeFileToProject, logger } = require("./helpers");
 const { PROJECT_FOLDER, TEMPLATES_FOLDER } = require("./constants");
 
 const fsPromises = fs.promises;
@@ -95,8 +95,7 @@ const run = async () => {
 			spinner.succeed();
 		} catch (error) {
 			spinner.fail();
-			console.error(error);
-			process.exit(1);
+			throw error;
 		}
 	};
 
@@ -106,7 +105,14 @@ const run = async () => {
 	await runStep("Format files", format);
 
 	spinner.stop();
+	logger.flush();
 };
 
 // @todo: future version => add possibility to specifiy language source (typescript / javascript / ...) via cli args ?
-run();
+try {
+	run();
+} catch (error) {
+	logger.log(error.toString(), "error");
+	logger.flush();
+	process.exit(1);
+}

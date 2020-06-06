@@ -33,28 +33,44 @@ const merge = (target, ...sources) => {
 
 const exec = (command) => {
 	return new Promise((resolve, reject) => {
-		try {
-			resolve(
-				childProcess
-					.execSync(command, {
-						cwd: PROJECT_FOLDER,
-						stdio: "pipe",
-					})
-					.toString()
-					.replace(/(\r?\n|\r)$/, "")
-			);
-		} catch (error) {
-			reject(error);
-		}
+		childProcess.exec(
+			command,
+			{
+				cwd: PROJECT_FOLDER,
+				stdio: "pipe",
+			},
+			(error, stdout) => {
+				if (error) {
+					reject(error);
+				} else {
+					resolve(stdout.replace(/(\r?\n|\r)$/, ""));
+				}
+			}
+		);
 	});
 };
+
+const createLogger = () => {
+	const logs = [];
+
+	return {
+		log(message, level = "log") {
+			logs.push({ message, level });
+		},
+		flush() {
+			logs.forEach(({ message, level }) => console[level](message));
+		},
+	};
+};
+
+const logger = createLogger();
 
 const writeFileToProject = (baseName, content, checkIfExists) => {
 	if (checkIfExists) {
 		const destFileName = path.join(PROJECT_FOLDER, baseName);
 
 		if (fs.existsSync(destFileName)) {
-			console.warn(
+			logger.log(
 				`File ${baseName} already exists, please consider reviewing it manually`
 			);
 		}
@@ -69,6 +85,7 @@ const writeFileToProject = (baseName, content, checkIfExists) => {
 
 module.exports = {
 	exec,
+	logger,
 	merge,
 	writeFileToProject,
 };
