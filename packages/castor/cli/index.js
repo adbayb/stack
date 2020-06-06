@@ -46,7 +46,7 @@ const processPkg = async () => {
 		},
 		"lint-staged": {
 			"**/*.{js,jsx,ts,tsx}": ["npm run lint", "npm run format"],
-			"**/*.{js,jsx,ts,tsx,md,mdx,html,css}": ["npm run format"],
+			"**/*.{js,json,jsx,ts,tsx,md,mdx,html,css}": ["npm run format"],
 		},
 	};
 	const targetPkg = path.join(PROJECT_FOLDER, "package.json");
@@ -80,11 +80,16 @@ const install = () => {
 	return exec("npm i @adbayb/castor --save-dev");
 };
 
+const format = () => {
+	return exec("npm run format");
+};
+
 const run = async () => {
 	const spinner = ora().start();
 
 	const runStep = async (message, asyncFunction) => {
 		try {
+			spinner.start();
 			spinner.text = message;
 			await asyncFunction();
 			spinner.succeed();
@@ -98,6 +103,7 @@ const run = async () => {
 	await runStep("Apply templates", copyTemplates);
 	await runStep("Process `package.json`", processPkg);
 	await runStep("Install dependencies", install);
+	await runStep("Format files", format);
 
 	spinner.stop();
 };
