@@ -1,41 +1,40 @@
 {
-	"private": true,
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/aybadb/castor.git"
-	},
-	"author": "Ayoub Adib <adbayb@gmail.com>",
-	"prettier": "@adbayb/prettier-config",
-	"eslintConfig": {
-		"extends": "@adbayb"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
-	},
-	"lint-staged": {
-		"**/*.{js,jsx,ts,tsx}": [
-			"npm run lint",
-			"npm run format"
-		],
-		"**/*.{js,jsx,ts,tsx,md,mdx,html,css}": [
-			"npm run format"
-		]
-	},
-	"scripts": {
-		"format": "prettier . --write --ignore-path .gitignore --ignore-path .prettierignore",
-		"lint": "eslint . --fix --ignore-path .gitignore",
-		"check:format": "prettier . --check",
-		"check:lint": "eslint . --ignore-path .gitignore"
-	},
-	"devDependencies": {
-		"@adbayb/eslint-config": "0.1.1",
-		"@adbayb/prettier-config": "0.1.0",
-		"@adbayb/ts-config": "0.1.0",
-		"husky": "4.2.5",
-		"lint-staged": "10.2.9",
-		"prettier": "2.0.5",
-		"typescript": "3.9.3"
-	}
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:adbayb/castor.git"
+  },
+  "author": {
+    "name": "Ayoub Adib",
+    "email": "adbayb@gmail.com",
+    "url": "https://twitter.com/adbayb"
+  },
+  "scripts": {
+    "check:format": "prettier . --check",
+    "check:lint": "eslint . --ignore-path .gitignore",
+    "format": "prettier . --write --ignore-path .gitignore --ignore-path .prettierignore",
+    "lint": "eslint . --fix --ignore-path .gitignore"
+  },
+  "license": "MIT",
+  "prettier": "@adbayb/prettier-config",
+  "eslintConfig": {
+    "extends": "@adbayb"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "npm run lint",
+      "npm run format"
+    ],
+    "**/*.{js,jsx,ts,tsx,md,mdx,html,css}": [
+      "npm run format"
+    ]
+  },
+  "devDependencies": {
+    "@adbayb/castor": "0.1.2"
+  }
 }
