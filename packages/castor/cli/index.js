@@ -67,9 +67,14 @@ const copyTemplates = async () => {
 	return Promise.all(
 		files.map(async (file) => {
 			return new Promise((resolve, reject) => {
+				// @note: we suffix all templates with `.tmpl` to avoid npm publish postprocessing
+				// By default, .gitignore and .npmrc are excluded and using "files" package.json field
+				// solves the issue partially since npm post-transform by renaming .gitignore to .npmignore
+				const fileName = path.parse(file).name;
+
 				fs.copyFile(
-					path.join(TEMPLATES_FOLDER, file),
-					path.join(PROJECT_FOLDER, file),
+					path.join(TEMPLATES_FOLDER, fileName),
+					path.join(PROJECT_FOLDER, fileName),
 					(error) => {
 						if (error) {
 							reject(error.toString());
