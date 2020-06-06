@@ -66,12 +66,19 @@ const copyTemplates = async () => {
 
 	return Promise.all(
 		files.map(async (file) => {
-			const templateContent = await fsPromises.readFile(
-				path.join(TEMPLATES_FOLDER, file),
-				"utf-8"
-			);
-
-			await writeFileToProject(file, templateContent, true);
+			return new Promise((resolve, reject) => {
+				fs.copyFile(
+					path.join(TEMPLATES_FOLDER, file),
+					path.join(PROJECT_FOLDER, file),
+					(error) => {
+						if (error) {
+							reject(error.toString());
+						} else {
+							resolve();
+						}
+					}
+				);
+			});
 		})
 	);
 };

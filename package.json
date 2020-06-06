@@ -1,5 +1,11 @@
 {
 	"private": true,
+	"scripts": {
+		"check:format": "prettier . --check",
+		"check:lint": "eslint . --ignore-path .gitignore",
+		"format": "prettier . --write --ignore-path .gitignore --ignore-path .prettierignore",
+		"lint": "eslint . --fix --ignore-path .gitignore"
+	},
 	"author": {
 		"name": "Ayoub Adib",
 		"email": "adbayb@gmail.com",
@@ -10,12 +16,6 @@
 		"url": "git@github.com:adbayb/castor.git"
 	},
 	"license": "MIT",
-	"scripts": {
-		"check:format": "prettier . --check",
-		"check:lint": "eslint . --ignore-path .gitignore",
-		"format": "prettier . --write --ignore-path .gitignore --ignore-path .prettierignore",
-		"lint": "eslint . --fix --ignore-path .gitignore"
-	},
 	"prettier": "@adbayb/prettier-config",
 	"eslintConfig": {
 		"extends": "@adbayb"
@@ -35,6 +35,6 @@
 		]
 	},
 	"devDependencies": {
-		"@adbayb/castor": "0.1.3"
+		"@adbayb/castor": "0.1.5"
 	}
 }

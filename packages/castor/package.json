@@ -1,11 +1,15 @@
 {
 	"name": "@adbayb/castor",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"publishConfig": {
 		"access": "public"
 	},
 	"description": "My opinionated scaffolding tool",
 	"bin": "cli/index.js",
+	"files": [
+		"templates",
+		"cli"
+	],
 	"scripts": {
 		"start": "./cli/index.js"
 	},
