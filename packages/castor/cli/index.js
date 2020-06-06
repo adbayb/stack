@@ -29,14 +29,24 @@ const processPkg = async () => {
 			...(isMonorepo && { directory }),
 		},
 		license: "MIT",
+		scripts: {
+			format:
+				"prettier . --write --ignore-path .gitignore --ignore-path .prettierignore",
+			lint: "eslint . --fix --ignore-path .gitignore",
+		},
 		prettier: "@adbayb/prettier-config",
 		eslintConfig: {
 			...(isMonorepo && { root: true }), // https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
 			extends: "@adbayb",
 		},
-		scripts: {
-			format: "prettier --write .",
-			lint: "eslint . --fix --ignore-path .gitignore",
+		husky: {
+			hooks: {
+				"pre-commit": "lint-staged",
+			},
+		},
+		"lint-staged": {
+			"**/*.{js,jsx,ts,tsx}": ["npm run lint", "npm run format"],
+			"**/*.{js,jsx,ts,tsx,md,mdx,html,css}": ["npm run format"],
 		},
 	};
 	const targetPkg = path.join(PROJECT_FOLDER, "package.json");
