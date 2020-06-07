@@ -91,7 +91,7 @@ const copyTemplates = async () => {
 };
 
 const install = () => {
-	return exec("npm i @adbayb/castor --save-dev");
+	return exec("npm i @adbayb/castor@latest --save-dev");
 };
 
 const clean = async () => {

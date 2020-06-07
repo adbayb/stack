@@ -35,6 +35,6 @@
 		]
 	},
 	"devDependencies": {
-		"@adbayb/castor": "0.2.1"
+		"@adbayb/castor": "0.2.3"
 	}
 }

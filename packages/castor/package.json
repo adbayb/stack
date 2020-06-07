@@ -1,6 +1,6 @@
 {
 	"name": "@adbayb/castor",
-	"version": "0.2.1",
+	"version": "0.2.3",
 	"publishConfig": {
 		"access": "public"
 	},
@@ -26,7 +26,7 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"@adbayb/eslint-config": "0.2.0",
+		"@adbayb/eslint-config": "0.2.1",
 		"@adbayb/prettier-config": "0.1.1",
 		"@adbayb/ts-config": "0.1.0",
 		"husky": "4.2.5",
