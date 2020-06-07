@@ -30,9 +30,12 @@ const processPkg = async () => {
 		},
 		license: "MIT",
 		scripts: {
-			format:
-				"prettier . --write --ignore-path .gitignore --ignore-path .prettierignore",
-			lint: "eslint . --fix --ignore-path .gitignore",
+			"check:format":
+				"prettier . --ignore-path .gitignore --ignore-path .prettierignore",
+			"check:lint": "eslint . --ignore-path .gitignore",
+			"check:types": "tsc --noEmit",
+			format: "npm run check:format -- --write",
+			lint: "npm run check:lint -- --fix",
 		},
 		prettier: "@adbayb/prettier-config",
 		eslintConfig: {

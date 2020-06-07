@@ -1,6 +1,11 @@
 module.exports = {
-	extends: ["eslint:recommended", "plugin:prettier/recommended"],
-	plugins: ["import", "react", "react-hooks"],
+	extends: [
+		"eslint:recommended",
+		"plugin:prettier/recommended",
+		"plugin:react/recommended",
+		"plugin:react-hooks/recommended",
+	],
+	plugins: ["import"],
 	parserOptions: {
 		ecmaVersion: 2020,
 		sourceType: "module",
@@ -34,7 +39,7 @@ module.exports = {
 				warnOnUnsupportedTypeScriptVersion: true,
 			},
 			rules: {
-				"@typescript-eslint/explicit-function-return-type": "off",
+				"@typescript-eslint/explicit-module-boundary-types": "off",
 				"@typescript-eslint/no-empty-interface": "off",
 				"@typescript-eslint/no-non-null-assertion": "off",
 				// @note: for preact h primitive
@@ -47,12 +52,6 @@ module.exports = {
 	],
 	rules: {
 		"dot-notation": "error",
-		"import/extensions": [
-			"error",
-			"ignorePackages",
-			{ js: "never", jsx: "never", ts: "never", tsx: "never" },
-		],
-
 		"import/no-default-export": "error",
 		"import/order": [
 			"error",
@@ -79,6 +78,84 @@ module.exports = {
 				ignoreRestSiblings: true,
 			},
 		],
+		"padding-line-between-statements": [
+			"error",
+			{
+				blankLine: "always",
+				prev: [
+					"block",
+					"block-like",
+					"class",
+					"directive",
+					"expression",
+					"const",
+					"let",
+					"var",
+					"import",
+					"cjs-import",
+					"export",
+					"cjs-export",
+				],
+				next: "*",
+			},
+			{
+				blankLine: "always",
+				prev: "*",
+				next: "return",
+			},
+			{
+				blankLine: "never",
+				prev: ["expression"],
+				next: ["expression"],
+			},
+			{
+				blankLine: "never",
+				prev: ["const", "let", "var"],
+				next: ["const", "let", "var"],
+			},
+			{
+				blankLine: "always",
+				prev: ["cjs-import"],
+				next: ["*"],
+			},
+			{
+				blankLine: "never",
+				prev: ["case"],
+				next: ["case", "default"],
+			},
+			{
+				blankLine: "any",
+				prev: ["multiline-const", "multiline-let", "multiline-var"],
+				next: [
+					"multiline-const",
+					"multiline-let",
+					"multiline-var",
+					"const",
+					"let",
+					"var",
+				],
+			},
+			{
+				blankLine: "any",
+				prev: ["export"],
+				next: ["export"],
+			},
+			{
+				blankLine: "any",
+				prev: ["cjs-export"],
+				next: ["cjs-export"],
+			},
+			{
+				blankLine: "any",
+				prev: ["import"],
+				next: ["import", "cjs-import"],
+			},
+			{
+				blankLine: "any",
+				prev: ["cjs-import"],
+				next: ["cjs-import", "import"],
+			},
+		],
 		"prefer-destructuring": [
 			"error",
 			{
@@ -89,6 +166,5 @@ module.exports = {
 			},
 		],
 		"sort-imports": ["error", { ignoreDeclarationSort: true }],
-		"react/jsx-uses-vars": "error",
 	},
 };
