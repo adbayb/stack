@@ -26,8 +26,8 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"@adbayb/eslint-config": "0.1.1",
-		"@adbayb/prettier-config": "0.1.0",
+		"@adbayb/eslint-config": "0.2.0",
+		"@adbayb/prettier-config": "0.1.1",
 		"@adbayb/ts-config": "0.1.0",
 		"husky": "4.2.5",
 		"lint-staged": "10.2.9",
