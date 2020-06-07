@@ -39,6 +39,7 @@ module.exports = {
 				warnOnUnsupportedTypeScriptVersion: true,
 			},
 			rules: {
+				"@typescript-eslint/ban-ts-comment": "off",
 				"@typescript-eslint/explicit-module-boundary-types": "off",
 				"@typescript-eslint/no-empty-interface": "off",
 				"@typescript-eslint/no-non-null-assertion": "off",
