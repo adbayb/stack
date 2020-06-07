@@ -28,14 +28,13 @@
 	},
 	"lint-staged": {
 		"**/*.{js,jsx,ts,tsx}": [
-			"npm run lint",
-			"npm run format"
+			"npm run lint"
 		],
-		"**/*.{js,json,jsx,ts,tsx,md,mdx,html,css}": [
+		"**/*.{json,md,mdx,html,css}": [
 			"npm run format"
 		]
 	},
 	"devDependencies": {
-		"@adbayb/castor": "0.2.0"
+		"@adbayb/castor": "0.2.1"
 	}
 }
