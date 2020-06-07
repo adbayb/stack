@@ -7,7 +7,6 @@ const { exec, merge, writeFileToProject, logger } = require("./helpers");
 const { PROJECT_FOLDER, TEMPLATES_FOLDER } = require("./constants");
 
 const fsPromises = fs.promises;
-
 const processPkg = async () => {
 	const [repositoryUrl, rootPath] = await Promise.all([
 		exec("git remote get-url --push origin"),
@@ -101,7 +100,6 @@ const clean = () => {
 
 const run = async () => {
 	const spinner = ora().start();
-
 	const runStep = async (message, asyncFunction) => {
 		try {
 			spinner.start();
@@ -110,6 +108,7 @@ const run = async () => {
 			spinner.succeed();
 		} catch (error) {
 			spinner.fail();
+
 			throw error;
 		}
 	};
@@ -118,7 +117,6 @@ const run = async () => {
 	await runStep("Process `package.json`", processPkg);
 	await runStep("Install dependencies", install);
 	await runStep("Verify and clean project with 🦦 standards", clean);
-
 	spinner.stop();
 	logger.flush();
 };

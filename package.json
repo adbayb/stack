@@ -1,10 +1,11 @@
 {
 	"private": true,
 	"scripts": {
-		"check:format": "prettier . --check",
+		"check:format": "prettier . --ignore-path .gitignore --ignore-path .prettierignore",
 		"check:lint": "eslint . --ignore-path .gitignore",
-		"format": "prettier . --write --ignore-path .gitignore --ignore-path .prettierignore",
-		"lint": "eslint . --fix --ignore-path .gitignore"
+		"check:types": "tsc --noEmit",
+		"format": "npm run check:format -- --write",
+		"lint": "npm run check:lint -- --fix"
 	},
 	"author": {
 		"name": "Ayoub Adib",
@@ -35,6 +36,6 @@
 		]
 	},
 	"devDependencies": {
-		"@adbayb/castor": "0.1.8"
+		"@adbayb/castor": "0.2.0"
 	}
 }

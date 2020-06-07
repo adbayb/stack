@@ -1,9 +1,9 @@
 const childProcess = require("child_process");
 const path = require("path");
 const fs = require("fs");
-const fsPromises = fs.promises;
 const { PROJECT_FOLDER } = require("./constants");
 
+const fsPromises = fs.promises;
 const isObject = (value) => {
 	return value !== null && typeof value === "object";
 };
@@ -64,7 +64,6 @@ const createLogger = () => {
 };
 
 const logger = createLogger();
-
 const writeFileToProject = (baseName, content, checkIfExists) => {
 	if (checkIfExists) {
 		const destFileName = path.join(PROJECT_FOLDER, baseName);
