@@ -47,8 +47,8 @@ const processPkg = async () => {
 			},
 		},
 		"lint-staged": {
-			"**/*.{js,jsx,ts,tsx}": ["npm run lint", "npm run format"],
-			"**/*.{js,json,jsx,ts,tsx,md,mdx,html,css}": ["npm run format"],
+			"**/*.{js,jsx,ts,tsx}": ["npm run lint"],
+			"**/*.{json,md,mdx,html,css}": ["npm run format"],
 		},
 	};
 	const targetPkg = path.join(PROJECT_FOLDER, "package.json");
@@ -94,8 +94,9 @@ const install = () => {
 	return exec("npm i @adbayb/castor --save-dev");
 };
 
-const clean = () => {
-	return exec("npm run lint");
+const clean = async () => {
+	await exec("npm run lint");
+	await exec("npm run format");
 };
 
 const run = async () => {
