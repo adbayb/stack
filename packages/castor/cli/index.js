@@ -95,8 +95,8 @@ const install = () => {
 	return exec("npm i @adbayb/castor --save-dev");
 };
 
-const format = () => {
-	return exec("npm run format");
+const clean = () => {
+	return exec("npm run lint");
 };
 
 const run = async () => {
@@ -117,7 +117,7 @@ const run = async () => {
 	await runStep("Apply templates", copyTemplates);
 	await runStep("Process `package.json`", processPkg);
 	await runStep("Install dependencies", install);
-	await runStep("Format files", format);
+	await runStep("Verify and clean project with 🦦 standards", clean);
 
 	spinner.stop();
 	logger.flush();
