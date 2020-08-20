@@ -28,7 +28,7 @@
 	"dependencies": {
 		"@adbayb/eslint-config": "0.2.1",
 		"@adbayb/prettier-config": "0.1.1",
-		"@adbayb/ts-config": "0.1.2",
+		"@adbayb/ts-config": "0.2.0",
 		"husky": "4.2.5",
 		"lint-staged": "10.2.11",
 		"ora": "5.0.0"
