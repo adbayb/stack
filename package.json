@@ -1,6 +1,8 @@
 {
 	"private": true,
-	"workspaces": ["packages/*"],
+	"workspaces": [
+		"packages/*"
+	],
 	"scripts": {
 		"check:format": "prettier . --ignore-path .gitignore --ignore-path .prettierignore",
 		"check:lint": "eslint . --ignore-path .gitignore",
@@ -36,6 +38,8 @@
 		]
 	},
 	"devDependencies": {
-		"@adbayb/create": "0.1.0"
-	}
+		"@adbayb/create": "0.1.0",
+		"lerna": "^4.0.0"
+	},
+	"name": "create"
 }
