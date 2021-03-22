@@ -1,5 +1,5 @@
 <div align="center">
-    <h1>🦦 Castor</h1>
+    <h1>🦦 Create</h1>
     <strong>My opinionated scaffolding tool</strong>
 </div>
 <p></p>
@@ -13,4 +13,4 @@ Custom configuration presets including:
 ## Usage
 
 -   `cd my-project-root-folder`
--   `npx @adbayb/castor`
+-   `npm init @adbayb --yes` or `npx @adbayb/create`

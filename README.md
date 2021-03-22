@@ -1,3 +1,3 @@
-# 🦦 Castor
+# 🦦 Create
 
-You can read more [here](packages/castor)
+You can read more [here](packages/create)
