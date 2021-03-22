@@ -14,7 +14,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:adbayb/castor.git"
+		"url": "git@github.com:adbayb/create.git"
 	},
 	"license": "MIT",
 	"prettier": "@adbayb/prettier-config",
@@ -35,6 +35,6 @@
 		]
 	},
 	"devDependencies": {
-		"@adbayb/castor": "0.2.3"
+		"@adbayb/create": "0.2.3"
 	}
 }
