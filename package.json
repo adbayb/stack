@@ -8,7 +8,9 @@
 		"check:lint": "eslint . --ignore-path .gitignore",
 		"check:types": "tsc --noEmit",
 		"format": "npm run check:format -- --write",
-		"lint": "npm run check:lint -- --fix"
+		"lint": "npm run check:lint -- --fix",
+		"changed": "lerna changed --all",
+		"release": "lerna publish"
 	},
 	"author": {
 		"name": "Ayoub Adib",
