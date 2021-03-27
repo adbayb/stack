@@ -25,7 +25,7 @@ module.exports = {
 		},
 	},
 	extends: ["eslint:recommended", "plugin:prettier/recommended"],
-	plugins: ["jest", "import", "react", "react-hooks", "sonarjs"],
+	plugins: ["import", "react", "react-hooks", "sonarjs"],
 	overrides: [
 		{
 			files: ["**/*.ts?(x)"],
@@ -52,7 +52,8 @@ module.exports = {
 				"@typescript-eslint/no-inferrable-types": "error",
 				"@typescript-eslint/no-misused-new": "error",
 				"@typescript-eslint/no-namespace": "error",
-				"@typescript-eslint/no-non-null-asserted-optional-chain": "error",
+				"@typescript-eslint/no-non-null-asserted-optional-chain":
+					"error",
 				"@typescript-eslint/no-non-null-assertion": "warn",
 				"@typescript-eslint/no-this-alias": "error",
 				"no-unused-vars": "off",
@@ -83,80 +84,40 @@ module.exports = {
 		"padding-line-between-statements": [
 			"error",
 			{
-				"blankLine": "always",
-				"prev": "*",
-				"next": "*"
+				blankLine: "always",
+				prev: "*",
+				next: "*",
 			},
 			{
-				"blankLine": "never",
-				"prev": [
-					"const",
-					"let",
-					"var"
-				],
-				"next": [
-					"const",
-					"let",
-					"var"
-				]
+				blankLine: "never",
+				prev: ["const", "let", "var"],
+				next: ["const", "let", "var"],
 			},
 			{
-				"blankLine": "never",
-				"prev": [
-					"case",
-					"default"
-				],
-				"next": [
-					"case",
-					"default"
-				]
+				blankLine: "never",
+				prev: ["case", "default"],
+				next: ["case", "default"],
 			},
 			{
-				"blankLine": "any",
-				"prev": [
-					"expression"
-				],
-				"next": [
-					"expression"
-				]
+				blankLine: "any",
+				prev: ["expression"],
+				next: ["expression"],
 			},
 			{
-				"blankLine": "any",
-				"prev": [
-					"multiline-const",
-					"multiline-let",
-					"multiline-var"
-				],
-				"next": [
-					"const",
-					"let",
-					"var"
-				]
+				blankLine: "any",
+				prev: ["multiline-const", "multiline-let", "multiline-var"],
+				next: ["const", "let", "var"],
 			},
 			{
-				"blankLine": "any",
-				"prev": [
-					"const",
-					"let",
-					"var"
-				],
-				"next": [
-					"multiline-const",
-					"multiline-let",
-					"multiline-var"
-				]
+				blankLine: "any",
+				prev: ["const", "let", "var"],
+				next: ["multiline-const", "multiline-let", "multiline-var"],
 			},
 			{
-				"blankLine": "any",
-				"prev": [
-					"cjs-import",
-					"import"
-				],
-				"next": [
-					"cjs-import",
-					"import"
-				]
-			}
+				blankLine: "any",
+				prev: ["cjs-import", "import"],
+				next: ["cjs-import", "import"],
+			},
 		],
 		"prefer-const": "error",
 		"sort-imports": ["error", { ignoreDeclarationSort: true }],
@@ -195,39 +156,6 @@ module.exports = {
 					"parent",
 					["sibling", "index"],
 				],
-			},
-		],
-		// #endregion
-		// #region jest
-		"jest/consistent-test-it": ["error", { fn: "test" }],
-		"jest/expect-expect": "error",
-		"jest/prefer-todo": "error",
-		"jest/no-commented-out-tests": "error",
-		"jest/no-conditional-expect": "error",
-		"jest/no-deprecated-functions": "error",
-		"jest/no-disabled-tests": "error",
-		"jest/no-done-callback": "error",
-		"jest/no-export": "error",
-		"jest/no-focused-tests": "error",
-		"jest/no-identical-title": "error",
-		"jest/no-jasmine-globals": "error",
-		"jest/no-jest-import": "error",
-		"jest/no-mocks-import": "error",
-		"jest/no-standalone-expect": "error",
-		"jest/no-test-prefixes": "error",
-		"jest/prefer-hooks-on-top": "error",
-		"jest/prefer-spy-on": "error",
-		// @todo: change to error once all warnings are fixed
-		"jest/prefer-strict-equal": "warn",
-		"jest/prefer-to-be-null": "error",
-		"jest/prefer-to-be-undefined": "error",
-		"jest/prefer-to-contain": "error",
-		"jest/prefer-to-have-length": "error",
-		// @todo: change to error once all warnings are fixed
-		"jest/valid-title": [
-			"warn",
-			{
-				mustMatch: { test: "should" },
 			},
 		],
 		// #endregion
