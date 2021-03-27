@@ -3,9 +3,11 @@
 const path = require("path");
 const fs = require("fs");
 const ora = require("ora");
+
 const { exec, merge, writeFileToProject, logger } = require("./helpers");
 const { PROJECT_FOLDER, TEMPLATES_FOLDER } = require("./constants");
 
+// eslint-disable-next-line padding-line-between-statements
 const fsPromises = fs.promises;
 const processPkg = async () => {
 	const [repositoryUrl, rootPath] = await Promise.all([

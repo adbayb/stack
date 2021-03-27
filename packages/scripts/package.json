@@ -7,8 +7,8 @@
 	"description": "My opinionated toolchain",
 	"bin": "bin/index.js",
 	"scripts": {
-    "prepublishOnly": "yarn build",
-    "prestart": "yarn build",
+		"prepublishOnly": "yarn build",
+		"prestart": "yarn build",
 		"start": "./bin/index.js",
 		"build": "tsc",
 		"watch": "tsc -w"

@@ -6,10 +6,11 @@
 
 ## Available scripts
 
-- Fix lint and formatting issues: `@adbayb/scripts fix`
-- Check lint and type (used as well on `pre-commit`): `@adbayb/scripts check`
-- Watch: `@adbayb/scripts watch`
-- Build: `@adbayb/scripts build`
+-   Fix lint and formatting issues: `@adbayb/scripts fix`
+-   Check lint and type (used as well on `pre-commit`): `@adbayb/scripts check`
+-   Watch: `@adbayb/scripts watch`
+-   Build: `@adbayb/scripts build`
 
 Potential candidates:
-- Setup: `@adbayb/scripts setup` (@adbayb/create)?
+
+-   Setup: `@adbayb/scripts setup` (@adbayb/create)?
