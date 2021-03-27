@@ -5,8 +5,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.4.0](https://github.com/adbayb/create/compare/v0.3.0...v0.4.0) (2021-03-27)
 
-**Note:** Version bump only for package @adbayb/create
+### Features
 
-# 0.3.0 (2021-03-22)
-
-**Note:** Version bump only for package @adbayb/create
+-   **scripts:** add package ([0b956dc](https://github.com/adbayb/create/commit/0b956dc328f751b25fc89311953029a8fc2e4087))

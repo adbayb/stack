@@ -1,6 +1,6 @@
 {
 	"name": "@adbayb/create",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"publishConfig": {
 		"access": "public"
 	},
@@ -26,9 +26,9 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"@adbayb/eslint-config": "0.3.0",
-		"@adbayb/prettier-config": "0.3.0",
-		"@adbayb/ts-config": "0.3.0",
+		"@adbayb/eslint-config": "0.4.0",
+		"@adbayb/prettier-config": "0.4.0",
+		"@adbayb/ts-config": "0.4.0",
 		"husky": "5.2.0",
 		"lint-staged": "10.5.4",
 		"ora": "5.4.0"

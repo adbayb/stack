@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adbayb/create/compare/v0.3.0...v0.4.0) (2021-03-27)
+
+### Bug Fixes
+
+-   **eslint-config:** remove jest plugin ([bdcd4d6](https://github.com/adbayb/create/commit/bdcd4d6682d999046f7cfba19ca1dfd2988bc451))
+
+### Features
+
+-   **scripts:** add package ([0b956dc](https://github.com/adbayb/create/commit/0b956dc328f751b25fc89311953029a8fc2e4087))
+
 # 0.3.0 (2021-03-22)
 
 ### Bug Fixes
