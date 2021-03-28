@@ -4,7 +4,8 @@
 	"private": "true",
 	"description": "Sandbox",
 	"scripts": {
-		"build": "scripts build"
+		"build": "scripts build",
+		"clean": "scripts clean"
 	},
 	"keywords": [],
 	"author": "Ayoub Adib <adbayb@gmail.com>",

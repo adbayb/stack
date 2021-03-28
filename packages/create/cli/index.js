@@ -3,7 +3,6 @@
 const path = require("path");
 const fs = require("fs");
 const ora = require("ora");
-
 const { exec, merge, writeFileToProject, logger } = require("./helpers");
 const { PROJECT_FOLDER, TEMPLATES_FOLDER } = require("./constants");
 

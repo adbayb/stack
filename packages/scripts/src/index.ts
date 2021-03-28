@@ -4,7 +4,11 @@ const command = process.argv[2];
 
 switch (command) {
 	case "build":
-		require("./build");
+		require("./commands/build");
+
+		break;
+	case "clean":
+		require("./commands/clean");
 
 		break;
 	case "check":

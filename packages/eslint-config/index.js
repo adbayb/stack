@@ -148,7 +148,7 @@ module.exports = {
 		"import/order": [
 			"error",
 			{
-				"newlines-between": "always",
+				"newlines-between": "never",
 				groups: [
 					["builtin", "external"],
 					"internal",

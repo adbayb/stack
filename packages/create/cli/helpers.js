@@ -1,7 +1,6 @@
 const childProcess = require("child_process");
 const path = require("path");
 const fs = require("fs");
-
 const { PROJECT_FOLDER } = require("./constants");
 
 // eslint-disable-next-line padding-line-between-statements
