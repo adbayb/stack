@@ -1,0 +1,15 @@
+{
+	"name": "example",
+	"version": "0.0.0",
+	"private": "true",
+	"description": "Sandbox",
+	"scripts": {
+		"build": "scripts build"
+	},
+	"keywords": [],
+	"author": "Ayoub Adib <adbayb@gmail.com>",
+	"license": "MIT",
+	"devDependencies": {
+		"@adbayb/scripts": "0.4.0"
+	}
+}

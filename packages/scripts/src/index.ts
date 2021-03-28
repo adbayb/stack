@@ -4,7 +4,7 @@ const command = process.argv[2];
 
 switch (command) {
 	case "build":
-		require("./commands/build");
+		require("./build");
 
 		break;
 	case "check":
@@ -17,3 +17,5 @@ switch (command) {
 		// @todo: make a log library that could be used across the monorepo:
 		throw new ReferenceError("Command not found");
 }
+
+export {};

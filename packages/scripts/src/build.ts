@@ -1,3 +1,3 @@
 import path from "path";
 
-console.log(process.cwd(), path.resolve(process.cwd()));
+console.log("plop", process.cwd(), path.resolve(process.cwd()));

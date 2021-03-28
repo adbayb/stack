@@ -5,12 +5,17 @@
 		"access": "public"
 	},
 	"description": "My opinionated toolchain",
-	"bin": "bin/index.js",
+	"bin": {
+		"scripts": "bin/index.js"
+	},
+	"files": [
+		"bin"
+	],
 	"scripts": {
 		"prepublishOnly": "yarn build",
 		"prestart": "yarn build",
-		"start": "./bin/index.js",
-		"build": "tsc",
+		"start": "bin/index.js",
+		"build": "tsc && chmod +x bin/index.js",
 		"watch": "tsc -w"
 	},
 	"keywords": [

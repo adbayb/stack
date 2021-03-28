@@ -1,7 +1,7 @@
 {
 	"extends": "@adbayb/ts-config",
 	"compilerOptions": {
-		"outDir": "bin/commands"
+		"outDir": "bin"
 	},
 	"include": ["src"]
 }

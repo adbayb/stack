@@ -1,7 +1,8 @@
 {
 	"private": true,
 	"workspaces": [
-		"packages/*"
+		"packages/*",
+		"packages/scripts/example"
 	],
 	"scripts": {
 		"check:format": "prettier . --ignore-path .gitignore --ignore-path .prettierignore",
