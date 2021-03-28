@@ -34,8 +34,8 @@ const processPkg = async () => {
 				"prettier . --ignore-path .gitignore --ignore-path .prettierignore",
 			"check:lint": "eslint . --ignore-path .gitignore",
 			"check:types": "tsc --noEmit",
-			format: "npm run check:format -- --write",
-			lint: "npm run check:lint -- --fix",
+			format: "yarn check:format --write",
+			lint: "yarn check:lint --fix",
 		},
 		prettier: "@adbayb/prettier-config",
 		eslintConfig: {
@@ -48,8 +48,8 @@ const processPkg = async () => {
 			},
 		},
 		"lint-staged": {
-			"**/*.{js,jsx,ts,tsx}": ["npm run lint"],
-			"**/*.{json,md,mdx,html,css}": ["npm run format"],
+			"**/*.{js,jsx,ts,tsx}": ["yarn lint"],
+			"**/*.{json,md,mdx,html,css}": ["yarn format"],
 		},
 	};
 	const targetPkg = path.join(PROJECT_FOLDER, "package.json");
@@ -92,12 +92,12 @@ const copyTemplates = async () => {
 };
 
 const install = () => {
-	return exec("npm i @adbayb/create@latest --save-dev");
+	return exec("yarn add @adbayb/create@latest --dev");
 };
 
 const clean = async () => {
-	await exec("npm run lint");
-	await exec("npm run format");
+	await exec("yarn lint");
+	await exec("yarn format");
 };
 
 const run = async () => {
