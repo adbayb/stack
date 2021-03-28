@@ -115,6 +115,11 @@ module.exports = {
 			},
 			{
 				blankLine: "any",
+				prev: ["cjs-import"],
+				next: ["const", "let", "var"],
+			},
+			{
+				blankLine: "any",
 				prev: ["cjs-import", "import"],
 				next: ["cjs-import", "import"],
 			},

@@ -1,9 +1,8 @@
 const childProcess = require("child_process");
-const path = require("path");
 const fs = require("fs");
+const path = require("path");
 const { PROJECT_FOLDER } = require("./constants");
 
-// eslint-disable-next-line padding-line-between-statements
 const fsPromises = fs.promises;
 const isObject = (value) => {
 	return value !== null && typeof value === "object";
