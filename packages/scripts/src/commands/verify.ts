@@ -1,15 +1,16 @@
+import { existsSync } from "fs";
+import { resolve } from "path";
+import { CWD } from "../constants";
 import { exec, run } from "../helpers";
 
-const wait = () => {
-	return new Promise((resolve) => {
-		setTimeout(resolve, 1000);
-	});
-};
-
 const lint = async () => {
-	await wait();
+	const args: string[] = [];
 
-	return exec("eslint . --ignore-path .gitignore");
+	if (existsSync(resolve(CWD, ".gitignore"))) {
+		args.push("--ignore-path .gitignore");
+	}
+
+	return exec(`eslint . ${args.join(" ")}`);
 };
 
 const type = () => {
@@ -17,9 +18,8 @@ const type = () => {
 };
 
 const main = async () => {
-	await run("plop", wait());
-	await run("Checking lint rules 🔎", lint());
-	await run("Checking types 🔎", type());
+	await run("Checking lint rules 🧐", lint());
+	await run("Checking types 🧐", type());
 };
 
 main();

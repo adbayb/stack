@@ -1,0 +1,4 @@
+{
+	"extends": "@adbayb/ts-config",
+	"include": ["src"]
+}

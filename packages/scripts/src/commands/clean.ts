@@ -17,7 +17,7 @@ const cleanFiles = (fileList: string) => {
 
 const main = async () => {
 	const files = await run(
-		"Retrieving removable assets 🔎",
+		"Retrieving removable assets 🔍",
 		retrieveIgnoredFiles()
 	);
 

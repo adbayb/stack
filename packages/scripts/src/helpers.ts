@@ -1,12 +1,13 @@
 import { exec as childProcessExec } from "child_process";
 import { promisify } from "util";
 import createLogger from "progress-estimator";
+import { CWD } from "./constants";
 
 export const ERROR_SIGNATURE = "ERROR_SIGNATURE";
 
 const pExec = promisify(childProcessExec);
 
-export const exec = async (command: string, cwd = process.cwd()) => {
+export const exec = async (command: string, cwd = CWD) => {
 	const { stdout } = await pExec(command, { cwd });
 
 	return stdout.trim();
@@ -27,13 +28,18 @@ export const run = async <ReturnValue>(
 	try {
 		return await logger(command, label);
 	} catch (error) {
-		logError(`𐄂 ${label}\n`, true);
-		logError(error.message);
+		logError(`𐄂 ${label}`, true);
+
+		if (typeof error.stdout === "string") {
+			logError(error.stdout.trim());
+		} else {
+			logError(error.message);
+		}
 
 		throw new Error(ERROR_SIGNATURE);
 	}
 };
 
 export const logError = (message: string, isBold = false) => {
-	console.error(`\x1b[${isBold ? "1;" : ""}91m%s\x1b[0m`, message);
+	console.error(`\x1b[${isBold ? "1;" : ""}91m%s\x1b[0m`, message, "\n");
 };
