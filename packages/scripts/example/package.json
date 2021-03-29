@@ -5,7 +5,8 @@
 	"description": "Sandbox",
 	"scripts": {
 		"build": "scripts build",
-		"clean": "scripts clean"
+		"clean": "scripts clean",
+		"verify": "scripts verify"
 	},
 	"keywords": [],
 	"author": "Ayoub Adib <adbayb@gmail.com>",

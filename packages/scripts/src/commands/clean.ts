@@ -1,5 +1,4 @@
-import { exec } from "../helpers/exec";
-import { logger } from "../helpers/logger";
+import { exec, run } from "../helpers";
 
 const retrieveIgnoredFiles = async () => {
 	// @note: ignored !== unversioned (ignored files are unversioned ones but unversioned aren't
@@ -9,22 +8,25 @@ const retrieveIgnoredFiles = async () => {
 		"git clean -fdXn | grep -v 'node_modules' | cut -c 14-"
 	);
 
-	return rawFiles.replace(/\n/, " ");
+	return rawFiles.split(/\n/).filter(Boolean);
 };
 
-const cleanFiles = async (fileList: string) => {
-	exec(`rm -rf ${fileList}`);
+const cleanFiles = (fileList: string) => {
+	return exec(`rm -rf ${fileList}`);
 };
 
 const main = async () => {
-	const files = await logger(
-		retrieveIgnoredFiles(),
-		"Retrieving removable assets 🔎"
+	const files = await run(
+		"Retrieving removable assets 🔎",
+		retrieveIgnoredFiles()
 	);
 
-	files
-		? logger(cleanFiles(files), `Cleaning ${files} assets 🧹`)
-		: logger(Promise.resolve(), "Already clean ✨");
+	files.length > 0
+		? run(
+				`Cleaning ${files.join(", ")} assets 🧹`,
+				cleanFiles(files.join(" "))
+		  )
+		: run("Already clean ✨", Promise.resolve());
 };
 
 main();

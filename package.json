@@ -5,7 +5,7 @@
 		"packages/scripts/example"
 	],
 	"scripts": {
-		"check:format": "prettier . --ignore-path .gitignore --ignore-path .prettierignore",
+		"check:format": "prettier . --ignore-path .gitignore",
 		"check:lint": "eslint . --ignore-path .gitignore",
 		"check:types": "tsc --noEmit",
 		"format": "npm run check:format -- --write",

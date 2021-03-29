@@ -7,8 +7,8 @@
 ## Available scripts
 
 -   Clean: `@adbayb/clean` ✅
+-   Check lint and type (used as well on `pre-commit`): `@adbayb/scripts verify`
 -   Fix lint and formatting issues: `@adbayb/scripts fix`
--   Check lint and type (used as well on `pre-commit`): `@adbayb/scripts check`
 -   Watch: `@adbayb/scripts watch`
 -   Build: `@adbayb/scripts build`
 
