@@ -1,4 +1,6 @@
 import { exec as childProcessExec } from "child_process";
+import { existsSync } from "fs";
+import { resolve } from "path";
 import { promisify } from "util";
 import createLogger from "progress-estimator";
 import { CWD } from "./constants";
@@ -42,4 +44,14 @@ export const run = async <ReturnValue>(
 
 export const logError = (message: string, isBold = false) => {
 	console.error(`\x1b[${isBold ? "1;" : ""}91m%s\x1b[0m`, message, "\n");
+};
+
+export const lint = async (...args: string[]) => {
+	if (existsSync(resolve(CWD, ".gitignore"))) {
+		args.push("--ignore-path .gitignore");
+	}
+
+	console.log(`eslint . ${args.join(" ")}`);
+
+	return exec(`eslint . ${args.join(" ")}`);
 };

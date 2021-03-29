@@ -38,6 +38,7 @@
 		"@adbayb/eslint-config": "0.4.0",
 		"@adbayb/prettier-config": "0.4.0",
 		"@adbayb/ts-config": "0.4.0",
+		"esbuild": "0.11.0",
 		"progress-estimator": "0.3.0"
 	},
 	"devDependencies": {

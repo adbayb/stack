@@ -18,8 +18,11 @@ switch (command) {
 
 		break;
 	case "fix":
+		require("./commands/fix");
+
+		break;
 	case "watch":
-		console.log(`TODO: ${command}`);
+		require("./commands/watch");
 
 		break;
 	default:

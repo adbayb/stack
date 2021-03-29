@@ -6,7 +6,9 @@
 	"scripts": {
 		"build": "scripts build",
 		"clean": "scripts clean",
-		"verify": "scripts verify"
+		"fix": "scripts fix",
+		"verify": "scripts verify",
+		"watch": "scripts watch"
 	},
 	"keywords": [],
 	"author": "Ayoub Adib <adbayb@gmail.com>",

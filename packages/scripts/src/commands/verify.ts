@@ -1,17 +1,4 @@
-import { existsSync } from "fs";
-import { resolve } from "path";
-import { CWD } from "../constants";
-import { exec, run } from "../helpers";
-
-const lint = async () => {
-	const args: string[] = [];
-
-	if (existsSync(resolve(CWD, ".gitignore"))) {
-		args.push("--ignore-path .gitignore");
-	}
-
-	return exec(`eslint . ${args.join(" ")}`);
-};
+import { exec, lint, run } from "../helpers";
 
 const type = () => {
 	return exec(`tsc --noEmit`);
