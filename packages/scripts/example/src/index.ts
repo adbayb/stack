@@ -1,5 +1,5 @@
-export const fn = (toto: number) => {
-	return "hello world" + toto;
+export const fn = () => {
+	return "hello world";
 };
 
 export class Component {

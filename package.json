@@ -5,6 +5,7 @@
 		"packages/scripts/example"
 	],
 	"scripts": {
+		"postinstall": "husky install",
 		"check:format": "prettier . --ignore-path .gitignore",
 		"check:lint": "eslint . --ignore-path .gitignore",
 		"check:types": "tsc --noEmit",
@@ -41,7 +42,7 @@
 		]
 	},
 	"devDependencies": {
-		"@adbayb/create": "0.1.0",
+		"@adbayb/create": "0.4.0",
 		"lerna": "^4.0.0"
 	},
 	"name": "create"
