@@ -1,4 +1,6 @@
-import { build } from "esbuild";
+/* eslint-disable @typescript-eslint/no-var-requires */
+import { BuildOptions, build } from "esbuild";
+import { resolve } from "path";
 import { CWD } from "../constants";
 import { run } from "../helpers";
 
@@ -6,17 +8,43 @@ import { run } from "../helpers";
 // @todo: clean before building (share clean method with the clean command)
 // @todo: esm, cjs, umd builds depending on package.json fields
 
+const pkgMetadata = require(resolve(CWD, "package.json"));
+const tsMetadata = require(resolve(CWD, "tsconfig.json"));
+
+// @todo: run tsc to emit declaration file based upon pkgMetadata target
+console.warn(tsMetadata, __dirname);
+
+type BundleFormat = NonNullable<BuildOptions["format"]>;
+
+const bundle = (format: BundleFormat, isProduction?: boolean) => {
+	const outfile = format === "esm" ? pkgMetadata.module : pkgMetadata.main;
+
+	return build({
+		absWorkingDir: CWD,
+		bundle: true,
+		define: {
+			"process.env.NODE_ENV": isProduction
+				? '"production"'
+				: '"development"',
+		},
+		entryPoints: [pkgMetadata.source],
+		outfile,
+		tsconfig: "tsconfig.json",
+		target: "es2015",
+		format,
+		minify: isProduction,
+		sourcemap: !isProduction,
+		// @todo: inject only if react-jsx / react-jsx-dev is defined (use typescript api to read the whole flatten tsconfig)
+		inject: [resolve(__dirname, "../../public/buildPresets/react.js")],
+	});
+};
+
 const main = async () => {
-	await run(
-		"Building 👷‍♂️",
-		build({
-			absWorkingDir: CWD,
-			entryPoints: ["./src/index.ts"],
-			outdir: "dist", // @todo: read from package.json
-			tsconfig: "tsconfig.json",
-			target: "es2015",
-		})
-	);
+	const formats: BundleFormat[] = ["cjs", "esm"];
+
+	for (const format of formats) {
+		await run(`Building ${format} 👷‍♂️`, bundle(format, false));
+	}
 };
 
 main();
