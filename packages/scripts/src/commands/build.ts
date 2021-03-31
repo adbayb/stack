@@ -35,7 +35,8 @@ const bundle = (format: BundleFormat, isProduction?: boolean) => {
 		minify: isProduction,
 		sourcemap: !isProduction,
 		// @todo: inject only if react-jsx / react-jsx-dev is defined (use typescript api to read the whole flatten tsconfig)
-		inject: [resolve(__dirname, "../../public/buildPresets/react.js")],
+		// @todo: choose preact or react preset based upon pkg dependencies! (if dependencies.preact key exists -> preact preset -> else if dependencies.react key exists -> react presets -> else do nothing)
+		inject: [resolve(__dirname, "../../public/buildPresets/preact.js")],
 	});
 };
 
