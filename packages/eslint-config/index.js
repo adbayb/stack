@@ -37,14 +37,11 @@ module.exports = {
 			plugins: ["@typescript-eslint"],
 			rules: {
 				"@typescript-eslint/adjacent-overload-signatures": "error",
-				// @todo: change to error once all warnings are fixed
-				"@typescript-eslint/ban-ts-comment": "warn",
-				// @todo: change to error once all warnings are fixed
-				"@typescript-eslint/ban-types": "warn",
+				"@typescript-eslint/ban-ts-comment": "error",
+				"@typescript-eslint/ban-types": "error",
 				"no-array-constructor": "off",
 				"@typescript-eslint/no-array-constructor": "error",
 				"@typescript-eslint/no-empty-interface": "error",
-				// @todo: change to error once all warnings are fixed
 				"@typescript-eslint/no-explicit-any": "warn",
 				"@typescript-eslint/no-extra-non-null-assertion": "error",
 				"no-extra-semi": "off",
@@ -75,7 +72,6 @@ module.exports = {
 			},
 		},
 	],
-	// @todo: explicitly set rules and do not rely on recommended (less maintainable)
 	rules: {
 		// #region eslint
 		"no-alert": "error",
@@ -188,25 +184,21 @@ module.exports = {
 		"react-hooks/exhaustive-deps": "warn",
 		// #endregion react-hooks
 		// #region sonarjs
-		// @todo: change to error once all warnings are fixed
-		"sonarjs/cognitive-complexity": "warn",
+		"sonarjs/cognitive-complexity": "error",
 		"sonarjs/max-switch-cases": "error",
 		"sonarjs/no-all-duplicated-branches": "error",
 		"sonarjs/no-collapsible-if": "error",
 		"sonarjs/no-collection-size-mischeck": "error",
-		// @todo: change to error once all warnings are fixed
 		"sonarjs/no-duplicate-string": "warn",
 		"sonarjs/no-duplicated-branches": "error",
 		"sonarjs/no-element-overwrite": "error",
 		"sonarjs/no-extra-arguments": "error",
 		"sonarjs/no-identical-conditions": "error",
-		// @todo: change to error once all warnings are fixed
-		"sonarjs/no-identical-functions": "warn",
+		"sonarjs/no-identical-functions": "error",
 		"sonarjs/no-identical-expressions": "error",
 		"sonarjs/no-inverted-boolean-check": "error",
 		"sonarjs/no-one-iteration-loop": "error",
 		"sonarjs/no-redundant-boolean": "error",
-		"sonarjs/no-redundant-jump": "error",
 		"sonarjs/no-same-line-conditional": "error",
 		"sonarjs/no-small-switch": "error",
 		"sonarjs/no-unused-collection": "error",

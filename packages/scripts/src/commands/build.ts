@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-var-requires, sonarjs/no-redundant-jump */
 import { resolve } from "path";
 import { BuildOptions, build } from "esbuild";
-import ts from "typescript";
 import { CWD } from "../constants";
 import { run } from "../helpers";
 
@@ -10,7 +9,8 @@ import { run } from "../helpers";
 // @todo: support externals
 // @todo: run tsc to emit declaration file based upon pkgMetadata target
 
-type BundleFormat = NonNullable<BuildOptions["format"]>;
+type BundleFormat = "esm" | "cjs";
+
 type PackageMetadata = {
 	main: string;
 	module: string;
@@ -20,35 +20,54 @@ type PackageMetadata = {
 	peerDependencies?: Record<string, string>;
 };
 
-const isObject = (value: unknown): value is Record<string, string> => {
-	return value !== null && typeof value === "object";
+type Project = ReturnType<typeof createProject>;
+
+const createProject = () => {
+	const {
+		dependencies = {},
+		devDependencies = {},
+		peerDependencies = {},
+		main,
+		module,
+		source,
+	}: PackageMetadata = require(resolve(CWD, "package.json"));
+	const allDependencies = [
+		...Object.keys(dependencies),
+		...Object.keys(devDependencies),
+		...Object.keys(peerDependencies),
+	];
+
+	// @todo: invariant/asserts for main/module/source
+
+	return {
+		source,
+		destination: {
+			cjs: main,
+			esm: module,
+		},
+		hasModule(name: string) {
+			return allDependencies.includes(name);
+		},
+	} as const;
 };
 
-const getInjectPresets = (pkg: PackageMetadata): BuildOptions["inject"] => {
-	const dependencyField = pkg.dependencies;
-
-	if (!isObject(dependencyField)) {
-		return;
-	}
-
-	const dependencies = Object.keys(dependencyField);
+const getInjectPresets = (project: Project): BuildOptions["inject"] => {
 	const availablePresets = ["preact", "react"]; // @note: the order is important (search first preact before react)
-	const getPreset = (name: string) => {
-		return resolve(__dirname, `../../public/buildPresets/${name}.js`);
-	};
 
 	for (const preset of availablePresets) {
-		if (dependencies.includes(preset)) {
-			return [getPreset(preset)];
+		if (project.hasModule(preset)) {
+			return [
+				resolve(__dirname, `../../public/buildPresets/${preset}.js`),
+			];
 		}
 	}
 
 	return;
 };
 
-const createBundler = () => {
-	// @note: always get fresh package.json data while running bundle command:
-	const pkgMetadata: PackageMetadata = require(resolve(CWD, "package.json"));
+const createBundler = async (project: Project) => {
+	const injectPresets = getInjectPresets(project);
+	const ts = await import("typescript"); // @note: lazy load typescript only if necessary
 	const tsMetadata = ts.parseJsonConfigFileContent(
 		require(resolve(CWD, "tsconfig.json")),
 		ts.sys,
@@ -65,9 +84,6 @@ const createBundler = () => {
 		: ts.ScriptTarget[tsTarget]?.toLowerCase();
 
 	return (format: BundleFormat, isProduction?: boolean) => {
-		const outfile =
-			format === "esm" ? pkgMetadata.module : pkgMetadata.main;
-
 		return build({
 			absWorkingDir: CWD,
 			bundle: true,
@@ -76,20 +92,21 @@ const createBundler = () => {
 					? '"production"'
 					: '"development"',
 			},
-			entryPoints: [pkgMetadata.source],
-			outfile,
+			entryPoints: [project.source],
+			outfile: project.destination[format],
 			tsconfig: "tsconfig.json",
 			target,
 			format,
 			minify: isProduction,
 			sourcemap: !isProduction,
-			inject: getInjectPresets(pkgMetadata),
+			inject: injectPresets,
 		});
 	};
 };
 
 const main = async () => {
-	const bundle = createBundler();
+	const project = createProject();
+	const bundle = await createBundler(project);
 	const formats: BundleFormat[] = ["cjs", "esm"];
 
 	for (const format of formats) {
