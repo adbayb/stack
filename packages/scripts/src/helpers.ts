@@ -51,7 +51,5 @@ export const lint = async (...args: string[]) => {
 		args.push("--ignore-path .gitignore");
 	}
 
-	console.log(`eslint . ${args.join(" ")}`);
-
 	return exec(`eslint . ${args.join(" ")}`);
 };

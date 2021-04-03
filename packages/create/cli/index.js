@@ -9,14 +9,23 @@ const { PROJECT_FOLDER, TEMPLATES_FOLDER } = require("./constants");
 const fsPromises = fs.promises;
 
 const processPkg = async () => {
-	const [repositoryUrl, rootPath] = await Promise.all([
-		exec("git remote get-url --push origin"),
-		exec("git rev-parse --show-toplevel"),
-	]);
+	let rootPath = PROJECT_FOLDER;
+	let repositoryUrl = "";
+
+	try {
+		[repositoryUrl, rootPath] = await Promise.all([
+			exec("git remote get-url --push origin"),
+			exec("git rev-parse --show-toplevel"),
+		]);
+	} catch (error) {
+		// Nothing
+	}
+
 	const isMonorepo = rootPath !== PROJECT_FOLDER;
 	const directory = isMonorepo
 		? PROJECT_FOLDER.replace(new RegExp(`^${rootPath}/`), "")
 		: "";
+
 	let pkgConfig = {
 		author: {
 			name: "Ayoub Adib",
@@ -52,6 +61,7 @@ const processPkg = async () => {
 			"**/*.{json,md,mdx,html,css}": ["yarn format"],
 		},
 	};
+
 	const targetPkg = path.join(PROJECT_FOLDER, "package.json");
 
 	if (fs.existsSync(targetPkg)) {
@@ -91,8 +101,10 @@ const copyTemplates = async () => {
 	);
 };
 
-const install = () => {
-	return exec("yarn add @adbayb/create@latest --dev");
+const install = async () => {
+	await exec("yarn add @adbayb/eslint-config@latest --dev");
+	await exec("yarn add @adbayb/prettier-config@latest --dev");
+	await exec("yarn add @adbayb/ts-config@latest --dev");
 };
 
 const clean = async () => {
