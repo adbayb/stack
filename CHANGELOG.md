@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adbayb/create/compare/v0.4.0...v0.5.0) (2021-04-03)
+
+### Bug Fixes
+
+-   **eslint-config:** make padding rule compatible with import rule ([80ac540](https://github.com/adbayb/create/commit/80ac5402c6cb319d669d3af261d6b69b6bf49486))
+
+### Features
+
+-   **create:** remove adbayb pkg from create ([885f3d0](https://github.com/adbayb/create/commit/885f3d09f99cfbfd84729331bf06c2de10eb2bfe))
+-   **create:** switch from npm to yarn ([f0021a4](https://github.com/adbayb/create/commit/f0021a4241e04bdca823087a41bb3dac6b040309))
+-   **scripts:** add build command ([63071b2](https://github.com/adbayb/create/commit/63071b2511be3e1263f5afec4bc3506ce2c12a16))
+-   **scripts:** add clean command ([977e83f](https://github.com/adbayb/create/commit/977e83fc629a021b5b8f5d501ec363ecb5a5f4c2))
+-   **scripts:** add fix command ([151ce13](https://github.com/adbayb/create/commit/151ce13dc11d884973d49cc2df713f6906413e51))
+-   **scripts:** add preact build preset ([e9f71e0](https://github.com/adbayb/create/commit/e9f71e0ec1defcc3f7406c7a5e4eee6fd6f20c46))
+-   **scripts:** add verify command ([a9d7ca3](https://github.com/adbayb/create/commit/a9d7ca3796b6c330efb2935aae6db252757894d7))
+-   **scripts:** handle error gracefully ([0b9a921](https://github.com/adbayb/create/commit/0b9a92112ff52656f7d5f622ef825f09f0bf47e4))
+-   **scripts:** read target from tsconfig and presets from pkg metadata ([5f0ebc5](https://github.com/adbayb/create/commit/5f0ebc5deaa482cf6d3fac3cb611c593e8293e30))
+
 # [0.4.0](https://github.com/adbayb/create/compare/v0.3.0...v0.4.0) (2021-03-27)
 
 ### Bug Fixes

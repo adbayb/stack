@@ -7,17 +7,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **create:** remove adbayb pkg from create ([885f3d0](https://github.com/adbayb/create/commit/885f3d09f99cfbfd84729331bf06c2de10eb2bfe))
--   **scripts:** add build command ([63071b2](https://github.com/adbayb/create/commit/63071b2511be3e1263f5afec4bc3506ce2c12a16))
 -   **scripts:** add clean command ([977e83f](https://github.com/adbayb/create/commit/977e83fc629a021b5b8f5d501ec363ecb5a5f4c2))
 -   **scripts:** add fix command ([151ce13](https://github.com/adbayb/create/commit/151ce13dc11d884973d49cc2df713f6906413e51))
 -   **scripts:** add preact build preset ([e9f71e0](https://github.com/adbayb/create/commit/e9f71e0ec1defcc3f7406c7a5e4eee6fd6f20c46))
 -   **scripts:** add verify command ([a9d7ca3](https://github.com/adbayb/create/commit/a9d7ca3796b6c330efb2935aae6db252757894d7))
 -   **scripts:** handle error gracefully ([0b9a921](https://github.com/adbayb/create/commit/0b9a92112ff52656f7d5f622ef825f09f0bf47e4))
--   **scripts:** read target from tsconfig and presets from pkg metadata ([5f0ebc5](https://github.com/adbayb/create/commit/5f0ebc5deaa482cf6d3fac3cb611c593e8293e30))
-
-# [0.4.0](https://github.com/adbayb/create/compare/v0.3.0...v0.4.0) (2021-03-27)
-
-### Features
-
--   **scripts:** add package ([0b956dc](https://github.com/adbayb/create/commit/0b956dc328f751b25fc89311953029a8fc2e4087))

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adbayb/init/compare/v0.4.0...v0.5.0) (2021-04-03)
+
+### Bug Fixes
+
+-   **eslint-config:** make padding rule compatible with import rule ([80ac540](https://github.com/adbayb/init/commit/80ac5402c6cb319d669d3af261d6b69b6bf49486))
+
+### Features
+
+-   **scripts:** add clean command ([977e83f](https://github.com/adbayb/init/commit/977e83fc629a021b5b8f5d501ec363ecb5a5f4c2))
+
 # [0.4.0](https://github.com/adbayb/init/compare/v0.3.0...v0.4.0) (2021-03-27)
 
 ### Bug Fixes
