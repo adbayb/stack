@@ -42,8 +42,9 @@
 		]
 	},
 	"devDependencies": {
-		"@adbayb/create": "0.4.0",
+		"@adbayb/eslint-config": "0.5.0",
+		"@adbayb/prettier-config": "0.5.0",
+		"@adbayb/ts-config": "0.5.0",
 		"lerna": "^4.0.0"
-	},
-	"name": "create"
+	}
 }

@@ -1999,10 +1999,10 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
-esbuild@0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.11.0.tgz#1a54ab199a144af76fee1399702efa11be99d31f"
-  integrity sha512-soxN5dic/pDMM0LKLUKmpOY/MVfF+6n3RHLS2ez0YQoM0dmd2tTs/hmAC4pxfhm2Pvn/28UtMJyFedRYC+8olA==
+esbuild@0.11.5:
+  version "0.11.5"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.11.5.tgz#25b18a2ff2fb9580683edce26a48f64c08c2f2df"
+  integrity sha512-aRs6jAE+bVRp1tyfzUugAw1T/Y0Fwzp4Z2ROikF3h+UifoD5QlEbEYQGc6orNnnSIRhWR5VWBH7LozlAumaLHg==
 
 escalade@^3.1.1:
   version "3.1.1"
@@ -4445,6 +4445,14 @@ quick-lru@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-4.0.1.tgz#5b8878f113a58217848c6482026c73e1ba57727f"
   integrity sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==
+
+quickbundle@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/quickbundle/-/quickbundle-0.1.1.tgz#aec27b81212b0086c9d95a8c975a9072ad89b6ca"
+  integrity sha512-b6r9JFqQofpQW3//CYnXudJfYdvklkj2lmQnSKvUNAlBTfB4w3oDklnyYnqU1zFoATG4sXMBaOU/uAjJE2QIZA==
+  dependencies:
+    esbuild "0.11.5"
+    progress-estimator "0.3.0"
 
 "react-dom@npm:@preact/compat@0.0.3", "react@npm:@preact/compat@0.0.3":
   version "0.0.3"
