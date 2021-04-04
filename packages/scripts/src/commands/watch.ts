@@ -1,7 +1,5 @@
 import { exec } from "../helpers";
 
-const main = async () => {
+export const main = async () => {
 	await exec("quickbundle watch");
 };
-
-main();

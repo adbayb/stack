@@ -2,33 +2,17 @@
 
 import { ERROR_SIGNATURE, logError } from "./helpers";
 
-const command = process.argv[2];
+const command = process.argv[2] || "";
 
-switch (command) {
-	case "build":
-		require("./commands/build");
-
-		break;
-	case "clean":
-		require("./commands/clean");
-
-		break;
-	case "verify":
-		require("./commands/verify");
-
-		break;
-	case "fix":
-		require("./commands/fix");
-
-		break;
-	case "watch":
-		require("./commands/watch");
-
-		break;
-	default:
-		// @todo: make a log library that could be used across the monorepo:
-		throw new ReferenceError("Command not found");
-}
+import(`./commands/${command}`)
+	.then((module) => module.main())
+	.catch((error) => {
+		if (error.code === "MODULE_NOT_FOUND") {
+			throw new ReferenceError(`Command "${command}" not found`);
+		} else {
+			throw error;
+		}
+	});
 
 // @section: gracefully shutdown our cli:
 process.on("SIGTERM", () => {

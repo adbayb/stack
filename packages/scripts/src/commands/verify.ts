@@ -4,9 +4,7 @@ const type = () => {
 	return exec(`tsc --noEmit`);
 };
 
-const main = async () => {
+export const main = async () => {
 	await run("Checking lint rules 🧐", lint());
 	await run("Checking types 🧐", type());
 };
-
-main();

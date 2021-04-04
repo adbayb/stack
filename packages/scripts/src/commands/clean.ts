@@ -15,7 +15,7 @@ const cleanFiles = (fileList: string) => {
 	return exec(`rm -rf ${fileList}`);
 };
 
-const main = async () => {
+export const main = async () => {
 	const files = await run(
 		"Retrieving removable assets 🔍",
 		retrieveIgnoredFiles()
@@ -28,5 +28,3 @@ const main = async () => {
 		  )
 		: run("Already clean ✨", Promise.resolve());
 };
-
-main();
