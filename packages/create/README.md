@@ -4,12 +4,6 @@
 </div>
 <p></p>
 
-Custom configuration presets including:
-
--   [✍️ Linting](../eslint-config)
--   [💄 Formatting](../prettier-config)
--   [⚙️ Typing](../ts-config)
-
 ## Usage
 
 -   `cd my-project-root-folder`
