@@ -15,7 +15,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/adbayb/create.git",
+		"url": "https://github.com/adbayb/stack.git",
 		"directory": "packages/prettier-config"
 	},
 	"dependencies": {
