@@ -38,8 +38,8 @@
 	"dependencies": {
 		"@adbayb/eslint-config": "0.5.0",
 		"@adbayb/prettier-config": "0.5.0",
+		"@adbayb/terminal-kit": "0.0.1",
 		"@adbayb/ts-config": "0.5.0",
-		"progress-estimator": "0.3.0",
 		"quickbundle": "0.1.1"
 	},
 	"devDependencies": {

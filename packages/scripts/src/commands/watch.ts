@@ -1,4 +1,4 @@
-import { exec } from "../helpers";
+import { exec } from "@adbayb/terminal-kit";
 import { main as clean } from "./clean";
 
 export const main = async () => {

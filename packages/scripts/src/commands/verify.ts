@@ -1,4 +1,5 @@
-import { exec, lint, run } from "../helpers";
+import { exec, run } from "@adbayb/terminal-kit";
+import { lint } from "../helpers";
 
 const type = () => {
 	return exec(`tsc --noEmit`);

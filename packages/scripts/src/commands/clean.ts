@@ -1,4 +1,4 @@
-import { exec, run } from "../helpers";
+import { exec, run } from "@adbayb/terminal-kit";
 
 const retrieveIgnoredFiles = async () => {
 	// @note: ignored !== unversioned (ignored files are unversioned ones but unversioned aren't
