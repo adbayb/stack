@@ -5,7 +5,7 @@
 		"packages/scripts/example"
 	],
 	"scripts": {
-		"postinstall": "husky install",
+		"postinstall": "husky install && lerna run prepublishOnly",
 		"check:format": "prettier . --ignore-path .gitignore",
 		"check:lint": "eslint . --ignore-path .gitignore",
 		"check:types": "tsc --noEmit",
@@ -42,9 +42,9 @@
 		]
 	},
 	"devDependencies": {
-		"@adbayb/eslint-config": "0.5.0",
-		"@adbayb/prettier-config": "0.5.0",
-		"@adbayb/ts-config": "0.5.0",
+		"@adbayb/eslint-config": "0.6.0",
+		"@adbayb/prettier-config": "0.6.0",
+		"@adbayb/ts-config": "0.6.0",
 		"lerna": "^4.0.0"
 	}
 }
