@@ -1,18 +1,52 @@
-import { exec as childProcessExec } from "child_process";
+import { spawn } from "child_process";
 import { existsSync } from "fs";
 import { resolve } from "path";
-import { promisify } from "util";
 import createLogger from "progress-estimator";
 import { CWD } from "./constants";
 
 export const ERROR_SIGNATURE = "ERROR_SIGNATURE";
 
-const pExec = promisify(childProcessExec);
+export const exec = async (command: string, displayOutput = false) => {
+	return new Promise<string>((resolve, reject) => {
+		let stdout = "";
+		let stderr = "";
+		const [bin, ...args] = command.split(" ") as [string, ...string[]];
 
-export const exec = async (command: string, cwd = CWD) => {
-	const { stdout } = await pExec(command, { cwd });
+		const childProcess = spawn(bin, args, {
+			cwd: CWD,
+			shell: true,
+			stdio: "pipe",
+			env: {
+				...process.env,
+				// @note: make sure to force color display for spawned processes
+				FORCE_COLOR: "1",
+			},
+		});
 
-	return stdout.trim();
+		childProcess.stdout.on("data", (chunk) => {
+			stdout += chunk;
+
+			if (displayOutput) {
+				process.stdout.write(chunk);
+			}
+		});
+
+		childProcess.stderr.on("data", (chunk) => {
+			stderr += chunk;
+
+			if (displayOutput) {
+				process.stdout.write(stderr);
+			}
+		});
+
+		childProcess.on("close", (exitCode) => {
+			if (exitCode !== 0) {
+				reject(stderr.trim());
+			} else {
+				resolve(stdout.trim());
+			}
+		});
+	});
 };
 
 const logger = createLogger({

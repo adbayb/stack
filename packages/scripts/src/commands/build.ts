@@ -3,5 +3,5 @@ import { main as clean } from "./clean";
 
 export const main = async () => {
 	await clean();
-	await exec("quickbundle build");
+	await exec("quickbundle build", true);
 };
