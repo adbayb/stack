@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/adbayb/create/compare/v0.6.0...v0.6.1) (2021-04-05)
+
+### Bug Fixes
+
+-   **scripts:** outDir wrong update ([54f60f7](https://github.com/adbayb/create/commit/54f60f78edd6ac4a582bd1ea523ff7d95960b6ed))
+
 # [0.6.0](https://github.com/adbayb/create/compare/v0.5.0...v0.6.0) (2021-04-05)
 
 ### Bug Fixes
