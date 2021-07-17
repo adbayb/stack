@@ -1,6 +1,6 @@
 {
 	"name": "example",
-	"version": "0.6.1",
+	"version": "0.7.0",
 	"private": "true",
 	"description": "Sandbox",
 	"source": "src/index.tsx",
@@ -18,7 +18,7 @@
 	"author": "Ayoub Adib <adbayb@gmail.com>",
 	"license": "MIT",
 	"devDependencies": {
-		"@adbayb/scripts": "0.6.1",
+		"@adbayb/scripts": "0.7.0",
 		"@types/react": "17.0.3",
 		"@types/react-dom": "17.0.3",
 		"typescript": "4.2.3"
