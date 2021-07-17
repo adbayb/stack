@@ -18,7 +18,7 @@
 		"url": "https://github.com/adbayb/stack.git",
 		"directory": "packages/ts-config"
 	},
-	"dependencies": {
-		"typescript": "4.2.3"
+	"peerDependencies": {
+		"typescript": ">=4.0.0"
 	}
 }

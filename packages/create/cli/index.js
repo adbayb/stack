@@ -39,12 +39,10 @@ const processPkg = async () => {
 		},
 		license: "MIT",
 		scripts: {
-			"check:format":
-				"prettier . --ignore-path .gitignore --ignore-path .prettierignore",
-			"check:lint": "eslint . --ignore-path .gitignore",
-			"check:types": "tsc --noEmit",
-			format: "yarn check:format --write",
-			lint: "yarn check:lint --fix",
+			verify: "yarn lint & tsc --noEmit",
+			fix: "yarn lint --fix",
+			lint: "eslint . --ignore-path .gitignore",
+			format: "prettier . --ignore-path .gitignore --ignore-path .prettierignore --write",
 		},
 		prettier: "@adbayb/prettier-config",
 		eslintConfig: {
@@ -102,14 +100,21 @@ const copyTemplates = async () => {
 };
 
 const install = async () => {
+	await exec("yarn add typescript@latest --dev");
+	await exec("yarn add eslint@latest --dev");
+	await exec("yarn add prettier@latest --dev");
 	await exec("yarn add @adbayb/eslint-config@latest --dev");
 	await exec("yarn add @adbayb/prettier-config@latest --dev");
 	await exec("yarn add @adbayb/ts-config@latest --dev");
 };
 
 const clean = async () => {
-	await exec("yarn lint");
-	await exec("yarn format");
+	try {
+		await exec("yarn lint");
+		await exec("yarn format");
+	} catch (error) {
+		// @note: encapsulate lint/format logic to be error tolerant in case of new project without any files
+	}
 };
 
 const run = async () => {
