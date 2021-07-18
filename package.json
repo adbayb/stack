@@ -42,9 +42,9 @@
 		]
 	},
 	"devDependencies": {
-		"@adbayb/eslint-config": "0.6.0",
-		"@adbayb/prettier-config": "0.6.0",
-		"@adbayb/ts-config": "0.6.0",
+		"@adbayb/eslint-config": "0.7.0",
+		"@adbayb/prettier-config": "0.7.0",
+		"@adbayb/ts-config": "0.7.0",
 		"eslint": "7.31.0",
 		"lerna": "4.0.0",
 		"prettier": "2.3.2",
