@@ -1,7 +1,0 @@
-{
-	"extends": "@adbayb/ts-config",
-	"compilerOptions": {
-		"outDir": "dist"
-	},
-	"include": ["src"]
-}
