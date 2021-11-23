@@ -5,7 +5,7 @@
 		"packages/scripts/example"
 	],
 	"scripts": {
-		"postinstall": "husky install && lerna run prepublishOnly",
+		"postinstall": "lerna run prepublishOnly",
 		"check:format": "prettier . --ignore-path .gitignore",
 		"check:lint": "eslint . --ignore-path .gitignore",
 		"check:types": "tsc --noEmit",
