@@ -85,6 +85,16 @@ module.exports = {
 				next: "*",
 			},
 			{
+				blankLine: "always",
+				prev: "*",
+				next: ["cjs-export", "export"],
+			},
+			{
+				blankLine: "always",
+				prev: ["cjs-export", "export"],
+				next: "*",
+			},
+			{
 				blankLine: "never",
 				prev: ["const", "let", "var"],
 				next: ["const", "let", "var"],
@@ -118,6 +128,11 @@ module.exports = {
 				blankLine: "any",
 				prev: ["cjs-import", "import"],
 				next: ["cjs-import", "import"],
+			},
+			{
+				blankLine: "any",
+				prev: ["cjs-export", "export"],
+				next: ["cjs-export", "export"],
 			},
 		],
 		"prefer-const": "error",
