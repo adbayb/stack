@@ -7,20 +7,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @adbayb/create
 
-
-
-
-
 # [0.8.0](https://github.com/adbayb/stack/compare/v0.7.0...v0.8.0) (2021-11-23)
-
 
 ### Features
 
-* **create:** use husky v4 ([982c8be](https://github.com/adbayb/stack/commit/982c8bea835f1610d578175071b6d52e83cc8e92))
-
-
-
-
+-   **create:** use husky v4 ([982c8be](https://github.com/adbayb/stack/commit/982c8bea835f1610d578175071b6d52e83cc8e92))
 
 # [0.7.0](https://github.com/adbayb/stack/compare/v0.6.1...v0.7.0) (2021-07-17)
 

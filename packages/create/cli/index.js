@@ -106,6 +106,7 @@ const install = async () => {
 	await exec("yarn add @adbayb/eslint-config@latest --dev");
 	await exec("yarn add @adbayb/prettier-config@latest --dev");
 	await exec("yarn add @adbayb/ts-config@latest --dev");
+	await exec("yarn add @adbayb/create@latest --dev"); // @todo: replace with @adbayb/scripts once ready (scripts should hoist the husky and other core dev packages)
 };
 
 const clean = async () => {

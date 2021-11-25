@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @adbayb/prettier-config
 
-
-
-
-
 # [0.8.0](https://github.com/adbayb/stack/compare/v0.7.0...v0.8.0) (2021-11-23)
 
 **Note:** Version bump only for package @adbayb/prettier-config
-
-
-
-
 
 # [0.7.0](https://github.com/adbayb/stack/compare/v0.6.1...v0.7.0) (2021-07-17)
 

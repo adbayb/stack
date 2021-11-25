@@ -5,25 +5,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.9.0](https://github.com/adbayb/create/compare/v0.8.0...v0.9.0) (2021-11-23)
 
-
 ### Features
 
-* **eslint-config:** update linebreak rules ([c4239b5](https://github.com/adbayb/create/commit/c4239b5936eae3687302d122427b07e864c2b8ef))
-
-
-
-
+-   **eslint-config:** update linebreak rules ([c4239b5](https://github.com/adbayb/create/commit/c4239b5936eae3687302d122427b07e864c2b8ef))
 
 # [0.8.0](https://github.com/adbayb/create/compare/v0.7.0...v0.8.0) (2021-11-23)
 
-
 ### Features
 
-* **create:** use husky v4 ([982c8be](https://github.com/adbayb/create/commit/982c8bea835f1610d578175071b6d52e83cc8e92))
-
-
-
-
+-   **create:** use husky v4 ([982c8be](https://github.com/adbayb/create/commit/982c8bea835f1610d578175071b6d52e83cc8e92))
 
 # [0.7.0](https://github.com/adbayb/create/compare/v0.6.1...v0.7.0) (2021-07-17)
 
