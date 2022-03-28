@@ -9,7 +9,12 @@ import { createWatchCommand } from "./commands/watch";
 import { CommandFactory } from "./types";
 
 const createProgram = (...commandFactories: Array<CommandFactory>) => {
-	const program = termost("Toolbox to easily manage a JavaScript project");
+	const program = termost({
+		name: "scripts",
+		description: "Toolbox to easily manage a JavaScript/TypeScript project",
+		// @todo: to fix
+		version: "",
+	});
 
 	for (const commandBuilder of commandFactories) {
 		commandBuilder(program);

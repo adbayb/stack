@@ -6,7 +6,7 @@ export const createBuildCommand: CommandFactory = (program) => {
 	program
 		.command({
 			name: "build",
-			description: "Build the project",
+			description: "Build the project in production mode",
 		})
 		.task({
 			handler() {

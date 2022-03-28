@@ -1,17 +1,16 @@
-import { helpers } from "termost";
 import { CommandFactory } from "../types";
-import { lint } from "../helpers";
+import { lintRules, lintTypes } from "../helpers";
 
 export const createVerifyCommand: CommandFactory = (program) => {
 	program
 		.command({
 			name: "verify",
-			description: "Verify the project",
+			description: "Verify the project health",
 		})
 		.task({
 			label: "Checking lint rules 🧐",
-			handler() {
-				return lint();
+			handler(_, argv) {
+				return lintRules(argv.operands);
 			},
 		})
 		.task({
@@ -19,12 +18,8 @@ export const createVerifyCommand: CommandFactory = (program) => {
 			skip() {
 				return !require.resolve("typescript");
 			},
-			handler() {
-				return type();
+			handler(_, argv) {
+				return lintTypes(argv.operands);
 			},
 		});
-};
-
-const type = () => {
-	return helpers.exec(`tsc --noEmit`, { hasLiveOutput: true });
 };

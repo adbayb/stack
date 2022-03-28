@@ -1,16 +1,16 @@
 import { CommandFactory } from "../types";
-import { lint } from "../helpers";
+import { fixRules } from "../helpers";
 
 export const createFixCommand: CommandFactory = (program) => {
 	program
 		.command({
 			name: "fix",
-			description: "Fix the project",
+			description: "Fix all auto-fixable issues",
 		})
 		.task({
 			label: "Fixing lint rules 🚑",
-			handler() {
-				return lint("--fix");
+			handler(_, argv) {
+				return fixRules(argv.operands);
 			},
 		});
 };

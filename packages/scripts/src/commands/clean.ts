@@ -9,7 +9,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 	program
 		.command<CleanCommandContext>({
 			name: "clean",
-			description: "Clean the project",
+			description: "Clean all untracked and build assets",
 		})
 		.task({
 			key: "files",
@@ -21,13 +21,23 @@ export const createCleanCommand: CommandFactory = (program) => {
 		.task({
 			label({ files }) {
 				return files.length > 0
-					? `Cleaning ${files.join(", ")} assets 🧹`
+					? `Cleaning assets 🧹`
 					: "Already clean ✨";
 			},
 			handler({ files }) {
 				return files.length > 0
 					? cleanFiles(files.join(" "))
 					: Promise.resolve();
+			},
+		})
+		.task({
+			skip({ files }) {
+				return files.length === 0;
+			},
+			handler({ files }) {
+				helpers.message(`Removed assets: ${files.join(", ")}\n`, {
+					type: "information",
+				});
 			},
 		});
 };
