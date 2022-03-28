@@ -8,7 +8,7 @@ export const createVerifyCommand: CommandFactory = (program) => {
 			description: "Verify the project health",
 		})
 		.task({
-			label: "Checking lint rules 🧐",
+			label: "Checking linter rules 🧐",
 			handler(_, argv) {
 				return lintRules(argv.operands);
 			},
