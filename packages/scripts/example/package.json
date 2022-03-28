@@ -8,6 +8,7 @@
 	"module": "dist/example.esm.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
+		"postinstall": "cd ../ && yarn build && npm link && cd ./example && npm link @adbayb/scripts",
 		"build": "scripts build",
 		"clean": "scripts clean",
 		"fix": "scripts fix",

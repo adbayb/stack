@@ -1,21 +1,28 @@
 #!/usr/bin/env node
 
-import { setup } from "@adbayb/terminal-kit";
+import { termost } from "termost";
+import { createBuildCommand } from "./commands/build";
+import { createCleanCommand } from "./commands/clean";
+import { createFixCommand } from "./commands/fix";
+import { createVerifyCommand } from "./commands/verify";
+import { createWatchCommand } from "./commands/watch";
+import { CommandFactory } from "./types";
 
-setup();
+const createProgram = (...commandFactories: Array<CommandFactory>) => {
+	const program = termost("Toolbox to easily manage a JavaScript project");
 
-const command = process.argv[2] || "";
+	for (const commandBuilder of commandFactories) {
+		commandBuilder(program);
+	}
+};
 
-// @todo: set postinstall script on package.json to set pre-commit and commit hooks
-// @todo: add eslint, prettier, lint-staged, commitlint as dependencies (not exposed externally)
-// @todo: add typescript as peerDependencies optional since tsconfig is anyway exposed externally (for ide intellisense)
+// @todo: bootstrap command to set all requirements such as git hooks...?
+// @todo: release command
 
-import(`./commands/${command}`)
-	.then((module) => module.main())
-	.catch((error) => {
-		if (error.code === "MODULE_NOT_FOUND") {
-			throw new ReferenceError(`Command "${command}" not found`);
-		} else {
-			throw error;
-		}
-	});
+createProgram(
+	createBuildCommand,
+	createCleanCommand,
+	createFixCommand,
+	createVerifyCommand,
+	createWatchCommand
+);

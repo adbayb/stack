@@ -1,7 +1,23 @@
-import { exec } from "@adbayb/terminal-kit";
-import { main as clean } from "./clean";
+import { helpers } from "termost";
+import { scripts } from "../helpers";
+import { CommandFactory } from "../types";
 
-export const main = async () => {
-	await clean();
-	await exec("quickbundle build", true);
+export const createBuildCommand: CommandFactory = (program) => {
+	program
+		.command({
+			name: "build",
+			description: "Build the project",
+		})
+		.task({
+			handler() {
+				return scripts("clean");
+			},
+		})
+		.task({
+			handler() {
+				return helpers.exec("quickbundle build", {
+					hasLiveOutput: true,
+				});
+			},
+		});
 };

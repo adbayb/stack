@@ -1,11 +1,17 @@
-import { exec } from "@adbayb/terminal-kit";
 import { existsSync } from "fs";
 import { resolve } from "path";
+import { helpers } from "termost";
 
-export const lint = async (...args: string[]) => {
+export const scripts = (command: "clean") => {
+	return helpers.exec(`scripts ${command}`, {
+		hasLiveOutput: true,
+	});
+};
+
+export const lint = async (...args: Array<string>) => {
 	if (existsSync(resolve(process.cwd(), ".gitignore"))) {
 		args.push("--ignore-path .gitignore");
 	}
 
-	return exec(`eslint . ${args.join(" ")}`);
+	return helpers.exec(`eslint . ${args.join(" ")}`, { hasLiveOutput: true });
 };

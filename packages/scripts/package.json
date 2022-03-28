@@ -38,9 +38,9 @@
 	"dependencies": {
 		"@adbayb/eslint-config": "0.10.0",
 		"@adbayb/prettier-config": "0.10.0",
-		"@adbayb/terminal-kit": "0.7.0",
 		"@adbayb/ts-config": "0.10.0",
-		"quickbundle": "0.12.0"
+		"quickbundle": "0.12.0",
+		"termost": "0.7.0"
 	},
 	"devDependencies": {
 		"@types/node": "17.0.23",

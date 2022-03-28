@@ -1,4 +1,7 @@
 {
 	"extends": "@adbayb/ts-config",
-	"include": ["src"]
+	"include": ["src"],
+	"compilerOptions": {
+		"jsxImportSource": "preact"
+	}
 }

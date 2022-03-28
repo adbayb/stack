@@ -1,10 +1,42 @@
-import { exec, run } from "@adbayb/terminal-kit";
+import { helpers } from "termost";
+import { CommandFactory } from "../types";
+
+type CleanCommandContext = {
+	files: Array<string>;
+};
+
+export const createCleanCommand: CommandFactory = (program) => {
+	program
+		.command<CleanCommandContext>({
+			name: "clean",
+			description: "Clean the project",
+		})
+		.task({
+			key: "files",
+			label: "Retrieving removable assets 🔍",
+			handler() {
+				return retrieveIgnoredFiles();
+			},
+		})
+		.task({
+			label({ files }) {
+				return files.length > 0
+					? `Cleaning ${files.join(", ")} assets 🧹`
+					: "Already clean ✨";
+			},
+			handler({ files }) {
+				return files.length > 0
+					? cleanFiles(files.join(" "))
+					: Promise.resolve();
+			},
+		});
+};
 
 const retrieveIgnoredFiles = async () => {
 	// @note: ignored !== unversioned (ignored files are unversioned ones but unversioned aren't
 	// necessarly ignored: for example, a newly create file which will be versioned later)
 
-	const rawFiles = await exec(
+	const rawFiles = await helpers.exec(
 		"git clean -fdXn | grep -v 'node_modules' | cut -c 14-"
 	);
 
@@ -12,19 +44,5 @@ const retrieveIgnoredFiles = async () => {
 };
 
 const cleanFiles = (fileList: string) => {
-	return exec(`rm -rf ${fileList}`);
-};
-
-export const main = async () => {
-	const files = await run(
-		"Retrieving removable assets 🔍",
-		retrieveIgnoredFiles()
-	);
-
-	files.length > 0
-		? run(
-				`Cleaning ${files.join(", ")} assets 🧹`,
-				cleanFiles(files.join(" "))
-		  )
-		: run("Already clean ✨", Promise.resolve());
+	return helpers.exec(`rm -rf ${fileList}`);
 };
