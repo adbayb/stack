@@ -12,6 +12,7 @@
 		"build": "scripts build",
 		"clean": "scripts clean",
 		"fix": "scripts fix",
+		"setup": "scripts setup",
 		"verify": "scripts verify",
 		"watch": "scripts watch"
 	},
@@ -28,5 +29,10 @@
 		"preact": "10.5.13",
 		"react": "npm:@preact/compat@0.0.3",
 		"react-dom": "npm:@preact/compat@0.0.3"
+	},
+	"lint-staged": {
+		"**/*.{js,jsx,ts,tsx,json,md,mdx,html,css}": [
+			"yarn fix"
+		]
 	}
 }

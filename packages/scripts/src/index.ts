@@ -4,6 +4,7 @@ import { termost } from "termost";
 import { createBuildCommand } from "./commands/build";
 import { createCleanCommand } from "./commands/clean";
 import { createFixCommand } from "./commands/fix";
+import { createSetupCommand } from "./commands/setup";
 import { createVerifyCommand } from "./commands/verify";
 import { createWatchCommand } from "./commands/watch";
 import { CommandFactory } from "./types";
@@ -28,6 +29,7 @@ createProgram(
 	createBuildCommand,
 	createCleanCommand,
 	createFixCommand,
+	createSetupCommand,
 	createVerifyCommand,
 	createWatchCommand
 );
