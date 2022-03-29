@@ -7,10 +7,10 @@
 ## Available scripts
 
 -   Clean: `@adbayb/clean` ✅
--   Check lint and type (used as well on `pre-commit`?): `@adbayb/scripts verify` ✅
+-   Check lint and type (used as well on `pre-commit`): `@adbayb/scripts verify` ✅
 -   Fix lint and formatting issues: `@adbayb/scripts fix` ✅
--   Watch: `@adbayb/scripts watch`
--   Build: `@adbayb/scripts build`
+-   Watch: `@adbayb/scripts watch` ✅
+-   Build: `@adbayb/scripts build` ✅
+-   Setup: `@adbayb/scripts setup`
 -   Test: `@adbayb/scripts test`
-
-TODO: pre-commit management (only within @adbayb/create?)
+-   Release: `@adbayb/scripts release`

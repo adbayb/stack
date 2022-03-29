@@ -1,30 +1,38 @@
-import { helpers } from "termost";
+import { chmod, writeFile } from "fs/promises";
 import { resolveFromRoot } from "../helpers";
 import { CommandFactory } from "../types";
 
-type SetupContext = {
-	gitDir: string;
-};
-
 export const createSetupCommand: CommandFactory = (program) => {
 	program
-		.command<SetupContext>({
+		.command({
 			name: "setup",
 			description: "Setup all project requirements on installation",
 		})
 		.task({
-			key: "gitDir",
-			label: "Finding git root dir ⚙️",
+			label: "Installing pre-commit git hook ⚙️",
 			handler() {
-				return resolveFromRoot(".git");
+				return installGitHook(
+					"pre-commit",
+					// @todo: replace by npm? Use npm package to detect which-npm-runs?
+					`yarn scripts verify $(git status --porcelain | awk 'BEGIN{ ORS=" " } { print $2 }')`
+				);
 			},
 		})
 		.task({
-			label: "Installing pre-commit git hook ⚙️",
-			handler(context) {
-				// echo '{"*": "scripts verify"}' | ./node_modules/.bin/lint-staged --config - // inside gitDir/hooks/pre-commit
-				// commitlint inside gitDir/hooks/commit-msg
-				helpers.message(context.gitDir);
+			label: "Installing commit-msg git hook ⚙️",
+			handler() {
+				return installGitHook("commit-msg", `echo "TODO"`);
 			},
 		});
+};
+
+const installGitHook = async (
+	hook: "commit-msg" | "pre-commit",
+	content: string
+) => {
+	const filename = resolveFromRoot(`.git/hooks/${hook}`);
+
+	await writeFile(filename, content);
+
+	return chmod(filename, "0755");
 };

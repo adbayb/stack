@@ -17,7 +17,3 @@ The monorepo includes:
 -   [✍️ Linting](./packages/eslint-config)
 -   [💄 Formatting](./packages/prettier-config)
 -   [⚙️ Typing](./packages/ts-config)
-
-## 💁 Libraries
-
--   [📺 Terminal Kit](./packages/terminal-kit)
