@@ -57,7 +57,11 @@ export const fixRules = eslint({ isFixMode: true });
 
 export const fixFormatting = async (files: FilenameCollection) => {
 	const prettierFiles = files.filter((file) => {
-		return PRETTIER_EXTENSIONS.some((ext) => file.endsWith(ext));
+		return (
+			!PRETTIER_IGNORE_FILES.some((filename) =>
+				file.endsWith(filename)
+			) && PRETTIER_EXTENSIONS.some((ext) => file.endsWith(ext))
+		);
 	});
 
 	if (prettierFiles.length === 0) return Promise.resolve();
@@ -77,24 +81,32 @@ export const fixFormatting = async (files: FilenameCollection) => {
 
 export const lintTypes = async (files: FilenameCollection) => {
 	try {
+		const tsFiles = files.filter((file) => {
+			return TYPESCRIPT_EXTENSIONS.some((ext) => file.endsWith(ext));
+		});
+
+		console.log(tsFiles);
+
 		return await helpers.exec(
-			`tsc --tsBuildInfoFile ${resolveFromRoot(
+			`tsc --incremental --tsBuildInfoFile ${resolveFromRoot(
 				"node_modules/.cache/.tsbuildinfo"
-			)} --noEmit ${files.join(" ")}`
+			)} --noEmit ${tsFiles.join(" ")}`
 		);
 	} catch (error) {
 		throw new Error(`\`tsc\` failed:\n${error}`);
 	}
 };
 
+const TYPESCRIPT_EXTENSIONS = ["ts", "tsx"];
 /**
  * Extensions supported by ESLint.
  */
-const ESLINT_EXTENSIONS = ["js", "jsx", "ts", "tsx"];
+const ESLINT_EXTENSIONS = ["js", "jsx", ...TYPESCRIPT_EXTENSIONS];
 /**
  * Extensions supported by Prettier but not yet parseable
  * by ESLint to take advantage of the eslint prettier plugin
  */
 const PRETTIER_EXTENSIONS = ["css", "html", "json", "md", "mdx", "yml", "yaml"];
+const PRETTIER_IGNORE_FILES = ["package.json", "CHANGELOG.md"];
 
 type FilenameCollection = Array<string>;

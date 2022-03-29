@@ -32,7 +32,7 @@ export const createSetupCommand: CommandFactory = (program) => {
 		.task({
 			label: "Installing pre-commit git hook ⚙️",
 			handler(context) {
-				// echo '{"*": "scripts verify"}' | ../../node_modules/.bin/lint-staged --config - // inside gitDir/hooks/pre-commit
+				// echo '{"*": "scripts verify"}' | ./node_modules/.bin/lint-staged --config - // inside gitDir/hooks/pre-commit
 				// commitlint inside gitDir/hooks/commit-msg
 				helpers.message(context.gitDir);
 			},
