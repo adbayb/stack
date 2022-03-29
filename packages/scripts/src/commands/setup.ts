@@ -1,5 +1,5 @@
-import { resolve } from "path";
 import { helpers } from "termost";
+import { resolveFromRoot } from "../helpers";
 import { CommandFactory } from "../types";
 
 type SetupContext = {
@@ -15,18 +15,8 @@ export const createSetupCommand: CommandFactory = (program) => {
 		.task({
 			key: "gitDir",
 			label: "Finding git root dir ⚙️",
-			async handler() {
-				try {
-					const rootDir = await helpers.exec(
-						"git rev-parse --show-toplevel"
-					);
-
-					return resolve(rootDir, ".git");
-				} catch (error) {
-					throw new Error(
-						`\`git\` failed:\nThe root repository must be a git project. Have you tried to run \`git init\`?\n${error}`
-					);
-				}
+			handler() {
+				return resolveFromRoot(".git");
 			},
 		})
 		.task({

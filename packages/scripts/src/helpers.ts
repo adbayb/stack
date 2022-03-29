@@ -1,9 +1,24 @@
-import { existsSync, realpathSync } from "fs";
+import { existsSync } from "fs";
+import { execSync } from "child_process";
 import { resolve } from "path";
 import { helpers } from "termost";
 
-const resolveFromRoot = (path: string) => {
-	return resolve(realpathSync(process.cwd()), path);
+const getRootDir = () => {
+	try {
+		return execSync("git rev-parse --show-toplevel", {
+			encoding: "utf-8",
+		}).trim();
+	} catch (error) {
+		throw new Error(
+			`\`git\` failed:\nThe root repository must be a git project. Have you tried to run \`git init\`?\n${error}`
+		);
+	}
+};
+
+const ROOT_DIR = getRootDir();
+
+export const resolveFromRoot = (path: string) => {
+	return resolve(ROOT_DIR, path);
 };
 
 export const scripts = (command: "clean") => {
@@ -28,9 +43,10 @@ const eslint =
 		}
 
 		const args = [...eslintFiles];
+		const gitIgnoreFile = resolveFromRoot(".gitignore");
 
-		if (existsSync(resolveFromRoot(".gitignore"))) {
-			args.push("--ignore-path .gitignore");
+		if (existsSync(gitIgnoreFile)) {
+			args.push(`--ignore-path ${gitIgnoreFile}`);
 		}
 
 		if (options.isFixMode) {
@@ -85,10 +101,8 @@ export const lintTypes = async (files: FilenameCollection) => {
 			return TYPESCRIPT_EXTENSIONS.some((ext) => file.endsWith(ext));
 		});
 
-		console.log(tsFiles);
-
 		return await helpers.exec(
-			`tsc --incremental --tsBuildInfoFile ${resolveFromRoot(
+			`tsc --tsBuildInfoFile ${resolveFromRoot(
 				"node_modules/.cache/.tsbuildinfo"
 			)} --noEmit ${tsFiles.join(" ")}`
 		);

@@ -1,5 +1,4 @@
-import { render } from "react-dom";
+import { render } from "preact";
 import { App } from "./App";
 
-// @ts-expect-error to fix
-render(<App />, document.getElementById("root"));
+render(<App />, document.getElementById("root") as HTMLElement);

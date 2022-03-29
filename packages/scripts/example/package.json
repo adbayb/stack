@@ -21,18 +21,9 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@adbayb/scripts": "0.10.0",
-		"@types/react": "17.0.3",
-		"@types/react-dom": "17.0.3",
 		"typescript": "4.6.3"
 	},
 	"dependencies": {
-		"preact": "10.5.13",
-		"react": "npm:@preact/compat@0.0.3",
-		"react-dom": "npm:@preact/compat@0.0.3"
-	},
-	"lint-staged": {
-		"**/*.{js,jsx,ts,tsx,json,md,mdx,html,css}": [
-			"yarn fix"
-		]
+		"preact": "10.5.13"
 	}
 }
