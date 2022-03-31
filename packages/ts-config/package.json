@@ -19,6 +19,7 @@
 		"directory": "packages/ts-config"
 	},
 	"peerDependencies": {
-		"typescript": ">=4.0.0"
+		"typescript": ">=4.0.0",
+		"vitest": ">=0.8.0"
 	}
 }

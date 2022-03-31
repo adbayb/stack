@@ -132,7 +132,7 @@ export const verifyTests = async (files: FilenameCollection) => {
 			args.push("related", ...files);
 		}
 
-		args.push("--run", "--passWithNoTests");
+		args.push("--run", "--passWithNoTests", "--globals");
 
 		return await helpers.exec(`vitest ${args.join(" ")}`);
 	} catch (error) {
