@@ -18,7 +18,7 @@ export const createVerifyCommand: CommandFactory = (program) => {
 	program
 		.command<VerifyContext>({
 			name: "verify",
-			description: "Verify the project health",
+			description: "Verify source code health",
 		})
 		.option({
 			key: "only",

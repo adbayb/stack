@@ -14,8 +14,6 @@ const createProgram = (...commandFactories: Array<CommandFactory>) => {
 	const program = termost({
 		name: "scripts",
 		description: "Toolbox to easily manage a JavaScript/TypeScript project",
-		// @todo: to fix
-		version: "",
 	});
 
 	for (const commandBuilder of commandFactories) {
