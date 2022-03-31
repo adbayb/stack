@@ -6,7 +6,7 @@ export const createSetupCommand: CommandFactory = (program) => {
 	program
 		.command({
 			name: "setup",
-			description: "Setup all project requirements on installation",
+			description: "Setup all requirements",
 		})
 		.task({
 			label: "Installing pre-commit git hook ⚙️",

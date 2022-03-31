@@ -6,7 +6,7 @@ export const createWatchCommand: CommandFactory = (program) => {
 	program
 		.command({
 			name: "watch",
-			description: "Watch and rebuild the project on any code change",
+			description: "Watch and rebuild assets on any code change",
 		})
 		.task({
 			handler() {

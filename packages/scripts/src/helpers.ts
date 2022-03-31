@@ -22,8 +22,8 @@ export const resolveFromRoot = (path: string) => {
 	return resolve(ROOT_DIR, path);
 };
 
-export const scripts = (command: "clean") => {
-	return helpers.exec(`scripts ${command}`, {
+export const scripts = (command: "build" | "clean" | "verify") => {
+	return helpers.exec(`npx --no @adbayb/scripts ${command}`, {
 		hasLiveOutput: true,
 	});
 };

@@ -9,7 +9,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 	program
 		.command<CleanCommandContext>({
 			name: "clean",
-			description: "Clean all untracked and build assets",
+			description: "Clean all unversioned and untracked assets",
 		})
 		.task({
 			key: "files",
