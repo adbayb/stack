@@ -118,7 +118,7 @@ export const verifyCommit = async () => {
 			`yarn commitlint --extends "@commitlint/config-conventional" --edit`
 		);
 	} catch (error) {
-		throw new Error(`\`commitlint2\` failed:\n${error}`);
+		throw new Error(`\`commitlint\` failed:\n${error}`);
 	}
 };
 

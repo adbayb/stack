@@ -11,6 +11,9 @@
 -   Fix lint and formatting issues: `@adbayb/scripts fix` ✅
 -   Watch: `@adbayb/scripts watch` ✅
 -   Build: `@adbayb/scripts build` ✅
--   Setup: `@adbayb/scripts setup`
+-   Setup: `@adbayb/scripts setup` ✅
 -   Test: `@adbayb/scripts test`
 -   Release: `@adbayb/scripts release`
+
+Others:
+- Make `tsc` check feasible on git hooks => eslint-plugin-tsc?

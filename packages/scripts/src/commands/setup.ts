@@ -13,8 +13,9 @@ export const createSetupCommand: CommandFactory = (program) => {
 			handler() {
 				return installGitHook(
 					"pre-commit",
-					// @todo: replace by npm? Use npm package to detect which-npm-runs?
-					`yarn scripts verify $(git status --porcelain | awk 'BEGIN{ ORS=" " } { print $2 }')`
+					// @note: npx is used since it's the NodeJS built-in package exec tool
+					// `--no` flag to prevent installation prompt and throw an error if the binary is not installed
+					`npx --no @adbayb/scripts verify $(git status --porcelain | awk 'BEGIN{ ORS=" " } { print $2 }')`
 				);
 			},
 		})
@@ -23,7 +24,7 @@ export const createSetupCommand: CommandFactory = (program) => {
 			handler() {
 				return installGitHook(
 					"commit-msg",
-					"yarn scripts verify --only commit"
+					"npx --no @adbayb/scripts verify --only commit"
 				);
 			},
 		});
