@@ -13,7 +13,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 		})
 		.task({
 			key: "files",
-			label: "Retrieving removable assets 🔍",
+			label: "Retrieving removable assets 🧹",
 			handler() {
 				return retrieveIgnoredFiles();
 			},
