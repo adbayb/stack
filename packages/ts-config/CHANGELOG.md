@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/adbayb/stack/compare/v0.10.0...v0.11.0) (2022-03-31)
+
+
+### Features
+
+* **scripts:** add setup command ([4fe191c](https://github.com/adbayb/stack/commit/4fe191c746652c9fd0e589ae7fae157f72f9b889))
+* **scripts:** use vitest API globally ([798d7a0](https://github.com/adbayb/stack/commit/798d7a04aada8240eb1c6e5f42545325efb93892))
+* **ts-config:** enable exactOptionalPropertyTypes and resolveJsonModule config ([2d6382c](https://github.com/adbayb/stack/commit/2d6382cfa068c4677eb1b740e60511d214cc33d0))
+
+
+
+
+
 # [0.10.0](https://github.com/adbayb/stack/compare/v0.9.0...v0.10.0) (2021-11-25)
 
 ### Features

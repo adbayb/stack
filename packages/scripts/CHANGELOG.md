@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/adbayb/stack/compare/v0.10.0...v0.11.0) (2022-03-31)
+
+
+### Bug Fixes
+
+* **scripts:** filter ts files for typechecking ([20760ee](https://github.com/adbayb/stack/commit/20760eea7db77de6037e6592d816ca9a0fc3b5d1))
+* **scripts:** resolve root directory with git ([7ba133c](https://github.com/adbayb/stack/commit/7ba133c5740eee35697728651394ed5224b087ff))
+
+
+### Features
+
+* **prettier-config:** add singleAttributePerLine property ([433e86f](https://github.com/adbayb/stack/commit/433e86fc92bfc3498598e480362ef301dcd945a4))
+* **scripts:** add commit-msg linter ([ad76f3a](https://github.com/adbayb/stack/commit/ad76f3a5071824c7ca137357695bef7ce4686f69))
+* **scripts:** add git hooks installation ([60c6612](https://github.com/adbayb/stack/commit/60c661273fe90db9ca777f82ed6245455b44316b))
+* **scripts:** add prettier formatter for unsupported linter ext ([901b128](https://github.com/adbayb/stack/commit/901b12818298957899347e3e7da7f98f82b893ea))
+* **scripts:** add release command ([f04dba9](https://github.com/adbayb/stack/commit/f04dba9e2be1fb72d1966bcf0dfa46542e8eeeb6))
+* **scripts:** add setup command ([4fe191c](https://github.com/adbayb/stack/commit/4fe191c746652c9fd0e589ae7fae157f72f9b889))
+* **scripts:** add test step in verify command ([4b0383c](https://github.com/adbayb/stack/commit/4b0383c4b240944c7df41046c4c89f261342d39e))
+* **scripts:** automatically run setup command on module installation ([391be78](https://github.com/adbayb/stack/commit/391be7876ac88c712c1a4e61091014f0dc6f67d4))
+* **scripts:** support file inputs ([7fefbae](https://github.com/adbayb/stack/commit/7fefbaec69e9d3904b655064834b7d587b3f6ea7))
+* **scripts:** upgrade quickbundle and termost ([b0249db](https://github.com/adbayb/stack/commit/b0249db4d84271d351810366a246448ad49017fe))
+* **scripts:** use built-in package manager to resolve bin instead of yarn ([80a5fd4](https://github.com/adbayb/stack/commit/80a5fd4776b4f36ac6e583e289342bfe2474e22e))
+* **scripts:** use vitest API globally ([798d7a0](https://github.com/adbayb/stack/commit/798d7a04aada8240eb1c6e5f42545325efb93892))
+
+
+
+
+
 # [0.10.0](https://github.com/adbayb/stack/compare/v0.9.0...v0.10.0) (2021-11-25)
 
 ### Features

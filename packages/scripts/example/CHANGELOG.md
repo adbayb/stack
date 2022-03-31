@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/adbayb/stack/compare/v0.10.0...v0.11.0) (2022-03-31)
+
+
+### Bug Fixes
+
+* **scripts:** resolve root directory with git ([7ba133c](https://github.com/adbayb/stack/commit/7ba133c5740eee35697728651394ed5224b087ff))
+
+
+### Features
+
+* **prettier-config:** add singleAttributePerLine property ([433e86f](https://github.com/adbayb/stack/commit/433e86fc92bfc3498598e480362ef301dcd945a4))
+* **scripts:** add setup command ([4fe191c](https://github.com/adbayb/stack/commit/4fe191c746652c9fd0e589ae7fae157f72f9b889))
+* **scripts:** support file inputs ([7fefbae](https://github.com/adbayb/stack/commit/7fefbaec69e9d3904b655064834b7d587b3f6ea7))
+
+
+
+
+
 # [0.10.0](https://github.com/adbayb/stack/compare/v0.9.0...v0.10.0) (2021-11-25)
 
 ### Features

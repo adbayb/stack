@@ -1,6 +1,6 @@
 {
 	"name": "@adbayb/scripts",
-	"version": "0.10.0",
+	"version": "0.11.0",
 	"publishConfig": {
 		"access": "public"
 	},
@@ -37,9 +37,9 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"@adbayb/eslint-config": "0.10.0",
-		"@adbayb/prettier-config": "0.10.0",
-		"@adbayb/ts-config": "0.10.0",
+		"@adbayb/eslint-config": "0.11.0",
+		"@adbayb/prettier-config": "0.11.0",
+		"@adbayb/ts-config": "0.11.0",
 		"@commitlint/cli": "16.2.3",
 		"@commitlint/config-conventional": "16.2.1",
 		"quickbundle": "0.13.0",
