@@ -68,9 +68,9 @@ const eslint =
 		}
 	};
 
-export const verifyLint = eslint({ isFixMode: false });
+export const verifyLints = eslint({ isFixMode: false });
 
-export const fixLint = eslint({ isFixMode: true });
+export const fixLints = eslint({ isFixMode: true });
 
 export const fixFormatting = async (files: FilenameCollection) => {
 	const prettierFiles = files.filter((file) => {
@@ -89,8 +89,10 @@ export const fixFormatting = async (files: FilenameCollection) => {
 		args.push("--ignore-path .gitignore");
 	}
 
+	args.push("--write");
+
 	try {
-		return await helpers.exec(`prettier ${args.join(" ")} --write`);
+		return await helpers.exec(`prettier ${args.join(" ")}`);
 	} catch (error) {
 		throw runtimeError("prettier", error);
 	}
@@ -115,10 +117,26 @@ export const verifyTypes = async (files: FilenameCollection) => {
 export const verifyCommit = async () => {
 	try {
 		return await helpers.exec(
-			`yarn commitlint --extends "@commitlint/config-conventional" --edit`
+			`commitlint --extends "@commitlint/config-conventional" --edit`
 		);
 	} catch (error) {
 		throw new Error(`\`commitlint\` failed:\n${error}`);
+	}
+};
+
+export const verifyTests = async (files: FilenameCollection) => {
+	try {
+		const args = [];
+
+		if (files.length > 0) {
+			args.push("related", ...files);
+		}
+
+		args.push("--run", "--passWithNoTests");
+
+		return await helpers.exec(`vitest ${args.join(" ")}`);
+	} catch (error) {
+		throw new Error(`\`vitest\` failed:\n${error}`);
 	}
 };
 

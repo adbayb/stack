@@ -1,10 +1,17 @@
 import { CommandFactory } from "../types";
-import { verifyCommit, verifyLint, verifyTypes } from "../helpers";
+import {
+	verifyCommit,
+	verifyLints,
+	verifyTests,
+	verifyTypes,
+} from "../helpers";
 
-const onlyValues = ["commit", "lint", "type"] as const;
+const onlyValues = ["commit", "lint", "test", "type"] as const;
+
+type Only = typeof onlyValues[number];
 
 type VerifyContext = {
-	only: typeof onlyValues[number] | undefined;
+	only: Only | undefined;
 };
 
 export const createVerifyCommand: CommandFactory = (program) => {
@@ -22,19 +29,17 @@ export const createVerifyCommand: CommandFactory = (program) => {
 			defaultValue: undefined,
 		})
 		.task({
-			label: "Checking linter rules 🧐",
-			skip({ only }) {
-				return only !== "lint" && only !== undefined;
-			},
+			label: "Checking lints 🧐",
+			skip: ifDefinedAndNotEqualTo("lint"),
 			handler(_, argv) {
-				return verifyLint(argv.operands);
+				return verifyLints(argv.operands);
 			},
 		})
 		.task({
 			label: "Checking types 🧐",
-			skip({ only }, argv) {
+			skip(context, argv) {
 				return (
-					(only !== "type" && only !== undefined) ||
+					ifDefinedAndNotEqualTo("type")(context) ||
 					!require.resolve("typescript") ||
 					// @note: for now disallow type checking with specified files
 					// @see: https://github.com/microsoft/TypeScript/issues/27379
@@ -46,6 +51,13 @@ export const createVerifyCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
+			label: "Checking tests 🧐",
+			skip: ifDefinedAndNotEqualTo("test"),
+			handler(_, argv) {
+				return verifyTests(argv.operands);
+			},
+		})
+		.task({
 			label: "Checking commit 🧐",
 			skip({ only }) {
 				return only !== "commit";
@@ -54,4 +66,8 @@ export const createVerifyCommand: CommandFactory = (program) => {
 				return verifyCommit();
 			},
 		});
+};
+
+const ifDefinedAndNotEqualTo = (only: Only) => (context: VerifyContext) => {
+	return context.only !== undefined && context.only !== only;
 };
