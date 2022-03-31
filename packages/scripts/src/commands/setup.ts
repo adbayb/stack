@@ -21,7 +21,10 @@ export const createSetupCommand: CommandFactory = (program) => {
 		.task({
 			label: "Installing commit-msg git hook ⚙️",
 			handler() {
-				return installGitHook("commit-msg", `echo "TODO"`);
+				return installGitHook(
+					"commit-msg",
+					"yarn scripts verify --only commit"
+				);
 			},
 		});
 };

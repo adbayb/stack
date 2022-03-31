@@ -9,8 +9,9 @@ const getRootDir = () => {
 			encoding: "utf-8",
 		}).trim();
 	} catch (error) {
-		throw new Error(
-			`\`git\` failed:\nThe root repository must be a git project. Have you tried to run \`git init\`?\n${error}`
+		throw runtimeError(
+			"git",
+			`The root repository must be a git project. Have you tried to run \`git init\`?\n${error}`
 		);
 	}
 };
@@ -63,13 +64,13 @@ const eslint =
 		try {
 			return await helpers.exec(`eslint ${args.join(" ")}`);
 		} catch (error) {
-			throw new Error(`\`eslint\` failed:\n${error}`);
+			throw runtimeError("eslint", error);
 		}
 	};
 
-export const lintRules = eslint({ isFixMode: false });
+export const verifyLint = eslint({ isFixMode: false });
 
-export const fixRules = eslint({ isFixMode: true });
+export const fixLint = eslint({ isFixMode: true });
 
 export const fixFormatting = async (files: FilenameCollection) => {
 	const prettierFiles = files.filter((file) => {
@@ -91,11 +92,11 @@ export const fixFormatting = async (files: FilenameCollection) => {
 	try {
 		return await helpers.exec(`prettier ${args.join(" ")} --write`);
 	} catch (error) {
-		throw new Error(`\`prettier\` failed:\n${error}`);
+		throw runtimeError("prettier", error);
 	}
 };
 
-export const lintTypes = async (files: FilenameCollection) => {
+export const verifyTypes = async (files: FilenameCollection) => {
 	try {
 		const tsFiles = files.filter((file) => {
 			return TYPESCRIPT_EXTENSIONS.some((ext) => file.endsWith(ext));
@@ -107,8 +108,22 @@ export const lintTypes = async (files: FilenameCollection) => {
 			)} --noEmit ${tsFiles.join(" ")}`
 		);
 	} catch (error) {
-		throw new Error(`\`tsc\` failed:\n${error}`);
+		throw runtimeError("tsc", error);
 	}
+};
+
+export const verifyCommit = async () => {
+	try {
+		return await helpers.exec(
+			`yarn commitlint --extends "@commitlint/config-conventional" --edit`
+		);
+	} catch (error) {
+		throw new Error(`\`commitlint2\` failed:\n${error}`);
+	}
+};
+
+export const runtimeError = (bin: string, error: Error | string | unknown) => {
+	return new Error(`\`${bin}\` failed:\n${error}`);
 };
 
 const TYPESCRIPT_EXTENSIONS = ["ts", "tsx"];

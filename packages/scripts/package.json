@@ -39,6 +39,8 @@
 		"@adbayb/eslint-config": "0.10.0",
 		"@adbayb/prettier-config": "0.10.0",
 		"@adbayb/ts-config": "0.10.0",
+		"@commitlint/cli": "16.2.3",
+		"@commitlint/config-conventional": "16.2.1",
 		"quickbundle": "0.12.0",
 		"termost": "0.7.0"
 	},
