@@ -1,5 +1,5 @@
 import { helpers } from "termost";
-import { scripts } from "../helpers";
+import { execScripts } from "../helpers";
 import { CommandFactory } from "../types";
 
 export const createReleaseCommand: CommandFactory = (program) => {
@@ -10,12 +10,12 @@ export const createReleaseCommand: CommandFactory = (program) => {
 		})
 		.task({
 			handler() {
-				return scripts("verify");
+				return execScripts("verify");
 			},
 		})
 		.task({
 			handler() {
-				return scripts("build");
+				return execScripts("build");
 			},
 		})
 		.task({

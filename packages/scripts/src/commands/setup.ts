@@ -1,5 +1,5 @@
 import { chmod, writeFile } from "fs/promises";
-import { resolveFromRoot } from "../helpers";
+import { resolveFromRoot, scripts } from "../helpers";
 import { CommandFactory } from "../types";
 
 export const createSetupCommand: CommandFactory = (program) => {
@@ -13,9 +13,9 @@ export const createSetupCommand: CommandFactory = (program) => {
 			handler() {
 				return installGitHook(
 					"pre-commit",
-					// @note: npx is used since it's the NodeJS built-in package exec tool
-					// `--no` flag to prevent installation prompt and throw an error if the binary is not installed
-					`npx --no @adbayb/scripts verify $(git status --porcelain | awk 'BEGIN{ ORS=" " } { print $2 }') --fix && git add -A`
+					`${scripts(
+						`verify $(git status --porcelain | awk 'BEGIN{ ORS=" " } { print $2 }') --fix`
+					)} && git add -A`
 				);
 			},
 		})
@@ -24,7 +24,7 @@ export const createSetupCommand: CommandFactory = (program) => {
 			handler() {
 				return installGitHook(
 					"commit-msg",
-					"npx --no @adbayb/scripts verify --only commit"
+					`${scripts("verify --only commit")}`
 				);
 			},
 		});

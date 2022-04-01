@@ -1,5 +1,5 @@
 import { helpers } from "termost";
-import { scripts } from "../helpers";
+import { execScripts } from "../helpers";
 import { CommandFactory } from "../types";
 
 export const createBuildCommand: CommandFactory = (program) => {
@@ -10,7 +10,7 @@ export const createBuildCommand: CommandFactory = (program) => {
 		})
 		.task({
 			handler() {
-				return scripts("clean");
+				return execScripts("clean");
 			},
 		})
 		.task({

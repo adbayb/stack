@@ -1,6 +1,6 @@
 import { CommandFactory } from "@adbayb/scripts/src/types";
 import { helpers } from "termost";
-import { scripts } from "../helpers";
+import { execScripts } from "../helpers";
 
 export const createWatchCommand: CommandFactory = (program) => {
 	program
@@ -10,7 +10,7 @@ export const createWatchCommand: CommandFactory = (program) => {
 		})
 		.task({
 			handler() {
-				return scripts("clean");
+				return execScripts("clean");
 			},
 		})
 		.task({

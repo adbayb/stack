@@ -22,10 +22,14 @@ export const resolveFromRoot = (path: string) => {
 	return resolve(ROOT_DIR, path);
 };
 
-export const scripts = (command: "build" | "clean" | "verify") => {
-	return helpers.exec(`npx --no @adbayb/scripts ${command}`, {
+export const execScripts = (command: "build" | "clean" | "verify") => {
+	return helpers.exec(scripts(command), {
 		hasLiveOutput: true,
 	});
+};
+
+export const scripts = (command: string) => {
+	return `scripts ${command}`;
 };
 
 const eslint =
