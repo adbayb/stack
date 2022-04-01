@@ -1,5 +1,7 @@
 import { CommandFactory } from "../types";
 import {
+	fixFormatting,
+	fixLints,
 	verifyCommit,
 	verifyLints,
 	verifyTests,
@@ -11,6 +13,7 @@ const onlyValues = ["commit", "lint", "test", "type"] as const;
 type Only = typeof onlyValues[number];
 
 type VerifyContext = {
+	fix: boolean;
 	only: Only | undefined;
 };
 
@@ -28,11 +31,26 @@ export const createVerifyCommand: CommandFactory = (program) => {
 			)})`,
 			defaultValue: undefined,
 		})
+		.option({
+			key: "fix",
+			name: "fix",
+			description: "Fix all auto-fixable lints",
+			defaultValue: false,
+		})
 		.task({
-			label: "Checking lints 🧐",
+			label(context) {
+				return `Checking ${context.fix ? "and fixing" : ""} lints 🧐`;
+			},
 			skip: ifDefinedAndNotEqualTo("lint"),
-			handler(_, argv) {
-				return verifyLints(argv.operands);
+			async handler(context, argv) {
+				const filenames = argv.operands;
+				const lint = context.fix ? fixLints : verifyLints;
+
+				if (context.fix) {
+					await fixFormatting(filenames);
+				}
+
+				return lint(filenames);
 			},
 		})
 		.task({

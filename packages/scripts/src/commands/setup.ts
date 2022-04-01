@@ -15,7 +15,7 @@ export const createSetupCommand: CommandFactory = (program) => {
 					"pre-commit",
 					// @note: npx is used since it's the NodeJS built-in package exec tool
 					// `--no` flag to prevent installation prompt and throw an error if the binary is not installed
-					`npx --no @adbayb/scripts verify $(git status --porcelain | awk 'BEGIN{ ORS=" " } { print $2 }')`
+					`npx --no @adbayb/scripts verify $(git status --porcelain | awk 'BEGIN{ ORS=" " } { print $2 }') --fix && git add -A`
 				);
 			},
 		})
