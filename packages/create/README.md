@@ -15,3 +15,4 @@
 -   PNPM
 -   @adbayb/scripts usage 
 -   Monorepo by default with project_name, packages/*, examples/*, docs/, .config (?) folder
+-   Renovatebot

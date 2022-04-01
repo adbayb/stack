@@ -26,8 +26,6 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"husky": "4.3.8",
-		"lint-staged": "12.3.7",
 		"ora": "5.4.1"
 	}
 }
