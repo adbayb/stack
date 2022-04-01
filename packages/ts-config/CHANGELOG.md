@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/adbayb/stack/compare/v0.11.0...v0.12.0) (2022-04-01)
+
+
+### Bug Fixes
+
+* **ts-config:** do not remove comments to preserve jsdocs ([afe646d](https://github.com/adbayb/stack/commit/afe646dbcbf5e37de5880df1d9f9ef82d25938da))
+
+
+
+
+
 # [0.11.0](https://github.com/adbayb/stack/compare/v0.10.0...v0.11.0) (2022-03-31)
 
 

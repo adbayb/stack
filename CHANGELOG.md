@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/adbayb/create/compare/v0.11.0...v0.12.0) (2022-04-01)
+
+
+### Bug Fixes
+
+* **scripts:** lint error on unmatched pattern ([5c5bc78](https://github.com/adbayb/create/commit/5c5bc78f6fe26eccf0aa1f4fc39fba31bd3d1f6d))
+* **scripts:** make scripts execution compatible with pnpm ([190e43b](https://github.com/adbayb/create/commit/190e43b21bf1cc8874b21cd9518485a818d203a9))
+* **scripts:** prevent phantom binaries by proxying scripts dependant bins ([0b3a71e](https://github.com/adbayb/create/commit/0b3a71ea92086513e9bd02645dee83038b11cd50))
+* **ts-config:** do not remove comments to preserve jsdocs ([afe646d](https://github.com/adbayb/create/commit/afe646dbcbf5e37de5880df1d9f9ef82d25938da))
+
+
+### Features
+
+* **scripts:** add prettier and eslint runtime ([345cfe9](https://github.com/adbayb/create/commit/345cfe9b62e0e732f63970c2edc527799b7c8f09))
+* **scripts:** allow fixing lints on git hooks ([37a752b](https://github.com/adbayb/create/commit/37a752b8322fd9f4dac9e9b056d2f27dd8010be3))
+* **scripts:** do not auto-setup on install ([4dd6752](https://github.com/adbayb/create/commit/4dd6752f1aac64e36a59a24528f43dc0d4b06e46))
+* update dependencies ([4dcd403](https://github.com/adbayb/create/commit/4dcd4039c0dac3596129db05657fa5a85deaceab))
+
+
+
+
+
 # [0.11.0](https://github.com/adbayb/create/compare/v0.10.0...v0.11.0) (2022-03-31)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/adbayb/stack/compare/v0.11.0...v0.12.0) (2022-04-01)
+
+
+### Features
+
+* update dependencies ([4dcd403](https://github.com/adbayb/stack/commit/4dcd4039c0dac3596129db05657fa5a85deaceab))
+
+
+
+
+
 # [0.11.0](https://github.com/adbayb/stack/compare/v0.10.0...v0.11.0) (2022-03-31)
 
 
