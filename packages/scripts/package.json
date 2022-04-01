@@ -18,7 +18,6 @@
 	],
 	"main": "bin/index.js",
 	"scripts": {
-		"postinstall": "node ./bin/index.js setup",
 		"prepublishOnly": "yarn build",
 		"prestart": "yarn build",
 		"start": "bin/index.js",
