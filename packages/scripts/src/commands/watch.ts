@@ -1,6 +1,5 @@
 import { CommandFactory } from "@adbayb/scripts/src/types";
-import { helpers } from "termost";
-import { execScripts } from "../helpers";
+import { execQuickbundle, execScripts } from "../helpers";
 
 export const createWatchCommand: CommandFactory = (program) => {
 	program
@@ -15,9 +14,7 @@ export const createWatchCommand: CommandFactory = (program) => {
 		})
 		.task({
 			handler() {
-				return helpers.exec("quickbundle watch", {
-					hasLiveOutput: true,
-				});
+				return execQuickbundle("watch");
 			},
 		});
 };

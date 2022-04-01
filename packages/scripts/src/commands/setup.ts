@@ -1,5 +1,5 @@
 import { chmod, writeFile } from "fs/promises";
-import { resolveFromRoot, scripts } from "../helpers";
+import { getScripts, resolveFromRoot } from "../helpers";
 import { CommandFactory } from "../types";
 
 export const createSetupCommand: CommandFactory = (program) => {
@@ -13,8 +13,9 @@ export const createSetupCommand: CommandFactory = (program) => {
 			handler() {
 				return installGitHook(
 					"pre-commit",
-					`${scripts(
-						`verify $(git status --porcelain | awk 'BEGIN{ ORS=" " } { print $2 }') --fix`
+					`${getScripts(
+						`verify $(git status --porcelain | awk 'BEGIN{ ORS=" " } { print $2 }') --fix`,
+						false
 					)} && git add -A`
 				);
 			},
@@ -24,7 +25,7 @@ export const createSetupCommand: CommandFactory = (program) => {
 			handler() {
 				return installGitHook(
 					"commit-msg",
-					`${scripts("verify --only commit")}`
+					`${getScripts("verify --only commit", false)}`
 				);
 			},
 		});

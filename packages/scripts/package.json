@@ -6,12 +6,7 @@
 	},
 	"description": "My opinionated toolchain",
 	"bin": {
-		"scripts": "bin/index.js",
-		"commitlint": "@commitlint/cli",
-		"eslint": "eslint",
-		"prettier": "prettier",
-		"quickbundle": "quickbundle",
-		"vitest": "vitest"
+		"scripts": "bin/index.js"
 	},
 	"files": [
 		"bin"

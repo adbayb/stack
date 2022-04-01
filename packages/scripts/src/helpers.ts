@@ -23,13 +23,24 @@ export const resolveFromRoot = (path: string) => {
 };
 
 export const execScripts = (command: "build" | "clean" | "verify") => {
-	return helpers.exec(scripts(command), {
+	return helpers.exec(getScripts(command), {
 		hasLiveOutput: true,
 	});
 };
 
-export const scripts = (command: string) => {
-	return `scripts ${command}`;
+export const getScripts = (command: string, isNodeRuntime = true) => {
+	// @note: `isNodeRuntime` allows executing node bin executables in a non node environment such as in git hooks context
+	// Npx is used to make executable resolution independent from the build tool (npx is the built-in Node tool)
+	// `--no` flag to prevent installation prompt and throw an error if the binary is not installed
+	return [...(isNodeRuntime ? [] : ["npx --no"]), `scripts ${command}`].join(
+		" "
+	);
+};
+
+export const execQuickbundle = (command: "build" | "watch") => {
+	return helpers.exec(`quickbundle ${command}`, {
+		hasLiveOutput: true,
+	});
 };
 
 const eslint =
