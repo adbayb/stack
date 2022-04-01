@@ -44,6 +44,17 @@ const eslint =
 		}
 
 		const args = [...eslintFiles];
+
+		args.push(`--ext ${ESLINT_EXTENSIONS.join(",")}`);
+		args.push("--cache");
+		args.push(
+			`--cache-location ${resolveFromRoot(
+				"node_modules/.cache/.eslintcache"
+			)}`
+		);
+		// @note: prevent errors when no matched file is found
+		args.push("--no-error-on-unmatched-pattern");
+
 		const gitIgnoreFile = resolveFromRoot(".gitignore");
 
 		if (existsSync(gitIgnoreFile)) {
@@ -53,13 +64,6 @@ const eslint =
 		if (options.isFixMode) {
 			args.push("--fix");
 		}
-
-		args.push("--cache");
-		args.push(
-			`--cache-location ${resolveFromRoot(
-				"node_modules/.cache/.eslintcache"
-			)}`
-		);
 
 		try {
 			return await helpers.exec(`eslint ${args.join(" ")}`);
