@@ -26,7 +26,7 @@ export const createVerifyCommand: CommandFactory = (program) => {
 		.option({
 			key: "only",
 			name: "only",
-			description: `Run a specific check (accepted value: ${onlyValues.join(
+			description: `Run only one specified task (accepted value: ${onlyValues.join(
 				", "
 			)})`,
 			defaultValue: undefined,

@@ -43,11 +43,8 @@ export const createCleanCommand: CommandFactory = (program) => {
 };
 
 const retrieveIgnoredFiles = async () => {
-	// @note: ignored !== unversioned (ignored files are unversioned ones but unversioned aren't
-	// necessarly ignored: for example, a newly create file which will be versioned later)
-
 	const rawFiles = await helpers.exec(
-		"git clean -fdXn | grep -v 'node_modules' | cut -c 14-"
+		`git clean -fdXn | grep -v '${PRESERVE_FILES.join("\\|")}' | cut -c 14-`
 	);
 
 	return rawFiles.split(/\n/).filter(Boolean);
@@ -56,3 +53,5 @@ const retrieveIgnoredFiles = async () => {
 const cleanFiles = (fileList: string) => {
 	return helpers.exec(`rm -rf ${fileList}`);
 };
+
+const PRESERVE_FILES = ["node_modules", ".turbo"]
