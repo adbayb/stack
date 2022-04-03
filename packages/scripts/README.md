@@ -12,7 +12,8 @@
 -   Watch: `@adbayb/scripts watch` ✅
 -   Build: `@adbayb/scripts build` ✅
 -   Setup: `@adbayb/scripts setup` ✅
--   Test: `@adbayb/scripts test`
+-   Test: `@adbayb/scripts test` ✅
+-   Serve: `@adbayb/scripts serve`
 -   Release: `@adbayb/scripts release`
 
 Others:

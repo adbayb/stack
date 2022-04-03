@@ -37,8 +37,8 @@ export const getScripts = (command: string, isNodeRuntime = true) => {
 	);
 };
 
-export const execQuickbundle = (command: "build" | "watch") => {
-	return helpers.exec(`quickbundle ${command}`, {
+export const execQuickbundle = (command: "build" | "watch", args: string = "") => {
+	return helpers.exec(`quickbundle ${command} ${args}`, {
 		hasLiveOutput: true,
 	});
 };

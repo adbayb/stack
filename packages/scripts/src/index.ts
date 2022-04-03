@@ -5,6 +5,7 @@ import { createBuildCommand } from "./commands/build";
 import { createCleanCommand } from "./commands/clean";
 import { createFixCommand } from "./commands/fix";
 import { createReleaseCommand } from "./commands/release";
+import { createServeCommand } from "./commands/serve";
 import { createSetupCommand } from "./commands/setup";
 import { createVerifyCommand } from "./commands/verify";
 import { createWatchCommand } from "./commands/watch";
@@ -21,14 +22,12 @@ const createProgram = (...commandFactories: Array<CommandFactory>) => {
 	}
 };
 
-// @todo: bootstrap command to set all requirements such as git hooks...?
-// @todo: release command
-
 createProgram(
 	createBuildCommand,
 	createCleanCommand,
 	createFixCommand,
 	createReleaseCommand,
+	createServeCommand,
 	createSetupCommand,
 	createVerifyCommand,
 	createWatchCommand
