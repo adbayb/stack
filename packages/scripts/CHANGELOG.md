@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/adbayb/stack/compare/v0.12.0...v0.13.0) (2022-04-03)
+
+
+### Bug Fixes
+
+* **scripts:** do not proxify dependant bins (not working with pnpm) ([103a77b](https://github.com/adbayb/stack/commit/103a77bab5570526edd25b9f696db104f515739c))
+
+
+### Features
+
+* **scripts:** add serve command ([53ac947](https://github.com/adbayb/stack/commit/53ac9473e6a1deb86ad3b4e0f55728481a891920))
+* **scripts:** do not clean assets on watch command ([781ae62](https://github.com/adbayb/stack/commit/781ae62925cf4900d4d97e58749585e229e4e9a0))
+* **scripts:** ignore pnpm-lock file for formatting ([1cd3312](https://github.com/adbayb/stack/commit/1cd33122de88ffbc89614804ad089bf066301ffc))
+* **scripts:** preserve .turbo artefacts on clean command ([7b222f6](https://github.com/adbayb/stack/commit/7b222f6f5fecd7f0a106e24dd121502d93c2e69c))
+
+
+
+
+
 # [0.12.0](https://github.com/adbayb/stack/compare/v0.11.0...v0.12.0) (2022-04-01)
 
 
