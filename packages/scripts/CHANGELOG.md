@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/adbayb/stack/compare/v0.13.0...v0.14.0) (2022-04-03)
+
+
+### Features
+
+* **scripts:** upgrade quickbundle ([c73b686](https://github.com/adbayb/stack/commit/c73b68669b2b45fdee102f8f035d9aa8fb267111))
+
+
+
+
+
 # [0.13.0](https://github.com/adbayb/stack/compare/v0.12.0...v0.13.0) (2022-04-03)
 
 
