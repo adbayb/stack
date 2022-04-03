@@ -42,10 +42,10 @@
 		"@commitlint/cli": "16.2.3",
 		"@commitlint/config-conventional": "16.2.1",
 		"eslint": "8.12.0",
-		"prettier": "2.6.1",
-		"quickbundle": "0.14.0",
+		"prettier": "2.6.2",
+		"quickbundle": "0.15.0",
 		"termost": "0.9.0",
-		"vitest": "0.8.2"
+		"vitest": "0.8.4"
 	},
 	"devDependencies": {
 		"@types/node": "17.0.23",
