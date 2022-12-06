@@ -2,6 +2,30 @@
 # yarn lockfile v1
 
 
+"@adbayb/eslint-config@0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@adbayb/eslint-config/-/eslint-config-0.13.0.tgz#2e9863a8e6efb750999ab493cfb32f604d0d0af3"
+  integrity sha512-HK+tz9BPj+ZBNJ+3MAI0e5wi80c3cDyezuqgyq9BfTl+JKHzxQFoahMY7DkxDEco+Am4nqOWly2ylrivTIoEJQ==
+  dependencies:
+    "@typescript-eslint/eslint-plugin" "5.17.0"
+    "@typescript-eslint/parser" "5.17.0"
+    eslint-config-prettier "8.5.0"
+    eslint-plugin-import "2.25.4"
+    eslint-plugin-prettier "4.0.0"
+    eslint-plugin-react "7.29.4"
+    eslint-plugin-react-hooks "4.4.0"
+    eslint-plugin-sonarjs "0.13.0"
+
+"@adbayb/prettier-config@0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@adbayb/prettier-config/-/prettier-config-0.13.0.tgz#19f1f92fba6a4162ba2579bea314d9284a382d29"
+  integrity sha512-QSsuCNvrCUdIZ0tpHeV250rKwCIxeSTxYPoufZmt5gFukuPQt0Dqhhppt95wLxBUhgJZXJzg1HiSUbH+5EF2Kg==
+
+"@adbayb/ts-config@0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@adbayb/ts-config/-/ts-config-0.13.0.tgz#d473e5eb1bd4706b30ef9ca7c5ac5ee6b494bdcc"
+  integrity sha512-CdhebX/dALCy7MemMq6GZ8mdzyRHrES2PmsgxRs5AmANRvbmDhVmg50wl97Jxnb2FPeU22utf5tuhILP8HFR8Q==
+
 "@babel/code-frame@^7.0.0":
   version "7.16.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.16.0.tgz#0dfc80309beec8411e65e706461c408b0bb9b431"
@@ -4636,9 +4660,9 @@ qs@^6.9.4:
     side-channel "^1.0.4"
 
 qs@~6.5.2:
-  version "6.5.2"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
-  integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
+  version "6.5.3"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.3.tgz#3aeeffc91967ef6e35c0e488ef46fb296ab76aad"
+  integrity sha512-qxXIEh4pCGfHICj1mAJQ2/2XVZkjCDTcEgfoSQxc/fYivUZxTkk7L3bDBJSoNrEzXI17oUO5Dp07ktqE5KzczA==
 
 query-string@^6.13.8:
   version "6.14.1"
