@@ -2,6 +2,30 @@
 # yarn lockfile v1
 
 
+"@adbayb/eslint-config@0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@adbayb/eslint-config/-/eslint-config-0.13.0.tgz#2e9863a8e6efb750999ab493cfb32f604d0d0af3"
+  integrity sha512-HK+tz9BPj+ZBNJ+3MAI0e5wi80c3cDyezuqgyq9BfTl+JKHzxQFoahMY7DkxDEco+Am4nqOWly2ylrivTIoEJQ==
+  dependencies:
+    "@typescript-eslint/eslint-plugin" "5.17.0"
+    "@typescript-eslint/parser" "5.17.0"
+    eslint-config-prettier "8.5.0"
+    eslint-plugin-import "2.25.4"
+    eslint-plugin-prettier "4.0.0"
+    eslint-plugin-react "7.29.4"
+    eslint-plugin-react-hooks "4.4.0"
+    eslint-plugin-sonarjs "0.13.0"
+
+"@adbayb/prettier-config@0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@adbayb/prettier-config/-/prettier-config-0.13.0.tgz#19f1f92fba6a4162ba2579bea314d9284a382d29"
+  integrity sha512-QSsuCNvrCUdIZ0tpHeV250rKwCIxeSTxYPoufZmt5gFukuPQt0Dqhhppt95wLxBUhgJZXJzg1HiSUbH+5EF2Kg==
+
+"@adbayb/ts-config@0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@adbayb/ts-config/-/ts-config-0.13.0.tgz#d473e5eb1bd4706b30ef9ca7c5ac5ee6b494bdcc"
+  integrity sha512-CdhebX/dALCy7MemMq6GZ8mdzyRHrES2PmsgxRs5AmANRvbmDhVmg50wl97Jxnb2FPeU22utf5tuhILP8HFR8Q==
+
 "@babel/code-frame@^7.0.0":
   version "7.16.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.16.0.tgz#0dfc80309beec8411e65e706461c408b0bb9b431"
@@ -3411,9 +3435,9 @@ json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   integrity sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
 
 json5@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/json5/-/json5-1.0.1.tgz#779fb0018604fa854eacbf6252180d83543e3dbe"
-  integrity sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/json5/-/json5-1.0.2.tgz#63d98d60f21b313b77c4d6da18bfa69d80e1d593"
+  integrity sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==
   dependencies:
     minimist "^1.2.0"
 
@@ -3799,9 +3823,9 @@ minimist-options@4.1.0:
     kind-of "^6.0.3"
 
 minimist@^1.2.0, minimist@^1.2.5, minimist@^1.2.6:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
-  integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.7.tgz#daa1c4d91f507390437c6a8bc01078e7000c4d18"
+  integrity sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==
 
 minipass-collect@^1.0.2:
   version "1.0.2"
