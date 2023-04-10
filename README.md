@@ -5,7 +5,7 @@
 <br />
 <br />
 
-The monorepository includes:
+The mono-repository includes:
 
 ## 💿 Binaries
 
