@@ -1,9 +1,6 @@
 {
 	"name": "@adbayb/scripts",
 	"version": "0.14.0",
-	"publishConfig": {
-		"access": "public"
-	},
 	"description": "My opinionated toolchain",
 	"bin": {
 		"scripts": "bin/index.js"
@@ -36,19 +33,12 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"@adbayb/eslint-config": "0.14.0",
-		"@adbayb/prettier-config": "0.14.0",
-		"@adbayb/ts-config": "0.14.0",
-		"@commitlint/cli": "16.2.3",
-		"@commitlint/config-conventional": "16.2.1",
-		"eslint": "8.12.0",
-		"prettier": "2.6.2",
-		"quickbundle": "0.15.0",
-		"termost": "0.9.0",
-		"vitest": "0.8.4"
-	},
-	"devDependencies": {
-		"@types/node": "17.0.23",
-		"typescript": "4.6.3"
+		"@adbayb/eslint-config": "^0.14.0",
+		"@adbayb/prettier-config": "^0.14.0",
+		"@adbayb/ts-config": "^0.14.0",
+		"@commitlint/cli": "^16.2.3",
+		"@commitlint/config-conventional": "^16.2.1",
+		"quickbundle": "^0.15.0",
+		"termost": "^0.9.0"
 	}
 }

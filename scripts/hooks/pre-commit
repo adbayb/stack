@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+
+# Following line to fix Windows output
+# @see: https://github.com/typicode/husky/issues/968#issuecomment-1184296264
+if [ -t 2 ]; then
+  exec >/dev/tty 2>&1
+fi
+
+pnpm exec lint-staged --allow-empty

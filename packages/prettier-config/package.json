@@ -1,9 +1,6 @@
 {
 	"name": "@adbayb/prettier-config",
 	"version": "0.14.0",
-	"publishConfig": {
-		"access": "public"
-	},
 	"description": "My opinionated Prettier configuration preset",
 	"main": "index.json",
 	"keywords": [

@@ -1,18 +1,8 @@
 {
 	"private": true,
-	"workspaces": [
-		"packages/*",
-		"packages/scripts/example"
-	],
-	"scripts": {
-		"postinstall": "lerna run prepublishOnly",
-		"verify": "yarn lint & tsc --noEmit",
-		"fix": "yarn lint --fix",
-		"format": "prettier . --ignore-path .gitignore --write",
-		"lint": "eslint . --ignore-path .gitignore",
-		"changed": "lerna changed --all",
-		"release": "lerna publish"
-	},
+	"name": "monorepo-stack",
+	"version": "0.0.0",
+	"description": "My opinionated stack to ease project building",
 	"author": {
 		"name": "Ayoub Adib",
 		"email": "adbayb@gmail.com",
@@ -20,33 +10,51 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:adbayb/create.git"
+		"url": "git@github.com:adbayb/stack.git"
 	},
 	"license": "MIT",
+	"scripts": {
+		"prepare": "husky install ./scripts/hooks",
+		"clean": "scripts clean",
+		"verify": "scripts verify",
+		"fix": "scripts fix",
+		"start": "turbo run start",
+		"build": "turbo run build"
+	},
+	"devDependencies": {
+		"@adbayb/eslint-config": "workspace:*",
+		"@adbayb/prettier-config": "workspace:*",
+		"@adbayb/scripts": "workspace:*",
+		"@adbayb/ts-config": "workspace:*",
+		"@commitlint/cli": "17.5.1",
+		"@commitlint/config-conventional": "17.4.4",
+		"@types/node": "18.15.11",
+		"eslint": "8.38.0",
+		"husky": "8.0.3",
+		"lint-staged": "13.2.1",
+		"prettier": "2.8.7",
+		"turbo": "1.8.8",
+		"typescript": "5.0.4"
+	},
 	"prettier": "@adbayb/prettier-config",
 	"eslintConfig": {
 		"extends": "@adbayb"
 	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
+	"commitlint": {
+		"extends": [
+			"@commitlint/config-conventional"
+		]
 	},
 	"lint-staged": {
 		"**/*.{js,jsx,ts,tsx}": [
-			"yarn lint"
+			"pnpm lint"
 		],
 		"**/*.{json,md,mdx,html,css}": [
-			"yarn format"
+			"pnpm format"
 		]
 	},
-	"devDependencies": {
-		"@adbayb/eslint-config": "0.13.0",
-		"@adbayb/prettier-config": "0.13.0",
-		"@adbayb/ts-config": "0.13.0",
-		"eslint": "8.12.0",
-		"lerna": "4.0.0",
-		"prettier": "2.6.2",
-		"typescript": "4.6.3"
+	"packageManager": "pnpm@8.1.1",
+	"engines": {
+		"node": ">= 16.13.1"
 	}
 }
