@@ -2,7 +2,7 @@
     <h1>🦦 Scripts</h1>
     <strong>My opinionated toolchain scripts</strong>
 </div>
-<br />
+<br>
 
 ## Available scripts
 

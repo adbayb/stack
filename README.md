@@ -2,8 +2,8 @@
     <h1>🦦 Stack</h1>
     <strong>My opinionated environment to ease project building</strong>
 </div>
-<br />
-<br />
+<br>
+<br>
 
 The mono-repository includes:
 
