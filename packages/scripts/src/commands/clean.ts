@@ -1,5 +1,6 @@
 import { helpers } from "termost";
-import { CommandFactory } from "../types";
+
+import type { CommandFactory } from "../types";
 
 type CleanCommandContext = {
 	files: Array<string>;

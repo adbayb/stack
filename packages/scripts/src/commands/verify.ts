@@ -1,4 +1,4 @@
-import { CommandFactory } from "../types";
+import type { CommandFactory } from "../types";
 import {
 	fixFormatting,
 	fixLints,

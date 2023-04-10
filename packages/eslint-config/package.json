@@ -2,7 +2,7 @@
 	"name": "@adbayb/eslint-config",
 	"version": "0.14.0",
 	"description": "My opinionated ESLint configuration preset",
-	"main": "index.js",
+	"main": "index.cjs",
 	"keywords": [
 		"configuration",
 		"eslint",
@@ -17,14 +17,17 @@
 		"directory": "packages/eslint-config"
 	},
 	"dependencies": {
-		"@typescript-eslint/eslint-plugin": "5.57.1",
-		"@typescript-eslint/parser": "5.57.1",
-		"eslint-config-prettier": "8.8.0",
-		"eslint-plugin-import": "2.27.5",
-		"eslint-plugin-prettier": "4.2.1",
-		"eslint-plugin-react": "7.32.2",
-		"eslint-plugin-react-hooks": "4.6.0",
-		"eslint-plugin-sonarjs": "0.19.0"
+		"@typescript-eslint/eslint-plugin": "^5.57.1",
+		"@typescript-eslint/parser": "^5.57.1",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-import-resolver-typescript": "^3.5.5",
+		"eslint-plugin-import": "^2.27.5",
+		"eslint-plugin-jest": "^27.2.1",
+		"eslint-plugin-mdx": "^2.0.5",
+		"eslint-plugin-prettier": "^4.2.1",
+		"eslint-plugin-react": "^7.32.2",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-sonarjs": "^0.19.0"
 	},
 	"peerDependencies": {
 		"eslint": ">=8.0.0",

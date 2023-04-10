@@ -1,6 +1,7 @@
 import { chmod, writeFile } from "fs/promises";
+
 import { getScripts, resolveFromRoot } from "../helpers";
-import { CommandFactory } from "../types";
+import type { CommandFactory } from "../types";
 
 export const createSetupCommand: CommandFactory = (program) => {
 	program

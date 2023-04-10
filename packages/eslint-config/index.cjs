@@ -8,7 +8,7 @@ module.exports = {
 		node: true,
 	},
 	parserOptions: {
-		ecmaVersion: 2018,
+		ecmaVersion: 2020,
 		sourceType: "module",
 		ecmaFeatures: {
 			jsx: true,
@@ -16,16 +16,15 @@ module.exports = {
 	},
 	settings: {
 		"import/resolver": {
-			node: {
-				extensions: [".js", ".jsx", ".ts", ".tsx"],
-			},
+			typescript: true,
+			node: true,
 		},
 		react: {
 			version: "detect",
 		},
 	},
 	extends: ["eslint:recommended", "plugin:prettier/recommended"],
-	plugins: ["import", "react", "react-hooks", "sonarjs"],
+	plugins: ["jest", "import", "react", "react-hooks", "sonarjs"],
 	overrides: [
 		{
 			files: ["**/*.ts?(x)"],
@@ -33,16 +32,41 @@ module.exports = {
 			extends: [
 				// @note: following line disables recommended eslint rules already checked by TS:
 				"plugin:@typescript-eslint/eslint-recommended",
+				"plugin:import/typescript",
 			],
+			parserOptions: {
+				tsconfigRootDir: process.cwd(),
+				project: ["./tsconfig.json"],
+			},
 			plugins: ["@typescript-eslint"],
 			rules: {
-				"@typescript-eslint/adjacent-overload-signatures": "error",
-				"@typescript-eslint/ban-ts-comment": "error",
-				"@typescript-eslint/ban-types": "error",
 				"no-array-constructor": "off",
+				"@typescript-eslint/adjacent-overload-signatures": "error",
+				"@typescript-eslint/ban-ts-comment": [
+					"error",
+					{
+						"ts-expect-error": "allow-with-description",
+						"ts-ignore": "allow-with-description",
+						"ts-nocheck": "allow-with-description",
+						"ts-check": false,
+						minimumDescriptionLength: 3,
+					},
+				],
+				"@typescript-eslint/ban-types": "error",
+				"@typescript-eslint/consistent-type-imports": [
+					"error",
+					{
+						prefer: "type-imports",
+						fixStyle: "separate-type-imports",
+					},
+				],
+				"@typescript-eslint/consistent-type-exports": [
+					"error",
+					{ fixMixedExportsWithInlineTypeSpecifier: false },
+				],
 				"@typescript-eslint/no-array-constructor": "error",
 				"@typescript-eslint/no-empty-interface": "error",
-				"@typescript-eslint/no-explicit-any": "warn",
+				"@typescript-eslint/no-explicit-any": "error",
 				"@typescript-eslint/no-extra-non-null-assertion": "error",
 				"no-extra-semi": "off",
 				"@typescript-eslint/no-extra-semi": "error",
@@ -62,13 +86,30 @@ module.exports = {
 				"@typescript-eslint/prefer-as-const": "error",
 				"@typescript-eslint/prefer-namespace-keyword": "error",
 				"@typescript-eslint/triple-slash-reference": "error",
+				"import/consistent-type-specifier-style": [
+					"error",
+					"prefer-top-level",
+				],
 			},
 		},
 		{
-			files: ["**/stories.[jt]s?(x)"],
+			files: ["**/*.md?(x)"],
+			extends: ["plugin:mdx/recommended"],
+			settings: {
+				"mdx/code-blocks": false,
+			},
+		},
+		{
+			// Relaxed rules for example-like folder, and [config-, story-, and test]-like files
+			files: [
+				"examples/**",
+				"**/*.config.ts",
+				"**/?(*.)stories.ts?(x)",
+				"**/test.ts?(x)",
+			],
 			rules: {
-				"no-alert": "off",
-				"react/display-name": "off",
+				"import/no-default-export": "off",
+				"sonarjs/no-duplicate-string": "off",
 			},
 		},
 	],
@@ -85,16 +126,6 @@ module.exports = {
 				next: "*",
 			},
 			{
-				blankLine: "always",
-				prev: "*",
-				next: ["cjs-export", "export"],
-			},
-			{
-				blankLine: "always",
-				prev: ["cjs-export", "export"],
-				next: "*",
-			},
-			{
 				blankLine: "never",
 				prev: ["const", "let", "var"],
 				next: ["const", "let", "var"],
@@ -105,19 +136,19 @@ module.exports = {
 				next: ["case", "default"],
 			},
 			{
-				blankLine: "any",
-				prev: ["expression"],
-				next: ["expression"],
-			},
-			{
-				blankLine: "any",
+				blankLine: "always",
 				prev: ["multiline-const", "multiline-let", "multiline-var"],
 				next: ["const", "let", "var"],
 			},
 			{
-				blankLine: "any",
+				blankLine: "always",
 				prev: ["const", "let", "var"],
 				next: ["multiline-const", "multiline-let", "multiline-var"],
+			},
+			{
+				blankLine: "any",
+				prev: ["expression"],
+				next: ["expression"],
 			},
 			{
 				blankLine: "any",
@@ -135,6 +166,7 @@ module.exports = {
 				next: ["cjs-export", "export"],
 			},
 		],
+		"prefer-arrow-callback": ["error", { allowNamedFunctions: true }],
 		"prefer-const": "error",
 		"sort-imports": ["error", { ignoreDeclarationSort: true }],
 		// #endregion
@@ -150,6 +182,7 @@ module.exports = {
 		"import/no-cycle": "error",
 		"import/no-default-export": "error",
 		"import/no-duplicates": "error",
+		"import/no-empty-named-blocks": "error",
 		"import/no-mutable-exports": "error",
 		"import/no-named-as-default": "error",
 		"import/no-named-as-default-member": "error",
@@ -164,7 +197,7 @@ module.exports = {
 		"import/order": [
 			"error",
 			{
-				"newlines-between": "never",
+				"newlines-between": "always",
 				groups: [
 					["builtin", "external"],
 					"internal",
@@ -172,6 +205,34 @@ module.exports = {
 					"parent",
 					["sibling", "index"],
 				],
+			},
+		],
+		// #endregion
+		// #region jest
+		"jest/consistent-test-it": ["error", { fn: "test" }],
+		"jest/expect-expect": "error",
+		"jest/prefer-todo": "error",
+		"jest/no-commented-out-tests": "error",
+		"jest/no-conditional-expect": "error",
+		"jest/no-disabled-tests": "error",
+		"jest/no-done-callback": "error",
+		"jest/no-export": "error",
+		"jest/no-focused-tests": "error",
+		"jest/no-identical-title": "error",
+		"jest/no-jasmine-globals": "error",
+		"jest/no-mocks-import": "error",
+		"jest/no-standalone-expect": "error",
+		"jest/no-test-prefixes": "error",
+		"jest/prefer-hooks-on-top": "error",
+		"jest/prefer-spy-on": "error",
+		"jest/prefer-strict-equal": "error",
+		"jest/prefer-to-be": "error",
+		"jest/prefer-to-contain": "error",
+		"jest/prefer-to-have-length": "error",
+		"jest/valid-title": [
+			"error",
+			{
+				mustMatch: { test: "^should" },
 			},
 		],
 		// #endregion
@@ -204,7 +265,7 @@ module.exports = {
 		"sonarjs/no-all-duplicated-branches": "error",
 		"sonarjs/no-collapsible-if": "error",
 		"sonarjs/no-collection-size-mischeck": "error",
-		"sonarjs/no-duplicate-string": "warn",
+		"sonarjs/no-duplicate-string": ["error", 5],
 		"sonarjs/no-duplicated-branches": "error",
 		"sonarjs/no-element-overwrite": "error",
 		"sonarjs/no-extra-arguments": "error",
@@ -214,6 +275,7 @@ module.exports = {
 		"sonarjs/no-inverted-boolean-check": "error",
 		"sonarjs/no-one-iteration-loop": "error",
 		"sonarjs/no-redundant-boolean": "error",
+		"sonarjs/no-redundant-jump": "error",
 		"sonarjs/no-same-line-conditional": "error",
 		"sonarjs/no-small-switch": "error",
 		"sonarjs/no-unused-collection": "error",

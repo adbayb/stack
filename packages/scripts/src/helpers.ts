@@ -151,6 +151,7 @@ const ESLINT_EXTENSIONS = ["js", "jsx", ...TYPESCRIPT_EXTENSIONS];
  * by ESLint to take advantage of the eslint prettier plugin
  */
 const PRETTIER_EXTENSIONS = ["css", "html", "json", "md", "mdx", "yml", "yaml"];
+
 const PRETTIER_IGNORE_FILES = [
 	"CHANGELOG.md",
 	"package.json",

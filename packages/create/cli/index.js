@@ -3,6 +3,7 @@
 const path = require("path");
 const fs = require("fs");
 const ora = require("ora");
+
 const { exec, merge, writeFileToProject, logger } = require("./helpers");
 const { PROJECT_FOLDER, TEMPLATES_FOLDER } = require("./constants");
 
@@ -22,6 +23,7 @@ const processPkg = async () => {
 	}
 
 	const isMonorepo = rootPath !== PROJECT_FOLDER;
+
 	const directory = isMonorepo
 		? PROJECT_FOLDER.replace(new RegExp(`^${rootPath}/`), "")
 		: "";
@@ -120,6 +122,7 @@ const clean = async () => {
 
 const run = async () => {
 	const spinner = ora().start();
+
 	const runStep = async (message, asyncFunction) => {
 		try {
 			spinner.start();
