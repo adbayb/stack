@@ -4,6 +4,7 @@
 	"description": "My opinionated Prettier configuration preset",
 	"main": "index.json",
 	"keywords": [
+		"configuration",
 		"prettier",
 		"format",
 		"development"

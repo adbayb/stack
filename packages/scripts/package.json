@@ -18,6 +18,7 @@
 	},
 	"keywords": [
 		"scripts",
+		"scripts",
 		"toolchain",
 		"development"
 	],
@@ -32,13 +33,18 @@
 		"directory": "packages/scripts"
 	},
 	"license": "MIT",
+	"peerDependencies": {
+		"@commitlint/cli": ">=17.0.0",
+		"@commitlint/config-conventional": ">=17.0.0",
+		"husky": ">=8.0.0",
+		"lint-staged": ">=13.0.0"
+	},
 	"dependencies": {
 		"@adbayb/eslint-config": "^0.14.0",
 		"@adbayb/prettier-config": "^0.14.0",
 		"@adbayb/ts-config": "^0.14.0",
-		"@commitlint/cli": "^16.2.3",
-		"@commitlint/config-conventional": "^16.2.1",
-		"quickbundle": "^0.15.0",
+		"@commitlint/cli": "^17.5.1",
+		"@commitlint/config-conventional": "^17.4.4",
 		"termost": "^0.9.0"
 	}
 }

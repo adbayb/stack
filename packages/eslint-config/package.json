@@ -4,6 +4,7 @@
 	"description": "My opinionated ESLint configuration preset",
 	"main": "index.js",
 	"keywords": [
+		"configuration",
 		"eslint",
 		"lint",
 		"development"

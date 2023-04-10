@@ -54,4 +54,4 @@ const cleanFiles = (fileList: string) => {
 	return helpers.exec(`rm -rf ${fileList}`);
 };
 
-const PRESERVE_FILES = ["node_modules", ".turbo"]
+const PRESERVE_FILES = ["node_modules", ".turbo"];

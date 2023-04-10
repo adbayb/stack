@@ -47,10 +47,10 @@
 	},
 	"lint-staged": {
 		"**/*.{js,jsx,ts,tsx}": [
-			"pnpm lint"
+			"pnpm verify"
 		],
 		"**/*.{json,md,mdx,html,css}": [
-			"pnpm format"
+			"pnpm fix"
 		]
 	},
 	"packageManager": "pnpm@8.1.1",

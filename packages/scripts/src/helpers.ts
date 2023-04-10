@@ -22,7 +22,7 @@ export const resolveFromRoot = (path: string) => {
 	return resolve(ROOT_DIR, path);
 };
 
-export const execScripts = (command: "build" | "clean" | "verify") => {
+export const execScripts = (command: "clean" | "verify") => {
 	return helpers.exec(getScripts(command), {
 		hasLiveOutput: true,
 	});
@@ -35,12 +35,6 @@ export const getScripts = (command: string, isNodeRuntime = true) => {
 	return [...(isNodeRuntime ? [] : ["npx --no"]), `scripts ${command}`].join(
 		" "
 	);
-};
-
-export const execQuickbundle = (command: "build" | "watch", args: string = "") => {
-	return helpers.exec(`quickbundle ${command} ${args}`, {
-		hasLiveOutput: true,
-	});
 };
 
 const eslint =
@@ -143,22 +137,6 @@ export const verifyCommit = async () => {
 	}
 };
 
-export const verifyTests = async (files: FilenameCollection) => {
-	try {
-		const args = [];
-
-		if (files.length > 0) {
-			args.push("related", ...files);
-		}
-
-		args.push("--run", "--passWithNoTests", "--globals");
-
-		return await helpers.exec(`vitest ${args.join(" ")}`);
-	} catch (error) {
-		throw new Error(`\`vitest\` failed:\n${error}`);
-	}
-};
-
 export const runtimeError = (bin: string, error: Error | string | unknown) => {
 	return new Error(`\`${bin}\` failed:\n${error}`);
 };
@@ -173,6 +151,10 @@ const ESLINT_EXTENSIONS = ["js", "jsx", ...TYPESCRIPT_EXTENSIONS];
  * by ESLint to take advantage of the eslint prettier plugin
  */
 const PRETTIER_EXTENSIONS = ["css", "html", "json", "md", "mdx", "yml", "yaml"];
-const PRETTIER_IGNORE_FILES = ["CHANGELOG.md", "package.json", "pnpm-lock.yaml"];
+const PRETTIER_IGNORE_FILES = [
+	"CHANGELOG.md",
+	"package.json",
+	"pnpm-lock.yaml",
+];
 
 type FilenameCollection = Array<string>;

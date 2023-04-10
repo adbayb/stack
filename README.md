@@ -3,17 +3,17 @@
     <strong>My opinionated environment to ease project building</strong>
 </div>
 <br />
-
-The monorepo includes:
 <br />
+
+The monorepository includes:
 
 ## 💿 Binaries
 
--   [🏗 Initializer](./packages/create)
--   [🧰 Scripts](./packages/scripts)
+-   [Initializer](./packages/create)
+-   [Scripts](./packages/scripts)
 
-## 📐 Presets
+## 🏗️ Configuration presets
 
--   [✍️ Linting](./packages/eslint-config)
--   [💄 Formatting](./packages/prettier-config)
--   [⚙️ Typing](./packages/ts-config)
+-   [Linting](./packages/eslint-config)
+-   [Formatting](./packages/prettier-config)
+-   [Typing](./packages/ts-config)

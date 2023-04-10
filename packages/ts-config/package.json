@@ -4,6 +4,7 @@
 	"description": "My opinionated TypeScript configuration preset",
 	"main": "tsconfig.json",
 	"keywords": [
+		"configuration",
 		"typescript",
 		"types",
 		"development"

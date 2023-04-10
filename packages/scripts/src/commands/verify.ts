@@ -4,13 +4,12 @@ import {
 	fixLints,
 	verifyCommit,
 	verifyLints,
-	verifyTests,
 	verifyTypes,
 } from "../helpers";
 
 const onlyValues = ["commit", "lint", "test", "type"] as const;
 
-type Only = typeof onlyValues[number];
+type Only = (typeof onlyValues)[number];
 
 type VerifyContext = {
 	fix: boolean;
@@ -66,13 +65,6 @@ export const createVerifyCommand: CommandFactory = (program) => {
 			},
 			handler(_, argv) {
 				return verifyTypes(argv.operands);
-			},
-		})
-		.task({
-			label: "Checking tests 🧐",
-			skip: ifDefinedAndNotEqualTo("test"),
-			handler(_, argv) {
-				return verifyTests(argv.operands);
 			},
 		})
 		.task({
