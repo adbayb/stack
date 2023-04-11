@@ -22,7 +22,7 @@ export const resolveFromRoot = (path: string) => {
 	return resolve(ROOT_DIR, path);
 };
 
-export const execScripts = (command: "clean" | "verify") => {
+export const execScripts = (command: "clean" | "check") => {
 	return helpers.exec(getScripts(command), {
 		hasLiveOutput: true,
 	});
@@ -81,7 +81,7 @@ const eslint =
 		}
 	};
 
-export const verifyLints = eslint({ isFixMode: false });
+export const checkLints = eslint({ isFixMode: false });
 
 export const fixLints = eslint({ isFixMode: true });
 
@@ -111,7 +111,7 @@ export const fixFormatting = async (files: FilenameCollection) => {
 	}
 };
 
-export const verifyTypes = async (files: FilenameCollection) => {
+export const checkTypes = async (files: FilenameCollection) => {
 	try {
 		const tsFiles = files.filter((file) => {
 			return TYPESCRIPT_EXTENSIONS.some((ext) => file.endsWith(ext));
@@ -127,7 +127,7 @@ export const verifyTypes = async (files: FilenameCollection) => {
 	}
 };
 
-export const verifyCommit = async () => {
+export const checkCommit = async () => {
 	try {
 		return await helpers.exec(
 			`commitlint --extends "@commitlint/config-conventional" --edit`

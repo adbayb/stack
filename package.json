@@ -14,9 +14,9 @@
 	},
 	"license": "MIT",
 	"scripts": {
-		"prepare": "husky install ./scripts/hooks",
+		"prepare": "husky install ./scripts/hooks && pnpm build",
 		"clean": "scripts clean",
-		"verify": "scripts verify",
+		"check": "scripts check",
 		"fix": "scripts fix",
 		"start": "turbo run start",
 		"build": "turbo run build"
@@ -46,15 +46,16 @@
 		]
 	},
 	"lint-staged": {
-		"**/*.{js,jsx,ts,tsx}": [
-			"pnpm verify"
+		"**/*.{js,jsx,ts,tsx,cjs,mjs,cts,mts}": [
+			"pnpm check"
 		],
-		"**/*.{json,md,mdx,html,css}": [
+		"**/*.{json,md,mdx,html,css,yaml,yml}": [
 			"pnpm fix"
 		]
 	},
 	"packageManager": "pnpm@8.1.1",
 	"engines": {
-		"node": ">= 16.13.1"
+		"node": ">=18.0.0",
+		"pnpm": ">=8.0.0"
 	}
 }

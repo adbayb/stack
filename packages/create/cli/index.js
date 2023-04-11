@@ -41,8 +41,8 @@ const processPkg = async () => {
 		},
 		license: "MIT",
 		scripts: {
-			verify: "yarn lint & tsc --noEmit",
-			fix: "yarn lint --fix",
+			check: "pnpm lint & tsc --noEmit",
+			fix: "pnpm lint --fix",
 			lint: "eslint . --ignore-path .gitignore",
 			format: "prettier . --ignore-path .gitignore --ignore-path .prettierignore --write",
 		},
@@ -57,8 +57,8 @@ const processPkg = async () => {
 			},
 		},
 		"lint-staged": {
-			"**/*.{js,jsx,ts,tsx}": ["yarn lint"],
-			"**/*.{json,md,mdx,html,css}": ["yarn format"],
+			"**/*.{js,jsx,ts,tsx}": ["pnpm lint"],
+			"**/*.{json,md,mdx,html,css}": ["pnpm format"],
 		},
 	};
 
@@ -102,19 +102,19 @@ const copyTemplates = async () => {
 };
 
 const install = async () => {
-	await exec("yarn add typescript@latest --dev");
-	await exec("yarn add eslint@latest --dev");
-	await exec("yarn add prettier@latest --dev");
-	await exec("yarn add @adbayb/eslint-config@latest --dev");
-	await exec("yarn add @adbayb/prettier-config@latest --dev");
-	await exec("yarn add @adbayb/ts-config@latest --dev");
-	await exec("yarn add @adbayb/create@latest --dev"); // @todo: replace with @adbayb/scripts once ready (scripts should hoist the husky and other core dev packages)
+	await exec("pnpm add typescript@latest --dev");
+	await exec("pnpm add eslint@latest --dev");
+	await exec("pnpm add prettier@latest --dev");
+	await exec("pnpm add @adbayb/eslint-config@latest --dev");
+	await exec("pnpm add @adbayb/prettier-config@latest --dev");
+	await exec("pnpm add @adbayb/ts-config@latest --dev");
+	await exec("pnpm add @adbayb/create@latest --dev"); // @todo: replace with @adbayb/scripts once ready (scripts should hoist the husky and other core dev packages)
 };
 
 const clean = async () => {
 	try {
-		await exec("yarn lint");
-		await exec("yarn format");
+		await exec("pnpm lint");
+		await exec("pnpm format");
 	} catch (error) {
 		// @note: encapsulate lint/format logic to be error tolerant in case of new project without any files
 	}

@@ -2,10 +2,10 @@
 
 import { termost } from "termost";
 
+import { createCheckCommand } from "./commands/check";
 import { createCleanCommand } from "./commands/clean";
 import { createFixCommand } from "./commands/fix";
 import { createSetupCommand } from "./commands/setup";
-import { createVerifyCommand } from "./commands/verify";
 import type { CommandFactory } from "./types";
 
 const createProgram = (...commandFactories: Array<CommandFactory>) => {
@@ -20,8 +20,8 @@ const createProgram = (...commandFactories: Array<CommandFactory>) => {
 };
 
 createProgram(
+	createCheckCommand,
 	createCleanCommand,
 	createFixCommand,
-	createSetupCommand,
-	createVerifyCommand
+	createSetupCommand
 );

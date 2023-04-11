@@ -1,26 +1,26 @@
 import type { CommandFactory } from "../types";
 import {
+	checkCommit,
+	checkLints,
+	checkTypes,
 	fixFormatting,
 	fixLints,
-	verifyCommit,
-	verifyLints,
-	verifyTypes,
 } from "../helpers";
 
 const onlyValues = ["commit", "lint", "test", "type"] as const;
 
 type Only = (typeof onlyValues)[number];
 
-type VerifyContext = {
+type CheckContext = {
 	fix: boolean;
 	only: Only | undefined;
 };
 
-export const createVerifyCommand: CommandFactory = (program) => {
+export const createCheckCommand: CommandFactory = (program) => {
 	program
-		.command<VerifyContext>({
-			name: "verify",
-			description: "Verify source code health",
+		.command<CheckContext>({
+			name: "check",
+			description: "Check source code health",
 		})
 		.option({
 			key: "only",
@@ -43,7 +43,7 @@ export const createVerifyCommand: CommandFactory = (program) => {
 			skip: ifDefinedAndNotEqualTo("lint"),
 			async handler(context, argv) {
 				const filenames = argv.operands;
-				const lint = context.fix ? fixLints : verifyLints;
+				const lint = context.fix ? fixLints : checkLints;
 
 				if (context.fix) {
 					await fixFormatting(filenames);
@@ -64,7 +64,7 @@ export const createVerifyCommand: CommandFactory = (program) => {
 				);
 			},
 			handler(_, argv) {
-				return verifyTypes(argv.operands);
+				return checkTypes(argv.operands);
 			},
 		})
 		.task({
@@ -73,11 +73,11 @@ export const createVerifyCommand: CommandFactory = (program) => {
 				return only !== "commit";
 			},
 			handler() {
-				return verifyCommit();
+				return checkCommit();
 			},
 		});
 };
 
-const ifDefinedAndNotEqualTo = (only: Only) => (context: VerifyContext) => {
+const ifDefinedAndNotEqualTo = (only: Only) => (context: CheckContext) => {
 	return context.only !== undefined && context.only !== only;
 };
