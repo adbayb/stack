@@ -13,6 +13,6 @@
 
 -   Github actions (integrate and release)
 -   PNPM
--   @adbayb/scripts usage 
--   Monorepo by default with project_name, packages/*, examples/*, docs/, .config (?) folder
+-   @adbayb/scripts usage
+-   Monorepo by default with project*name, packages/*, examples/\_, docs/, .config (?) folder
 -   Renovatebot

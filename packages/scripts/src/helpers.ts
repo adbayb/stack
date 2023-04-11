@@ -86,15 +86,19 @@ export const checkLints = eslint({ isFixMode: false });
 export const fixLints = eslint({ isFixMode: true });
 
 export const fixFormatting = async (files: FilenameCollection) => {
-	const prettierFiles = files.filter((file) => {
-		return (
-			!PRETTIER_IGNORE_FILES.some((filename) =>
-				file.endsWith(filename)
-			) && PRETTIER_EXTENSIONS.some((ext) => file.endsWith(ext))
-		);
-	});
+	let prettierFiles = [];
 
-	if (prettierFiles.length === 0) return Promise.resolve();
+	if (files.length === 0) {
+		prettierFiles.push(`"**/!(${PRETTIER_IGNORE_FILES.join("|")})"`);
+	} else {
+		prettierFiles = files.filter((file) => {
+			return !PRETTIER_IGNORE_FILES.some((filename) =>
+				file.endsWith(filename)
+			);
+		});
+
+		if (prettierFiles.length === 0) return Promise.resolve();
+	}
 
 	const args = [...prettierFiles];
 
@@ -103,6 +107,7 @@ export const fixFormatting = async (files: FilenameCollection) => {
 	}
 
 	args.push("--write");
+	args.push("--ignore-unknown");
 
 	try {
 		return await helpers.exec(`prettier ${args.join(" ")}`);
@@ -146,11 +151,6 @@ const TYPESCRIPT_EXTENSIONS = ["ts", "tsx", "cts", "mts"];
  * Extensions supported by ESLint.
  */
 const ESLINT_EXTENSIONS = ["js", "jsx", "cjs", "mjs", ...TYPESCRIPT_EXTENSIONS];
-/**
- * Extensions supported by Prettier but not yet parseable
- * by ESLint to take advantage of the eslint prettier plugin
- */
-const PRETTIER_EXTENSIONS = ["css", "html", "json", "md", "mdx", "yml", "yaml"];
 const PRETTIER_IGNORE_FILES = ["CHANGELOG.md", "pnpm-lock.yaml"];
 
 type FilenameCollection = Array<string>;

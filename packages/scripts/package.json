@@ -8,13 +8,15 @@
 	"files": [
 		"bin"
 	],
+	"source": "src/index.ts",
 	"main": "bin/index.js",
+	"platform": "node",
 	"scripts": {
-		"prepublishOnly": "yarn build",
-		"prestart": "yarn build",
+		"prepublishOnly": "pnpm build",
+		"prestart": "pnpm build",
 		"start": "bin/index.js",
-		"build": "tsc && chmod +x bin/index.js",
-		"watch": "tsc -w"
+		"build": "quickbundle build && chmod +x bin/index.js",
+		"watch": "quickbundle watch"
 	},
 	"keywords": [
 		"scripts",
@@ -46,5 +48,8 @@
 		"@commitlint/cli": "^17.5.1",
 		"@commitlint/config-conventional": "^17.4.4",
 		"termost": "^0.9.0"
+	},
+	"devDependencies": {
+		"quickbundle": "1.0.0"
 	}
 }
