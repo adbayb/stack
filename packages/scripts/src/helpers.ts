@@ -141,21 +141,16 @@ export const runtimeError = (bin: string, error: Error | string | unknown) => {
 	return new Error(`\`${bin}\` failed:\n${error}`);
 };
 
-const TYPESCRIPT_EXTENSIONS = ["ts", "tsx"];
+const TYPESCRIPT_EXTENSIONS = ["ts", "tsx", "cts", "mts"];
 /**
  * Extensions supported by ESLint.
  */
-const ESLINT_EXTENSIONS = ["js", "jsx", ...TYPESCRIPT_EXTENSIONS];
+const ESLINT_EXTENSIONS = ["js", "jsx", "cjs", "mjs", ...TYPESCRIPT_EXTENSIONS];
 /**
  * Extensions supported by Prettier but not yet parseable
  * by ESLint to take advantage of the eslint prettier plugin
  */
 const PRETTIER_EXTENSIONS = ["css", "html", "json", "md", "mdx", "yml", "yaml"];
-
-const PRETTIER_IGNORE_FILES = [
-	"CHANGELOG.md",
-	"package.json",
-	"pnpm-lock.yaml",
-];
+const PRETTIER_IGNORE_FILES = ["CHANGELOG.md", "pnpm-lock.yaml"];
 
 type FilenameCollection = Array<string>;
