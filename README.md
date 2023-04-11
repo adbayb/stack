@@ -17,3 +17,9 @@ The mono-repository includes:
 -   [Linting](./packages/eslint-config)
 -   [Formatting](./packages/prettier-config)
 -   [Typing](./packages/ts-config)
+
+## ✅ TODO
+
+-   [ ] Check if it's ok to have `commitlint`, `eslint`, ... as dependencies in `@adbayb/scripts` by removing monorepo root dev dependencies
+-   [ ] Update `@adbayb/create` to use TypeScript, Termost, and update templates (including package.json)
+-   [ ] Add changesets (or other semantic release alternatives based on commit)
