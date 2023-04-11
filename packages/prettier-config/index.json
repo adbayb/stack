@@ -7,6 +7,6 @@
 	"semi": true,
 	"singleAttributePerLine": true,
 	"singleQuote": false,
-	"trailingComma": "es5",
+	"trailingComma": "all",
 	"useTabs": true
 }
