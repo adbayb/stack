@@ -70,7 +70,7 @@ const processPkg = async () => {
 
 	return writeFileToProject(
 		"package.json",
-		JSON.stringify(pkgConfig, null, 2)
+		JSON.stringify(pkgConfig, null, 2),
 	);
 };
 
@@ -94,10 +94,10 @@ const copyTemplates = async () => {
 						} else {
 							resolve();
 						}
-					}
+					},
 				);
 			});
-		})
+		}),
 	);
 };
 

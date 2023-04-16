@@ -16,8 +16,8 @@ export const createSetupCommand: CommandFactory = (program) => {
 					"pre-commit",
 					`${getScripts(
 						`check $(git status --porcelain | awk 'BEGIN{ ORS=" " } { print $2 }') --fix`,
-						false
-					)} && git add -A`
+						false,
+					)} && git add -A`,
 				);
 			},
 		})
@@ -26,7 +26,7 @@ export const createSetupCommand: CommandFactory = (program) => {
 			handler() {
 				return installGitHook(
 					"commit-msg",
-					`${getScripts("check --only commit", false)}`
+					`${getScripts("check --only commit", false)}`,
 				);
 			},
 		});
@@ -34,7 +34,7 @@ export const createSetupCommand: CommandFactory = (program) => {
 
 const installGitHook = async (
 	hook: "commit-msg" | "pre-commit",
-	content: string
+	content: string,
 ) => {
 	const filename = resolveFromRoot(`.git/hooks/${hook}`);
 

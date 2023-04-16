@@ -23,5 +23,5 @@ createProgram(
 	createCheckCommand,
 	createCleanCommand,
 	createFixCommand,
-	createSetupCommand
+	createSetupCommand,
 );

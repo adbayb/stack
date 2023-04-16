@@ -47,7 +47,7 @@ const exec = (command) => {
 				} else {
 					resolve(stdout.replace(/(\r?\n|\r)$/, ""));
 				}
-			}
+			},
 		);
 	});
 };
@@ -73,7 +73,7 @@ const writeFileToProject = (baseName, content, checkIfExists) => {
 
 		if (fs.existsSync(destFileName)) {
 			logger.log(
-				`File ${baseName} already exists, please consider reviewing it manually`
+				`File ${baseName} already exists, please consider reviewing it manually`,
 			);
 		}
 	}
@@ -81,7 +81,7 @@ const writeFileToProject = (baseName, content, checkIfExists) => {
 	return fsPromises.writeFile(
 		path.join(PROJECT_FOLDER, baseName),
 		content,
-		"utf-8"
+		"utf-8",
 	);
 };
 

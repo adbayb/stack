@@ -11,7 +11,7 @@ const getRootDir = () => {
 	} catch (error) {
 		throw runtimeError(
 			"git",
-			`The root repository must be a git project. Have you tried to run \`git init\`?\n${error}`
+			`The root repository must be a git project. Have you tried to run \`git init\`?\n${error}`,
 		);
 	}
 };
@@ -33,7 +33,7 @@ export const getScripts = (command: string, isNodeRuntime = true) => {
 	// Npx is used to make executable resolution independent from the build tool (npx is the built-in Node tool)
 	// `--no` flag to prevent installation prompt and throw an error if the binary is not installed
 	return [...(isNodeRuntime ? [] : ["npx --no"]), `scripts ${command}`].join(
-		" "
+		" ",
 	);
 };
 
@@ -58,8 +58,8 @@ const eslint =
 		args.push("--cache");
 		args.push(
 			`--cache-location ${resolveFromRoot(
-				"node_modules/.cache/.eslintcache"
-			)}`
+				"node_modules/.cache/.eslintcache",
+			)}`,
 		);
 		// @note: prevent errors when no matched file is found
 		args.push("--no-error-on-unmatched-pattern");
@@ -93,7 +93,7 @@ export const fixFormatting = async (files: FilenameCollection) => {
 	} else {
 		prettierFiles = files.filter((file) => {
 			return !PRETTIER_IGNORE_FILES.some((filename) =>
-				file.endsWith(filename)
+				file.endsWith(filename),
 			);
 		});
 
@@ -124,8 +124,8 @@ export const checkTypes = async (files: FilenameCollection) => {
 
 		return await helpers.exec(
 			`tsc --tsBuildInfoFile ${resolveFromRoot(
-				"node_modules/.cache/.tsbuildinfo"
-			)} --noEmit ${tsFiles.join(" ")}`
+				"node_modules/.cache/.tsbuildinfo",
+			)} --noEmit ${tsFiles.join(" ")}`,
 		);
 	} catch (error) {
 		throw runtimeError("tsc", error);
@@ -135,7 +135,7 @@ export const checkTypes = async (files: FilenameCollection) => {
 export const checkCommit = async () => {
 	try {
 		return await helpers.exec(
-			`commitlint --extends "@commitlint/config-conventional" --edit`
+			`commitlint --extends "@commitlint/config-conventional" --edit`,
 		);
 	} catch (error) {
 		throw new Error(`\`commitlint\` failed:\n${error}`);

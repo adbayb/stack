@@ -45,7 +45,9 @@ export const createCleanCommand: CommandFactory = (program) => {
 
 const retrieveIgnoredFiles = async () => {
 	const rawFiles = await helpers.exec(
-		`git clean -fdXn | grep -v '${PRESERVE_FILES.join("\\|")}' | cut -c 14-`
+		`git clean -fdXn | grep -v '${PRESERVE_FILES.join(
+			"\\|",
+		)}' | cut -c 14-`,
 	);
 
 	return rawFiles.split(/\n/).filter(Boolean);
