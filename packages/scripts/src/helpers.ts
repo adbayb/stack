@@ -1,32 +1,6 @@
-import { existsSync } from "fs";
-import { execSync } from "child_process";
-import { resolve } from "path";
+import { existsSync } from "node:fs";
 import { helpers } from "termost";
-
-const getRootDir = () => {
-	try {
-		return execSync("git rev-parse --show-toplevel", {
-			encoding: "utf-8",
-		}).trim();
-	} catch (error) {
-		throw runtimeError(
-			"git",
-			`The root repository must be a git project. Have you tried to run \`git init\`?\n${error}`,
-		);
-	}
-};
-
-const ROOT_DIR = getRootDir();
-
-export const resolveFromRoot = (path: string) => {
-	return resolve(ROOT_DIR, path);
-};
-
-export const execScripts = (command: "clean" | "check") => {
-	return helpers.exec(getScripts(command), {
-		hasLiveOutput: true,
-	});
-};
+import { resolveFromRootDir } from "@internal/helpers";
 
 export const getScripts = (command: string, isNodeRuntime = true) => {
 	// @note: `isNodeRuntime` allows executing node bin executables in a non node environment such as in git hooks context
@@ -57,14 +31,14 @@ const eslint =
 		args.push(`--ext ${ESLINT_EXTENSIONS.join(",")}`);
 		args.push("--cache");
 		args.push(
-			`--cache-location ${resolveFromRoot(
+			`--cache-location ${await resolveFromRootDir(
 				"node_modules/.cache/.eslintcache",
 			)}`,
 		);
 		// @note: prevent errors when no matched file is found
 		args.push("--no-error-on-unmatched-pattern");
 
-		const gitIgnoreFile = resolveFromRoot(".gitignore");
+		const gitIgnoreFile = await resolveFromRootDir(".gitignore");
 
 		if (existsSync(gitIgnoreFile)) {
 			args.push(`--ignore-path ${gitIgnoreFile}`);
@@ -102,7 +76,7 @@ export const fixFormatting = async (files: FilenameCollection) => {
 
 	const args = [...prettierFiles];
 
-	if (existsSync(resolveFromRoot(".gitignore"))) {
+	if (existsSync(await resolveFromRootDir(".gitignore"))) {
 		args.push("--ignore-path .gitignore");
 	}
 
@@ -123,7 +97,7 @@ export const checkTypes = async (files: FilenameCollection) => {
 		});
 
 		return await helpers.exec(
-			`tsc --tsBuildInfoFile ${resolveFromRoot(
+			`tsc --tsBuildInfoFile ${await resolveFromRootDir(
 				"node_modules/.cache/.tsbuildinfo",
 			)} --noEmit ${tsFiles.join(" ")}`,
 		);

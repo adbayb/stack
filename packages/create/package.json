@@ -2,10 +2,10 @@
 	"name": "@adbayb/create",
 	"version": "0.14.0",
 	"description": "My opinionated scaffolding tool",
-	"bin": "bin/index.js",
 	"files": [
 		"bin"
 	],
+	"bin": "bin/index.js",
 	"source": "src/index.ts",
 	"main": "bin/index.js",
 	"platform": "node",
@@ -34,5 +34,8 @@
 	"license": "MIT",
 	"dependencies": {
 		"termost": "0.9.0"
+	},
+	"devDependencies": {
+		"@internal/helpers": "workspace:*"
 	}
 }

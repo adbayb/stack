@@ -1,6 +1,7 @@
-import { chmod, writeFile } from "fs/promises";
+import { chmod, writeFile } from "node:fs/promises";
+import { resolveFromRootDir } from "@internal/helpers";
 
-import { getScripts, resolveFromRoot } from "../helpers";
+import { getScripts } from "../helpers";
 import type { CommandFactory } from "../types";
 
 export const createSetupCommand: CommandFactory = (program) => {
@@ -36,7 +37,7 @@ const installGitHook = async (
 	hook: "commit-msg" | "pre-commit",
 	content: string,
 ) => {
-	const filename = resolveFromRoot(`.git/hooks/${hook}`);
+	const filename = await resolveFromRootDir(`.git/hooks/${hook}`);
 
 	await writeFile(filename, content);
 

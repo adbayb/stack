@@ -38,8 +38,8 @@ importers:
         specifier: 2.8.7
         version: 2.8.7
       quickbundle:
-        specifier: 1.0.0
-        version: 1.0.0
+        specifier: 1.1.0
+        version: 1.1.0
       turbo:
         specifier: 1.8.8
         version: 1.8.8
@@ -47,11 +47,21 @@ importers:
         specifier: 5.0.4
         version: 5.0.4
 
+  internal/helpers:
+    devDependencies:
+      termost:
+        specifier: 0.9.0
+        version: 0.9.0
+
   packages/create:
     dependencies:
       termost:
         specifier: 0.9.0
         version: 0.9.0
+    devDependencies:
+      '@internal/helpers':
+        specifier: workspace:*
+        version: link:../../internal/helpers
 
   packages/eslint-config:
     dependencies:
@@ -130,6 +140,10 @@ importers:
       termost:
         specifier: ^0.9.0
         version: 0.9.0
+    devDependencies:
+      '@internal/helpers':
+        specifier: workspace:*
+        version: link:../../internal/helpers
 
   packages/ts-config:
     dependencies:
@@ -3344,8 +3358,8 @@ packages:
     resolution: {integrity: sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==}
     engines: {node: '>=8'}
 
-  /quickbundle@1.0.0:
-    resolution: {integrity: sha512-FTlKXN9/REMsWHogM09fHM3S6M3fT53gAYnDathyK7M40LFIqvsUuuSgeDJhAxv8x1qqBuAMzzJDElsnk0c/wQ==}
+  /quickbundle@1.1.0:
+    resolution: {integrity: sha512-9LoHasCD2wBH6novXerS1dnCU34w92mgwEDMJzN1KMcYFmqHTmvOAn5Rkyjui3PlvDtDne9Tq9rhdM11Jp/8vw==}
     engines: {node: '>= 16.13.1'}
     hasBin: true
     dependencies:

@@ -2,12 +2,12 @@
 	"name": "@adbayb/scripts",
 	"version": "0.14.0",
 	"description": "My opinionated toolchain",
-	"bin": {
-		"scripts": "bin/index.js"
-	},
 	"files": [
 		"bin"
 	],
+	"bin": {
+		"scripts": "bin/index.js"
+	},
 	"source": "src/index.ts",
 	"main": "bin/index.js",
 	"platform": "node",
@@ -48,5 +48,8 @@
 		"@commitlint/cli": "^17.5.1",
 		"@commitlint/config-conventional": "^17.4.4",
 		"termost": "^0.9.0"
+	},
+	"devDependencies": {
+		"@internal/helpers": "workspace:*"
 	}
 }

@@ -4,7 +4,7 @@
 </div>
 <br>
 
-## Available scripts
+## Features
 
 -   Clean: `@adbayb/clean` ✅
 -   Check lint and type (used as well on `pre-commit`): `@adbayb/scripts check` ✅
