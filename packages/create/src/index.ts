@@ -5,6 +5,7 @@ import { helpers, termost } from "termost";
 import { getRepositoryUrl } from "@internal/helpers";
 
 import { PACKAGE_FOLDER, PROJECT_FOLDER, TEMPLATES_FOLDER } from "./constants";
+import { copyTemplates, processPkg } from "./helpers";
 
 type ProgramContext = {
 	repositoryUrl: string;
@@ -23,6 +24,18 @@ program
 		label: "Retrieve repository URL",
 		async handler() {
 			return await getRepositoryUrl();
+		},
+	})
+	.task({
+		label: "Apply templates",
+		async handler() {
+			return await copyTemplates();
+		},
+	})
+	.task({
+		label: "Process `package.json`",
+		async handler() {
+			return await processPkg();
 		},
 	})
 	.task({

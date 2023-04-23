@@ -3,7 +3,8 @@
 	"version": "0.14.0",
 	"description": "My opinionated scaffolding tool",
 	"files": [
-		"bin"
+		"bin",
+		"templates"
 	],
 	"bin": "bin/index.js",
 	"source": "src/index.ts",
