@@ -24,7 +24,7 @@ export const copyTemplates = async () => {
 	);
 };
 
-export const processPkg = async () => {
+export const createPkgFile = async () => {
 	const [rootDir, repositoryUrl] = await Promise.all([
 		getRootDir(),
 		getRepositoryUrl(),

@@ -5,7 +5,7 @@ import { helpers, termost } from "termost";
 import { getRepositoryUrl } from "@internal/helpers";
 
 import { PACKAGE_FOLDER, PROJECT_FOLDER, TEMPLATES_FOLDER } from "./constants";
-import { copyTemplates, processPkg, setPkgManager } from "./helpers";
+import { copyTemplates, createPkgFile, setPkgManager } from "./helpers";
 
 type ProgramContext = {
 	repositoryUrl: string;
@@ -21,7 +21,7 @@ const TEST_FOLDER = join(__dirname, "../dist");
 program
 	.task({
 		key: "repositoryUrl",
-		label: "Retrieve repository URL",
+		label: "Get critical context",
 		handler() {
 			return getRepositoryUrl();
 		},
@@ -33,13 +33,13 @@ program
 		},
 	})
 	.task({
-		label: "Process `package.json` files",
+		label: "Generate `package.json` files",
 		handler() {
-			return processPkg();
+			return createPkgFile();
 		},
 	})
 	.task({
-		label: "Set package manager up",
+		label: "Set the package manager up",
 		handler() {
 			return setPkgManager();
 		},
@@ -60,6 +60,13 @@ program
 			for (const dep of dependencies) {
 				await helpers.exec(`pnpm add ${dep}@latest --save-dev`);
 			}
+		},
+	})
+	.task({
+		label: "Run quality checks",
+		async handler() {
+			helpers.exec("pnpm fix");
+			helpers.exec("pnpm check");
 		},
 	})
 	.task({
