@@ -5,7 +5,7 @@ import { helpers, termost } from "termost";
 import { getRepositoryUrl } from "@internal/helpers";
 
 import { PACKAGE_FOLDER, PROJECT_FOLDER, TEMPLATES_FOLDER } from "./constants";
-import { copyTemplates, processPkg } from "./helpers";
+import { copyTemplates, processPkg, setPkgManager } from "./helpers";
 
 type ProgramContext = {
 	repositoryUrl: string;
@@ -22,20 +22,43 @@ program
 	.task({
 		key: "repositoryUrl",
 		label: "Retrieve repository URL",
-		async handler() {
-			return await getRepositoryUrl();
+		handler() {
+			return getRepositoryUrl();
 		},
 	})
 	.task({
 		label: "Apply templates",
-		async handler() {
-			return await copyTemplates();
+		handler() {
+			return copyTemplates();
 		},
 	})
 	.task({
-		label: "Process `package.json`",
-		async handler() {
-			return await processPkg();
+		label: "Process `package.json` files",
+		handler() {
+			return processPkg();
+		},
+	})
+	.task({
+		label: "Set package manager up",
+		handler() {
+			return setPkgManager();
+		},
+	})
+	.task({
+		label: "Install dependencies",
+		handler() {
+			const dependencies = [
+				"@adbayb/eslint-config",
+				"@adbayb/prettier-config",
+				"@adbayb/ts-config",
+				"eslint",
+				"prettier",
+				"typescript",
+			];
+
+			return helpers.exec(
+				`pnpm add ${dependencies.join("@latest, ")}@latest --dev`,
+			);
 		},
 	})
 	.task({
