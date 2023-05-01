@@ -46,19 +46,20 @@ program
 	})
 	.task({
 		label: "Install dependencies",
-		handler() {
+		async handler() {
 			const dependencies = [
 				"@adbayb/eslint-config",
 				"@adbayb/prettier-config",
 				"@adbayb/ts-config",
 				"eslint",
 				"prettier",
+				"turbo",
 				"typescript",
 			];
 
-			return helpers.exec(
-				`pnpm add ${dependencies.join("@latest, ")}@latest --dev`,
-			);
+			for (const dep of dependencies) {
+				await helpers.exec(`pnpm add ${dep}@latest --save-dev`);
+			}
 		},
 	})
 	.task({
