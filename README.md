@@ -21,5 +21,6 @@ The mono-repository includes:
 ## ✅ TODO
 
 -   [ ] Check if it's ok to have `commitlint`, `eslint`, ... as dependencies in `@adbayb/scripts` by removing monorepo root dev dependencies
--   [ ] Update `@adbayb/create` to use TypeScript, Termost, and update templates (including package.json)
+-   [ ] Update `@adbayb/create` to include vscode template
+-   [ ] Update `@adbayb/scripts` to allow server live reload feature (serve or start command?)
 -   [ ] Add changesets (or other semantic release alternatives based on commit)
