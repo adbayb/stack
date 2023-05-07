@@ -1,4 +1,4 @@
-import { copyFile, readdir, writeFile } from "node:fs/promises";
+import { cp, readdir, rename, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, parse } from "node:path";
 import { getRepositoryUrl, getRootDir } from "@internal/helpers";
@@ -7,18 +7,28 @@ import { helpers } from "termost";
 import { PROJECT_FOLDER, TEMPLATES_FOLDER } from "./constants";
 
 export const copyTemplates = async () => {
+	// Copy all template files to the target recursively
+	await cp(TEMPLATES_FOLDER, PROJECT_FOLDER, { recursive: true });
+
+	/**
+	 * `.tmpl` extension removal post processing
+	 * Some templates have this extension to allow their publication in the NPM registry
+	 * Indeed, by default, some files are always excluded by NPM during the package publish process (eg. `.npmrc` and `.gitignore`)
+	 * @see https://docs.npmjs.com/cli/v9/configuring-npm/package-json#files)
+	 */
 	const files = await readdir(TEMPLATES_FOLDER);
 
 	return Promise.all(
-		files.map(async (sourceFileName) => {
-			// @note: we suffix all templates with `.tmpl` to avoid npm publish postprocessing
-			// By default, .gitignore and .npmrc are excluded and using "files" package.json field
-			// solves the issue partially since npm post-transform by renaming .gitignore to .npmignore
-			const destinationFileName = parse(sourceFileName).name;
+		files.map(async (filename) => {
+			const { ext, name } = parse(filename);
 
-			return await copyFile(
-				join(TEMPLATES_FOLDER, sourceFileName),
-				join(PROJECT_FOLDER, destinationFileName),
+			if (ext !== ".tmpl") {
+				return Promise.resolve(); // no-op
+			}
+
+			return await rename(
+				join(PROJECT_FOLDER, filename),
+				join(PROJECT_FOLDER, name),
 			);
 		}),
 	);
