@@ -17,6 +17,6 @@
 		"directory": "packages/prettier-config"
 	},
 	"peerDependencies": {
-		"prettier": ">=2.0.0"
+		"prettier": ">=3.0.0"
 	}
 }
