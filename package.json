@@ -19,13 +19,16 @@
 		"fix": "scripts fix",
 		"start": "turbo run start",
 		"build": "turbo run build",
-		"watch": "turbo run watch"
+		"watch": "turbo run watch",
+		"release": "pnpm build && pnpm changeset release",
+		"add:changelog": "pnpm changeset"
 	},
 	"devDependencies": {
 		"@adbayb/eslint-config": "workspace:*",
 		"@adbayb/prettier-config": "workspace:*",
 		"@adbayb/scripts": "workspace:*",
 		"@adbayb/ts-config": "workspace:*",
+		"@changesets/cli": "2.26.2",
 		"@commitlint/cli": "17.6.7",
 		"@commitlint/config-conventional": "17.6.7",
 		"@types/node": "20.4.8",

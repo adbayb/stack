@@ -22,5 +22,4 @@ The mono-repository includes:
 
 -   [ ] Check if it's ok to have `commitlint`, `eslint`, ... as dependencies in `@adbayb/scripts` by removing monorepo root dev dependencies
 -   [ ] Update `@adbayb/create` to include VSCode template
--   [ ] Add changesets (or other semantic release alternatives based on commit)
 -   [ ] Update `@adbayb/scripts` to make `tsc` check feasible on git hooks (via eslint-plugin-tsc?)
