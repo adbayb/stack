@@ -18,7 +18,7 @@ export const getRootDir = async () => {
 
 export const getRepositoryUrl = async () => {
 	try {
-		return await helpers.exec("git remote get-url --push origin");
+		return await helpers.exec("git config --get remote.origin.url");
 	} catch (error) {
 		throw getGitError(error);
 	}

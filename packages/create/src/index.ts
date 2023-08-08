@@ -23,6 +23,7 @@ program
 		key: "repositoryUrl",
 		label: "Get critical context",
 		handler() {
+			// @todo: get dynamically all needed variables including latest lts node version, pnpm version, extract shorthand repo id, ...
 			return getRepositoryUrl();
 		},
 	})
@@ -39,9 +40,28 @@ program
 		},
 	})
 	.task({
-		label: "Set the package manager up",
+		label: "Set up the package manager",
 		handler() {
 			return setPkgManager();
+		},
+	})
+	.task({
+		label: "Replace template placeholders",
+		handler() {
+			// .nvmrc => node_version => https://resolve-node.vercel.app/lts
+			// package.json => {{ pnpm_version }} => https://registry.npmjs.org/pnpm/latest
+			// LICENSE => {{ license_year }}
+			// .changeset/config.json => {{ repo_id }}
+
+			return;
+		},
+	})
+	.task({
+		label: "Symlink the `README.md` file",
+		handler() {
+			// @todo: from {{ pkg_name }} to root
+
+			return;
 		},
 	})
 	.task({
@@ -51,15 +71,22 @@ program
 				"@adbayb/eslint-config",
 				"@adbayb/prettier-config",
 				"@adbayb/ts-config",
+				"@adbayb/scripts",
+				"@changesets/changelog-github",
+				"@changesets/cli",
+				"@commitlint/cli",
+				"@commitlint/config-conventional",
 				"eslint",
 				"prettier",
 				"turbo",
 				"typescript",
 			];
 
-			for (const dep of dependencies) {
+			console.log(dependencies);
+
+			/*for (const dep of dependencies) {
 				await helpers.exec(`pnpm add ${dep}@latest --save-dev`);
-			}
+			}*/
 		},
 	})
 	.task({

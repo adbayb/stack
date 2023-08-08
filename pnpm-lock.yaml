@@ -752,7 +752,7 @@ packages:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
     dependencies:
       eslint: 8.38.0
-      eslint-visitor-keys: 3.4.0
+      eslint-visitor-keys: 3.4.2
     dev: false
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.46.0):

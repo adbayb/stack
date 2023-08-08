@@ -43,14 +43,12 @@ export const createPkgFile = async () => {
 	const directory = PROJECT_FOLDER.replace(new RegExp(`^${rootDir}/`), "");
 	const isRoot = rootDir === PROJECT_FOLDER;
 
-	const projectUrl = repositoryUrl.replace(
-		/^git@(.*):(.*).git$/,
-		"https://$1/$2/",
-	);
+	const projectUrl = repositoryUrl.startsWith("git")
+		? repositoryUrl.replace(/^git@(.*):(.*).git$/, "https://$1/$2/")
+		: repositoryUrl.replace(/.git$/, "");
 
 	const rootConfig = {
 		private: true,
-		name: "xxx-monorepo", // @todo: replace xxx by the name provided by cli
 		version: "0.0.0",
 		prettier: "@adbayb/prettier-config",
 		eslintConfig: {
@@ -60,7 +58,9 @@ export const createPkgFile = async () => {
 		packageManager: "pnpm@8.3.1", // @todo: retrieve pnpm version dynamically? If yes check engine invariant
 		engines: {
 			node: ">=18.0.0",
+			npm: "please-use-pnpm",
 			pnpm: ">=8.0.0",
+			yarn: "please-use-pnpm",
 		},
 	};
 
@@ -71,15 +71,15 @@ export const createPkgFile = async () => {
 		files: ["dist"],
 		sideEffects: false,
 		type: "module",
-		source: "src/index.ts",
-		main: "dist/index.cjs",
-		module: "dist/index.mjs",
-		types: "dist/index.d.ts",
+		source: "./src/index.ts",
+		main: "./dist/index.cjs",
+		module: "./dist/index.mjs",
+		types: "./dist/index.d.ts",
 		exports: {
 			".": {
-				require: "dist/index.cjs",
-				import: "dist/index.mjs",
-				types: "dist/index.d.ts",
+				require: "./dist/index.cjs",
+				import: "./dist/index.mjs",
+				types: "./dist/index.d.ts",
 			},
 		},
 	};
@@ -107,6 +107,8 @@ export const createPkgFile = async () => {
 			start: "turbo run start",
 			build: "turbo run build",
 			watch: "turbo run watch",
+			release: "pnpm build && pnpm changeset release",
+			"add:changelog": "pnpm changeset",
 		},
 	};
 
