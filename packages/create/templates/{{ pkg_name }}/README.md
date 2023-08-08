@@ -1,7 +1,7 @@
 <br>
 <div align="center">
     <h1>{{ pkg_name }}</h1>
-    <strong>TODO</strong>
+    <strong>{{ pkg_description }}</strong>
 </div>
 <br>
 <br>

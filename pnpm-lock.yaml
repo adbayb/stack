@@ -57,12 +57,6 @@ importers:
         specifier: 5.1.6
         version: 5.1.6
 
-  internal/helpers:
-    devDependencies:
-      termost:
-        specifier: 0.9.0
-        version: 0.9.0
-
   packages/create:
     dependencies:
       termost:
@@ -71,7 +65,7 @@ importers:
     devDependencies:
       '@internal/helpers':
         specifier: workspace:*
-        version: link:../../internal/helpers
+        version: link:../helpers
 
   packages/eslint-config:
     dependencies:
@@ -118,6 +112,12 @@ importers:
         specifier: '>=5.0.0'
         version: 5.1.6
 
+  packages/helpers:
+    devDependencies:
+      termost:
+        specifier: 0.9.0
+        version: 0.9.0
+
   packages/prettier-config:
     dependencies:
       prettier:
@@ -147,7 +147,7 @@ importers:
         version: link:../ts-config
       '@internal/helpers':
         specifier: workspace:*
-        version: link:../../internal/helpers
+        version: link:../helpers
 
   packages/ts-config:
     dependencies:

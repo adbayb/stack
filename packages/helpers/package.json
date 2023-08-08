@@ -2,7 +2,7 @@
 	"name": "@internal/helpers",
 	"private": true,
 	"version": "0.0.0",
-	"description": "Internal package to expose common helpers across public packages",
+	"description": "Internal helpers for stack public packages",
 	"license": "MIT",
 	"author": {
 		"name": "Ayoub Adib",

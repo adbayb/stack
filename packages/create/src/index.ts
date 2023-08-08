@@ -2,7 +2,8 @@
 
 import { join } from "node:path";
 import { helpers, termost } from "termost";
-import { getRepositoryUrl } from "@internal/helpers";
+
+import { getRepositoryUrl } from "../../helpers/dist/index.cjs";
 
 import { PACKAGE_FOLDER, PROJECT_FOLDER, TEMPLATES_FOLDER } from "./constants";
 import { copyTemplates, createPkgFile, setPkgManager } from "./helpers";

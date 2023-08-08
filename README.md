@@ -21,5 +21,6 @@ The mono-repository includes:
 ## ✅ TODO
 
 -   [ ] Check if it's ok to have `commitlint`, `eslint`, ... as dependencies in `@adbayb/scripts` by removing monorepo root dev dependencies
--   [ ] Update `@adbayb/create` to include VSCode template, Turborepo, Changesets setup (add lib question?)
 -   [ ] Update `@adbayb/scripts` to make `tsc` check feasible on git hooks (via eslint-plugin-tsc?)
+-   [ ] Update `@adbayb/scripts` to lint packages (caret range for dependencies and strict ones for dev dependencies)
+-   [ ] Unify `@adbayb/scripts` and `@adbayb/create` to create one main package `@adbayb/stack` with two subcommands `stack create|setup|clean|check|fix` and move `stack` folder upper in the file structure

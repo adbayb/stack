@@ -1,8 +1,9 @@
 import { cp, readdir, rename, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, parse } from "node:path";
-import { getRepositoryUrl, getRootDir } from "@internal/helpers";
 import { helpers } from "termost";
+
+import { getRepositoryUrl, getRootDir } from "../../helpers/dist/index.cjs";
 
 import { PROJECT_FOLDER, TEMPLATES_FOLDER } from "./constants";
 
