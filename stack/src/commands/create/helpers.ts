@@ -27,7 +27,7 @@ export const copyTemplates = async () => {
 				return Promise.resolve(); // no-op
 			}
 
-			return await rename(
+			return rename(
 				join(PROJECT_FOLDER, filename),
 				join(PROJECT_FOLDER, name),
 			);
@@ -165,5 +165,5 @@ const isObject = (value: unknown): value is object => {
 };
 
 const writeFileToProject = async (baseName: string, content: string) => {
-	return await writeFile(join(PROJECT_FOLDER, baseName), content, "utf-8");
+	return writeFile(join(PROJECT_FOLDER, baseName), content, "utf-8");
 };

@@ -100,6 +100,21 @@ module.exports = {
 			},
 		},
 		{
+			// Relaxed rules for example-like folder, and [config-, story-, and test]-like files
+			files: [
+				"examples/**",
+				"website/**",
+				"**/*.config.ts",
+				"**/?(*.)stories.ts?(x)",
+				"**/test.ts?(x)",
+				"scripts/**",
+			],
+			rules: {
+				"import/no-default-export": "off",
+				"sonarjs/no-duplicate-string": "off",
+			},
+		},
+		{
 			files: ["*.astro"],
 			parser: "astro-eslint-parser",
 			parserOptions: {
@@ -108,29 +123,23 @@ module.exports = {
 			},
 		},
 		{
-			files: ["**/*.md?(x)"],
-			extends: ["plugin:mdx/recommended"],
-			settings: {
-				"mdx/code-blocks": false,
+			files: ["**/*.c[j|t]s"],
+			rules: {
+				"import/no-commonjs": "off",
 			},
 		},
 		{
-			// Relaxed rules for example-like folder, and [config-, story-, and test]-like files
-			files: [
-				"examples/**",
-				"**/*.config.ts",
-				"**/?(*.)stories.ts?(x)",
-				"**/test.ts?(x)",
-			],
-			rules: {
-				"import/no-default-export": "off",
-				"sonarjs/no-duplicate-string": "off",
+			files: ["**/*.md?(x)"],
+			extends: ["plugin:mdx/recommended"],
+			settings: {
+				"mdx/code-blocks": "off",
 			},
 		},
 	],
 	rules: {
 		// #region eslint
 		"no-alert": "error",
+		"no-return-await": "error",
 		"no-var": "error",
 		"object-shorthand": ["error", "always"],
 		"padding-line-between-statements": [
@@ -194,14 +203,22 @@ module.exports = {
 		"import/newline-after-import": "error",
 		"import/no-absolute-path": "error",
 		"import/no-amd": "error",
+		"import/no-anonymous-default-export": "error",
+		"import/no-commonjs": "error",
 		"import/no-cycle": "error",
 		"import/no-default-export": "error",
+		"import/no-deprecated": "error",
 		"import/no-duplicates": "error",
 		"import/no-empty-named-blocks": "error",
+		"import/no-extraneous-dependencies": "error",
 		"import/no-mutable-exports": "error",
 		"import/no-named-as-default": "error",
 		"import/no-named-as-default-member": "error",
+		"import/no-namespace": "error",
+		"import/no-relative-packages": "error",
 		"import/no-self-import": "error",
+		"import/no-unassigned-import": "error",
+		"import/no-unused-modules": "error",
 		"import/no-useless-path-segments": [
 			"error",
 			{
@@ -209,6 +226,7 @@ module.exports = {
 				commonjs: true,
 			},
 		],
+		"import/no-webpack-loader-syntax": "error",
 		"import/order": [
 			"error",
 			{
@@ -269,6 +287,7 @@ module.exports = {
 		"react/no-string-refs": "error",
 		"react/no-unescaped-entities": "error",
 		"react/prefer-stateless-function": "error",
+		"react/self-closing-comp": "error",
 		// #endregion react
 		// #region react-hooks
 		"react-hooks/rules-of-hooks": "error",
