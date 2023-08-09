@@ -2,7 +2,7 @@
 	"name": "@adbayb/prettier-config",
 	"version": "0.14.0",
 	"description": "My opinionated Prettier configuration preset",
-	"main": "index.json",
+	"main": "index.cjs",
 	"keywords": [
 		"configuration",
 		"prettier",
@@ -18,5 +18,8 @@
 	},
 	"peerDependencies": {
 		"prettier": ">=3.0.0"
+	},
+	"dependencies": {
+		"prettier-plugin-astro": "^0.11.0"
 	}
 }

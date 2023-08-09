@@ -84,6 +84,8 @@ export const createCreateCommand: CommandFactory = (program) => {
 
 				console.log(dependencies);
 
+				// @todo: install dependencies for {{ pkg_folder }} (including typescript and quickbundle)
+
 				/*for (const dep of dependencies) {
 					await helpers.exec(`pnpm add ${dep}@latest --save-dev`);
 				}*/

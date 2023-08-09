@@ -23,7 +23,11 @@ module.exports = {
 			version: "detect",
 		},
 	},
-	extends: ["eslint:recommended", "plugin:prettier/recommended"],
+	extends: [
+		"eslint:recommended",
+		"plugin:prettier/recommended",
+		"plugin:astro/recommended",
+	],
 	plugins: ["jest", "import", "react", "react-hooks", "sonarjs"],
 	overrides: [
 		{
@@ -90,6 +94,14 @@ module.exports = {
 					"error",
 					"prefer-top-level",
 				],
+			},
+		},
+		{
+			files: ["*.astro"],
+			parser: "astro-eslint-parser",
+			parserOptions: {
+				parser: "@typescript-eslint/parser",
+				extraFileExtensions: [".astro"],
 			},
 		},
 		{

@@ -1,6 +1,6 @@
 <br>
 <div align="center">
-    <h1>{{ pkg_name }}</h1>
+    <h1>📦 {{ pkg_name }}</h1>
     <strong>{{ pkg_description }}</strong>
 </div>
 <br>
@@ -16,7 +16,10 @@ TODO
 
 TODO
 
+0️⃣ ...
 1️⃣ ...
+2️⃣ ...
+3️⃣ ...
 
 <br>
 
