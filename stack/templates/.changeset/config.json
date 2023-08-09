@@ -3,7 +3,7 @@
 	"baseBranch": "main",
 	"commit": false,
 	"updateInternalDependencies": "patch",
-	"changelog": ["@changesets/changelog-github", { "repo": "{{ repo_id }}" }],
+	"changelog": ["@changesets/changelog-github", { "repo": "{{repo_id}}" }],
 	"___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
 		"onlyUpdatePeerDependentsWhenOutOfRange": true,
 		"updateInternalDependents": "out-of-range"

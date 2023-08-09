@@ -1,6 +1,6 @@
 {
-	"name": "{{ pkg_name }}",
-	"description": "{{ pkg_description }}",
+	"name": "{{pkg_name}}",
+	"description": "{{pkg_description}}",
 	"version": "0.0.0",
 	"files": [
 		"dist"
@@ -20,12 +20,12 @@
 	},
 	"license": "MIT",
 	"author": "Ayoub Adib <adbayb@gmail.com> (https://twitter.com/adbayb)",
-	"bugs": "https://github.com/{{ repo_id }}/issues",
-	"homepage": "https://github.com/{{ repo_id }}/tree/main/{{ pkg_folder }}#readme",
+	"bugs": "https://github.com/{{repo_id}}/issues",
+	"homepage": "https://github.com/{{repo_id}}/tree/main/{{pkg_folder}}#readme",
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:{{ repo_id }}.git",
-		"directory": "{{ pkg_folder }}"
+		"url": "git@github.com:{{repo_id}}.git",
+		"directory": "{{pkg_folder}}"
 	},
 	"scripts": {
 		"start": "pnpm watch",

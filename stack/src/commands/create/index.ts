@@ -1,9 +1,11 @@
-import { join, parse } from "node:path";
+import { resolve } from "node:path";
 import { helpers } from "termost";
-import { cp, readdir, rename } from "node:fs/promises";
+import { cp } from "node:fs/promises";
+import { readFileSync, renameSync, writeFileSync } from "node:fs";
 
 import type { CommandFactory } from "../../types";
 import { createError, getRepositoryUrl } from "../../helpers";
+import defaultTemplateConfig from "../../../templates/default/config.json";
 
 import { PACKAGE_FOLDER, PROJECT_FOLDER, TEMPLATES_FOLDER } from "./constants";
 
@@ -11,7 +13,7 @@ type CreateCommandContext = {
 	pkgName: string;
 	pkgDescription: string;
 	repositoryUrl: string;
-	templateValues: Record<string, string>;
+	templateInput: Record<string, string>;
 };
 
 export const createCreateCommand: CommandFactory = (program) => {
@@ -37,20 +39,13 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.input({
 			type: "text",
-			key: "pkgName",
-			label: "What's your main package name?",
-			skip: () => true,
-		})
-		.input({
-			type: "text",
 			key: "pkgDescription",
-			label: "What's your main package description?",
-			skip: () => true,
+			label: "How would you describe your project?",
 		})
 		.task({
 			label: "Get template values",
-			key: "templateValues",
-			async handler({ pkgName, pkgDescription, repositoryUrl }) {
+			key: "templateInput",
+			async handler({ pkgDescription, repositoryUrl }) {
 				// @todo: resilient fetch
 				const nodeVersion = await (
 					await fetch("https://resolve-node.vercel.app/lts")
@@ -76,13 +71,15 @@ export const createCreateCommand: CommandFactory = (program) => {
 					);
 				}
 
+				const id = `${repoOwner}/${repoName}`;
+
 				return {
 					license_year: new Date().getFullYear().toString(),
 					node_version: nodeVersion,
 					npm_version: npmVersion,
-					repo_id: `${repoOwner}/${repoName}`,
-					pkg_name: pkgName,
+					repo_id: id,
 					pkg_description: pkgDescription,
+					pkg_name: repoName,
 					pkg_folder: repoName,
 				};
 			},
@@ -94,22 +91,15 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: "Hydrate templates",
-			handler() {
-				// .nvmrc => node_version => https://resolve-node.vercel.app/lts
-				// package.json => {{ pnpm_version }} => https://registry.npmjs.org/pnpm/latest
-				// LICENSE => {{ license_year }}
-				// .changeset/config.json => {{ repo_id }}
+			label: "Evaluate templates",
+			handler({ templateInput }) {
+				const engine = createTemplateEngine(
+					defaultTemplateConfig,
+					templateInput,
+				);
 
-				return;
-			},
-		})
-		.task({
-			label: "Symlink the `README.md` file",
-			handler() {
-				// @todo: from {{ pkg_name }} to root
-
-				return;
+				engine.hydrate();
+				engine.rename();
 			},
 		})
 		.task({
@@ -151,6 +141,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.task({
 			label: "Clean up",
 			async handler() {
+				// @todo: symlink readme file
 				await setPkgManager();
 				await helpers.exec("pnpm fix");
 				await helpers.exec("pnpm check");
@@ -158,32 +149,50 @@ export const createCreateCommand: CommandFactory = (program) => {
 		});
 };
 
-export const copyTemplates = async () => {
-	// Copy all template files to the target recursively
-	await cp(TEMPLATES_FOLDER, PROJECT_FOLDER, { recursive: true });
+/**
+ * A simple template engine to evaluate dynamic expressions and apply side effets (such as hydrating a content with values from an input object) on impacted template files
+ * @param config Configuration object listing template files/folders that need expression evaluation
+ * @param input Input object mapping the template expression key with its corresponding value
+ */
+const createTemplateEngine = (
+	config: Record<"files" | "folders", Array<string>>,
+	input: CreateCommandContext["templateInput"],
+) => {
+	const resolveFromRootDir = (filename: string) =>
+		resolve(PROJECT_FOLDER, filename);
 
-	/**
-	 * `.tmpl` extension removal post processing
-	 * Some templates have this extension to allow their publication in the NPM registry
-	 * Indeed, by default, some files are always excluded by NPM during the package publish process (eg. `.npmrc` and `.gitignore`)
-	 * @see https://docs.npmjs.com/cli/v9/configuring-npm/package-json#files)
-	 */
-	const files = await readdir(TEMPLATES_FOLDER);
+	const evaluate = (expression: string) => {
+		return expression.replace(/{{(.*?)}}/g, (_, key) => input[key] || "");
+	};
 
-	return Promise.all(
-		files.map(async (filename) => {
-			const { ext, name } = parse(filename);
+	return {
+		hydrate() {
+			for (const filename of config.files) {
+				const filepath = resolveFromRootDir(filename);
+				const content = readFileSync(filepath, "utf-8");
 
-			if (ext !== ".tmpl") {
-				return Promise.resolve(); // no-op
+				writeFileSync(filepath, evaluate(content));
 			}
+		},
+		rename() {
+			try {
+				for (const pathname of config.folders) {
+					renameSync(
+						resolveFromRootDir(pathname),
+						resolveFromRootDir(evaluate(pathname)),
+					);
+				}
+			} catch {
+				// Silent error in case of stack re-creation
+			}
+		},
+	};
+};
 
-			return rename(
-				join(PROJECT_FOLDER, filename),
-				join(PROJECT_FOLDER, name),
-			);
-		}),
-	);
+// TODO gzip via zlib.createUnzip() instead (no more tmpl file) => templates/default.tar.gz (it can welcome later other specialized template)
+export const copyTemplates = () => {
+	// Copy all template files to the target recursively
+	return cp(TEMPLATES_FOLDER, PROJECT_FOLDER, { recursive: true });
 };
 
 export const setPkgManager = () => {

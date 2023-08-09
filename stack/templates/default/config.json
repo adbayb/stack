@@ -1,0 +1,13 @@
+{
+	"files": [
+		".nvmrc",
+		"CONTRIBUTING.md",
+		"LICENSE",
+		"package.json",
+		".changeset/config.json",
+		".github/PULL_REQUEST_TEMPLATE.md",
+		"{{pkg_folder}}/package.json",
+		"{{pkg_folder}}/README.md"
+	],
+	"folders": ["{{pkg_folder}}"]
+}
