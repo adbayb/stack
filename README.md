@@ -24,3 +24,4 @@ The mono-repository includes:
 -   [ ] Update `@adbayb/stack` to make `tsc` check feasible on git hooks (via eslint-plugin-tsc?)
 -   [ ] Update `@adbayb/stack` to lint packages (caret range for dependencies and strict ones for dev dependencies)
 -   [ ] Deprecate and remove `@adbayb/scripts` package
+-   [ ] Clean scripts and root package.json after publishing the v1
