@@ -34,9 +34,7 @@
 	},
 	"license": "MIT",
 	"dependencies": {
+		"@adbayb/stack": "0.14.0",
 		"termost": "0.9.0"
-	},
-	"devDependencies": {
-		"@internal/helpers": "workspace:*"
 	}
 }

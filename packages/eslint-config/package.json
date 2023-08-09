@@ -16,6 +16,11 @@
 		"url": "https://github.com/adbayb/init.git",
 		"directory": "packages/eslint-config"
 	},
+	"peerDependencies": {
+		"eslint": ">=8.0.0",
+		"prettier": ">=3.0.0",
+		"typescript": ">=5.0.0"
+	},
 	"dependencies": {
 		"@typescript-eslint/eslint-plugin": "^6.3.0",
 		"@typescript-eslint/parser": "^6.3.0",
@@ -28,10 +33,5 @@
 		"eslint-plugin-react": "^7.33.1",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-sonarjs": "^0.20.0"
-	},
-	"peerDependencies": {
-		"eslint": ">=8.0.0",
-		"prettier": ">=3.0.0",
-		"typescript": ">=5.0.0"
 	}
 }

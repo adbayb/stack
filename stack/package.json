@@ -1,12 +1,12 @@
 {
-	"name": "@adbayb/scripts",
+	"name": "@adbayb/stack",
 	"version": "0.14.0",
 	"description": "My opinionated toolchain",
 	"files": [
 		"bin"
 	],
 	"bin": {
-		"scripts": "bin/index.js"
+		"stack": "bin/index.js"
 	},
 	"source": "src/index.ts",
 	"main": "bin/index.js",
@@ -19,7 +19,7 @@
 		"watch": "quickbundle watch"
 	},
 	"keywords": [
-		"scripts",
+		"stack",
 		"scripts",
 		"toolchain",
 		"development"
@@ -32,25 +32,10 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/adbayb/stack.git",
-		"directory": "packages/scripts"
+		"directory": "stack"
 	},
 	"license": "MIT",
-	"peerDependencies": {
-		"@adbayb/eslint-config": ">=0.14.0",
-		"@adbayb/prettier-config": ">=0.14.0",
-		"@adbayb/ts-config": ">=0.14.0",
-		"@commitlint/cli": ">=17.0.0",
-		"@commitlint/config-conventional": ">=17.0.0"
-	},
 	"dependencies": {
-		"@commitlint/cli": "^17.6.7",
-		"@commitlint/config-conventional": "^17.6.7",
 		"termost": "^0.9.0"
-	},
-	"devDependencies": {
-		"@adbayb/eslint-config": "0.14.0",
-		"@adbayb/prettier-config": "0.14.0",
-		"@adbayb/ts-config": "0.14.0",
-		"@internal/helpers": "workspace:*"
 	}
 }

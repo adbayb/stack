@@ -3,7 +3,7 @@ import { existsSync } from "node:fs";
 import { join, parse } from "node:path";
 import { helpers } from "termost";
 
-import { getRepositoryUrl, getRootDir } from "../../helpers/dist/index.cjs";
+import { getRepositoryUrl, getRootDir } from "../../helpers";
 
 import { PROJECT_FOLDER, TEMPLATES_FOLDER } from "./constants";
 
@@ -101,10 +101,10 @@ export const createPkgFile = async () => {
 			...(directory && { directory }),
 		},
 		scripts: {
-			prepare: "scripts setup",
-			clean: "scripts clean",
-			check: "scripts check",
-			fix: "scripts fix",
+			prepare: "stack install",
+			clean: "stack clean",
+			check: "stack check",
+			fix: "stack fix",
 			start: "turbo run start",
 			build: "turbo run build",
 			watch: "turbo run watch",

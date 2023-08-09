@@ -1,13 +1,12 @@
 import { chmod, writeFile } from "node:fs/promises";
-import { resolveFromRootDir } from "@internal/helpers";
 
-import { getScripts } from "../helpers";
+import { getStackCommand, resolveFromRootDir } from "../helpers";
 import type { CommandFactory } from "../types";
 
-export const createSetupCommand: CommandFactory = (program) => {
+export const createInstallCommand: CommandFactory = (program) => {
 	program
 		.command({
-			name: "setup",
+			name: "install",
 			description: "Setup all requirements",
 		})
 		.task({
@@ -15,7 +14,7 @@ export const createSetupCommand: CommandFactory = (program) => {
 			handler() {
 				return installGitHook(
 					"pre-commit",
-					`${getScripts(
+					`${getStackCommand(
 						`check $(git status --porcelain | awk 'BEGIN{ ORS=" " } { print $2 }') --fix`,
 						false,
 					)} && git add -A`,
@@ -27,7 +26,7 @@ export const createSetupCommand: CommandFactory = (program) => {
 			handler() {
 				return installGitHook(
 					"commit-msg",
-					`${getScripts("check --only commit", false)}`,
+					`${getStackCommand("check --only commit", false)}`,
 				);
 			},
 		});

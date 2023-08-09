@@ -14,9 +14,9 @@
 	"license": "MIT",
 	"scripts": {
 		"prepare": "husky install ./scripts/hooks && pnpm build",
-		"clean": "scripts clean",
-		"check": "echo 'scripts check'",
-		"fix": "echo 'scripts fix'",
+		"clean": "stack clean",
+		"check": "echo 'stack check'",
+		"fix": "echo 'stack fix'",
 		"start": "turbo run start",
 		"build": "turbo run build",
 		"watch": "turbo run watch",
@@ -26,7 +26,7 @@
 	"devDependencies": {
 		"@adbayb/eslint-config": "workspace:*",
 		"@adbayb/prettier-config": "workspace:*",
-		"@adbayb/scripts": "workspace:*",
+		"@adbayb/stack": "workspace:*",
 		"@adbayb/ts-config": "workspace:*",
 		"@changesets/changelog-github": "0.4.8",
 		"@changesets/cli": "2.26.2",

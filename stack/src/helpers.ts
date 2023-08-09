@@ -1,12 +1,45 @@
 import { existsSync } from "node:fs";
 import { helpers } from "termost";
-import { resolveFromRootDir } from "@internal/helpers";
+import { resolve } from "node:path";
 
-export const getScripts = (command: string, isNodeRuntime = true) => {
+const getGitError = (error: unknown) => {
+	return binError(
+		"git",
+		`The project must be a \`git\` repository. Have you tried to run \`git init\`?\n${error}`,
+	);
+};
+
+export const getRootDir = async () => {
+	try {
+		return helpers.exec("git rev-parse --show-toplevel");
+	} catch (error) {
+		throw getGitError(error);
+	}
+};
+
+export const getRepositoryUrl = async () => {
+	try {
+		return await helpers.exec("git config --get remote.origin.url");
+	} catch (error) {
+		throw getGitError(error);
+	}
+};
+
+export const resolveFromRootDir = async (path: string) => {
+	const rootDir = await getRootDir();
+
+	return resolve(rootDir, path);
+};
+
+export const binError = (bin: string, error: Error | string | unknown) => {
+	return new Error(`\`${bin}\` failed:\n${error}`);
+};
+
+export const getStackCommand = (command: string, isNodeRuntime = true) => {
 	// @note: `isNodeRuntime` allows executing node bin executables in a non node environment such as in git hooks context
 	// Npx is used to make executable resolution independent from the build tool (npx is the built-in Node tool)
 	// `--no` flag to prevent installation prompt and throw an error if the binary is not installed
-	return [...(isNodeRuntime ? [] : ["npx --no"]), `scripts ${command}`].join(
+	return [...(isNodeRuntime ? [] : ["npx --no"]), `stack ${command}`].join(
 		" ",
 	);
 };
