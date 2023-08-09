@@ -2,37 +2,14 @@ import { existsSync } from "node:fs";
 import { helpers } from "termost";
 import { resolve } from "node:path";
 
-const getGitError = (error: unknown) => {
-	return binError(
-		"git",
-		`The project must be a \`git\` repository. Have you tried to run \`git init\`?\n${error}`,
-	);
-};
-
-export const getRootDir = async () => {
-	try {
-		return helpers.exec("git rev-parse --show-toplevel");
-	} catch (error) {
-		throw getGitError(error);
-	}
-};
-
 export const getRepositoryUrl = async () => {
-	try {
-		return await helpers.exec("git config --get remote.origin.url");
-	} catch (error) {
-		throw getGitError(error);
-	}
+	return helpers.exec("git config --get remote.origin.url");
 };
 
 export const resolveFromRootDir = async (path: string) => {
-	const rootDir = await getRootDir();
+	const rootDir = await helpers.exec("git rev-parse --show-toplevel");
 
 	return resolve(rootDir, path);
-};
-
-export const binError = (bin: string, error: Error | string | unknown) => {
-	return new Error(`\`${bin}\` failed:\n${error}`);
 };
 
 export const getStackCommand = (command: string, isNodeRuntime = true) => {
@@ -84,7 +61,7 @@ const eslint =
 		try {
 			return await helpers.exec(`eslint ${args.join(" ")}`);
 		} catch (error) {
-			throw runtimeError("eslint", error);
+			throw createError("eslint", error);
 		}
 	};
 
@@ -119,7 +96,7 @@ export const fixFormatting = async (files: FilenameCollection) => {
 	try {
 		return await helpers.exec(`prettier ${args.join(" ")}`);
 	} catch (error) {
-		throw runtimeError("prettier", error);
+		throw createError("prettier", error);
 	}
 };
 
@@ -135,7 +112,7 @@ export const checkTypes = async (files: FilenameCollection) => {
 			)} --noEmit ${tsFiles.join(" ")}`,
 		);
 	} catch (error) {
-		throw runtimeError("tsc", error);
+		throw createError("tsc", error);
 	}
 };
 
@@ -145,11 +122,11 @@ export const checkCommit = async () => {
 			`commitlint --extends "@commitlint/config-conventional" --edit`,
 		);
 	} catch (error) {
-		throw new Error(`\`commitlint\` failed:\n${error}`);
+		throw createError("commitlint", error);
 	}
 };
 
-export const runtimeError = (bin: string, error: Error | string | unknown) => {
+export const createError = (bin: string, error: Error | string | unknown) => {
 	return new Error(`\`${bin}\` failed:\n${error}`);
 };
 

@@ -12,5 +12,21 @@
 		"watch": "turbo run watch",
 		"release": "pnpm build && pnpm changeset release",
 		"add:changelog": "pnpm changeset"
+	},
+	"packageManager": "pnpm@{{ npm_version }}",
+	"engines": {
+		"node": ">=18.0.0",
+		"pnpm": ">=8.0.0",
+		"npm": "please-use-pnpm",
+		"yarn": "please-use-pnpm"
+	},
+	"prettier": "@adbayb/prettier-config",
+	"eslintConfig": {
+		"extends": "@adbayb"
+	},
+	"commitlint": {
+		"extends": [
+			"@commitlint/config-conventional"
+		]
 	}
 }
