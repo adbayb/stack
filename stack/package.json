@@ -3,7 +3,8 @@
 	"version": "0.14.0",
 	"description": "My opinionated toolchain",
 	"files": [
-		"bin"
+		"bin",
+		"templates"
 	],
 	"bin": {
 		"stack": "bin/index.js"

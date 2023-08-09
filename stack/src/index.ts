@@ -22,9 +22,9 @@ const createProgram = (...commandFactories: Array<CommandFactory>) => {
 };
 
 createProgram(
+	createCreateCommand,
 	createCheckCommand,
 	createCleanCommand,
-	createCreateCommand,
 	createFixCommand,
 	createInstallCommand,
 );

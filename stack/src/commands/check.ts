@@ -20,7 +20,7 @@ export const createCheckCommand: CommandFactory = (program) => {
 	program
 		.command<CheckContext>({
 			name: "check",
-			description: "Check source code health",
+			description: "Check code health",
 		})
 		.option({
 			key: "only",

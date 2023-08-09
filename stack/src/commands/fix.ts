@@ -5,7 +5,7 @@ export const createFixCommand: CommandFactory = (program) => {
 	program
 		.command({
 			name: "fix",
-			description: "Fix all auto-fixable issues",
+			description: "Fix auto-fixable issues",
 		})
 		.task({
 			label: "Fixing lints 🚑",
