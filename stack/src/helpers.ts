@@ -21,6 +21,27 @@ export const getStackCommand = (command: string, isNodeRuntime = true) => {
 	);
 };
 
+export const request = {
+	async get<ResponseType extends "json" | "text">(
+		url: string,
+		responseType: ResponseType,
+	): Promise<ResponseType extends "text" ? string : Record<string, string>> {
+		const response = await fetch(url);
+
+		if (!response.ok) {
+			throw createError(
+				"fetch",
+				`Failed to fetch resources from ${url} (${JSON.stringify({
+					status: response.status,
+					statusText: response.statusText,
+				})})`,
+			);
+		}
+
+		return responseType === "text" ? response.text() : response.json();
+	},
+};
+
 const eslint =
 	(options: { isFixMode: boolean }) =>
 	async (files: FilenameCollection = []) => {

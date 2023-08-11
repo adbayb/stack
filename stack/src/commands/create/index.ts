@@ -4,10 +4,10 @@ import { cp } from "node:fs/promises";
 import { readFileSync, renameSync, writeFileSync } from "node:fs";
 
 import type { CommandFactory } from "../../types";
-import { createError, getRepositoryUrl } from "../../helpers";
+import { createError, getRepositoryUrl, request } from "../../helpers";
 import defaultTemplateConfig from "../../../templates/default/config.json";
 
-import { PACKAGE_FOLDER, PROJECT_FOLDER, TEMPLATES_FOLDER } from "./constants";
+import { PROJECT_FOLDER, TEMPLATES_FOLDER } from "./constants";
 
 type CreateCommandContext = {
 	pkgName: string;
@@ -16,6 +16,13 @@ type CreateCommandContext = {
 	templateInput: Record<string, string>;
 };
 
+/**
+ * TODO:
+ * - Update `copyTemplates` to gzip via zlib.createUnzip() instead (no more tmpl file) => templates/default.tar.gz (it can welcome later other specialized template)
+ * - Symlink the pkg README file to the repository root
+ * - Test the `create` command in real condition (npm link?)
+ * - Test the package create with npm init in real condition (npm link?)
+ */
 export const createCreateCommand: CommandFactory = (program) => {
 	program
 		.command<CreateCommandContext>({
@@ -43,19 +50,20 @@ export const createCreateCommand: CommandFactory = (program) => {
 			label: "How would you describe your project?",
 		})
 		.task({
-			label: "Get template values",
+			label: "Initialize the context",
 			key: "templateInput",
 			async handler({ pkgDescription, repositoryUrl }) {
-				// @todo: resilient fetch
-				const nodeVersion = await (
-					await fetch("https://resolve-node.vercel.app/lts")
-				).text();
+				const nodeVersion = await request.get(
+					"https://resolve-node.vercel.app/lts",
+					"text",
+				);
 
 				const npmVersion = (
-					await (
-						await fetch("https://registry.npmjs.org/pnpm/latest")
-					).json()
-				).version;
+					await request.get(
+						"https://registry.npmjs.org/pnpm/latest",
+						"json",
+					)
+				).version as string;
 
 				const { repoOwner, repoName } =
 					repositoryUrl.match(
@@ -85,14 +93,11 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: "Copy templates",
-			handler() {
-				return copyTemplates();
-			},
-		})
-		.task({
-			label: "Evaluate templates",
-			handler({ templateInput }) {
+			label: "Apply the default template",
+			async handler({ templateInput }) {
+				await copyTemplates();
+
+				// Hydrate template expressions with context values:
 				const engine = createTemplateEngine(
 					defaultTemplateConfig,
 					templateInput,
@@ -105,7 +110,9 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.task({
 			label: "Install dependencies",
 			async handler() {
-				const dependencies = [
+				const localDevDependencies = ["quickbundle"];
+
+				const globalDevDependencies = [
 					"@adbayb/eslint-config",
 					"@adbayb/prettier-config",
 					"@adbayb/ts-config",
@@ -120,28 +127,24 @@ export const createCreateCommand: CommandFactory = (program) => {
 					"typescript",
 				];
 
-				dependencies;
+				for (const dependency of globalDevDependencies) {
+					// await helpers.exec(
+					// 	`pnpm add ${dependency}@latest --save-dev`,
+					// );
+					dependency;
+				}
 
-				// @todo: install dependencies for {{ pkg_folder }} (including typescript and quickbundle)
-
-				/*for (const dep of dependencies) {
-					await helpers.exec(`pnpm add ${dep}@latest --save-dev`);
-				}*/
-			},
-		})
-		.task({
-			handler(context) {
-				helpers.message(JSON.stringify(context, null, 4));
-				helpers.message(`Repository path: ${context.repositoryUrl}`);
-				helpers.message(`Project path: ${PROJECT_FOLDER}`);
-				helpers.message(`Package path: ${PACKAGE_FOLDER}`);
-				helpers.message(`Templates path: ${TEMPLATES_FOLDER}`);
+				for (const dependency of localDevDependencies) {
+					// await helpers.exec(
+					// 	`pnpm add ${dependency}@latest --save-dev --workspace ${context.pkgName}`,
+					// );
+					dependency;
+				}
 			},
 		})
 		.task({
 			label: "Clean up",
 			async handler() {
-				// @todo: symlink readme file
 				await setPkgManager();
 				await helpers.exec("pnpm fix");
 				await helpers.exec("pnpm check");
@@ -189,7 +192,6 @@ const createTemplateEngine = (
 	};
 };
 
-// TODO gzip via zlib.createUnzip() instead (no more tmpl file) => templates/default.tar.gz (it can welcome later other specialized template)
 export const copyTemplates = () => {
 	// Copy all template files to the target recursively
 	return cp(TEMPLATES_FOLDER, PROJECT_FOLDER, { recursive: true });
