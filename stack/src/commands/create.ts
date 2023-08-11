@@ -3,11 +3,9 @@ import { helpers } from "termost";
 import { cp } from "node:fs/promises";
 import { readFileSync, renameSync, writeFileSync } from "node:fs";
 
-import type { CommandFactory } from "../../types";
-import { createError, getRepositoryUrl, request } from "../../helpers";
-import defaultTemplateConfig from "../../../templates/default/config.json";
-
-import { PROJECT_FOLDER, TEMPLATES_FOLDER } from "./constants";
+import type { CommandFactory } from "../types";
+import { createError, getRepositoryUrl, request } from "../helpers";
+import defaultTemplateConfig from "../../templates/default/config.json";
 
 type CreateCommandContext = {
 	pkgName: string;
@@ -15,6 +13,10 @@ type CreateCommandContext = {
 	repositoryUrl: string;
 	templateInput: Record<string, string>;
 };
+
+const PROJECT_FOLDER = resolve(__dirname, "../dist"); // @todo remove (test purposes), replace with resolveFromRootProject
+const PACKAGE_FOLDER = resolve(__dirname, "../");
+const TEMPLATES_FOLDER = resolve(PACKAGE_FOLDER, "templates");
 
 /**
  * TODO:
