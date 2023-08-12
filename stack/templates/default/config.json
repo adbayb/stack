@@ -4,6 +4,7 @@
 		"CONTRIBUTING.md",
 		"LICENSE",
 		"package.json",
+		"pnpm-workspace.yaml",
 		".changeset/config.json",
 		".github/PULL_REQUEST_TEMPLATE.md",
 		"{{pkg_folder}}/package.json",

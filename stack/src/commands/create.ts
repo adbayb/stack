@@ -128,27 +128,33 @@ export const createCreateCommand: CommandFactory = (program) => {
 					"typescript",
 				];
 
-				for (const dependency of globalDevDependencies) {
-					await helpers.exec(
-						`pnpm add ${dependency}@latest --save-dev`,
-					);
-					dependency;
-				}
+				try {
+					for (const dependency of globalDevDependencies) {
+						await helpers.exec(
+							`pnpm add ${dependency}@latest --save-dev --ignore-workspace-root-check`,
+						);
+					}
 
-				for (const dependency of localDevDependencies) {
-					await helpers.exec(
-						`pnpm add ${dependency}@latest --save-dev --workspace ${context.pkgName}`,
-					);
-					dependency;
+					for (const dependency of localDevDependencies) {
+						await helpers.exec(
+							`pnpm add ${dependency}@latest --save-dev --filter ${context.pkgName}`,
+						);
+					}
+				} catch (error) {
+					throw createError("pnpm", error);
 				}
 			},
 		})
 		.task({
 			label: "Clean up",
 			async handler() {
-				await setPkgManager();
-				await helpers.exec("pnpm fix");
-				await helpers.exec("pnpm check");
+				try {
+					await setPkgManager();
+					await helpers.exec("pnpm fix");
+					await helpers.exec("pnpm check");
+				} catch (error) {
+					throw createError("clean", error);
+				}
 			},
 		});
 };
