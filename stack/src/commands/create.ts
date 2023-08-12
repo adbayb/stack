@@ -33,10 +33,10 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.task({
 			label: "Check pre-requisites",
 			key: "repositoryUrl",
-			handler() {
+			async handler() {
 				try {
 					// This step is used as well to persist the repository url value:
-					return getRepositoryUrl();
+					return await getRepositoryUrl();
 				} catch (error) {
 					throw createError(
 						"git",
