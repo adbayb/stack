@@ -1,6 +1,5 @@
 import { resolve } from "node:path";
 import { helpers } from "termost";
-import { cp } from "node:fs/promises";
 import { readFileSync, renameSync, writeFileSync } from "node:fs";
 
 import type { CommandFactory } from "../types";
@@ -97,7 +96,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.task({
 			label: "Apply the default template",
 			async handler({ templateInput }) {
-				await copyTemplates();
+				await extractTemplate();
 
 				// Hydrate template expressions with context values:
 				const engine = createTemplateEngine(
@@ -194,11 +193,17 @@ const createTemplateEngine = (
 	};
 };
 
-export const copyTemplates = () => {
-	// Copy all template files to the target recursively
-	return cp(TEMPLATES_FOLDER, PROJECT_FOLDER, { recursive: true });
+const extractTemplate = async () => {
+	const compressedFilePath = resolve(
+		TEMPLATES_FOLDER,
+		"./default/content.tar.gz",
+	);
+
+	return helpers.exec(
+		`mkdir ${PROJECT_FOLDER} && tar -xzf ${compressedFilePath} -C ${PROJECT_FOLDER} --strip-components=1`,
+	);
 };
 
-export const setPkgManager = () => {
+const setPkgManager = () => {
 	return helpers.exec("corepack enable");
 };
