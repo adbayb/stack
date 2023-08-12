@@ -3,7 +3,13 @@ import { helpers } from "termost";
 import { readFileSync, renameSync, writeFileSync } from "node:fs";
 
 import type { CommandFactory } from "../types";
-import { createError, getRepositoryUrl, request } from "../helpers";
+import {
+	createError,
+	getRepositoryUrl,
+	request,
+	resolveFromProjectDirectory,
+	resolveFromStackDirectory,
+} from "../helpers";
 import defaultTemplateConfig from "../../templates/default/config.json";
 
 type CreateCommandContext = {
@@ -13,15 +19,9 @@ type CreateCommandContext = {
 	templateInput: Record<string, string>;
 };
 
-const PROJECT_FOLDER = resolve(__dirname, "../dist"); // @todo remove (test purposes), replace with resolveFromRootProject
-const PACKAGE_FOLDER = resolve(__dirname, "../");
-const TEMPLATES_FOLDER = resolve(PACKAGE_FOLDER, "templates");
-
 /**
  * TODO:
- * - Update `copyTemplates` to gzip via zlib.createUnzip() instead (no more tmpl file) => templates/default.tar.gz (it can welcome later other specialized template)
  * - Symlink the pkg README file to the repository root
- * - Test the `create` command in real condition (npm link?)
  * - Test the package create with npm init in real condition (npm link?)
  */
 export const createCreateCommand: CommandFactory = (program) => {
@@ -110,7 +110,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label: "Install dependencies",
-			async handler() {
+			async handler(context) {
 				const localDevDependencies = ["quickbundle"];
 
 				const globalDevDependencies = [
@@ -129,16 +129,16 @@ export const createCreateCommand: CommandFactory = (program) => {
 				];
 
 				for (const dependency of globalDevDependencies) {
-					// await helpers.exec(
-					// 	`pnpm add ${dependency}@latest --save-dev`,
-					// );
+					await helpers.exec(
+						`pnpm add ${dependency}@latest --save-dev`,
+					);
 					dependency;
 				}
 
 				for (const dependency of localDevDependencies) {
-					// await helpers.exec(
-					// 	`pnpm add ${dependency}@latest --save-dev --workspace ${context.pkgName}`,
-					// );
+					await helpers.exec(
+						`pnpm add ${dependency}@latest --save-dev --workspace ${context.pkgName}`,
+					);
 					dependency;
 				}
 			},
@@ -162,9 +162,6 @@ const createTemplateEngine = (
 	config: Record<"files" | "folders", Array<string>>,
 	input: CreateCommandContext["templateInput"],
 ) => {
-	const resolveFromRootDir = (filename: string) =>
-		resolve(PROJECT_FOLDER, filename);
-
 	const evaluate = (expression: string) => {
 		return expression.replace(/{{(.*?)}}/g, (_, key) => input[key] || "");
 	};
@@ -172,18 +169,18 @@ const createTemplateEngine = (
 	return {
 		hydrate() {
 			for (const filename of config.files) {
-				const filepath = resolveFromRootDir(filename);
+				const filepath = resolveFromProjectDirectory(filename);
 				const content = readFileSync(filepath, "utf-8");
 
 				writeFileSync(filepath, evaluate(content));
 			}
 		},
-		rename() {
+		async rename() {
 			try {
 				for (const pathname of config.folders) {
 					renameSync(
-						resolveFromRootDir(pathname),
-						resolveFromRootDir(evaluate(pathname)),
+						resolveFromProjectDirectory(pathname),
+						resolveFromProjectDirectory(evaluate(pathname)),
 					);
 				}
 			} catch {
@@ -195,12 +192,14 @@ const createTemplateEngine = (
 
 const extractTemplate = async () => {
 	const compressedFilePath = resolve(
-		TEMPLATES_FOLDER,
+		resolveFromStackDirectory("./templates"),
 		"./default/content.tar.gz",
 	);
 
+	const destinationPath = resolveFromProjectDirectory("./");
+
 	return helpers.exec(
-		`mkdir ${PROJECT_FOLDER} && tar -xzf ${compressedFilePath} -C ${PROJECT_FOLDER} --strip-components=1`,
+		`tar -xzf ${compressedFilePath} -C ${destinationPath} --strip-components=1`,
 	);
 };
 

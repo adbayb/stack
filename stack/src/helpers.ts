@@ -6,10 +6,17 @@ export const getRepositoryUrl = async () => {
 	return helpers.exec("git config --get remote.origin.url");
 };
 
-export const resolveFromRootDir = async (path: string) => {
-	const rootDir = await helpers.exec("git rev-parse --show-toplevel");
+export const resolveFromProjectDirectory = (path: string) => {
+	return resolve(process.cwd(), path);
+};
 
-	return resolve(rootDir, path);
+/**
+ * Resolve a relative path to generate an absolute one resolved from the `stack` node module directory
+ * @param path The relative path
+ * @returns The absolute path
+ */
+export const resolveFromStackDirectory = (path: string) => {
+	return resolve(__dirname, "../", path);
 };
 
 export const getStackCommand = (command: string, isNodeRuntime = true) => {
@@ -62,14 +69,14 @@ const eslint =
 		args.push(`--ext ${ESLINT_EXTENSIONS.join(",")}`);
 		args.push("--cache");
 		args.push(
-			`--cache-location ${await resolveFromRootDir(
+			`--cache-location ${await resolveFromProjectDirectory(
 				"node_modules/.cache/.eslintcache",
 			)}`,
 		);
 		// @note: prevent errors when no matched file is found
 		args.push("--no-error-on-unmatched-pattern");
 
-		const gitIgnoreFile = await resolveFromRootDir(".gitignore");
+		const gitIgnoreFile = await resolveFromProjectDirectory(".gitignore");
 
 		if (existsSync(gitIgnoreFile)) {
 			args.push(`--ignore-path ${gitIgnoreFile}`);
@@ -107,7 +114,7 @@ export const fixFormatting = async (files: FilenameCollection) => {
 
 	const args = [...prettierFiles];
 
-	if (existsSync(await resolveFromRootDir(".gitignore"))) {
+	if (existsSync(await resolveFromProjectDirectory(".gitignore"))) {
 		args.push("--ignore-path .gitignore");
 	}
 
@@ -128,7 +135,7 @@ export const checkTypes = async (files: FilenameCollection) => {
 		});
 
 		return await helpers.exec(
-			`tsc --tsBuildInfoFile ${await resolveFromRootDir(
+			`tsc --tsBuildInfoFile ${await resolveFromProjectDirectory(
 				"node_modules/.cache/.tsbuildinfo",
 			)} --noEmit ${tsFiles.join(" ")}`,
 		);
