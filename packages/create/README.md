@@ -4,7 +4,7 @@
 </div>
 <p></p>
 
-## Usage
+## 🚀 Usage
 
 -   `cd my-project-root-folder`
--   `npm init @adbayb --yes` or `npx @adbayb/create`
+-   `npm init @adbayb --yes`
