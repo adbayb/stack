@@ -7,7 +7,7 @@
 
 ## ✨ Features
 
-`Stack` allows creating an NPM project in a **quick**, **easy** and **opinionated** with :
+`Stack` allows creating an NPM project in a **quick**, **easy** and **opinionated** with:
 
 -   A unified monorepo-driven and git-driven approach for all kinds of projects (single-purpose library, multiple libraries, application(s), ...)
 -   Support for several templates application (for now, only a default template is available but others can be added later)
@@ -21,9 +21,9 @@
 
 ## 🚀 Usage
 
-This section introduces the `stack`` essentials by walking through its main commands:
+This section introduces the `stack` essentials by walking through its main commands:
 
-1️⃣ Create the NPM project thanks to the `stack` initializer:
+1️⃣ Create the NPM project thanks to the `@adbayb/create` initializer:
 
 ```bash
 # npm
@@ -53,19 +53,25 @@ stack fix
 
 #### Binaries
 
--   [NPM initializer](./packages/create)
+-   [NPM initializer](https://github.com/adbayb/stack/tree/main/packages/create)
 
 #### Configuration presets
 
--   [Linting](./packages/eslint-config)
--   [Formatting](./packages/prettier-config)
--   [Typing](./packages/ts-config)
+-   [Linting](https://github.com/adbayb/stack/tree/main/packages/eslint-config)
+-   [Formatting](https://github.com/adbayb/stack/tree/main/packages/prettier-config)
+-   [Typing](https://github.com/adbayb/stack/tree/main/packages/ts-config)
+
+<br>
+
+## ✍️ Contribution
+
+We're open to new contributions, you can find more details [here](https://github.com/adbayb/stack/blob/main/CONTRIBUTING.md).
 
 <br>
 
 ## 📖 License
 
-[MIT](./LICENSE "License MIT")
+[MIT](https://github.com/adbayb/stack/blob/main/LICENSE "License MIT")
 
 <br>
 
