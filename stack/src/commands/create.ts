@@ -1,6 +1,7 @@
 import { resolve } from "node:path";
 import { helpers } from "termost";
 import { readFileSync, renameSync, writeFileSync } from "node:fs";
+import { symlink } from "node:fs/promises";
 
 import type { CommandFactory } from "../types";
 import {
@@ -13,7 +14,6 @@ import {
 import defaultTemplateConfig from "../../templates/default/config.json";
 
 type CreateCommandContext = {
-	pkgName: string;
 	pkgDescription: string;
 	repositoryUrl: string;
 	templateInput: Record<string, string>;
@@ -21,7 +21,6 @@ type CreateCommandContext = {
 
 /**
  * TODO:
- * - Symlink the pkg README file to the repository root
  * - Test the package create with npm init in real condition (npm link?)
  */
 export const createCreateCommand: CommandFactory = (program) => {
@@ -137,7 +136,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 
 					for (const dependency of localDevDependencies) {
 						await helpers.exec(
-							`pnpm add ${dependency}@latest --save-dev --filter ${context.pkgName}`,
+							`pnpm add ${dependency}@latest --save-dev --filter ${context.templateInput.pkg_name}`,
 						);
 					}
 				} catch (error) {
@@ -147,8 +146,15 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label: "Clean up",
-			async handler() {
+			async handler(context) {
 				try {
+					// Symlink the package `README.md` file to the root project directory
+					await symlink(
+						resolveFromProjectDirectory(
+							`./${context.templateInput.pkg_folder}/README.md`,
+						),
+						resolveFromProjectDirectory(`./README.md`),
+					);
 					await setPkgManager();
 					await helpers.exec("pnpm fix");
 					await helpers.exec("pnpm check");
@@ -181,7 +187,7 @@ const createTemplateEngine = (
 				writeFileSync(filepath, evaluate(content));
 			}
 		},
-		async rename() {
+		rename() {
 			try {
 				for (const pathname of config.folders) {
 					renameSync(
