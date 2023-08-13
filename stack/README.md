@@ -86,7 +86,7 @@ We're open to new contributions, you can find more details [here](https://github
 
 ## ✅ Todo
 
--   [ ] **CircleCI setup (+ update the features part)**
+-   [ ] **CI setup (+ update the features part)**
 -   [ ] **Create folder project (ask GitHub URL) and run git init**
 -   [ ] **Deprecate and remove `@adbayb/scripts` package**
 -   [ ] **Clean scripts and root package.json after publishing the v1**
