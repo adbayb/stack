@@ -5,7 +5,8 @@
 		"typescript",
 		"typescriptreact",
 		"markdown",
-		"mdx"
+		"mdx",
+		"astro"
 	],
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": true

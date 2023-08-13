@@ -14,7 +14,7 @@
 -   Standardized file structure including optional folder creation such as `examples`, `packages`, ...
 -   Enable all project lifecycle steps with commands from the setup, check, fix, build, and test to the versioning and release
 -   Built-in configuration preset setup (including Node/NPM runtime, Git ignore/hooks, TypeScript, ESLint, Prettier, EditorConfig, Renovate, Changesets, and VSCode)
--   A welcoming environment for users and contributors with the creation of `README.md`, `CONTRIBUTING.md`, and GitHub template files (including issue and pull request), ...
+-   A welcoming environment for users and contributors with the continuous integration setup, and the creation of `README.md`, `CONTRIBUTING.md`, and GitHub template files (including issue and pull request ones), ...
 -   An optimized development environment with command caching (no build needed if nothing changes)
 
 <br>
@@ -86,7 +86,6 @@ We're open to new contributions, you can find more details [here](https://github
 
 ## ✅ Todo
 
--   [ ] **CI setup (+ update the features part)**
 -   [ ] **Create folder project (ask GitHub URL) and run git init**
 -   [ ] **Deprecate and remove `@adbayb/scripts` package**
 -   [ ] **Clean scripts and root package.json after publishing the v1**
