@@ -27,7 +27,7 @@ This section introduces the `stack` essentials by walking through its main comma
 
 ```bash
 # npm
-npm init @adbayb --yes
+npm init @adbayb
 # pnpm
 pnpm create @adbayb
 ```
@@ -49,17 +49,26 @@ stack fix
 
 <br>
 
-## 📦 Dependencies
+## 🏗️ Architecture
 
-#### Binaries
-
--   [NPM initializer](https://github.com/adbayb/stack/tree/main/packages/create)
-
-#### Configuration presets
-
--   [Linting](https://github.com/adbayb/stack/tree/main/packages/eslint-config)
--   [Formatting](https://github.com/adbayb/stack/tree/main/packages/prettier-config)
--   [Typing](https://github.com/adbayb/stack/tree/main/packages/ts-config)
+```mermaid
+flowchart TD
+    N("npm init @adbayb"):::strokeWidth -- Calls --> C("<a href='https://github.com/adbayb/stack/tree/main/packages/create'>@adbayb/create</a>"):::strokeWidth
+    C -- Uses --> S("<a href='https://github.com/adbayb/stack/tree/main/stack'>@adbayb/stack</a>"):::strokeWidth
+    S -- "Installs" --> EC("<a href='https://github.com/adbayb/stack/tree/main/packages/eslint-config'>@adbayb/eslint-config</a>"):::strokeWidth
+    S -- "Installs" --> PC("<a href='https://github.com/adbayb/stack/tree/main/packages/prettier-config'>@adbayb/prettier-config</a>"):::strokeWidth
+    S -- "Installs" --> TC("<a href='https://github.com/adbayb/stack/tree/main/packages/ts-config'>@adbayb/ts-config</a>"):::strokeWidth
+    S -- "Scaffolds" --> P("Created project"):::strokeWidth
+    EC -- "Configures" --> P
+    PC -- "Configures" --> P
+    TC -- "Configures" --> P
+    style C fill:#daf2d7,stroke:#90cf8e
+    style S fill:#daf2d7,stroke:#90cf8e
+    style EC fill:#daf2d7,stroke:#90cf8e
+    style PC fill:#daf2d7,stroke:#90cf8e
+    style TC fill:#daf2d7,stroke:#90cf8e
+    classDef strokeWidth stroke-width:3px
+```
 
 <br>
 
@@ -75,13 +84,14 @@ We're open to new contributions, you can find more details [here](https://github
 
 <br>
 
-## ✅ TODO
+## ✅ Todo
 
+-   [ ] **CircleCI setup (+ update the features part)**
+-   [ ] **Create folder project (ask GitHub URL) and run git init**
+-   [ ] **Deprecate and remove `@adbayb/scripts` package**
+-   [ ] **Clean scripts and root package.json after publishing the v1**
 -   [ ] Check if it's ok to have `commitlint`, `eslint`, ... as dependencies in `@adbayb/scripts` by removing monorepo root dev dependencies
 -   [ ] Update `@adbayb/stack` to make `tsc` check feasible on git hooks (via eslint-plugin-tsc?)
 -   [ ] Update `@adbayb/stack` to lint packages (caret range for dependencies and strict ones for dev dependencies)
--   [ ] Deprecate and remove `@adbayb/scripts` package
--   [ ] Clean scripts and root package.json after publishing the v1
--   [ ] CircleCI setup (+ update the features part)
 
 <br>

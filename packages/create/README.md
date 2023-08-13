@@ -7,4 +7,4 @@
 ## 🚀 Usage
 
 -   `cd my-project-root-folder`
--   `npm init @adbayb --yes`
+-   `npm init @adbayb`
