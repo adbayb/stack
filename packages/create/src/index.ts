@@ -6,4 +6,4 @@
  */
 import { helpers } from "termost";
 
-helpers.exec("stack create");
+helpers.exec("stack create", { hasLiveOutput: true });

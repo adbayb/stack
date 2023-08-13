@@ -2,21 +2,34 @@ import { existsSync } from "node:fs";
 import { helpers } from "termost";
 import { resolve } from "node:path";
 
-export const getRepositoryUrl = async () => {
-	return helpers.exec("git config --get remote.origin.url");
-};
-
+/**
+ * Resolve a relative path to an absolute one resolved from the generated project root directory
+ * @param path The relative path
+ * @returns The resolved absolute path
+ */
 export const resolveFromProjectDirectory = (path: string) => {
 	return resolve(process.cwd(), path);
 };
 
 /**
- * Resolve a relative path to generate an absolute one resolved from the `stack` node module directory
+ * Resolve a relative path to an absolute one resolved from the `stack` node module directory
  * @param path The relative path
- * @returns The absolute path
+ * @returns The resolved absolute path
  */
 export const resolveFromStackDirectory = (path: string) => {
 	return resolve(__dirname, "../", path);
+};
+
+export const getRepositoryUrl = async () => {
+	try {
+		// This step is used as well to persist the repository url value:
+		return await helpers.exec("git config --get remote.origin.url");
+	} catch (error) {
+		throw createError(
+			"git",
+			`The project must be a \`git\` repository with an origin already setup. Have you tried to run \`git init && git remote add origin git@github.com:OWNER/REPOSITORY.git && git add -A && git commit -m "chore: initial commit" && git push -u origin main\`?\n${error}`,
+		);
+	}
 };
 
 export const getStackCommand = (command: string, isNodeRuntime = true) => {

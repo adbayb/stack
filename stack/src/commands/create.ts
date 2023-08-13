@@ -19,10 +19,6 @@ type CreateCommandContext = {
 	templateInput: Record<string, string>;
 };
 
-/**
- * TODO:
- * - Test the package create with npm init in real condition (npm link?)
- */
 export const createCreateCommand: CommandFactory = (program) => {
 	program
 		.command<CreateCommandContext>({
@@ -32,16 +28,9 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.task({
 			label: "Check pre-requisites",
 			key: "repositoryUrl",
-			async handler() {
-				try {
-					// This step is used as well to persist the repository url value:
-					return await getRepositoryUrl();
-				} catch (error) {
-					throw createError(
-						"git",
-						`The project must be a \`git\` repository with an origin already setup. Have you tried to run \`git init && git remote add origin git@github.com:OWNER/REPOSITORY.git && git add -A && git commit -m "chore: initial commit" && git push -u origin main\`?\n${error}`,
-					);
-				}
+			handler() {
+				// Check for git pre-requisite and persist the remote repository URL
+				return getRepositoryUrl();
 			},
 		})
 		.input({
@@ -159,7 +148,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 					await helpers.exec("pnpm fix");
 					await helpers.exec("pnpm check");
 				} catch (error) {
-					throw createError("clean", error);
+					throw createError("clean-up", error);
 				}
 			},
 		});
