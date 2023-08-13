@@ -20,6 +20,15 @@ type CreateCommandContext = {
 };
 
 export const createCreateCommand: CommandFactory = (program) => {
+	helpers.message(
+		`
+╭─────╮
+│ ◠   ◠  I'm Stack your bot assistant. 
+│   ◡ │  I can guarantee you a project creation in under 30 seconds 🚀
+╰─────╯
+`,
+	);
+
 	program
 		.command<CreateCommandContext>({
 			name: "create",
