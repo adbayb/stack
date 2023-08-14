@@ -7,8 +7,8 @@
 		"pnpm-workspace.yaml",
 		".changeset/config.json",
 		".github/PULL_REQUEST_TEMPLATE.md",
-		"{{pkg_folder}}/package.json",
-		"{{pkg_folder}}/README.md"
+		"{{project_name}}/package.json",
+		"{{project_name}}/README.md"
 	],
-	"folders": ["{{pkg_folder}}"]
+	"folders": ["{{project_name}}"]
 }
