@@ -13,14 +13,15 @@
 	},
 	"license": "MIT",
 	"scripts": {
-		"prepare": "husky install ./scripts/hooks",
+		"prepare": "pnpm build && stack install",
 		"clean": "stack clean",
-		"check": "echo 'stack check'",
-		"fix": "echo 'stack fix'",
+		"check": "stack check",
+		"fix": "stack fix",
 		"start": "turbo run start",
 		"build": "turbo run build",
 		"watch": "turbo run watch",
-		"release": "pnpm build && pnpm changeset publish",
+		"publish": "pnpm build && pnpm changeset publish",
+		"version": "pnpm changeset version && pnpm install --no-frozen-lockfile",
 		"add:changelog": "pnpm changeset"
 	},
 	"devDependencies": {
@@ -34,8 +35,6 @@
 		"@commitlint/config-conventional": "17.7.0",
 		"@types/node": "18.17.5",
 		"eslint": "8.47.0",
-		"husky": "8.0.3",
-		"lint-staged": "14.0.0",
 		"prettier": "3.0.1",
 		"quickbundle": "1.2.0",
 		"turbo": "1.10.12",
@@ -48,14 +47,6 @@
 	"commitlint": {
 		"extends": [
 			"@commitlint/config-conventional"
-		]
-	},
-	"lint-staged": {
-		"**/*.{js,jsx,ts,tsx,cjs,mjs,cts,mts}": [
-			"pnpm check"
-		],
-		"**/*.{json,md,mdx,html,css,yaml,yml}": [
-			"pnpm fix"
 		]
 	},
 	"packageManager": "pnpm@8.6.12",

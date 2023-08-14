@@ -6,17 +6,18 @@
 		"access": "public"
 	},
 	"files": [
-		"bin"
+		"bin",
+		"dist"
 	],
-	"bin": "bin/index.js",
+	"bin": "bin/index.cjs",
 	"source": "src/index.ts",
-	"main": "bin/index.js",
+	"main": "dist/index.js",
 	"platform": "node",
 	"scripts": {
 		"prepublishOnly": "pnpm build",
 		"prestart": "pnpm build",
 		"start": "bin/index.js",
-		"build": "quickbundle build && chmod +x bin/index.js",
+		"build": "quickbundle build",
 		"watch": "quickbundle watch"
 	},
 	"keywords": [
