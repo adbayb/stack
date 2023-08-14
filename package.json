@@ -13,7 +13,7 @@
 	},
 	"license": "MIT",
 	"scripts": {
-		"prepare": "husky install ./scripts/hooks && pnpm build",
+		"prepare": "husky install ./scripts/hooks",
 		"clean": "stack clean",
 		"check": "echo 'stack check'",
 		"fix": "echo 'stack fix'",
