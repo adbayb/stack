@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 1.2.0
+
+### Minor Changes
+
+- [`a2a085d`](https://github.com/adbayb/stack/commit/a2a085d15287af5fd169232a3e2b6d68de97b333) Thanks [@adbayb](https://github.com/adbayb)! - Update the default template to force lockfile updates by Changesets during versioning
+
 ## 1.1.0
 
 ### Minor Changes
