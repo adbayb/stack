@@ -10,7 +10,8 @@
 		"templates"
 	],
 	"bin": {
-		"stack": "bin/index.js"
+		"stack": "bin/index.js",
+		"adbayb-stack": "bin/index.js"
 	},
 	"source": "src/index.ts",
 	"main": "bin/index.js",
