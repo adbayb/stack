@@ -1,6 +1,6 @@
 {
 	"name": "@adbayb/create",
-	"version": "0.14.0",
+	"version": "1.0.0",
 	"description": "My opinionated scaffolding tool",
 	"files": [
 		"bin",
@@ -34,7 +34,7 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"@adbayb/stack": "^0.14.0",
+		"@adbayb/stack": "^1.0.0",
 		"termost": "^0.9.0"
 	}
 }

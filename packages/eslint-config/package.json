@@ -1,6 +1,6 @@
 {
 	"name": "@adbayb/eslint-config",
-	"version": "0.14.0",
+	"version": "1.0.0",
 	"description": "My opinionated ESLint configuration preset",
 	"main": "index.cjs",
 	"keywords": [
