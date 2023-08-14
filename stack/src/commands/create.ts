@@ -40,7 +40,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 					{
 						title: "I'm Stack, your bot assistant",
 						description:
-							"I can guarantee you a project creation in under 30 seconds 🚀",
+							"I can guarantee you a project creation in under 2 minutes 🚀",
 					},
 					{
 						type: "information",

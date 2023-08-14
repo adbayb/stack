@@ -86,10 +86,6 @@ We're open to new contributions, you can find more details [here](https://github
 
 ## ✅ Todo
 
--   [ ] **Create folder project (ask GitHub URL) and run git init**
--   [ ] **Deprecate and remove `@adbayb/scripts` package**
--   [ ] **Clean scripts and root package.json after publishing the v1**
--   [ ] Check if it's ok to have `commitlint`, `eslint`, ... as dependencies in `@adbayb/scripts` by removing monorepo root dev dependencies
 -   [ ] Update `@adbayb/stack` to make `tsc` check feasible on git hooks (via eslint-plugin-tsc?)
 -   [ ] Update `@adbayb/stack` to lint packages (caret range for dependencies and strict ones for dev dependencies)
 

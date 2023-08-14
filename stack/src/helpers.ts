@@ -117,8 +117,11 @@ export const fixFormatting = async (files: FilenameCollection) => {
 		prettierFiles.push(`"**/!(${PRETTIER_IGNORE_FILES.join("|")})"`);
 	} else {
 		prettierFiles = files.filter((file) => {
-			return !PRETTIER_IGNORE_FILES.some((filename) =>
-				file.endsWith(filename),
+			return (
+				!PRETTIER_IGNORE_FILES.some((filename) =>
+					file.endsWith(filename),
+				) && // The root `README.md` file is ignored to prevent error due to its symbolic link nature when specified explicitly as a file
+				file !== "README.md"
 			);
 		});
 
@@ -133,6 +136,7 @@ export const fixFormatting = async (files: FilenameCollection) => {
 
 	args.push("--write");
 	args.push("--ignore-unknown");
+	args.push("--no-error-on-unmatched-pattern");
 
 	try {
 		return await helpers.exec(`prettier ${args.join(" ")}`);
