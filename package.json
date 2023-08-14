@@ -20,8 +20,8 @@
 		"start": "turbo run start",
 		"build": "turbo run build",
 		"watch": "turbo run watch",
-		"version": "pnpm install && pnpm changeset version",
 		"publish": "pnpm build && pnpm changeset publish",
+		"version": "pnpm install && pnpm changeset version",
 		"add:changelog": "pnpm changeset"
 	},
 	"devDependencies": {
