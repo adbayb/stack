@@ -1,7 +1,13 @@
 {
 	"name": "@adbayb/ts-config",
-	"version": "0.14.0",
+	"version": "1.0.0",
 	"description": "My opinionated TypeScript configuration preset",
+	"publishConfig": {
+		"access": "public"
+	},
+	"files": [
+		"tsconfig.json"
+	],
 	"main": "tsconfig.json",
 	"keywords": [
 		"configuration",
