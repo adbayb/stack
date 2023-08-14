@@ -21,13 +21,13 @@
 		"build": "turbo run build",
 		"watch": "turbo run watch",
 		"publish": "pnpm build && pnpm changeset publish",
-		"version": "pnpm install && pnpm changeset version",
+		"version": "pnpm changeset version && pnpm install --no-frozen-lockfile",
 		"add:changelog": "pnpm changeset"
 	},
 	"devDependencies": {
 		"@adbayb/eslint-config": "workspace:*",
 		"@adbayb/prettier-config": "workspace:*",
-		"@adbayb/stack": "1.0.0",
+		"@adbayb/stack": "workspace:*",
 		"@adbayb/ts-config": "workspace:*",
 		"@changesets/changelog-github": "0.4.8",
 		"@changesets/cli": "2.26.2",

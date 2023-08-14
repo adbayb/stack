@@ -1,9 +1,11 @@
 {
 	"$schema": "https://raw.githubusercontent.com/changesets/changesets/main/packages/config/schema.json",
+	"access": "public",
 	"baseBranch": "main",
 	"commit": false,
-	"updateInternalDependencies": "patch",
 	"changelog": ["@changesets/changelog-github", { "repo": "adbayb/stack" }],
+	"fixed": [["@adbayb/create", "@adbayb/stack"]],
+	"updateInternalDependencies": "patch",
 	"___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
 		"onlyUpdatePeerDependentsWhenOutOfRange": true,
 		"updateInternalDependents": "out-of-range"
