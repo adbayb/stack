@@ -228,11 +228,16 @@ export const createCreateCommand: CommandFactory = (program) => {
 		});
 };
 
+/**
+ * Helper to format log messages with a welcoming bot
+ * @param input Content input
+ * @param options Termost options for the `message` API
+ */
 const botMessage = (
 	input: { title: string; description: string; body?: string },
 	options: Parameters<typeof helpers.message>[1],
 ) => {
-	return helpers.message(
+	helpers.message(
 		`
 ╭─────╮
 │ ◠   ◠  ${input.title}
