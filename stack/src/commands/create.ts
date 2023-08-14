@@ -5,24 +5,28 @@ import { mkdir, symlink } from "node:fs/promises";
 
 import type { CommandFactory } from "../types";
 import {
+	botMessage,
 	createError,
+	getNpmVersion,
 	request,
 	resolveFromProjectDirectory,
 	resolveFromStackDirectory,
+	setPkgManager,
 } from "../helpers";
 import defaultTemplateConfig from "../../templates/default/config.json";
 
 type CreateCommandContext = {
 	previousTaskError: Error | undefined;
-	projectName: string;
-	projectDescription: string;
-	projectUrl: string;
-	templateInput: Record<
+	inputName: string;
+	inputDescription: string;
+	inputUrl: string;
+	data: Record<
 		| "license_year"
 		| "node_version"
 		| "npm_version"
 		| "project_description"
 		| "project_name"
+		| "project_url"
 		| "repo_id",
 		string
 	>;
@@ -50,41 +54,30 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.input({
 			type: "text",
-			key: "projectName",
+			key: "inputName",
 			label: "What's your project name?",
 		})
 		.input({
 			type: "text",
-			key: "projectDescription",
+			key: "inputDescription",
 			label: "How would you describe it?",
 		})
 		.input({
 			type: "text",
-			key: "projectUrl",
+			key: "inputUrl",
 			label: "Where will it be stored? (Git remote URL)",
 		})
 		.task({
-			label({ projectName }) {
-				return `Create \`${projectName}\` folder`;
-			},
-			async handler({ projectName }) {
-				const projectPath = resolve(process.cwd(), projectName);
-
-				await mkdir(projectPath);
-				process.chdir(projectPath);
+			label: "Check pre-requisites",
+			handler() {
+				// Check pnpm availability by verifying its version
+				return getNpmVersion();
 			},
 		})
 		.task({
-			label: "Initialize Git",
-			async handler({ projectUrl }) {
-				await helpers.exec("git init");
-				await helpers.exec(`git remote add origin ${projectUrl}`);
-			},
-		})
-		.task({
-			key: "templateInput",
-			label: "Evaluate template expressions",
-			async handler({ projectDescription, projectName, projectUrl }) {
+			key: "data",
+			label: "Evaluate contextual data",
+			async handler({ inputDescription, inputName, inputUrl }) {
 				const nodeVersion = await request.get(
 					"https://resolve-node.vercel.app/lts",
 					"text",
@@ -98,8 +91,8 @@ export const createCreateCommand: CommandFactory = (program) => {
 				).version as string;
 
 				const { repoOwner, repoName } =
-					projectUrl.match(
-						projectUrl.startsWith("git")
+					inputUrl.match(
+						inputUrl.startsWith("git")
 							? /^git@.*:(?<repoOwner>.*)\/(?<repoName>.*)\.git$/
 							: /^https?:\/\/.*\/(?<repoOwner>.*)\/(?<repoName>.*)\.git$/,
 					)?.groups ?? {};
@@ -116,20 +109,41 @@ export const createCreateCommand: CommandFactory = (program) => {
 					node_version: nodeVersion,
 					npm_version: npmVersion,
 					repo_id: `${repoOwner}/${repoName}`,
-					project_description: projectDescription,
-					project_name: projectName,
+					project_description:
+						inputDescription.charAt(0).toUpperCase() +
+						inputDescription.slice(1), // Enforce upper case for the first letter
+					project_name: inputName.toLowerCase(), // Enforce lower case for folder and package name
+					project_url: inputUrl,
 				};
 			},
 		})
 		.task({
-			label: "Apply the default template",
-			async handler({ templateInput }) {
+			label({ data }) {
+				return `Create \`${data.project_name}\` folder`;
+			},
+			async handler({ data }) {
+				const projectPath = resolve(process.cwd(), data.project_name);
+
+				await mkdir(projectPath);
+				process.chdir(projectPath);
+			},
+		})
+		.task({
+			label: "Initialize Git",
+			async handler({ data }) {
+				await helpers.exec("git init");
+				await helpers.exec(`git remote add origin ${data.project_url}`);
+			},
+		})
+		.task({
+			label: "Apply default template",
+			async handler({ data }) {
 				await extractTemplate();
 
 				// Hydrate template expressions with context values:
 				const engine = createTemplateEngine(
 					defaultTemplateConfig,
-					templateInput,
+					data,
 				);
 
 				engine.hydrate();
@@ -138,7 +152,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label: "Install dependencies",
-			async handler({ templateInput }) {
+			async handler({ data }) {
 				const localDevDependencies = ["quickbundle"];
 
 				const globalDevDependencies = [
@@ -165,7 +179,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 
 					for (const dependency of localDevDependencies) {
 						await helpers.exec(
-							`pnpm add ${dependency}@latest --save-dev --filter ${templateInput.project_name}`,
+							`pnpm add ${dependency}@latest --save-dev --filter ${data.project_name}`,
 						);
 					}
 				} catch (error) {
@@ -176,12 +190,12 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.task({
 			label: "Clean up",
 			key: "previousTaskError",
-			async handler({ templateInput }) {
+			async handler({ data }) {
 				try {
 					// Symlink the package `README.md` file to the root project directory
 					await symlink(
 						resolveFromProjectDirectory(
-							`./${templateInput.project_name}/README.md`,
+							`./${data.project_name}/README.md`,
 						),
 						resolveFromProjectDirectory(`./README.md`),
 					);
@@ -200,7 +214,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			handler({ previousTaskError, projectName }) {
+			handler({ previousTaskError, data }) {
 				if (previousTaskError) {
 					botMessage(
 						{
@@ -219,39 +233,13 @@ export const createCreateCommand: CommandFactory = (program) => {
 
 				botMessage(
 					{
-						title: `Project successfully created: enter it using \`cd ./${projectName}\``,
-						description: "Enjoy 🚀",
+						title: `The project was successfully created`,
+						description: `Run \`cd ./${data.project_name}\` and Enjoy 🚀`,
 					},
 					{ type: "success" },
 				);
 			},
 		});
-};
-
-/**
- * Helper to format log messages with a welcoming bot
- * @param input Content input
- * @param options Termost options for the `message` API
- */
-const botMessage = (
-	input: { title: string; description: string; body?: string },
-	options: Parameters<typeof helpers.message>[1],
-) => {
-	helpers.message(
-		`
-╭─────╮
-│ ◠   ◠  ${input.title}
-│   ${options?.type === "error" ? "◠" : "◡"} │  ${input.description}
-╰─────╯
-${
-	!input.body
-		? ""
-		: `
-${input.body}
-`
-}`,
-		options,
-	);
 };
 
 /**
@@ -261,13 +249,12 @@ ${input.body}
  */
 const createTemplateEngine = (
 	config: Record<"files" | "folders", Array<string>>,
-	input: CreateCommandContext["templateInput"],
+	input: CreateCommandContext["data"],
 ) => {
 	const evaluate = (expression: string) => {
 		return expression.replace(
 			/{{(.*?)}}/g,
-			(_, key: keyof CreateCommandContext["templateInput"]) =>
-				input[key] || "",
+			(_, key: keyof CreateCommandContext["data"]) => input[key] || "",
 		);
 	};
 
@@ -306,8 +293,4 @@ const extractTemplate = async () => {
 	return helpers.exec(
 		`tar -xzf ${compressedFilePath} -C ${destinationPath} --strip-components=1`,
 	);
-};
-
-const setPkgManager = () => {
-	return helpers.exec("corepack enable");
 };

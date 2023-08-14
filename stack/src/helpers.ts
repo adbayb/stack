@@ -3,6 +3,32 @@ import { helpers } from "termost";
 import { resolve } from "node:path";
 
 /**
+ * Helper to format log messages with a welcoming bot
+ * @param input Content input
+ * @param options Termost options for the `message` API
+ */
+export const botMessage = (
+	input: { title: string; description: string; body?: string },
+	options: Parameters<typeof helpers.message>[1],
+) => {
+	helpers.message(
+		`
+╭─────╮
+│ ◠   ◠  ${input.title}
+│   ${options?.type === "error" ? "◠" : "◡"} │  ${input.description}
+╰─────╯
+${
+	!input.body
+		? ""
+		: `
+${input.body}
+`
+}`,
+		options,
+	);
+};
+
+/**
  * Resolve a relative path to an absolute one resolved from the generated project root directory
  * @param path The relative path
  * @returns The resolved absolute path
@@ -32,6 +58,17 @@ export const getRepositoryUrl = async () => {
 	}
 };
 
+export const getNpmVersion = async () => {
+	try {
+		return await helpers.exec("pnpm -v");
+	} catch (error) {
+		throw createError(
+			"pnpm",
+			"The project must use `pnpm` as a node package manager tool. Follow this installation guide https://pnpm.io/installation",
+		);
+	}
+};
+
 export const getStackCommand = (command: string, isNodeRuntime = true) => {
 	// @note: `isNodeRuntime` allows executing node bin executables in a non node environment such as in git hooks context
 	// Npx is used to make executable resolution independent from the build tool (npx is the built-in Node tool)
@@ -39,6 +76,10 @@ export const getStackCommand = (command: string, isNodeRuntime = true) => {
 	return [...(isNodeRuntime ? [] : ["npx --no"]), `stack ${command}`].join(
 		" ",
 	);
+};
+
+export const setPkgManager = () => {
+	return helpers.exec("corepack enable");
 };
 
 export const request = {
