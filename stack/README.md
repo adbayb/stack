@@ -23,12 +23,9 @@
 
 This section introduces the `stack` essentials by walking through its main commands:
 
-1️⃣ Create the NPM project thanks to the `@adbayb/create` initializer:
+1️⃣ Create the NPM project via the `@adbayb/create` initializer:
 
 ```bash
-# npm
-npm init @adbayb
-# pnpm
 pnpm create @adbayb
 ```
 
@@ -84,7 +81,7 @@ We're open to new contributions, you can find more details [here](https://github
 
 <br>
 
-## ✅ Todo
+## ☑️ Roadmap
 
 -   [ ] Update `@adbayb/stack` to make `tsc` check feasible on git hooks (via eslint-plugin-tsc?)
 -   [ ] Update `@adbayb/stack` to lint packages (caret range for dependencies and strict ones for dev dependencies)
