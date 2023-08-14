@@ -1,5 +1,12 @@
 # @adbayb/stack
 
+## 1.1.0
+
+### Minor Changes
+
+- [`fd0211c`](https://github.com/adbayb/stack/commit/fd0211cc90077339f6eb46be9fa77fb345a34a3d) Thanks [@adbayb](https://github.com/adbayb)! - Enforce string transformation for project name and description
+  Add pre-requisites verification step
+
 ## 1.0.0
 
 ### Major Changes
