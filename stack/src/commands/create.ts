@@ -194,10 +194,8 @@ export const createCreateCommand: CommandFactory = (program) => {
 				try {
 					// Symlink the package `README.md` file to the root project directory
 					await symlink(
-						resolveFromProjectDirectory(
-							`./${data.project_name}/README.md`,
-						),
-						resolveFromProjectDirectory(`./README.md`),
+						`./${data.project_name}/README.md`,
+						"./README.md",
 					);
 					// Set the Node package manager runtime by following the `packageManager` field instruction
 					await setPkgManager();
@@ -218,7 +216,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 				if (previousTaskError) {
 					botMessage(
 						{
-							title: `Oops, an error occurred`,
+							title: "Oops, an error occurred",
 							description:
 								"Keep calm and carry on with some coffee ☕️",
 							body: String(previousTaskError),
@@ -233,7 +231,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 
 				botMessage(
 					{
-						title: `The project was successfully created`,
+						title: "The project was successfully created",
 						description: `Run \`cd ./${data.project_name}\` and Enjoy 🚀`,
 					},
 					{ type: "success" },
