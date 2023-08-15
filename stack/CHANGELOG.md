@@ -1,5 +1,17 @@
 # @adbayb/stack
 
+## 1.4.0
+
+### Minor Changes
+
+- [`f9322cf`](https://github.com/adbayb/stack/commit/f9322cfae1b4d85f25e95b117062e33bd0b0dd81) Thanks [@adbayb](https://github.com/adbayb)! - Update the default template to:
+  - Include missing examples workspaces
+  - Fix the unparsable package.json private field
+
+### Patch Changes
+
+- [`f9322cf`](https://github.com/adbayb/stack/commit/f9322cfae1b4d85f25e95b117062e33bd0b0dd81) Thanks [@adbayb](https://github.com/adbayb)! - Generate symlink relatively to the project folder
+
 ## 1.3.0
 
 ### Minor Changes
