@@ -6,5 +6,6 @@
 
 ## 🚀 Usage
 
--   `cd my-project-root-folder`
--   `npm init @adbayb`
+```bash
+pnpm create @adbayb
+```
