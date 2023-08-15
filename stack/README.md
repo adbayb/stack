@@ -1,6 +1,6 @@
 <div align="center">
     <h1>🦦 Stack</h1>
-    <strong>My opinionated environment to ease project building</strong>
+    <strong>My opinionated scaffolding tool to ease project building</strong>
 </div>
 <br>
 <br>
@@ -26,6 +26,9 @@ This section introduces the `stack` essentials by walking through its main comma
 1️⃣ Create the NPM project via the `@adbayb/create` initializer:
 
 ```bash
+# Npm
+npm init @adbayb
+# Pnpm
 pnpm create @adbayb
 ```
 

@@ -1,11 +1,15 @@
 <div align="center">
     <h1>🦦 Create</h1>
-    <strong>My opinionated scaffolding tool</strong>
+    <strong>My opinionated node package manager initializer</strong>
 </div>
-<p></p>
+<br>
+<br>
 
 ## 🚀 Usage
 
 ```bash
+# Npm
+npm init @adbayb
+# Pnpm
 pnpm create @adbayb
 ```

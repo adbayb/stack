@@ -44,7 +44,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 					{
 						title: "I'm Stack, your bot assistant",
 						description:
-							"I can guarantee you a project creation in under 2 minutes 🚀",
+							"I can guarantee you a project creation in under 1 minute 🚀",
 					},
 					{
 						type: "information",
@@ -171,17 +171,17 @@ export const createCreateCommand: CommandFactory = (program) => {
 				];
 
 				try {
-					for (const dependency of globalDevDependencies) {
-						await helpers.exec(
-							`pnpm add ${dependency}@latest --save-dev --ignore-workspace-root-check`,
-						);
-					}
+					await helpers.exec(
+						`pnpm add ${globalDevDependencies.join(
+							" ",
+						)} --save-dev --ignore-workspace-root-check`,
+					);
 
-					for (const dependency of localDevDependencies) {
-						await helpers.exec(
-							`pnpm add ${dependency}@latest --save-dev --filter ${data.project_name}`,
-						);
-					}
+					await helpers.exec(
+						`pnpm add ${localDevDependencies.join(
+							" ",
+						)} --save-dev --filter ${data.project_name}`,
+					);
 				} catch (error) {
 					throw createError("pnpm", error);
 				}
