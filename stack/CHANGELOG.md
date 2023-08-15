@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 1.3.0
+
+### Minor Changes
+
+- [`73c5c75`](https://github.com/adbayb/stack/commit/73c5c759d0f54e28d177fd28511c4d794723f904) Thanks [@adbayb](https://github.com/adbayb)! - Reduce scaffolding time by installing dependencies at once when possible
+
 ## 1.2.0
 
 ### Minor Changes
