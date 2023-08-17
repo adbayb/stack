@@ -7,7 +7,7 @@
 
 ## ✨ Features
 
-`Stack` allows creating an NPM project in a **quick**, **easy** and **opinionated** with:
+`Stack` allows creating an NPM project in a **quick**, **easy** and **opinionated** way with:
 
 -   A unified monorepo-driven and git-driven approach for all kinds of projects (single-purpose library, multiple libraries, application(s), ...)
 -   Support for several templates application (for now, only a default template is available but others can be added later)
