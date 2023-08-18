@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 1.5.1
+
+### Patch Changes
+
+- [`d0365d4`](https://github.com/adbayb/stack/commit/d0365d42eefa234ce727230a430412b6aed2faea) Thanks [@adbayb](https://github.com/adbayb)! - Update template to fix failed check/fix commands if build is not run before
+
 ## 1.5.0
 
 ### Minor Changes
