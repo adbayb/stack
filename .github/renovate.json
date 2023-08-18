@@ -2,14 +2,13 @@
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": [
 		":automergeAll",
-		":automergePr",
+		":automergeBranch",
 		":automergeRequireAllStatusChecks",
 		":enableVulnerabilityAlerts",
 		":label(dependencies)",
 		":maintainLockFilesMonthly",
 		":prConcurrentLimit10",
 		":rebaseStalePrs",
-		":reviewer(adbayb)",
 		":semanticCommits",
 		":semanticCommitScopeDisabled",
 		":semanticPrefixFixDepsChoreOthers",
@@ -17,6 +16,7 @@
 		"replacements:all",
 		"workarounds:all"
 	],
+	"reviewers": ["adbayb"],
 	"ignoreDeps": [],
 	"packageRules": [
 		{
