@@ -14,8 +14,6 @@
 		":semanticCommitScopeDisabled",
 		":semanticPrefixFixDepsChoreOthers",
 		":timezone(Europe/Paris)",
-		"npm:unpublishSafe",
-		"schedule:daily",
 		"replacements:all",
 		"workarounds:all"
 	],
