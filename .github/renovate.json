@@ -2,7 +2,7 @@
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": [
 		":automergeAll",
-		":automergePr",
+		":automergeBranch",
 		":automergeRequireAllStatusChecks",
 		":enableVulnerabilityAlerts",
 		":label(dependencies)",
@@ -14,9 +14,7 @@
 		":semanticCommitScopeDisabled",
 		":semanticPrefixFixDepsChoreOthers",
 		":timezone(Europe/Paris)",
-		"npm:unpublishSafe",
 		"replacements:all",
-		"schedule:monthly",
 		"workarounds:all"
 	],
 	"ignoreDeps": [],
