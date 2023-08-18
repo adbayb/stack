@@ -28,8 +28,8 @@
 		"typescript": ">=5.0.0"
 	},
 	"dependencies": {
-		"@typescript-eslint/eslint-plugin": "^6.3.0",
-		"@typescript-eslint/parser": "^6.3.0",
+		"@typescript-eslint/eslint-plugin": "^6.4.0",
+		"@typescript-eslint/parser": "^6.4.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-import-resolver-typescript": "^3.6.0",
 		"eslint-plugin-astro": "^0.28.0",
