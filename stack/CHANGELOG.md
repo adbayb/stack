@@ -1,5 +1,15 @@
 # @adbayb/stack
 
+## 1.5.0
+
+### Minor Changes
+
+- [`7c79b87`](https://github.com/adbayb/stack/commit/7c79b87ce79c1f7858e78feb1ce97936a129ce2a) Thanks [@adbayb](https://github.com/adbayb)! - Update default template to include:
+
+  - Redundant CI jobs on pull requests
+  - Renovate config file updates to enable automerge
+  - `@examples` workspace with a default example
+
 ## 1.4.0
 
 ### Minor Changes
