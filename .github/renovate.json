@@ -9,14 +9,17 @@
 		":maintainLockFilesMonthly",
 		":prConcurrentLimit10",
 		":rebaseStalePrs",
-		":reviewer(adbayb)",
 		":semanticCommits",
 		":semanticCommitScopeDisabled",
 		":semanticPrefixFixDepsChoreOthers",
 		":timezone(Europe/Paris)",
+		"npm:unpublishSafe",
 		"replacements:all",
+		"schedule:monthly",
 		"workarounds:all"
 	],
+	"commitBodyTable": true,
+	"platformAutomerge": false,
 	"ignoreDeps": [],
 	"packageRules": [
 		{
