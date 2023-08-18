@@ -114,6 +114,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 						inputDescription.slice(1), // Enforce upper case for the first letter
 					project_name: inputName.toLowerCase(), // Enforce lower case for folder and package name
 					project_url: inputUrl,
+					project_version: "0.0.0",
 				};
 			},
 		})
