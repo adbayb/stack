@@ -54,7 +54,7 @@ importers:
   packages/create:
     dependencies:
       '@adbayb/stack':
-        specifier: ^1.4.0
+        specifier: ^1.5.0
         version: link:../../stack
       termost:
         specifier: ^0.9.0
