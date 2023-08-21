@@ -161,14 +161,6 @@ export const createCreateCommand: CommandFactory = (program) => {
 					"@adbayb/prettier-config",
 					"@adbayb/ts-config",
 					"@adbayb/stack",
-					"@changesets/changelog-github",
-					"@changesets/cli",
-					"@commitlint/cli",
-					"@commitlint/config-conventional",
-					"eslint",
-					"prettier",
-					"turbo",
-					"typescript",
 				];
 
 				try {
