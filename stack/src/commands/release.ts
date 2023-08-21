@@ -19,7 +19,6 @@ export const createReleaseCommand: CommandFactory = (program) => {
 			key: "log",
 			name: "log",
 			description: "Add a new changelog entry",
-			defaultValue: true,
 		})
 		.option({
 			key: "tag",
