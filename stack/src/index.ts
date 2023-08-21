@@ -9,13 +9,13 @@ import { createCleanCommand } from "./commands/clean";
 import { createFixCommand } from "./commands/fix";
 import { createInstallCommand } from "./commands/install";
 import { createStartCommand } from "./commands/start";
+import { createWatchCommand } from "./commands/watch";
 import type { CommandFactory } from "./types";
 
 const createProgram = (...commandFactories: Array<CommandFactory>) => {
 	const program = termost({
 		name: "stack",
-		description:
-			"Toolbox to easily scaffold and manage a JavaScript/TypeScript project",
+		description: "Toolbox to easily scaffold and maintain a project",
 	});
 
 	for (const commandBuilder of commandFactories) {
@@ -26,9 +26,10 @@ const createProgram = (...commandFactories: Array<CommandFactory>) => {
 createProgram(
 	createCreateCommand,
 	createInstallCommand,
-	createCheckCommand,
 	createCleanCommand,
+	createCheckCommand,
 	createFixCommand,
-	createBuildCommand,
 	createStartCommand,
+	createBuildCommand,
+	createWatchCommand,
 );

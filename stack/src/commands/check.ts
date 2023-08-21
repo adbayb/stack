@@ -1,3 +1,5 @@
+import { helpers } from "termost";
+
 import type { CommandFactory } from "../types";
 import {
 	checkCommit,
@@ -35,6 +37,12 @@ export const createCheckCommand: CommandFactory = (program) => {
 			name: "fix",
 			description: "Fix all auto-fixable lints",
 			defaultValue: false,
+		})
+		.task({
+			label: "Checking commit 🧐",
+			handler() {
+				helpers.exec("stack build");
+			},
 		})
 		.task({
 			label(context) {

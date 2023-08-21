@@ -68,7 +68,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			label: "Where will it be stored? (Git remote URL)",
 		})
 		.task({
-			label: "Check pre-requisites",
+			label: "Checking pre-requisites 🔨",
 			handler() {
 				// Check pnpm availability by verifying its version
 				return getNpmVersion();
@@ -76,7 +76,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			key: "data",
-			label: "Evaluate contextual data",
+			label: "Evaluating contextual data 🔨",
 			async handler({ inputDescription, inputName, inputUrl }) {
 				const nodeVersion = await request.get(
 					"https://resolve-node.vercel.app/lts",
@@ -120,7 +120,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label({ data }) {
-				return `Create \`${data.project_name}\` folder`;
+				return `Creating \`${data.project_name}\` folder 🔨`;
 			},
 			async handler({ data }) {
 				const projectPath = resolve(process.cwd(), data.project_name);
@@ -130,14 +130,14 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: "Initialize Git",
+			label: "Initializing `git` 🔨",
 			async handler({ data }) {
 				await helpers.exec("git init");
 				await helpers.exec(`git remote add origin ${data.project_url}`);
 			},
 		})
 		.task({
-			label: "Apply default template",
+			label: "Applying default template 🔨",
 			async handler({ data }) {
 				await extractTemplate();
 
@@ -152,7 +152,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: "Install dependencies",
+			label: "Installing dependencies 🔨",
 			async handler({ data }) {
 				const localDevDependencies = ["quickbundle"];
 
@@ -181,7 +181,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: "Clean up",
+			label: "Cleaning up 🔨",
 			key: "previousTaskError",
 			async handler({ data }) {
 				try {
