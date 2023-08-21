@@ -216,9 +216,12 @@ export const createError = (bin: string, error: Error | string | unknown) => {
 	return new Error(`\`${bin}\` failed:\n${error}`);
 };
 
-export const build = async (options: Parameters<typeof helpers.exec>[1]) => {
+export const turbo = async (
+	command: "build" | "start" | "test" | "watch",
+	options: Parameters<typeof helpers.exec>[1] = { hasLiveOutput: true },
+) => {
 	try {
-		return await helpers.exec("turbo run build", options);
+		return await helpers.exec(`turbo run ${command}`, options);
 	} catch (error) {
 		throw createError("turbo", error);
 	}

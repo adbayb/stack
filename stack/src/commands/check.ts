@@ -1,9 +1,7 @@
-import { helpers } from "termost";
-
 import type { CommandFactory } from "../types";
-import { build, checkCommit, checkLints, checkTypes } from "../helpers";
+import { checkCommit, checkLints, checkTypes, turbo } from "../helpers";
 
-const onlyValues = ["commit", "lint", "test", "type"] as const;
+const onlyValues = ["commit", "lint", "type"] as const;
 
 type Only = (typeof onlyValues)[number];
 
@@ -15,7 +13,7 @@ export const createCheckCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
 			name: "check",
-			description: "Check code health",
+			description: "Check code health (static analysis)",
 		})
 		.option({
 			key: "only",
@@ -28,7 +26,7 @@ export const createCheckCommand: CommandFactory = (program) => {
 		.task({
 			label: label("Preparing the project"),
 			handler() {
-				return build({ hasLiveOutput: false });
+				return turbo("build", { hasLiveOutput: false });
 			},
 		})
 		.task({
@@ -53,13 +51,6 @@ export const createCheckCommand: CommandFactory = (program) => {
 			},
 			handler(_, argv) {
 				return checkTypes(argv.operands);
-			},
-		})
-		.task({
-			label: label("Checking tests"),
-			skip: ifNotAllOrOnlyNotEqualTo("test"),
-			handler() {
-				return helpers.exec("turbo run test", { hasLiveOutput: true });
 			},
 		})
 		.task({

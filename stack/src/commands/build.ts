@@ -1,5 +1,5 @@
 import type { CommandFactory } from "../types";
-import { build } from "../helpers";
+import { turbo } from "../helpers";
 
 export const createBuildCommand: CommandFactory = (program) => {
 	program
@@ -9,7 +9,7 @@ export const createBuildCommand: CommandFactory = (program) => {
 		})
 		.task({
 			handler() {
-				return build({ hasLiveOutput: true });
+				return turbo("build");
 			},
 		});
 };

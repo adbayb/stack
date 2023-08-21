@@ -1,6 +1,5 @@
-import { helpers } from "termost";
-
 import type { CommandFactory } from "../types";
+import { turbo } from "../helpers";
 
 export const createStartCommand: CommandFactory = (program) => {
 	program
@@ -10,7 +9,7 @@ export const createStartCommand: CommandFactory = (program) => {
 		})
 		.task({
 			handler() {
-				return helpers.exec("turbo run start", { hasLiveOutput: true });
+				return turbo("start");
 			},
 		});
 };

@@ -39,7 +39,7 @@ pnpm create @adbayb
 stack install
 # Clean the project
 stack clean
-# Check code health (linters, tests, types, and commit message)
+# Check code health (static analysis including linters, types, and commit message)
 stack check
 # Fix auto-fixable issues
 stack fix
@@ -49,6 +49,8 @@ stack start
 stack build
 # Build and start the project in development mode
 stack watch
+# Test the code execution
+stack test
 # Log, version, and publish package(s)
 stack release
 ```

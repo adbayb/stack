@@ -1,5 +1,5 @@
 import type { CommandFactory } from "../types";
-import { build, fixFormatting, fixLints } from "../helpers";
+import { fixFormatting, fixLints, turbo } from "../helpers";
 
 export const createFixCommand: CommandFactory = (program) => {
 	program
@@ -10,7 +10,7 @@ export const createFixCommand: CommandFactory = (program) => {
 		.task({
 			label: label("Preparing the project"),
 			handler() {
-				return build({ hasLiveOutput: false });
+				return turbo("build", { hasLiveOutput: false });
 			},
 		})
 		.task({
