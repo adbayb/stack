@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 1.6.0
+
+### Minor Changes
+
+- [`88e6316`](https://github.com/adbayb/stack/commit/88e631682b20b84bf7b43f57cbb419ec7cc7bc79) Thanks [@adbayb](https://github.com/adbayb)! - Hide dependency internal and add new commands (start, build, watch, test, release)
+
 ## 1.5.1
 
 ### Patch Changes
