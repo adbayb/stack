@@ -154,7 +154,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.task({
 			label: label("Installing dependencies"),
 			async handler({ data }) {
-				const localDevDependencies = ["quickbundle"];
+				const localDevDependencies = ["quickbundle", "vitest"];
 
 				const globalDevDependencies = [
 					"@adbayb/eslint-config",

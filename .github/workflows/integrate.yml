@@ -41,7 +41,7 @@ jobs:
                   cache: pnpm
             - name: Install dependencies
               run: pnpm install
-            - name: Check (lint, test, types)
+            - name: Check (linters, tests, types, and commit message)
               run: pnpm check
     build:
         timeout-minutes: 5

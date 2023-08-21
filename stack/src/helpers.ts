@@ -205,7 +205,7 @@ export const checkTypes = async (files: FilenameCollection) => {
 export const checkCommit = async () => {
 	try {
 		return await helpers.exec(
-			`commitlint --extends "@commitlint/config-conventional" --edit`,
+			'commitlint --extends "@commitlint/config-conventional" --edit',
 		);
 	} catch (error) {
 		throw createError("commitlint", error);

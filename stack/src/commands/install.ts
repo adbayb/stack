@@ -15,7 +15,7 @@ export const createInstallCommand: CommandFactory = (program) => {
 				return installGitHook(
 					"pre-commit",
 					`${getStackCommand(
-						`check $(git status --porcelain | awk 'BEGIN{ ORS=" " } { print $2 }') --fix`,
+						"fix $(git status --porcelain | awk 'BEGIN{ ORS=\" \" } { print $2 }')",
 						false,
 					)} && git add -A`,
 				);

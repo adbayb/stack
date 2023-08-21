@@ -1,19 +1,13 @@
+import { helpers } from "termost";
+
 import type { CommandFactory } from "../types";
-import {
-	build,
-	checkCommit,
-	checkLints,
-	checkTypes,
-	fixFormatting,
-	fixLints,
-} from "../helpers";
+import { build, checkCommit, checkLints, checkTypes } from "../helpers";
 
 const onlyValues = ["commit", "lint", "test", "type"] as const;
 
 type Only = (typeof onlyValues)[number];
 
 type CommandContext = {
-	fix: boolean;
 	only: Only | undefined;
 };
 
@@ -31,12 +25,6 @@ export const createCheckCommand: CommandFactory = (program) => {
 			)})`,
 			defaultValue: undefined,
 		})
-		.option({
-			key: "fix",
-			name: "fix",
-			description: "Fix all auto-fixable lints",
-			defaultValue: false,
-		})
 		.task({
 			label: label("Preparing the project"),
 			handler() {
@@ -44,36 +32,34 @@ export const createCheckCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label(context) {
-				return label(
-					`Checking ${context.fix ? "and fixing" : ""} lints`,
-				);
-			},
-			skip: ifDefinedAndNotEqualTo("lint"),
-			async handler(context, argv) {
+			label: label("Checking linters"),
+			skip: ifNotAllOrOnlyNotEqualTo("lint"),
+			async handler(_, argv) {
 				const filenames = argv.operands;
-				const lint = context.fix ? fixLints : checkLints;
 
-				if (context.fix) {
-					await fixFormatting(filenames);
-				}
-
-				return lint(filenames);
+				return checkLints(filenames);
 			},
 		})
 		.task({
 			label: label("Checking types"),
 			skip(context, argv) {
 				return (
-					ifDefinedAndNotEqualTo("type")(context) ||
+					ifNotAllOrOnlyNotEqualTo("type")(context) ||
 					!require.resolve("typescript") ||
-					// @note: for now disallow type checking with specified files
+					// For now, skip type-checking if some files are passed down
 					// @see: https://github.com/microsoft/TypeScript/issues/27379
 					argv.operands.length > 0
 				);
 			},
 			handler(_, argv) {
 				return checkTypes(argv.operands);
+			},
+		})
+		.task({
+			label: label("Checking tests"),
+			skip: ifNotAllOrOnlyNotEqualTo("test"),
+			handler() {
+				return helpers.exec("turbo run test", { hasLiveOutput: true });
 			},
 		})
 		.task({
@@ -89,6 +75,6 @@ export const createCheckCommand: CommandFactory = (program) => {
 
 const label = (message: string) => `${message} 🧐`;
 
-const ifDefinedAndNotEqualTo = (only: Only) => (context: CommandContext) => {
+const ifNotAllOrOnlyNotEqualTo = (only: Only) => (context: CommandContext) => {
 	return context.only !== undefined && context.only !== only;
 };

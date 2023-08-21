@@ -39,7 +39,7 @@ pnpm create @adbayb
 stack install
 # Clean the project
 stack clean
-# Check code health (static code analysis including linters and type checking)
+# Check code health (linters, tests, types, and commit message)
 stack check
 # Fix auto-fixable issues
 stack fix
@@ -80,13 +80,20 @@ flowchart TD
 
 <br>
 
-## 🔎 Used technologies
+### Used technologies
 
 -   **Static code analysis**: ESLint, Prettier
 -   **Node package manager**: PNPM
 -   **Task orchestration**: Turborepo
 -   **Release**: Changesets
 -   **Testing**: Vitest
+
+<br>
+
+## 👣 Roadmap
+
+-   [ ] Add `tsc` checks to git hooks (via eslint-plugin-tsc?)
+-   [ ] Lint packages (caret range for dependencies and strict ones for dev dependencies)
 
 <br>
 
@@ -99,13 +106,5 @@ We're open to new contributions, you can find more details [here](https://github
 ## 📖 License
 
 [MIT](https://github.com/adbayb/stack/blob/main/LICENSE "License MIT")
-
-<br>
-
-## ☑️ Roadmap
-
--   [ ] Test stack setup with sensible defaults (vitest?)
--   [ ] Make `tsc` check feasible on git hooks (via eslint-plugin-tsc?)
--   [ ] Lint packages (caret range for dependencies and strict ones for dev dependencies)
 
 <br>
