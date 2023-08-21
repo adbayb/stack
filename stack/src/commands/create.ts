@@ -15,7 +15,7 @@ import {
 } from "../helpers";
 import defaultTemplateConfig from "../../templates/default/config.json";
 
-type CreateCommandContext = {
+type CommandContext = {
 	previousTaskError: Error | undefined;
 	inputName: string;
 	inputDescription: string;
@@ -34,7 +34,7 @@ type CreateCommandContext = {
 
 export const createCreateCommand: CommandFactory = (program) => {
 	program
-		.command<CreateCommandContext>({
+		.command<CommandContext>({
 			name: "create",
 			description: "Scaffold a new project",
 		})
@@ -242,12 +242,12 @@ const label = (message: string) => `${message} 🔨`;
  */
 const createTemplateEngine = (
 	config: Record<"files" | "folders", Array<string>>,
-	input: CreateCommandContext["data"],
+	input: CommandContext["data"],
 ) => {
 	const evaluate = (expression: string) => {
 		return expression.replace(
 			/{{(.*?)}}/g,
-			(_, key: keyof CreateCommandContext["data"]) => input[key] || "",
+			(_, key: keyof CommandContext["data"]) => input[key] || "",
 		);
 	};
 

@@ -49,7 +49,7 @@ stack start
 stack build
 # Build and start the project in development mode
 stack watch
-# Release-related command
+# Log, version, and publish package(s)
 stack release
 ```
 
@@ -77,6 +77,16 @@ flowchart TD
     style TC fill:#daf2d7,stroke:#90cf8e
     classDef strokeWidth stroke-width:3px
 ```
+
+<br>
+
+## 🔎 Used technologies
+
+-   **Static code analysis**: ESLint, Prettier
+-   **Node package manager**: PNPM
+-   **Task orchestration**: Turborepo
+-   **Release**: Changesets
+-   **Testing**: Vitest
 
 <br>
 

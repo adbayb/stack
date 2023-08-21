@@ -8,6 +8,7 @@ import { createCheckCommand } from "./commands/check";
 import { createCleanCommand } from "./commands/clean";
 import { createFixCommand } from "./commands/fix";
 import { createInstallCommand } from "./commands/install";
+import { createReleaseCommand } from "./commands/release";
 import { createStartCommand } from "./commands/start";
 import { createWatchCommand } from "./commands/watch";
 import type { CommandFactory } from "./types";
@@ -32,4 +33,5 @@ createProgram(
 	createStartCommand,
 	createBuildCommand,
 	createWatchCommand,
+	createReleaseCommand,
 );

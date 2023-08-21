@@ -224,6 +224,16 @@ export const build = async (options: Parameters<typeof helpers.exec>[1]) => {
 	}
 };
 
+export const changeset = async (command: string) => {
+	try {
+		return await helpers.exec(command, {
+			hasLiveOutput: true,
+		});
+	} catch (error) {
+		throw createError("changeset", error);
+	}
+};
+
 const TYPESCRIPT_EXTENSIONS = ["ts", "tsx", "cts", "mts"];
 /**
  * Extensions supported by ESLint.

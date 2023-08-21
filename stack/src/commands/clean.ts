@@ -2,13 +2,13 @@ import { helpers } from "termost";
 
 import type { CommandFactory } from "../types";
 
-type CleanCommandContext = {
+type CommandContext = {
 	files: Array<string>;
 };
 
 export const createCleanCommand: CommandFactory = (program) => {
 	program
-		.command<CleanCommandContext>({
+		.command<CommandContext>({
 			name: "clean",
 			description: "Clean the project",
 		})

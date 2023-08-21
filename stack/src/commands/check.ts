@@ -12,14 +12,14 @@ const onlyValues = ["commit", "lint", "test", "type"] as const;
 
 type Only = (typeof onlyValues)[number];
 
-type CheckContext = {
+type CommandContext = {
 	fix: boolean;
 	only: Only | undefined;
 };
 
 export const createCheckCommand: CommandFactory = (program) => {
 	program
-		.command<CheckContext>({
+		.command<CommandContext>({
 			name: "check",
 			description: "Check code health",
 		})
@@ -89,6 +89,6 @@ export const createCheckCommand: CommandFactory = (program) => {
 
 const label = (message: string) => `${message} 🧐`;
 
-const ifDefinedAndNotEqualTo = (only: Only) => (context: CheckContext) => {
+const ifDefinedAndNotEqualTo = (only: Only) => (context: CommandContext) => {
 	return context.only !== undefined && context.only !== only;
 };
