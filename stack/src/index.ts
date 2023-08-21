@@ -2,6 +2,7 @@
 
 import { termost } from "termost";
 
+import { createBuildCommand } from "./commands/build";
 import { createCreateCommand } from "./commands/create";
 import { createCheckCommand } from "./commands/check";
 import { createCleanCommand } from "./commands/clean";
@@ -24,9 +25,10 @@ const createProgram = (...commandFactories: Array<CommandFactory>) => {
 
 createProgram(
 	createCreateCommand,
+	createInstallCommand,
 	createCheckCommand,
 	createCleanCommand,
 	createFixCommand,
-	createInstallCommand,
+	createBuildCommand,
 	createStartCommand,
 );
