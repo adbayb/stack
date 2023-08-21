@@ -13,32 +13,24 @@
 	},
 	"license": "MIT",
 	"scripts": {
-		"prepare": "pnpm build && stack install",
+		"prepare": "pnpm --filter stack build && stack install",
 		"clean": "stack clean",
 		"check": "stack check",
 		"fix": "stack fix",
-		"start": "turbo run start",
-		"build": "turbo run build",
-		"watch": "turbo run watch",
-		"release:log": "pnpm changeset",
-		"release:version": "pnpm changeset version && pnpm install --no-frozen-lockfile",
-		"release:publish": "pnpm build && pnpm changeset publish"
+		"start": "stack start",
+		"build": "stack build",
+		"watch": "stack watch",
+		"release:log": "stack release --log",
+		"release:version": "stack release --version",
+		"release:publish": "stack release --publish"
 	},
 	"devDependencies": {
 		"@adbayb/eslint-config": "workspace:*",
 		"@adbayb/prettier-config": "workspace:*",
 		"@adbayb/stack": "workspace:*",
 		"@adbayb/ts-config": "workspace:*",
-		"@changesets/changelog-github": "0.4.8",
-		"@changesets/cli": "2.26.2",
-		"@commitlint/cli": "17.7.1",
-		"@commitlint/config-conventional": "17.7.0",
 		"@types/node": "18.17.5",
-		"eslint": "8.47.0",
-		"prettier": "3.0.2",
-		"quickbundle": "1.2.0",
-		"turbo": "1.10.12",
-		"typescript": "5.1.6"
+		"quickbundle": "1.2.0"
 	},
 	"prettier": "@adbayb/prettier-config",
 	"eslintConfig": {
