@@ -1,5 +1,13 @@
 # @adbayb/stack
 
+## 1.7.0
+
+### Minor Changes
+
+- [`a8b0aab`](https://github.com/adbayb/stack/commit/a8b0aab485ce8ddd65320e4ec1d1d99a61d3a2a2) Thanks [@adbayb](https://github.com/adbayb)! - Add a default changelog and Update the GitHub action to include a test job
+
+- [`d2f684f`](https://github.com/adbayb/stack/commit/d2f684f4e0740cd2dab6a96ddeeeef088e33d3b2) Thanks [@adbayb](https://github.com/adbayb)! - Log stack version in create command
+
 ## 1.6.0
 
 ### Minor Changes
