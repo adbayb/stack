@@ -35,14 +35,22 @@ pnpm create @adbayb
 2️⃣ Play with available commands (already set up in the generated root `package.json`):
 
 ```bash
-# Setup (including Git hooks installation)
+# Setup initial requirements (including Git hooks installation)
 stack install
-# Clean
+# Clean the project
 stack clean
-# Check (static code analysis including linters and type checking)
+# Check code health (static code analysis including linters and type checking)
 stack check
-# Fix
+# Fix auto-fixable issues
 stack fix
+# Start the project in production mode
+stack start
+# Build the project in production mode
+stack build
+# Build and start the project in development mode
+stack watch
+# Release-related command
+stack release
 ```
 
 3️⃣ Enjoy!

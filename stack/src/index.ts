@@ -7,6 +7,7 @@ import { createCheckCommand } from "./commands/check";
 import { createCleanCommand } from "./commands/clean";
 import { createFixCommand } from "./commands/fix";
 import { createInstallCommand } from "./commands/install";
+import { createStartCommand } from "./commands/start";
 import type { CommandFactory } from "./types";
 
 const createProgram = (...commandFactories: Array<CommandFactory>) => {
@@ -27,4 +28,5 @@ createProgram(
 	createCleanCommand,
 	createFixCommand,
 	createInstallCommand,
+	createStartCommand,
 );
