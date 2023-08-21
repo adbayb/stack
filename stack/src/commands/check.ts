@@ -1,7 +1,6 @@
-import { helpers } from "termost";
-
 import type { CommandFactory } from "../types";
 import {
+	build,
 	checkCommit,
 	checkLints,
 	checkTypes,
@@ -39,14 +38,16 @@ export const createCheckCommand: CommandFactory = (program) => {
 			defaultValue: false,
 		})
 		.task({
-			label: "Checking commit 🧐",
+			label: label("Preparing the project"),
 			handler() {
-				helpers.exec("stack build");
+				return build({ hasLiveOutput: false });
 			},
 		})
 		.task({
 			label(context) {
-				return `Checking ${context.fix ? "and fixing" : ""} lints 🧐`;
+				return label(
+					`Checking ${context.fix ? "and fixing" : ""} lints`,
+				);
 			},
 			skip: ifDefinedAndNotEqualTo("lint"),
 			async handler(context, argv) {
@@ -61,7 +62,7 @@ export const createCheckCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: "Checking types 🧐",
+			label: label("Checking types"),
 			skip(context, argv) {
 				return (
 					ifDefinedAndNotEqualTo("type")(context) ||
@@ -76,7 +77,7 @@ export const createCheckCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: "Checking commit 🧐",
+			label: label("Checking commit"),
 			skip({ only }) {
 				return only !== "commit";
 			},
@@ -85,6 +86,8 @@ export const createCheckCommand: CommandFactory = (program) => {
 			},
 		});
 };
+
+const label = (message: string) => `${message} 🧐`;
 
 const ifDefinedAndNotEqualTo = (only: Only) => (context: CheckContext) => {
 	return context.only !== undefined && context.only !== only;

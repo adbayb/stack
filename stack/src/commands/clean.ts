@@ -14,7 +14,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 		})
 		.task({
 			key: "files",
-			label: "Retrieving removable assets 🧹",
+			label: label("Retrieving removable assets"),
 			handler() {
 				return retrieveIgnoredFiles();
 			},
@@ -22,7 +22,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 		.task({
 			label({ files }) {
 				return files.length > 0
-					? `Cleaning assets 🧹`
+					? label("Cleaning assets")
 					: "Already clean ✨";
 			},
 			handler({ files }) {
@@ -42,6 +42,8 @@ export const createCleanCommand: CommandFactory = (program) => {
 			},
 		});
 };
+
+const label = (message: string) => `${message} 🧹`;
 
 const retrieveIgnoredFiles = async () => {
 	const rawFiles = await helpers.exec(

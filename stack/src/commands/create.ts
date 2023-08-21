@@ -68,7 +68,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			label: "Where will it be stored? (Git remote URL)",
 		})
 		.task({
-			label: "Checking pre-requisites 🔨",
+			label: label("Checking pre-requisites"),
 			handler() {
 				// Check pnpm availability by verifying its version
 				return getNpmVersion();
@@ -76,7 +76,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			key: "data",
-			label: "Evaluating contextual data 🔨",
+			label: label("Evaluating contextual data"),
 			async handler({ inputDescription, inputName, inputUrl }) {
 				const nodeVersion = await request.get(
 					"https://resolve-node.vercel.app/lts",
@@ -120,7 +120,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label({ data }) {
-				return `Creating \`${data.project_name}\` folder 🔨`;
+				return label(`Creating \`${data.project_name}\` folder`);
 			},
 			async handler({ data }) {
 				const projectPath = resolve(process.cwd(), data.project_name);
@@ -130,14 +130,14 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: "Initializing `git` 🔨",
+			label: label("Initializing `git`"),
 			async handler({ data }) {
 				await helpers.exec("git init");
 				await helpers.exec(`git remote add origin ${data.project_url}`);
 			},
 		})
 		.task({
-			label: "Applying default template 🔨",
+			label: label("Applying default template"),
 			async handler({ data }) {
 				await extractTemplate();
 
@@ -152,7 +152,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: "Installing dependencies 🔨",
+			label: label("Installing dependencies"),
 			async handler({ data }) {
 				const localDevDependencies = ["quickbundle"];
 
@@ -181,7 +181,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: "Cleaning up 🔨",
+			label: label("Cleaning up"),
 			key: "previousTaskError",
 			async handler({ data }) {
 				try {
@@ -232,6 +232,8 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		});
 };
+
+const label = (message: string) => `${message} 🔨`;
 
 /**
  * A simple template engine to evaluate dynamic expressions and apply side effets (such as hydrating a content with values from an input object) on impacted template files

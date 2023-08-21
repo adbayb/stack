@@ -10,7 +10,7 @@ export const createInstallCommand: CommandFactory = (program) => {
 			description: "Setup initial requirements",
 		})
 		.task({
-			label: "Installing `git.pre-commit` hook ⚙️",
+			label: label("Installing `git.pre-commit` hook"),
 			handler() {
 				return installGitHook(
 					"pre-commit",
@@ -22,7 +22,7 @@ export const createInstallCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: "Installing `git.commit-msg` hook ⚙️",
+			label: label("Installing `git.commit-msg` hook"),
 			handler() {
 				return installGitHook(
 					"commit-msg",
@@ -31,6 +31,8 @@ export const createInstallCommand: CommandFactory = (program) => {
 			},
 		});
 };
+
+const label = (message: string) => `${message} 📲`;
 
 const installGitHook = async (
 	hook: "commit-msg" | "pre-commit",

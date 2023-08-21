@@ -1,5 +1,5 @@
 import type { CommandFactory } from "../types";
-import { fixFormatting, fixLints } from "../helpers";
+import { build, fixFormatting, fixLints } from "../helpers";
 
 export const createFixCommand: CommandFactory = (program) => {
 	program
@@ -8,15 +8,23 @@ export const createFixCommand: CommandFactory = (program) => {
 			description: "Fix auto-fixable issues",
 		})
 		.task({
-			label: "Fixing lints 🚑",
+			label: label("Preparing the project"),
+			handler() {
+				return build({ hasLiveOutput: false });
+			},
+		})
+		.task({
+			label: label("Fixing lints"),
 			handler(_, argv) {
 				return fixLints(argv.operands);
 			},
 		})
 		.task({
-			label: "Fixing formatting 🚑",
+			label: label("Fixing formatting"),
 			handler(_, argv) {
 				return fixFormatting(argv.operands);
 			},
 		});
 };
+
+const label = (message: string) => `${message} 🚑`;

@@ -216,6 +216,14 @@ export const createError = (bin: string, error: Error | string | unknown) => {
 	return new Error(`\`${bin}\` failed:\n${error}`);
 };
 
+export const build = async (options: Parameters<typeof helpers.exec>[1]) => {
+	try {
+		return await helpers.exec("turbo run build", options);
+	} catch (error) {
+		throw createError("turbo", error);
+	}
+};
+
 const TYPESCRIPT_EXTENSIONS = ["ts", "tsx", "cts", "mts"];
 /**
  * Extensions supported by ESLint.
