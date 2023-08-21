@@ -14,6 +14,7 @@ import {
 	setPkgManager,
 } from "../helpers";
 import defaultTemplateConfig from "../../templates/default/config.json";
+import pkg from "../../package.json";
 
 type CommandContext = {
 	previousTaskError: Error | undefined;
@@ -42,7 +43,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			handler() {
 				botMessage(
 					{
-						title: "I'm Stack, your bot assistant",
+						title: `I'm Stack v${pkg.version}, your bot assistant`,
 						description:
 							"I can guarantee you a project creation in under 1 minute 🚀",
 					},
