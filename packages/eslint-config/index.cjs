@@ -113,15 +113,15 @@ module.exports = {
 					"error",
 					{
 						selector: "default",
-						format: ["strictCamelCase"],
+						format: ["strictCamelCase", "StrictPascalCase"],
 					},
 					{
 						selector: "variable",
-						format: ["strictCamelCase", "UPPER_CASE"],
-					},
-					{
-						selector: "typeLike",
-						format: ["StrictPascalCase"],
+						format: [
+							"strictCamelCase",
+							"StrictPascalCase",
+							"UPPER_CASE",
+						],
 					},
 					{
 						selector: "variable",
