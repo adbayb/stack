@@ -30,7 +30,7 @@ importers:
   packages/create:
     dependencies:
       '@adbayb/stack':
-        specifier: ^1.8.0
+        specifier: ^1.8.1
         version: link:../../stack
       termost:
         specifier: ^0.10.0
