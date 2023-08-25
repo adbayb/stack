@@ -1,6 +1,6 @@
 {
 	"name": "@adbayb/create",
-	"version": "1.8.0",
+	"version": "1.8.1",
 	"description": "My opinionated scaffolding tool",
 	"publishConfig": {
 		"access": "public"
@@ -37,7 +37,7 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"@adbayb/stack": "^1.8.0",
+		"@adbayb/stack": "^1.8.1",
 		"termost": "^0.10.0"
 	}
 }
