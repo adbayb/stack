@@ -1,5 +1,13 @@
 # @adbayb/stack
 
+## 1.8.0
+
+### Minor Changes
+
+- [`378ff64`](https://github.com/adbayb/stack/commit/378ff64bdd8c534566471456d4b87c1787f540fa) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies
+
+- [`74ab3fd`](https://github.com/adbayb/stack/commit/74ab3fdae447589b7902f27efd065ccf29d44ca6) Thanks [@adbayb](https://github.com/adbayb)! - Skip project preparation during `check` command for commit-only lint
+
 ## 1.7.0
 
 ### Minor Changes
