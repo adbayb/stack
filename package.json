@@ -21,7 +21,7 @@
 		"build": "stack build",
 		"watch": "stack watch",
 		"release:log": "stack release --log",
-		"release:version": "stack release --version",
+		"release:version": "stack release --tag",
 		"release:publish": "stack release --publish"
 	},
 	"devDependencies": {

@@ -25,6 +25,9 @@ export const createCheckCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label: label("Preparing the project"),
+			skip({ only }) {
+				return only === "commit"; // No need to build if only commitlint is run
+			},
 			handler() {
 				return turbo("build", { hasLiveOutput: false });
 			},
