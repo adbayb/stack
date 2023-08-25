@@ -9,20 +9,20 @@ export const createFixCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label: label("Preparing the project"),
-			handler() {
-				return turbo("build", { hasLiveOutput: false });
+			async handler() {
+				await turbo("build", { hasLiveOutput: false });
 			},
 		})
 		.task({
 			label: label("Fixing lints"),
-			handler(_, argv) {
-				return fixLints(argv.operands);
+			async handler(_, argv) {
+				await fixLints(argv.operands);
 			},
 		})
 		.task({
 			label: label("Fixing formatting"),
-			handler(_, argv) {
-				return fixFormatting(argv.operands);
+			async handler(_, argv) {
+				await fixFormatting(argv.operands);
 			},
 		});
 };

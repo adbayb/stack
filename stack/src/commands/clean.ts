@@ -3,7 +3,7 @@ import { helpers } from "termost";
 import type { CommandFactory } from "../types";
 
 type CommandContext = {
-	files: Array<string>;
+	files: string[];
 };
 
 export const createCleanCommand: CommandFactory = (program) => {
@@ -15,7 +15,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 		.task({
 			key: "files",
 			label: label("Retrieving removable assets"),
-			handler() {
+			async handler() {
 				return retrieveIgnoredFiles();
 			},
 		})
@@ -25,10 +25,10 @@ export const createCleanCommand: CommandFactory = (program) => {
 					? label("Cleaning assets")
 					: "Already clean ✨";
 			},
-			handler({ files }) {
-				return files.length > 0
-					? cleanFiles(files.join(" "))
-					: Promise.resolve();
+			async handler({ files }) {
+				if (files.length === 0) return;
+
+				await cleanFiles(files.join(" "));
 			},
 		})
 		.task({
@@ -55,7 +55,7 @@ const retrieveIgnoredFiles = async () => {
 	return rawFiles.split(/\n/).filter(Boolean);
 };
 
-const cleanFiles = (fileList: string) => {
+const cleanFiles = async (fileList: string) => {
 	return helpers.exec(`rm -rf ${fileList}`);
 };
 

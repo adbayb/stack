@@ -32,28 +32,28 @@ export const createReleaseCommand: CommandFactory = (program) => {
 		})
 		.task({
 			skip: ifNotEqualTo("log"),
-			handler() {
+			async handler() {
 				helpers.message("New changelog entry\n");
 
-				return changeset("changeset");
+				await changeset("changeset");
 			},
 		})
 		.task({
 			skip: ifNotEqualTo("tag"),
-			handler() {
+			async handler() {
 				helpers.message("Bumping the package(s) version\n");
 
-				return changeset(
+				await changeset(
 					"changeset version && pnpm install --no-frozen-lockfile",
 				);
 			},
 		})
 		.task({
 			skip: ifNotEqualTo("publish"),
-			handler() {
+			async handler() {
 				helpers.message("Publishing package(s) to the registry\n");
 
-				return changeset("stack build && pnpm changeset publish");
+				await changeset("stack build && pnpm changeset publish");
 			},
 		});
 };

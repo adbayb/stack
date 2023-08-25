@@ -8,8 +8,8 @@ export const createStartCommand: CommandFactory = (program) => {
 			description: "Start the project in production mode",
 		})
 		.task({
-			handler() {
-				return turbo("start");
+			async handler() {
+				await turbo("start");
 			},
 		});
 };

@@ -22,13 +22,13 @@ type CommandContext = {
 	inputDescription: string;
 	inputUrl: string;
 	data: Record<
-		| "license_year"
-		| "node_version"
-		| "npm_version"
-		| "project_description"
-		| "project_name"
-		| "project_url"
-		| "repo_id",
+		| "licenseYear"
+		| "nodeVersion"
+		| "npmVersion"
+		| "projectDescription"
+		| "projectName"
+		| "projectUrl"
+		| "repoId",
 		string
 	>;
 };
@@ -70,9 +70,9 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label: label("Checking pre-requisites"),
-			handler() {
+			async handler() {
 				// Check pnpm availability by verifying its version
-				return getNpmVersion();
+				await getNpmVersion();
 			},
 		})
 		.task({
@@ -92,11 +92,10 @@ export const createCreateCommand: CommandFactory = (program) => {
 				).version as string;
 
 				const { repoOwner, repoName } =
-					inputUrl.match(
-						inputUrl.startsWith("git")
-							? /^git@.*:(?<repoOwner>.*)\/(?<repoName>.*)\.git$/
-							: /^https?:\/\/.*\/(?<repoOwner>.*)\/(?<repoName>.*)\.git$/,
-					)?.groups ?? {};
+					(inputUrl.startsWith("git")
+						? /^git@.*:(?<repoOwner>.*)\/(?<repoName>.*)\.git$/
+						: /^https?:\/\/.*\/(?<repoOwner>.*)\/(?<repoName>.*)\.git$/
+					).exec(inputUrl)?.groups ?? {};
 
 				if (!repoOwner || !repoName) {
 					throw createError(
@@ -106,25 +105,25 @@ export const createCreateCommand: CommandFactory = (program) => {
 				}
 
 				return {
-					license_year: new Date().getFullYear().toString(),
-					node_version: nodeVersion,
-					npm_version: npmVersion,
-					repo_id: `${repoOwner}/${repoName}`,
-					project_description:
+					licenseYear: new Date().getFullYear().toString(),
+					nodeVersion,
+					npmVersion,
+					repoId: `${repoOwner}/${repoName}`,
+					projectDescription:
 						inputDescription.charAt(0).toUpperCase() +
 						inputDescription.slice(1), // Enforce upper case for the first letter
-					project_name: inputName.toLowerCase(), // Enforce lower case for folder and package name
-					project_url: inputUrl,
-					project_version: "0.0.0",
+					projectName: inputName.toLowerCase(), // Enforce lower case for folder and package name
+					projectUrl: inputUrl,
+					projectVersion: "0.0.0",
 				};
 			},
 		})
 		.task({
 			label({ data }) {
-				return label(`Creating \`${data.project_name}\` folder`);
+				return label(`Creating \`${data.projectName}\` folder`);
 			},
 			async handler({ data }) {
-				const projectPath = resolve(process.cwd(), data.project_name);
+				const projectPath = resolve(process.cwd(), data.projectName);
 
 				await mkdir(projectPath);
 				process.chdir(projectPath);
@@ -134,7 +133,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			label: label("Initializing `git`"),
 			async handler({ data }) {
 				await helpers.exec("git init");
-				await helpers.exec(`git remote add origin ${data.project_url}`);
+				await helpers.exec(`git remote add origin ${data.projectUrl}`);
 			},
 		})
 		.task({
@@ -174,7 +173,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 					await helpers.exec(
 						`pnpm add ${localDevDependencies.join(
 							" ",
-						)} --save-dev --filter ${data.project_name}`,
+						)} --save-dev --filter ${data.projectName}`,
 					);
 				} catch (error) {
 					throw createError("pnpm", error);
@@ -188,7 +187,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 				try {
 					// Symlink the package `README.md` file to the root project directory
 					await symlink(
-						`./${data.project_name}/README.md`,
+						`./${data.projectName}/README.md`,
 						"./README.md",
 					);
 					// Set the Node package manager runtime by following the `packageManager` field instruction
@@ -226,7 +225,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 				botMessage(
 					{
 						title: "The project was successfully created",
-						description: `Run \`cd ./${data.project_name}\` and Enjoy 🚀`,
+						description: `Run \`cd ./${data.projectName}\` and Enjoy 🚀`,
 					},
 					{ type: "success" },
 				);
@@ -242,7 +241,7 @@ const label = (message: string) => `${message} 🔨`;
  * @param input Input object mapping the template expression key with its corresponding value
  */
 const createTemplateEngine = (
-	config: Record<"files" | "folders", Array<string>>,
+	config: Record<"files" | "folders", string[]>,
 	input: CommandContext["data"],
 ) => {
 	const evaluate = (expression: string) => {

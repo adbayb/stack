@@ -8,8 +8,8 @@ export const createTestCommand: CommandFactory = (program) => {
 			description: "Test the code execution",
 		})
 		.task({
-			handler() {
-				return turbo("test");
+			async handler() {
+				await turbo("test");
 			},
 		});
 };

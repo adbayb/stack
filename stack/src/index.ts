@@ -14,7 +14,7 @@ import { createTestCommand } from "./commands/test";
 import { createWatchCommand } from "./commands/watch";
 import type { CommandFactory } from "./types";
 
-const createProgram = (...commandFactories: Array<CommandFactory>) => {
+const createProgram = (...commandFactories: CommandFactory[]) => {
 	const program = termost({
 		name: "stack",
 		description: "Toolbox to easily scaffold and maintain a project",

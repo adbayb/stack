@@ -8,10 +8,10 @@
 		".changeset/config.json",
 		".changeset/welcome.md",
 		".github/PULL_REQUEST_TEMPLATE.md",
-		"{{project_name}}/package.json",
-		"{{project_name}}/README.md",
+		"{{projectName}}/package.json",
+		"{{projectName}}/README.md",
 		"examples/default/package.json",
 		"examples/default/src/index.ts"
 	],
-	"folders": ["{{project_name}}"]
+	"folders": ["{{projectName}}"]
 }

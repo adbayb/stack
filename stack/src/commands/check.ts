@@ -28,8 +28,8 @@ export const createCheckCommand: CommandFactory = (program) => {
 			skip({ only }) {
 				return only === "commit"; // No need to build if only commitlint is run
 			},
-			handler() {
-				return turbo("build", { hasLiveOutput: false });
+			async handler() {
+				await turbo("build", { hasLiveOutput: false });
 			},
 		})
 		.task({
@@ -38,7 +38,7 @@ export const createCheckCommand: CommandFactory = (program) => {
 			async handler(_, argv) {
 				const filenames = argv.operands;
 
-				return checkLints(filenames);
+				await checkLints(filenames);
 			},
 		})
 		.task({
@@ -52,8 +52,8 @@ export const createCheckCommand: CommandFactory = (program) => {
 					argv.operands.length > 0
 				);
 			},
-			handler(_, argv) {
-				return checkTypes(argv.operands);
+			async handler(_, argv) {
+				await checkTypes(argv.operands);
 			},
 		})
 		.task({
@@ -61,8 +61,8 @@ export const createCheckCommand: CommandFactory = (program) => {
 			skip({ only }) {
 				return only !== "commit";
 			},
-			handler() {
-				return checkCommit();
+			async handler() {
+				await checkCommit();
 			},
 		});
 };

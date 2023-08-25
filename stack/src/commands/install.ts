@@ -11,8 +11,8 @@ export const createInstallCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label: label("Installing `git.pre-commit` hook"),
-			handler() {
-				return installGitHook(
+			async handler() {
+				await installGitHook(
 					"pre-commit",
 					`${getStackCommand(
 						"fix $(git status --porcelain | awk 'BEGIN{ ORS=\" \" } { print $2 }')",
@@ -23,8 +23,8 @@ export const createInstallCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label: label("Installing `git.commit-msg` hook"),
-			handler() {
-				return installGitHook(
+			async handler() {
+				await installGitHook(
 					"commit-msg",
 					`${getStackCommand("check --only commit", false)}`,
 				);

@@ -6,4 +6,13 @@
  */
 import { helpers } from "termost";
 
-helpers.exec("pnpm dlx @adbayb/stack create", { hasLiveOutput: true });
+helpers
+	.exec("pnpm dlx @adbayb/stack create", {
+		hasLiveOutput: true,
+	})
+	.catch((error) => {
+		helpers.message(
+			`An error occurred while executing the npm initializer \`@adbayb/create\` (error: ${error})`,
+			{ type: "error" },
+		);
+	});

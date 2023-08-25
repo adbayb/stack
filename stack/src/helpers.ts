@@ -53,7 +53,9 @@ export const getRepositoryUrl = async () => {
 	} catch (error) {
 		throw createError(
 			"git",
-			`The project must be a \`git\` repository with an origin already setup. Have you tried to run \`git init && git remote add origin git@github.com:OWNER/REPOSITORY.git && git add -A && git commit -m "chore: initial commit" && git push -u origin main\`?\n${error}`,
+			`The project must be a \`git\` repository with an origin already setup. Have you tried to run \`git init && git remote add origin git@github.com:OWNER/REPOSITORY.git && git add -A && git commit -m "chore: initial commit" && git push -u origin main\`?\n${String(
+				error,
+			)}`,
 		);
 	}
 };
@@ -78,7 +80,7 @@ export const getStackCommand = (command: string, isNodeRuntime = true) => {
 	);
 };
 
-export const setPkgManager = () => {
+export const setPkgManager = async () => {
 	return helpers.exec("corepack enable");
 };
 
@@ -86,7 +88,7 @@ export const request = {
 	async get<ResponseType extends "json" | "text">(
 		url: string,
 		responseType: ResponseType,
-	): Promise<ResponseType extends "text" ? string : Record<string, string>> {
+	) {
 		const response = await fetch(url);
 
 		if (!response.ok) {
@@ -99,7 +101,11 @@ export const request = {
 			);
 		}
 
-		return responseType === "text" ? response.text() : response.json();
+		return (
+			responseType === "text" ? response.text() : response.json()
+		) as Promise<
+			ResponseType extends "text" ? string : Record<string, string>
+		>;
 	},
 };
 
@@ -123,14 +129,14 @@ const eslint =
 		args.push(`--ext ${ESLINT_EXTENSIONS.join(",")}`);
 		args.push("--cache");
 		args.push(
-			`--cache-location ${await resolveFromProjectDirectory(
+			`--cache-location ${resolveFromProjectDirectory(
 				"node_modules/.cache/.eslintcache",
 			)}`,
 		);
 		// @note: prevent errors when no matched file is found
 		args.push("--no-error-on-unmatched-pattern");
 
-		const gitIgnoreFile = await resolveFromProjectDirectory(".gitignore");
+		const gitIgnoreFile = resolveFromProjectDirectory(".gitignore");
 
 		if (existsSync(gitIgnoreFile)) {
 			args.push(`--ignore-path ${gitIgnoreFile}`);
@@ -171,7 +177,7 @@ export const fixFormatting = async (files: FilenameCollection) => {
 
 	const args = [...prettierFiles];
 
-	if (existsSync(await resolveFromProjectDirectory(".gitignore"))) {
+	if (existsSync(resolveFromProjectDirectory(".gitignore"))) {
 		args.push("--ignore-path .gitignore");
 	}
 
@@ -193,7 +199,7 @@ export const checkTypes = async (files: FilenameCollection) => {
 		});
 
 		return await helpers.exec(
-			`tsc --tsBuildInfoFile ${await resolveFromProjectDirectory(
+			`tsc --tsBuildInfoFile ${resolveFromProjectDirectory(
 				"node_modules/.cache/.tsbuildinfo",
 			)} --noEmit ${tsFiles.join(" ")}`,
 		);
@@ -213,7 +219,7 @@ export const checkCommit = async () => {
 };
 
 export const createError = (bin: string, error: Error | string | unknown) => {
-	return new Error(`\`${bin}\` failed:\n${error}`);
+	return new Error(`\`${bin}\` failed:\n${String(error)}`);
 };
 
 export const turbo = async (
@@ -244,4 +250,4 @@ const TYPESCRIPT_EXTENSIONS = ["ts", "tsx", "cts", "mts"];
 const ESLINT_EXTENSIONS = ["js", "jsx", "cjs", "mjs", ...TYPESCRIPT_EXTENSIONS];
 const PRETTIER_IGNORE_FILES = ["CHANGELOG.md", "pnpm-lock.yaml"];
 
-type FilenameCollection = Array<string>;
+type FilenameCollection = string[];

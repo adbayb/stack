@@ -8,8 +8,8 @@ export const createWatchCommand: CommandFactory = (program) => {
 			description: "Build and start the project in development mode",
 		})
 		.task({
-			handler() {
-				return turbo("watch");
+			async handler() {
+				await turbo("watch");
 			},
 		});
 };
