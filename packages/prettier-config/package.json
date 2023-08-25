@@ -1,6 +1,6 @@
 {
 	"name": "@adbayb/prettier-config",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"description": "My opinionated Prettier configuration preset",
 	"publishConfig": {
 		"access": "public"

@@ -1,5 +1,13 @@
 # @adbayb/eslint-config
 
+## 1.2.0
+
+### Minor Changes
+
+- [`378ff64`](https://github.com/adbayb/stack/commit/378ff64bdd8c534566471456d4b87c1787f540fa) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies
+
+- [`8d47e43`](https://github.com/adbayb/stack/commit/8d47e43faf1b32a50f0f94a0545db79037881c22) Thanks [@adbayb](https://github.com/adbayb)! - Update TypeScript-related rules with recommended/stricter ones
+
 ## 1.1.0
 
 ### Minor Changes
