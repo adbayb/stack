@@ -1,5 +1,17 @@
 # @adbayb/eslint-config
 
+## 1.3.0
+
+### Minor Changes
+
+- [`a418624`](https://github.com/adbayb/stack/commit/a4186246b0e5b8c92d1dfc5de43fd6b1e0de0711) Thanks [@adbayb](https://github.com/adbayb)! - Add import rules
+
+- [`84b40f5`](https://github.com/adbayb/stack/commit/84b40f543ab75c7cc7c82935b25daf265b8a80a0) Thanks [@adbayb](https://github.com/adbayb)! - Relax naming convention eslint config rule
+
+- [`f2c4bc2`](https://github.com/adbayb/stack/commit/f2c4bc2667a7573b130b46ab5f7763d295b7d8bc) Thanks [@adbayb](https://github.com/adbayb)! - Add missing strict typescript rules
+
+- [`b4a1dda`](https://github.com/adbayb/stack/commit/b4a1ddaa7352a432dd6636de84e6675e89e42a7d) Thanks [@adbayb](https://github.com/adbayb)! - Update sonar lint rules
+
 ## 1.2.0
 
 ### Minor Changes

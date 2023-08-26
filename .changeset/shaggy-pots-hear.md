@@ -1,5 +1,0 @@
----
-"@adbayb/eslint-config": minor
----
-
-Update sonar lint rules
