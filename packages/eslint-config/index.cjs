@@ -448,6 +448,7 @@ module.exports = {
 		// #endregion react-hooks
 		// #region sonarjs
 		"sonarjs/cognitive-complexity": "error",
+		"sonarjs/elseif-without-else": "error",
 		"sonarjs/max-switch-cases": "error",
 		"sonarjs/no-all-duplicated-branches": "error",
 		"sonarjs/no-collapsible-if": "error",
@@ -456,6 +457,7 @@ module.exports = {
 		"sonarjs/no-duplicated-branches": "error",
 		"sonarjs/no-element-overwrite": "error",
 		"sonarjs/no-extra-arguments": "error",
+		"sonarjs/no-gratuitous-expressions": "error",
 		"sonarjs/no-identical-conditions": "error",
 		"sonarjs/no-identical-functions": "error",
 		"sonarjs/no-identical-expressions": "error",
@@ -468,6 +470,7 @@ module.exports = {
 		"sonarjs/no-unused-collection": "error",
 		"sonarjs/no-use-of-empty-return-value": "error",
 		"sonarjs/no-useless-catch": "error",
+		"sonarjs/non-existent-operator": "error",
 		"sonarjs/prefer-immediate-return": "error",
 		"sonarjs/prefer-object-literal": "error",
 		"sonarjs/prefer-single-boolean-return": "error",
