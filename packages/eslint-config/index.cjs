@@ -142,6 +142,8 @@ module.exports = {
 				"@typescript-eslint/no-confusing-non-null-assertion": "error",
 				"@typescript-eslint/no-confusing-void-expression": "error",
 				"@typescript-eslint/no-duplicate-enum-values": "error",
+				"@typescript-eslint/no-duplicate-type-constituents": "error",
+				"@typescript-eslint/no-dynamic-delete": "error",
 				"@typescript-eslint/no-empty-interface": "error",
 				"@typescript-eslint/no-explicit-any": [
 					"error",
@@ -167,6 +169,7 @@ module.exports = {
 				"@typescript-eslint/no-this-alias": "error",
 				"@typescript-eslint/no-unnecessary-boolean-literal-compare":
 					"error",
+				"@typescript-eslint/no-unnecessary-condition": "error",
 				"@typescript-eslint/no-unnecessary-qualifier": "error",
 				"@typescript-eslint/no-unnecessary-type-arguments": "error",
 				"@typescript-eslint/no-unnecessary-type-assertion": "error",
@@ -184,6 +187,7 @@ module.exports = {
 				"@typescript-eslint/prefer-for-of": "error",
 				"@typescript-eslint/prefer-function-type": "error",
 				"@typescript-eslint/prefer-includes": "error",
+				"@typescript-eslint/prefer-literal-enum-member": "error",
 				"@typescript-eslint/prefer-namespace-keyword": "error",
 				"@typescript-eslint/prefer-nullish-coalescing": "error",
 				"@typescript-eslint/prefer-optional-chain": "error",
