@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 1.9.0
+
+### Minor Changes
+
+- [`a418624`](https://github.com/adbayb/stack/commit/a4186246b0e5b8c92d1dfc5de43fd6b1e0de0711) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies
+
 ## 1.8.1
 
 ### Patch Changes
