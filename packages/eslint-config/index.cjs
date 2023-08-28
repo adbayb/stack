@@ -113,7 +113,7 @@ module.exports = {
 					"error",
 					{
 						selector: "default",
-						format: ["strictCamelCase", "StrictPascalCase"],
+						format: ["strictCamelCase"],
 					},
 					{
 						selector: "variable",
@@ -124,18 +124,33 @@ module.exports = {
 						],
 					},
 					{
+						selector: "function",
+						format: ["strictCamelCase", "StrictPascalCase"],
+					},
+					{
 						selector: "variable",
-						modifiers: ["destructured"],
-						format: null,
+						types: ["function"],
+						format: ["strictCamelCase", "StrictPascalCase"],
+					},
+					{
+						selector: "typeLike",
+						format: ["StrictPascalCase"],
 					},
 					{
 						selector: "parameter",
 						modifiers: ["unused"],
+						format: ["strictCamelCase"],
+						prefix: ["_"],
+					},
+					{
+						selector: ["memberLike", "method", "property"],
+						modifiers: ["requiresQuotes"],
 						format: null,
-						custom: {
-							regex: "^_$",
-							match: true,
-						},
+					},
+					{
+						selector: "variable",
+						modifiers: ["destructured"],
+						format: null,
 					},
 				],
 				"@typescript-eslint/no-base-to-string": "error",
