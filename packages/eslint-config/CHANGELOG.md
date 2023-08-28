@@ -1,5 +1,11 @@
 # @adbayb/eslint-config
 
+## 1.4.0
+
+### Minor Changes
+
+- [`1e85d95`](https://github.com/adbayb/stack/commit/1e85d95eecd8c5c9c2b9f0cc8dba2ced2173c66b) Thanks [@adbayb](https://github.com/adbayb)! - Update naming convention rules to relax convention for quoted attributes
+
 ## 1.3.0
 
 ### Minor Changes
