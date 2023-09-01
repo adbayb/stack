@@ -81,7 +81,7 @@ module.exports = {
 					"error",
 					{
 						assertionStyle: "as",
-						objectLiteralTypeAssertions: "never",
+						objectLiteralTypeAssertions: "allow-as-parameter",
 					},
 				],
 				// https://www.totaltypescript.com/type-vs-interface-which-should-you-use
@@ -108,50 +108,6 @@ module.exports = {
 				"@typescript-eslint/method-signature-style": [
 					"error",
 					"property",
-				],
-				"@typescript-eslint/naming-convention": [
-					"error",
-					{
-						selector: "default",
-						format: ["strictCamelCase"],
-					},
-					{
-						selector: "variable",
-						format: [
-							"strictCamelCase",
-							"StrictPascalCase",
-							"UPPER_CASE",
-						],
-					},
-					{
-						selector: "function",
-						format: ["strictCamelCase", "StrictPascalCase"],
-					},
-					{
-						selector: "variable",
-						types: ["function"],
-						format: ["strictCamelCase", "StrictPascalCase"],
-					},
-					{
-						selector: "typeLike",
-						format: ["StrictPascalCase"],
-					},
-					{
-						selector: "parameter",
-						modifiers: ["unused"],
-						format: ["strictCamelCase"],
-						prefix: ["_"],
-					},
-					{
-						selector: ["memberLike", "method", "property"],
-						modifiers: ["requiresQuotes"],
-						format: null,
-					},
-					{
-						selector: "variable",
-						modifiers: ["destructured"],
-						format: null,
-					},
 				],
 				"@typescript-eslint/no-base-to-string": "error",
 				"@typescript-eslint/no-confusing-non-null-assertion": "error",
@@ -207,7 +163,6 @@ module.exports = {
 				"@typescript-eslint/prefer-nullish-coalescing": "error",
 				"@typescript-eslint/prefer-optional-chain": "error",
 				"@typescript-eslint/prefer-readonly": "error",
-				"@typescript-eslint/prefer-reduce-type-parameter": "error",
 				"@typescript-eslint/prefer-regexp-exec": "error",
 				"@typescript-eslint/prefer-return-this-type": "error",
 				"@typescript-eslint/prefer-string-starts-ends-with": "error",
