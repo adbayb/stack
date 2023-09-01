@@ -1,5 +1,11 @@
 # @adbayb/eslint-config
 
+## 1.5.0
+
+### Minor Changes
+
+- [`edb6028`](https://github.com/adbayb/stack/commit/edb6028c93f28da753b32ada8ba7fe6d421e5a86) Thanks [@adbayb](https://github.com/adbayb)! - Disable @typescript-eslint/naming-convention and @typescript-eslint/prefer-reduce-type-parameter lint rules
+
 ## 1.4.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
 	"name": "@adbayb/eslint-config",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"description": "My opinionated ESLint configuration preset",
 	"publishConfig": {
 		"access": "public"
