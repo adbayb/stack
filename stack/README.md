@@ -94,8 +94,9 @@ flowchart TD
 
 ## 👣 Roadmap
 
--   [ ] Add `tsc` checks to git hooks (via eslint-plugin-tsc?)
--   [ ] Lint packages (caret range for dependencies and strict ones for dev dependencies)
+-   [ ] `stack check`: Run check command at a package level to take into account local TypeScript configs
+-   [ ] `stack clean`: Remove `root_folder/node_modules/.cache`
+-   [ ] `stack check`: Lint packages (caret range for dependencies and strict ones for dev dependencies)
 
 <br>
 
