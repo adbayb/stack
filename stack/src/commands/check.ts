@@ -34,7 +34,7 @@ export const createCheckCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label: label("Checking linters"),
-			skip: ifNotAllOrOnlyNotEqualTo("lint"),
+			skip: ifOnlyDefinedAndNotEqualTo("lint"),
 			async handler(_, argv) {
 				const filenames = argv.operands;
 
@@ -45,15 +45,15 @@ export const createCheckCommand: CommandFactory = (program) => {
 			label: label("Checking types"),
 			skip(context, argv) {
 				return (
-					ifNotAllOrOnlyNotEqualTo("type")(context) ||
+					ifOnlyDefinedAndNotEqualTo("type")(context) ||
 					!require.resolve("typescript") ||
 					// For now, skip type-checking if some files are passed down
 					// @see: https://github.com/microsoft/TypeScript/issues/27379
 					argv.operands.length > 0
 				);
 			},
-			async handler(_, argv) {
-				await checkTypes(argv.operands);
+			async handler() {
+				await checkTypes();
 			},
 		})
 		.task({
@@ -69,6 +69,7 @@ export const createCheckCommand: CommandFactory = (program) => {
 
 const label = (message: string) => `${message} 🧐`;
 
-const ifNotAllOrOnlyNotEqualTo = (only: Only) => (context: CommandContext) => {
-	return context.only !== undefined && context.only !== only;
-};
+const ifOnlyDefinedAndNotEqualTo =
+	(only: Only) => (context: CommandContext) => {
+		return context.only !== undefined && context.only !== only;
+	};

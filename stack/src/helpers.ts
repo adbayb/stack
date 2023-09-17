@@ -192,17 +192,9 @@ export const fixFormatting = async (files: FilenameCollection) => {
 	}
 };
 
-export const checkTypes = async (files: FilenameCollection) => {
+export const checkTypes = async () => {
 	try {
-		const tsFiles = files.filter((file) => {
-			return TYPESCRIPT_EXTENSIONS.some((ext) => file.endsWith(ext));
-		});
-
-		return await helpers.exec(
-			`tsc --tsBuildInfoFile ${resolveFromProjectDirectory(
-				"node_modules/.cache/.tsbuildinfo",
-			)} --noEmit ${tsFiles.join(" ")}`,
-		);
+		return await helpers.exec("pnpm --parallel exec tsc --noEmit");
 	} catch (error) {
 		throw createError("tsc", error);
 	}
