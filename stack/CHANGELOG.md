@@ -1,5 +1,15 @@
 # @adbayb/stack
 
+## 1.10.0
+
+### Minor Changes
+
+- [`3c7775c`](https://github.com/adbayb/stack/commit/3c7775c6322d51c2007380705d711c8847122c6f) Thanks [@adbayb](https://github.com/adbayb)! - Update the template to apply the needed permissions for the release GitHub action release workflow
+
+- [`bf08f19`](https://github.com/adbayb/stack/commit/bf08f192cfb37abf56e1232655f2146d78d4a811) Thanks [@adbayb](https://github.com/adbayb)! - Clean root cache folder if exists
+
+- [`2c8d09f`](https://github.com/adbayb/stack/commit/2c8d09fa37476e1b1c162b682e52948440a4fdcd) Thanks [@adbayb](https://github.com/adbayb)! - Run TypeScript check at a package-level to take into account local tsconfigs
+
 ## 1.9.0
 
 ### Minor Changes
