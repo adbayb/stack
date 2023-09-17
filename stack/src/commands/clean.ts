@@ -1,6 +1,8 @@
+import { existsSync, readdirSync } from "node:fs";
 import { helpers } from "termost";
 
 import type { CommandFactory } from "../types";
+import { resolveFromProjectDirectory } from "../helpers";
 
 type CommandContext = {
 	files: string[];
@@ -16,7 +18,18 @@ export const createCleanCommand: CommandFactory = (program) => {
 			key: "files",
 			label: label("Retrieving removable assets"),
 			async handler() {
-				return retrieveIgnoredFiles();
+				const cachePath = "node_modules/.cache";
+				const files = await retrieveIgnoredFiles();
+
+				if (
+					isDirectoryExistAndNotEmpty(
+						resolveFromProjectDirectory(cachePath),
+					)
+				) {
+					files.push(cachePath);
+				}
+
+				return files;
 			},
 		})
 		.task({
@@ -28,7 +41,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 			async handler({ files }) {
 				if (files.length === 0) return;
 
-				await cleanFiles(files.join(" "));
+				await cleanFiles(files);
 			},
 		})
 		.task({
@@ -45,6 +58,14 @@ export const createCleanCommand: CommandFactory = (program) => {
 
 const label = (message: string) => `${message} 🧹`;
 
+const cleanFiles = async (files: string[]) => {
+	return helpers.exec(`rm -rf ${files.join(" ")}`);
+};
+
+const isDirectoryExistAndNotEmpty = (path: string) => {
+	return existsSync(path) && readdirSync(path).length > 0;
+};
+
 const retrieveIgnoredFiles = async () => {
 	const rawFiles = await helpers.exec(
 		`git clean -fdXn | grep -v '${PRESERVE_FILES.join(
@@ -53,10 +74,6 @@ const retrieveIgnoredFiles = async () => {
 	);
 
 	return rawFiles.split(/\n/).filter(Boolean);
-};
-
-const cleanFiles = async (fileList: string) => {
-	return helpers.exec(`rm -rf ${fileList}`);
 };
 
 const PRESERVE_FILES = ["node_modules", ".turbo"];

@@ -94,7 +94,6 @@ flowchart TD
 
 ## 👣 Roadmap
 
--   [ ] `stack clean`: Remove `root_folder/node_modules/.cache`
 -   [ ] `stack check`: Lint packages (caret range for dependencies and strict ones for dev dependencies)
 
 <br>
