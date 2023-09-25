@@ -28,13 +28,13 @@
 		"typescript": ">=5.0.0"
 	},
 	"dependencies": {
-		"@typescript-eslint/eslint-plugin": "^6.4.1",
-		"@typescript-eslint/parser": "^6.4.1",
+		"@typescript-eslint/eslint-plugin": "^6.7.2",
+		"@typescript-eslint/parser": "^6.7.2",
 		"eslint-config-prettier": "^9.0.0",
-		"eslint-import-resolver-typescript": "^3.6.0",
+		"eslint-import-resolver-typescript": "^3.6.1",
 		"eslint-plugin-astro": "^0.29.0",
 		"eslint-plugin-import": "^2.28.1",
-		"eslint-plugin-jest": "^27.2.3",
+		"eslint-plugin-jest": "^27.4.0",
 		"eslint-plugin-mdx": "^2.2.0",
 		"eslint-plugin-prettier": "^5.0.0",
 		"eslint-plugin-react": "^7.33.2",
@@ -42,6 +42,6 @@
 		"eslint-plugin-sonarjs": "^0.21.0"
 	},
 	"devDependencies": {
-		"@types/eslint": "8.44.2"
+		"@types/eslint": "8.44.3"
 	}
 }

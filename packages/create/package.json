@@ -11,7 +11,7 @@
 	],
 	"bin": "bin/index.cjs",
 	"source": "src/index.ts",
-	"main": "dist/index.js",
+	"main": "dist/index.cjs",
 	"platform": "node",
 	"scripts": {
 		"prepublishOnly": "pnpm build",
@@ -38,6 +38,6 @@
 	"license": "MIT",
 	"dependencies": {
 		"@adbayb/stack": "workspace:^",
-		"termost": "^0.10.0"
+		"termost": "^0.12.0"
 	}
 }
