@@ -1,5 +1,11 @@
 # @adbayb/eslint-config
 
+## 1.6.0
+
+### Minor Changes
+
+- [`75dfcd1`](https://github.com/adbayb/stack/commit/75dfcd1594a2671f32e6bc4ff2930aaf201ef13b) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies
+
 ## 1.5.0
 
 ### Minor Changes

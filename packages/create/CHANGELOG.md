@@ -1,5 +1,16 @@
 # @adbayb/create
 
+## 1.11.0
+
+### Minor Changes
+
+- [`75dfcd1`](https://github.com/adbayb/stack/commit/75dfcd1594a2671f32e6bc4ff2930aaf201ef13b) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies
+
+### Patch Changes
+
+- Updated dependencies [[`75dfcd1`](https://github.com/adbayb/stack/commit/75dfcd1594a2671f32e6bc4ff2930aaf201ef13b)]:
+  - @adbayb/stack@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes
