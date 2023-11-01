@@ -29,7 +29,7 @@
 		"@adbayb/prettier-config": "workspace:*",
 		"@adbayb/stack": "workspace:*",
 		"@adbayb/ts-config": "workspace:*",
-		"@types/node": "18.18.0",
+		"@types/node": "18.18.7",
 		"quickbundle": "1.2.0"
 	},
 	"prettier": "@adbayb/prettier-config",
@@ -41,7 +41,7 @@
 			"@commitlint/config-conventional"
 		]
 	},
-	"packageManager": "pnpm@8.8.0",
+	"packageManager": "pnpm@8.10.0",
 	"engines": {
 		"node": ">=18.0.0",
 		"pnpm": ">=8.0.0"
