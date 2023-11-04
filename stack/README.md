@@ -10,7 +10,7 @@
 `Stack` allows creating an NPM project in a **quick**, **easy** and **opinionated** way with:
 
 -   A unified monorepo-driven and git-driven approach for all kinds of projects (single-purpose library, multiple libraries, application(s), ...)
--   Support for several templates application (for now, only a default template is available but others can be added later)
+-   Support for several application templates (for now, only a default template is available, but others can be added later)
 -   Standardized file structure including optional folder creation such as `examples`, `packages`, ...
 -   Enable all project lifecycle steps with commands from the setup, check, fix, build, and test to the versioning and release
 -   Built-in configuration preset setup (including Node/NPM runtime, Git ignore/hooks, TypeScript, ESLint, Prettier, EditorConfig, Renovate, Changesets, and VSCode)
@@ -95,6 +95,7 @@ flowchart TD
 ## 👣 Roadmap
 
 -   [ ] `stack check`: Lint packages (caret range for dependencies and strict ones for dev dependencies)
+-   [ ] Sync [Changesets](https://github.com/changesets/changesets/issues/647) with Renovate updates
 
 <br>
 
