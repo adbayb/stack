@@ -1,5 +1,15 @@
 # @adbayb/eslint-config
 
+## 1.7.0
+
+### Minor Changes
+
+- [`e93f996`](https://github.com/adbayb/stack/commit/e93f9967be497f8257cf8da5300066bee319f998) Thanks [@adbayb](https://github.com/adbayb)! - Add sort-destructure-keys, sort-keys-custom-order, sort-vars, and react/jsx-sort-props ESLint rules
+
+- [`7ecd682`](https://github.com/adbayb/stack/commit/7ecd682044f372afa6ff895a5a5e70857798a04b) Thanks [@adbayb](https://github.com/adbayb)! - Add eslint-plugin-deprecation rule
+
+- [`a3e9a22`](https://github.com/adbayb/stack/commit/a3e9a2206d02548c450aefe529b6756e33affe6b) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies
+
 ## 1.6.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @adbayb/prettier-config
 
+## 1.3.0
+
+### Minor Changes
+
+- [`a3e9a22`](https://github.com/adbayb/stack/commit/a3e9a2206d02548c450aefe529b6756e33affe6b) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies
+
 ## 1.2.0
 
 ### Minor Changes
