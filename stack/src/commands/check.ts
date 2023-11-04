@@ -25,24 +25,27 @@ export const createCheckCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label: label("Preparing the project"),
-			skip({ only }) {
-				return only === "commit"; // No need to build if only commitlint is run
-			},
 			async handler() {
 				await turbo("build", { hasLiveOutput: false });
+			},
+			skip({ only }) {
+				return only === "commit"; // No need to build if only commitlint is run
 			},
 		})
 		.task({
 			label: label("Checking linters"),
-			skip: ifOnlyDefinedAndNotEqualTo("lint"),
 			async handler(_, argv) {
 				const filenames = argv.operands;
 
 				await checkLints(filenames);
 			},
+			skip: ifOnlyDefinedAndNotEqualTo("lint"),
 		})
 		.task({
 			label: label("Checking types"),
+			async handler() {
+				await checkTypes();
+			},
 			skip(context, argv) {
 				return (
 					ifOnlyDefinedAndNotEqualTo("type")(context) ||
@@ -52,17 +55,14 @@ export const createCheckCommand: CommandFactory = (program) => {
 					argv.operands.length > 0
 				);
 			},
-			async handler() {
-				await checkTypes();
-			},
 		})
 		.task({
 			label: label("Checking commit"),
-			skip({ only }) {
-				return only !== "commit";
-			},
 			async handler() {
 				await checkCommit();
+			},
+			skip({ only }) {
+				return only !== "commit";
 			},
 		});
 };

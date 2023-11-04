@@ -77,6 +77,12 @@ importers:
       eslint-plugin-sonarjs:
         specifier: ^0.23.0
         version: 0.23.0(eslint@8.46.0)
+      eslint-plugin-sort-destructure-keys:
+        specifier: ^1.5.0
+        version: 1.5.0(eslint@8.46.0)
+      eslint-plugin-sort-keys-custom-order:
+        specifier: ^1.0.5
+        version: 1.0.5(eslint@8.46.0)
       prettier:
         specifier: '>=3.0.0'
         version: 3.0.1
@@ -2439,6 +2445,25 @@ packages:
       eslint: 8.46.0
     dev: false
 
+  /eslint-plugin-sort-destructure-keys@1.5.0(eslint@8.46.0):
+    resolution: {integrity: sha512-xGLyqHtbFXZNXQSvAiQ4ISBYokrbUywEhmaA50fKtSKgceCv5y3zjoNuZwcnajdM6q29Nxj+oXC9KcqfMsAPrg==}
+    engines: {node: '>=6.0.0'}
+    peerDependencies:
+      eslint: 3 - 8
+    dependencies:
+      eslint: 8.46.0
+      natural-compare-lite: 1.4.0
+    dev: false
+
+  /eslint-plugin-sort-keys-custom-order@1.0.5(eslint@8.46.0):
+    resolution: {integrity: sha512-WdZjCY/nyOjr4GnMvQTiH225sQ0+LvmoZBB7cPkSvhbx7FxKCk3pwn8UTKquSdSRsvPiM2qoUvIOPDAEdOJdkA==}
+    engines: {node: '>=0.10.0'}
+    peerDependencies:
+      eslint: ^8.28.0
+    dependencies:
+      eslint: 8.46.0
+    dev: false
+
   /eslint-scope@5.1.1:
     resolution: {integrity: sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw==}
     engines: {node: '>=8.0.0'}
@@ -4249,6 +4274,10 @@ packages:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+    dev: false
+
+  /natural-compare-lite@1.4.0:
+    resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
     dev: false
 
   /natural-compare@1.4.0:

@@ -45,13 +45,13 @@ export const createCleanCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			skip({ files }) {
-				return files.length === 0;
-			},
 			handler({ files }) {
 				helpers.message(`Removed assets: ${files.join(", ")}\n`, {
 					type: "information",
 				});
+			},
+			skip({ files }) {
+				return files.length === 0;
 			},
 		});
 };

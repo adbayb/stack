@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys-custom-order/object-keys */
 /**
  * @type {import("eslint").ESLint.ConfigData}
  */
@@ -31,7 +32,15 @@ module.exports = {
 		"plugin:prettier/recommended",
 		"plugin:astro/recommended",
 	],
-	plugins: ["jest", "import", "react", "react-hooks", "sonarjs"],
+	plugins: [
+		"jest",
+		"import",
+		"react",
+		"react-hooks",
+		"sonarjs",
+		"sort-destructure-keys",
+		"sort-keys-custom-order",
+	],
 	overrides: [
 		{
 			files: ["**/*.ts?(x)"],
@@ -316,6 +325,36 @@ module.exports = {
 		"prefer-arrow-callback": ["error", { allowNamedFunctions: true }],
 		"prefer-const": "error",
 		"sort-imports": ["error", { ignoreDeclarationSort: true }],
+		"sort-destructure-keys/sort-destructure-keys": "error",
+		"sort-keys-custom-order/object-keys": [
+			"error",
+			{
+				orderedKeys: [
+					"id",
+					"key",
+					"name",
+					"title",
+					"label",
+					"description",
+					"version",
+				],
+			},
+		],
+		"sort-keys-custom-order/type-keys": [
+			"error",
+			{
+				orderedKeys: [
+					"id",
+					"key",
+					"name",
+					"title",
+					"label",
+					"description",
+					"version",
+				],
+			},
+		],
+		"sort-vars": "error",
 		// #endregion
 		// #region import
 		"import/export": "error",
@@ -401,6 +440,7 @@ module.exports = {
 		"react/jsx-key": "error",
 		"react/jsx-no-useless-fragment": "warn",
 		"react/jsx-pascal-case": "error",
+		"react/jsx-sort-props": "error",
 		"react/jsx-uses-react": "error",
 		"react/jsx-uses-vars": "error",
 		"react/no-children-prop": "error",

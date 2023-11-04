@@ -17,10 +17,6 @@ import defaultTemplateConfig from "../../templates/default/config.json";
 import pkg from "../../package.json";
 
 type CommandContext = {
-	previousTaskError: Error | undefined;
-	inputName: string;
-	inputDescription: string;
-	inputUrl: string;
 	data: Record<
 		| "licenseYear"
 		| "nodeVersion"
@@ -31,6 +27,10 @@ type CommandContext = {
 		| "repoId",
 		string
 	>;
+	inputDescription: string;
+	inputName: string;
+	inputUrl: string;
+	previousTaskError: Error | undefined;
 };
 
 export const createCreateCommand: CommandFactory = (program) => {
@@ -54,19 +54,19 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.input({
-			type: "text",
 			key: "inputName",
 			label: "What's your project name?",
+			type: "text",
 		})
 		.input({
-			type: "text",
 			key: "inputDescription",
 			label: "How would you describe it?",
+			type: "text",
 		})
 		.input({
-			type: "text",
 			key: "inputUrl",
 			label: "Where will it be stored? (Git remote URL)",
+			type: "text",
 		})
 		.task({
 			label: label("Checking pre-requisites"),
@@ -91,7 +91,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 					)
 				).version as string;
 
-				const { repoOwner, repoName } =
+				const { repoName, repoOwner } =
 					(inputUrl.startsWith("git")
 						? /^git@.*:(?<repoOwner>.*)\/(?<repoName>.*)\.git$/
 						: /^https?:\/\/.*\/(?<repoOwner>.*)\/(?<repoName>.*)\.git$/
@@ -108,13 +108,13 @@ export const createCreateCommand: CommandFactory = (program) => {
 					licenseYear: new Date().getFullYear().toString(),
 					nodeVersion,
 					npmVersion,
-					repoId: `${repoOwner}/${repoName}`,
 					projectDescription:
 						inputDescription.charAt(0).toUpperCase() +
 						inputDescription.slice(1), // Enforce upper case for the first letter
 					projectName: inputName.toLowerCase(), // Enforce lower case for folder and package name
 					projectUrl: inputUrl,
 					projectVersion: "0.0.0",
+					repoId: `${repoOwner}/${repoName}`,
 				};
 			},
 		})
@@ -181,8 +181,8 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: label("Cleaning up"),
 			key: "previousTaskError",
+			label: label("Cleaning up"),
 			async handler({ data }) {
 				try {
 					// Symlink the package `README.md` file to the root project directory
@@ -205,7 +205,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			handler({ previousTaskError, data }) {
+			handler({ data, previousTaskError }) {
 				if (previousTaskError) {
 					botMessage(
 						{
