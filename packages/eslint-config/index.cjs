@@ -54,7 +54,7 @@ module.exports = {
 				tsconfigRootDir: process.cwd(),
 				project: ["./tsconfig.json"],
 			},
-			plugins: ["@typescript-eslint"],
+			plugins: ["@typescript-eslint", "deprecation"],
 			rules: {
 				"@typescript-eslint/adjacent-overload-signatures": "error",
 				// https://www.totaltypescript.com/array-types-in-typescript
@@ -225,6 +225,7 @@ module.exports = {
 				],
 				"no-useless-constructor": "off",
 				"@typescript-eslint/no-useless-constructor": "error",
+				"deprecation/deprecation": "error",
 				"import/consistent-type-specifier-style": [
 					"error",
 					"prefer-top-level",
@@ -269,93 +270,6 @@ module.exports = {
 		},
 	],
 	rules: {
-		// #region eslint
-		"no-alert": "error",
-		"no-return-await": "error",
-		"no-var": "error",
-		"object-shorthand": ["error", "always"],
-		"padding-line-between-statements": [
-			"error",
-			{
-				blankLine: "always",
-				prev: "*",
-				next: "*",
-			},
-			{
-				blankLine: "never",
-				prev: ["const", "let", "var"],
-				next: ["const", "let", "var"],
-			},
-			{
-				blankLine: "never",
-				prev: ["case", "default"],
-				next: ["case", "default"],
-			},
-			{
-				blankLine: "always",
-				prev: ["multiline-const", "multiline-let", "multiline-var"],
-				next: ["const", "let", "var"],
-			},
-			{
-				blankLine: "always",
-				prev: ["const", "let", "var"],
-				next: ["multiline-const", "multiline-let", "multiline-var"],
-			},
-			{
-				blankLine: "any",
-				prev: ["expression"],
-				next: ["expression"],
-			},
-			{
-				blankLine: "any",
-				prev: ["cjs-import"],
-				next: ["const", "let", "var"],
-			},
-			{
-				blankLine: "any",
-				prev: ["cjs-import", "import"],
-				next: ["cjs-import", "import"],
-			},
-			{
-				blankLine: "any",
-				prev: ["cjs-export", "export"],
-				next: ["cjs-export", "export"],
-			},
-		],
-		"prefer-arrow-callback": ["error", { allowNamedFunctions: true }],
-		"prefer-const": "error",
-		"sort-imports": ["error", { ignoreDeclarationSort: true }],
-		"sort-destructure-keys/sort-destructure-keys": "error",
-		"sort-keys-custom-order/object-keys": [
-			"error",
-			{
-				orderedKeys: [
-					"id",
-					"key",
-					"name",
-					"title",
-					"label",
-					"description",
-					"version",
-				],
-			},
-		],
-		"sort-keys-custom-order/type-keys": [
-			"error",
-			{
-				orderedKeys: [
-					"id",
-					"key",
-					"name",
-					"title",
-					"label",
-					"description",
-					"version",
-				],
-			},
-		],
-		"sort-vars": "error",
-		// #endregion
 		// #region import
 		"import/export": "error",
 		"import/default": "error",
@@ -453,11 +367,9 @@ module.exports = {
 		"react/no-unescaped-entities": "error",
 		"react/prefer-stateless-function": "error",
 		"react/self-closing-comp": "error",
-		// #endregion react
-		// #region react-hooks
 		"react-hooks/rules-of-hooks": "error",
 		"react-hooks/exhaustive-deps": "warn",
-		// #endregion react-hooks
+		// #endregion react
 		// #region sonarjs
 		"sonarjs/cognitive-complexity": "error",
 		"sonarjs/elseif-without-else": "error",
@@ -487,6 +399,93 @@ module.exports = {
 		"sonarjs/prefer-object-literal": "error",
 		"sonarjs/prefer-single-boolean-return": "error",
 		"sonarjs/prefer-while": "error",
+		// #endregion
+		// #region eslint and others
+		"no-alert": "error",
+		"no-return-await": "error",
+		"no-var": "error",
+		"object-shorthand": ["error", "always"],
+		"padding-line-between-statements": [
+			"error",
+			{
+				blankLine: "always",
+				prev: "*",
+				next: "*",
+			},
+			{
+				blankLine: "never",
+				prev: ["const", "let", "var"],
+				next: ["const", "let", "var"],
+			},
+			{
+				blankLine: "never",
+				prev: ["case", "default"],
+				next: ["case", "default"],
+			},
+			{
+				blankLine: "always",
+				prev: ["multiline-const", "multiline-let", "multiline-var"],
+				next: ["const", "let", "var"],
+			},
+			{
+				blankLine: "always",
+				prev: ["const", "let", "var"],
+				next: ["multiline-const", "multiline-let", "multiline-var"],
+			},
+			{
+				blankLine: "any",
+				prev: ["expression"],
+				next: ["expression"],
+			},
+			{
+				blankLine: "any",
+				prev: ["cjs-import"],
+				next: ["const", "let", "var"],
+			},
+			{
+				blankLine: "any",
+				prev: ["cjs-import", "import"],
+				next: ["cjs-import", "import"],
+			},
+			{
+				blankLine: "any",
+				prev: ["cjs-export", "export"],
+				next: ["cjs-export", "export"],
+			},
+		],
+		"prefer-arrow-callback": ["error", { allowNamedFunctions: true }],
+		"prefer-const": "error",
+		"sort-imports": ["error", { ignoreDeclarationSort: true }],
+		"sort-destructure-keys/sort-destructure-keys": "error",
+		"sort-keys-custom-order/object-keys": [
+			"error",
+			{
+				orderedKeys: [
+					"id",
+					"key",
+					"name",
+					"title",
+					"label",
+					"description",
+					"version",
+				],
+			},
+		],
+		"sort-keys-custom-order/type-keys": [
+			"error",
+			{
+				orderedKeys: [
+					"id",
+					"key",
+					"name",
+					"title",
+					"label",
+					"description",
+					"version",
+				],
+			},
+		],
+		"sort-vars": "error",
 		// #endregion
 	},
 };
