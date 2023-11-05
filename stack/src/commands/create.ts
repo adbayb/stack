@@ -79,10 +79,12 @@ export const createCreateCommand: CommandFactory = (program) => {
 			key: "data",
 			label: label("Evaluating contextual data"),
 			async handler({ inputDescription, inputName, inputUrl }) {
-				const nodeVersion = await request.get(
-					"https://resolve-node.vercel.app/lts",
-					"text",
-				);
+				const nodeVersion = (
+					await request.get(
+						"https://resolve-node.vercel.app/lts",
+						"text",
+					)
+				).replace("v", "");
 
 				const npmVersion = (
 					await request.get(
