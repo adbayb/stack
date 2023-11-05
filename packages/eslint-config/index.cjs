@@ -309,7 +309,7 @@ module.exports = {
 			{
 				alphabetize: {
 					order: "asc",
-					orderImportKind: "asc",
+					orderImportKind: "desc",
 					caseInsensitive: false,
 				},
 				"newlines-between": "always",
