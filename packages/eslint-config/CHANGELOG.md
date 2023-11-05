@@ -1,5 +1,11 @@
 # @adbayb/eslint-config
 
+## 1.7.1
+
+### Patch Changes
+
+- [`631fb85`](https://github.com/adbayb/stack/commit/631fb85baee3882ea9401d726d39d07f48e2c6af) Thanks [@adbayb](https://github.com/adbayb)! - Remove conflicting sort-destructure-keys rule
+
 ## 1.7.0
 
 ### Minor Changes
