@@ -38,7 +38,6 @@ module.exports = {
 		"react",
 		"react-hooks",
 		"sonarjs",
-		"sort-destructure-keys",
 		"sort-keys-custom-order",
 	],
 	overrides: [
@@ -456,7 +455,6 @@ module.exports = {
 		"prefer-arrow-callback": ["error", { allowNamedFunctions: true }],
 		"prefer-const": "error",
 		"sort-imports": ["error", { ignoreDeclarationSort: true }],
-		"sort-destructure-keys/sort-destructure-keys": "error",
 		"sort-keys-custom-order/object-keys": [
 			"error",
 			{
@@ -467,7 +465,6 @@ module.exports = {
 					"title",
 					"label",
 					"description",
-					"version",
 				],
 			},
 		],
@@ -481,7 +478,6 @@ module.exports = {
 					"title",
 					"label",
 					"description",
-					"version",
 				],
 			},
 		],
