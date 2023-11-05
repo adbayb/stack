@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 1.13.0
+
+### Minor Changes
+
+- [`ff3f156`](https://github.com/adbayb/stack/commit/ff3f1567342c4c1687ca9658cbca323ff12fa3e3) Thanks [@adbayb](https://github.com/adbayb)! - Update gitignore template and avoid including version prefix into nvmrc file
+
 ## 1.12.0
 
 ### Minor Changes

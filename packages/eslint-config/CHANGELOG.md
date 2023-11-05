@@ -1,5 +1,11 @@
 # @adbayb/eslint-config
 
+## 1.8.0
+
+### Minor Changes
+
+- [`0f7278a`](https://github.com/adbayb/stack/commit/0f7278a5b078726c248ead56ea8dcf83cfa8570e) Thanks [@adbayb](https://github.com/adbayb)! - Enable import sorting
+
 ## 1.7.1
 
 ### Patch Changes
