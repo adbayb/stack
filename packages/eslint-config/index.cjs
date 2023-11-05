@@ -307,6 +307,11 @@ module.exports = {
 		"import/order": [
 			"error",
 			{
+				alphabetize: {
+					order: "asc",
+					orderImportKind: "asc",
+					caseInsensitive: false,
+				},
 				"newlines-between": "always",
 				groups: [
 					["builtin", "external"],

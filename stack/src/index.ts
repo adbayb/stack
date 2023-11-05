@@ -3,9 +3,9 @@
 import { termost } from "termost";
 
 import { createBuildCommand } from "./commands/build";
-import { createCreateCommand } from "./commands/create";
 import { createCheckCommand } from "./commands/check";
 import { createCleanCommand } from "./commands/clean";
+import { createCreateCommand } from "./commands/create";
 import { createFixCommand } from "./commands/fix";
 import { createInstallCommand } from "./commands/install";
 import { createReleaseCommand } from "./commands/release";

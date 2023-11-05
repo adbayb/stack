@@ -1,7 +1,7 @@
 import { helpers } from "termost";
 
-import type { CommandFactory } from "../types";
 import { changeset } from "../helpers";
+import type { CommandFactory } from "../types";
 
 type CommandContext = {
 	log: boolean;

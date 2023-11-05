@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
-import { helpers } from "termost";
 import { resolve } from "node:path";
+import { helpers } from "termost";
 
 /**
  * Helper to format log messages with a welcoming bot

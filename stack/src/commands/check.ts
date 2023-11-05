@@ -1,5 +1,5 @@
-import type { CommandFactory } from "../types";
 import { checkCommit, checkLints, checkTypes, turbo } from "../helpers";
+import type { CommandFactory } from "../types";
 
 const onlyValues = ["commit", "lint", "type"] as const;
 

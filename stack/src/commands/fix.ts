@@ -1,5 +1,5 @@
-import type { CommandFactory } from "../types";
 import { fixFormatting, fixLints, turbo } from "../helpers";
+import type { CommandFactory } from "../types";
 
 export const createFixCommand: CommandFactory = (program) => {
 	program

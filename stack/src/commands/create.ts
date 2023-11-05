@@ -1,9 +1,10 @@
-import { resolve } from "node:path";
-import { helpers } from "termost";
 import { readFileSync, renameSync, writeFileSync } from "node:fs";
 import { mkdir, symlink } from "node:fs/promises";
+import { resolve } from "node:path";
+import { helpers } from "termost";
 
-import type { CommandFactory } from "../types";
+import pkg from "../../package.json";
+import defaultTemplateConfig from "../../templates/default/config.json";
 import {
 	botMessage,
 	createError,
@@ -13,8 +14,7 @@ import {
 	resolveFromStackDirectory,
 	setPkgManager,
 } from "../helpers";
-import defaultTemplateConfig from "../../templates/default/config.json";
-import pkg from "../../package.json";
+import type { CommandFactory } from "../types";
 
 type CommandContext = {
 	data: Record<
