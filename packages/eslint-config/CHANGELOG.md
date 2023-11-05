@@ -1,5 +1,11 @@
 # @adbayb/eslint-config
 
+## 1.9.0
+
+### Minor Changes
+
+- [`366cc1b`](https://github.com/adbayb/stack/commit/366cc1bee6f85b9d31bc7537b0823a0b15ad9ac6) Thanks [@adbayb](https://github.com/adbayb)! - Change import order for type statements
+
 ## 1.8.0
 
 ### Minor Changes
