@@ -21,8 +21,8 @@ importers:
         specifier: workspace:*
         version: link:packages/ts-config
       '@types/node':
-        specifier: 20.8.10
-        version: 20.8.10
+        specifier: 20.10.0
+        version: 20.10.0
       quickbundle:
         specifier: 1.2.0
         version: 1.2.0
@@ -967,7 +967,7 @@ packages:
   /@types/concat-stream@2.0.0:
     resolution: {integrity: sha512-t3YCerNM7NTVjLuICZo5gYAXYoDvpuuTceCcFQWcDQz26kxUR5uIWolxbIR5jRNIXpMqhOpW/b8imCR1LEmuJw==}
     dependencies:
-      '@types/node': 20.8.10
+      '@types/node': 20.10.0
     dev: false
 
   /@types/debug@4.1.8:
@@ -1038,8 +1038,8 @@ packages:
       undici-types: 5.26.5
     dev: false
 
-  /@types/node@20.8.10:
-    resolution: {integrity: sha512-TlgT8JntpcbmKUFzjhsyhGfP2fsiz1Mv56im6enJ905xG1DAYesxJaeSbGqQmAw8OWPdhyJGhGSQGKRNJ45u9w==}
+  /@types/node@20.10.0:
+    resolution: {integrity: sha512-D0WfRmU9TQ8I9PFx9Yc+EBHw+vSpIub4IDvQivcp26PtPrdMGAq5SDcpXEo/epqa/DXotVpekHiLNTg3iaKXBQ==}
     dependencies:
       undici-types: 5.26.5
 
