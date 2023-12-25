@@ -1,5 +1,15 @@
 # @adbayb/stack
 
+## 1.14.0
+
+### Minor Changes
+
+- [#70](https://github.com/adbayb/stack/pull/70) [`4e5d56d`](https://github.com/adbayb/stack/commit/4e5d56d0f91aaf9b8ccf9d3ae0e4d22dfd4f0a06) Thanks [@adbayb](https://github.com/adbayb)! - Externalize tool configuration outside the package.json for better compatibility with all editors (including Vim plugins). The default template has been updated consequently
+
+- [`f3d385f`](https://github.com/adbayb/stack/commit/f3d385f30d44ac42bd32f0944a2837c15407baf7) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies
+
+- [#70](https://github.com/adbayb/stack/pull/70) [`4e5d56d`](https://github.com/adbayb/stack/commit/4e5d56d0f91aaf9b8ccf9d3ae0e4d22dfd4f0a06) Thanks [@adbayb](https://github.com/adbayb)! - Update template to include new GitHub actions workflows (including Renovate/Changesets synchronization and better continous integration/delivery synergies)
+
 ## 1.13.0
 
 ### Minor Changes
