@@ -1,13 +1,14 @@
-name: Update dependency changelog
+name: Dependency changelog
 
 on:
     pull_request_target:
         paths:
             - "**/pnpm-lock.yaml"
-            - "**/package.json"
 
 jobs:
     main:
+        timeout-minutes: 5
+        name: Add new entry
         runs-on: ubuntu-latest
         if: github.actor == 'renovate[bot]'
         steps:
