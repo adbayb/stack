@@ -95,7 +95,6 @@ flowchart TD
 ## 👣 Roadmap
 
 -   [ ] `stack check`: Lint packages (caret range for dependencies and strict ones for dev dependencies)
--   [ ] Sync [Changesets](https://github.com/changesets/changesets/issues/647) with Renovate updates
 
 <br>
 
