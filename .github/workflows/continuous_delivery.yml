@@ -11,8 +11,8 @@ jobs:
     integrate:
         uses: ./.github/workflows/workflow.yml
     release:
-        needs: integrate
         timeout-minutes: 5
+        needs: integrate
         runs-on: ubuntu-latest
         permissions:
             contents: write
