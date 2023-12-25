@@ -1,4 +1,4 @@
-name: Release
+name: Continous delivery
 
 on:
     push:
@@ -8,7 +8,10 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
+    integrate:
+        uses: ./.github/workflows/workflow.yml
     release:
+        needs: integrate
         timeout-minutes: 5
         runs-on: ubuntu-latest
         permissions:
