@@ -238,9 +238,15 @@ export const createCreateCommand: CommandFactory = (program) => {
 const label = (message: string) => `${message} 🔨`;
 
 /**
- * A simple template engine to evaluate dynamic expressions and apply side effets (such as hydrating a content with values from an input object) on impacted template files
- * @param config Configuration object listing template files/folders that need expression evaluation
- * @param input Input object mapping the template expression key with its corresponding value
+ * A simple template engine to evaluate dynamic expressions and apply side effets (such as hydrating a content with values from an input object) on impacted template files.
+ * @param config - Configuration object listing template files/folders that need expression evaluation.
+ * @param input - Input object mapping the template expression key with its corresponding value.
+ * @returns Engine functions.
+ * @example
+ * createTemplateEngine(
+ * 	{ files: ["./templateA.ts"], folders: ["./folderB"] },
+ * 	{ toReplace: "value" },
+ * );
  */
 const createTemplateEngine = (
 	config: Record<"files" | "folders", string[]>,

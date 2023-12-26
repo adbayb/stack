@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 /**
- * Package proxy using `@adbayb/stack` to benefit from NPM initializer `npm init @adbayb`
- * @see https://docs.npmjs.com/cli/v9/commands/npm-init
+ * @file Package proxy using `@adbayb/stack` to benefit from NPM initializer `npm init @adbayb`.
+ * @see {@link https://docs.npmjs.com/cli/v9/commands/npm-init}
  */
 import { helpers } from "termost";
 

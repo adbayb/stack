@@ -3,9 +3,24 @@ import { resolve } from "node:path";
 import { helpers } from "termost";
 
 /**
- * Helper to format log messages with a welcoming bot
- * @param input Content input
- * @param options Termost options for the `message` API
+ * Helper to format log messages with a welcoming bot.
+ * @param input - Message factory.
+ * @param input.title - Title input.
+ * @param input.description - Description input.
+ * @param input.body - Body input.
+ * @param options - Formatting option.
+ * @example
+ * botMessage(
+ *	{
+ * 		title: "Oops, an error occurred",
+ * 		description:
+ * 			"Keep calm and carry on with some coffee ☕️",
+ * 		body: String(previousTaskError),
+ * 	},
+ * 	{
+ * 		type: "error",
+ * 	},
+ * );
  */
 export const botMessage = (
 	input: { title: string; description: string; body?: string },
@@ -29,18 +44,22 @@ ${input.body}
 };
 
 /**
- * Resolve a relative path to an absolute one resolved from the generated project root directory
- * @param path The relative path
- * @returns The resolved absolute path
+ * Resolve a relative path to an absolute one resolved from the generated project root directory.
+ * @param path - The relative path.
+ * @returns The resolved absolute path.
+ * @example
+ * resolveFromProjectDirectory(".gitignore");
  */
 export const resolveFromProjectDirectory = (path: string) => {
 	return resolve(process.cwd(), path);
 };
 
 /**
- * Resolve a relative path to an absolute one resolved from the `stack` node module directory
- * @param path The relative path
- * @returns The resolved absolute path
+ * Resolve a relative path to an absolute one resolved from the `stack` node module directory.
+ * @param path - The relative path.
+ * @returns The resolved absolute path.
+ * @example
+ * resolveFromStackDirectory("./templates");
  */
 export const resolveFromStackDirectory = (path: string) => {
 	return resolve(__dirname, "../", path);
