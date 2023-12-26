@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 1.15.0
+
+### Minor Changes
+
+- [`24f67e9`](https://github.com/adbayb/stack/commit/24f67e9b781ceedc33f02738beb5073cd24df181) Thanks [@adbayb](https://github.com/adbayb)! - Update template to comply with new VSCode setting
+
 ## 1.14.0
 
 ### Minor Changes

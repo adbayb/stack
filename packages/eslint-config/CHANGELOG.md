@@ -1,5 +1,11 @@
 # @adbayb/eslint-config
 
+## 1.11.0
+
+### Minor Changes
+
+- [`d0a2f05`](https://github.com/adbayb/stack/commit/d0a2f05189d73a952c8f37f390c1d40b603e45bd) Thanks [@adbayb](https://github.com/adbayb)! - Add eslint-plugin-jsdoc
+
 ## 1.10.0
 
 ### Minor Changes
