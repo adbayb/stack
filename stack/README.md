@@ -90,6 +90,11 @@ flowchart TD
 -   **Release**: Changesets
 -   **Testing**: Vitest
 
+### Used conventions
+
+-   [x] [Conventional commits](https://www.conventionalcommits.org/)
+-   [ ] [Conventional scripts](https://conventionalscripts.org/)
+
 <br>
 
 ## 👣 Roadmap
