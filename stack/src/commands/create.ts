@@ -1,10 +1,10 @@
-import { readFileSync, renameSync, writeFileSync } from "node:fs";
+import { fdir } from "fdir";
+import { cpSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { mkdir, symlink } from "node:fs/promises";
 import { resolve } from "node:path";
 import { helpers } from "termost";
 
 import pkg from "../../package.json";
-import defaultTemplateConfig from "../../templates/default/config.json";
 import {
 	botMessage,
 	createError,
@@ -27,10 +27,10 @@ type CommandContext = {
 		| "repoId",
 		string
 	>;
+	error: Error | undefined;
 	inputDescription: string;
 	inputName: string;
 	inputUrl: string;
-	previousTaskError: Error | undefined;
 };
 
 export const createCreateCommand: CommandFactory = (program) => {
@@ -115,7 +115,6 @@ export const createCreateCommand: CommandFactory = (program) => {
 						inputDescription.slice(1), // Enforce upper case for the first letter
 					projectName: inputName.toLowerCase(), // Enforce lower case for folder and package name
 					projectUrl: inputUrl,
-					projectVersion: "0.0.0",
 					repoId: `${repoOwner}/${repoName}`,
 				};
 			},
@@ -139,18 +138,9 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: label("Applying default template"),
-			async handler({ data }) {
-				await extractTemplate();
-
-				// Hydrate template expressions with context values:
-				const engine = createTemplateEngine(
-					defaultTemplateConfig,
-					data,
-				);
-
-				engine.hydrate();
-				engine.rename();
+			label: label("Applying template"),
+			handler({ data }) {
+				applyTemplate(data);
 			},
 		})
 		.task({
@@ -183,7 +173,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			key: "previousTaskError",
+			key: "error",
 			label: label("Cleaning up"),
 			async handler({ data }) {
 				try {
@@ -207,14 +197,14 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			handler({ data, previousTaskError }) {
-				if (previousTaskError) {
+			handler({ data, error }) {
+				if (error) {
 					botMessage(
 						{
 							title: "Oops, an error occurred",
 							description:
 								"Keep calm and carry on with some coffee ☕️",
-							body: String(previousTaskError),
+							body: String(error),
 						},
 						{
 							type: "error",
@@ -239,59 +229,68 @@ const label = (message: string) => `${message} 🔨`;
 
 /**
  * A simple template engine to evaluate dynamic expressions and apply side effets (such as hydrating a content with values from an input object) on impacted template files.
- * @param config - Configuration object listing template files/folders that need expression evaluation.
- * @param input - Input object mapping the template expression key with its corresponding value.
- * @returns Engine functions.
+ * @param dataModel - Data model mapping the template expression key with its corresponding value.
  * @example
- * createTemplateEngine(
- * 	{ files: ["./templateA.ts"], folders: ["./folderB"] },
+ * applyTemplate(
  * 	{ toReplace: "value" },
  * );
  */
-const createTemplateEngine = (
-	config: Record<"files" | "folders", string[]>,
-	input: CommandContext["data"],
-) => {
-	const evaluate = (expression: string) => {
-		return expression.replace(
-			/{{(.*?)}}/g,
-			(_, key: keyof CommandContext["data"]) => input[key] || "",
+const applyTemplate = (dataModel: CommandContext["data"]) => {
+	const templateExtension = ".tmpl";
+	const templateRootPath = resolveFromStackDirectory("./template");
+	const projectRootPath = resolveFromProjectDirectory("./");
+	const templateExpressionRegExp = /{{(.*?)}}/g;
+
+	const evaluate = (content: string) => {
+		return content.replace(
+			templateExpressionRegExp,
+			(_, key: keyof CommandContext["data"]) => dataModel[key] || "",
 		);
 	};
 
-	return {
-		hydrate() {
-			for (const filename of config.files) {
-				const filepath = resolveFromProjectDirectory(filename);
-				const content = readFileSync(filepath, "utf-8");
+	/** Copy the template before mutations. */
+	cpSync(templateRootPath, projectRootPath, {
+		force: true,
+		recursive: true,
+	});
 
-				writeFileSync(filepath, evaluate(content));
-			}
-		},
-		rename() {
-			try {
-				for (const pathname of config.folders) {
-					renameSync(
-						resolveFromProjectDirectory(pathname),
-						resolveFromProjectDirectory(evaluate(pathname)),
-					);
-				}
-			} catch {
-				// Silent error in case of stack re-creation
-			}
-		},
-	};
-};
+	/** Template file mutations. */
+	new fdir()
+		.withBasePath()
+		.glob(`**/*${templateExtension}`)
+		.crawl(projectRootPath)
+		.sync()
+		.forEach((templateFilePath) => {
+			const projectFilePath = templateFilePath.slice(
+				0,
+				templateFilePath.lastIndexOf(templateExtension),
+			);
 
-const extractTemplate = async () => {
-	const compressedFilePath = resolve(
-		resolveFromStackDirectory("./templates"),
-		"./default/content.tar.gz",
-	);
+			const content = evaluate(readFileSync(templateFilePath, "utf-8"));
 
-	const destinationPath = resolveFromProjectDirectory("./");
+			renameSync(templateFilePath, projectFilePath);
+			writeFileSync(projectFilePath, content, "utf-8");
+		});
 
-	return helpers.exec(
-		`tar -xzf ${compressedFilePath} -C ${destinationPath} --strip-components=1`,
-	);
+	/** Template folder mutations. */
+	new fdir()
+		.withBasePath()
+		.onlyDirs()
+		.filter((path) => {
+			return Boolean(templateExpressionRegExp.exec(path));
+		})
+		.crawl(projectRootPath)
+		.sync()
+		// Re-order from longest to lowest path length to apply first renaming operations on deepest file structure
+		.sort((a, b) => b.length - a.length)
+		.forEach((templateFolderPath) => {
+			const newPath = templateFolderPath.replace(
+				templateExpressionRegExp,
+				(_, dataModelKey) => {
+					return dataModel[dataModelKey as keyof typeof dataModel];
+				},
+			);
+
+			renameSync(templateFolderPath, newPath);
+		});
 };

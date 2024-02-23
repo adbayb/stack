@@ -92,8 +92,13 @@ flowchart TD
 
 ### Used conventions
 
--   [x] [Conventional commits](https://www.conventionalcommits.org/)
--   [ ] [Conventional scripts](https://conventionalscripts.org/)
+-   [File Structure (inspired by NX)](https://nx.dev/concepts/more-concepts/folder-structure)
+    -   Monorepo-first structure to:
+        -   Keep a consistent file structure pattern across templates (ease template familiarity and onboarding)
+        -   Ease examples setup
+        -   Not clutter the published package with development-related context, metadata, and artifacts
+-   [Commits](https://www.conventionalcommits.org/)
+-   [Scripts](https://conventionalscripts.org/)
 
 <br>
 

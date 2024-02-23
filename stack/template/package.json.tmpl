@@ -1,0 +1,26 @@
+{
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"prepare": "stack install",
+		"clean": "stack clean",
+		"check": "stack check",
+		"fix": "stack fix",
+		"start": "stack start",
+		"build": "stack build",
+		"watch": "stack watch",
+		"test": "stack test",
+		"release:log": "stack release --log",
+		"release:version": "stack release --tag",
+		"release:publish": "stack release --publish"
+	},
+	"prettier": "@adbayb/prettier-config",
+	"packageManager": "pnpm@{{npmVersion}}",
+	"engines": {
+		"node": ">=18.0.0",
+		"pnpm": ">=8.0.0",
+		"npm": "please-use-pnpm",
+		"yarn": "please-use-pnpm"
+	}
+}
