@@ -8,9 +8,9 @@ module.exports = {
 	env: {
 		browser: true,
 		commonjs: true,
-		es6: true,
-		jest: true,
+		es2020: true,
 		node: true,
+		worker: true,
 	},
 	parserOptions: {
 		ecmaVersion: 2020,
@@ -34,9 +34,8 @@ module.exports = {
 		"plugin:astro/recommended",
 	],
 	plugins: [
-		"jest",
-		"jsdoc",
 		"import",
+		"jsdoc",
 		"react",
 		"react-hooks",
 		"sonarjs",
@@ -234,6 +233,58 @@ module.exports = {
 			},
 		},
 		{
+			files: ["**/*.test.?(c|m)[jt]s?(x)"],
+			plugins: ["jest-formatting", "vitest"],
+			rules: {
+				"jest-formatting/padding-around-all": "error",
+				"vitest/consistent-test-it": [
+					"error",
+					{ fn: "test", withinDescribe: "test" },
+				],
+				"vitest/expect-expect": "error",
+				"vitest/max-nested-describe": ["error", { max: 1 }],
+				"vitest/no-alias-methods": "error",
+				"vitest/no-commented-out-tests": "error",
+				"vitest/no-conditional-expect": "error",
+				"vitest/no-conditional-in-test": "error",
+				"vitest/no-conditional-tests": "error",
+				"vitest/no-disabled-tests": "error",
+				"vitest/no-done-callback": "error",
+				"vitest/no-duplicate-hooks": "error",
+				"vitest/no-focused-tests": "error",
+				"vitest/no-identical-title": "error",
+				"vitest/no-import-node-test": "error",
+				"vitest/no-mocks-import": "error",
+				"vitest/no-standalone-expect": "error",
+				"vitest/no-test-return-statement": "error",
+				"vitest/prefer-called-with": "error",
+				"vitest/prefer-comparison-matcher": "error",
+				"vitest/prefer-each": "error",
+				"vitest/prefer-equality-matcher": "error",
+				"vitest/prefer-hooks-in-order": "error",
+				"vitest/prefer-hooks-on-top": "error",
+				"vitest/prefer-lowercase-title": "error",
+				"vitest/prefer-mock-promise-shorthand": "error",
+				"vitest/prefer-strict-equal": "error",
+				"vitest/prefer-to-be": "error",
+				"vitest/prefer-to-be-object": "error",
+				"vitest/prefer-to-contain": "error",
+				"vitest/prefer-to-have-length": "error",
+				"vitest/prefer-todo": "error",
+				"vitest/require-hook": "error",
+				"vitest/require-local-test-context-for-concurrent-snapshots":
+					"error",
+				"vitest/require-to-throw-message": "error",
+				"vitest/require-top-level-describe": "error",
+				"vitest/valid-describe-callback": "error",
+				"vitest/valid-expect": "error",
+				"vitest/valid-title": [
+					"error",
+					{ mustMatch: { test: ["^should "] } },
+				],
+			},
+		},
+		{
 			// Relaxed rules for example-like folder, and [config-, story-, and test]-like files
 			files: [
 				"examples/**",
@@ -387,34 +438,6 @@ module.exports = {
 			},
 		],
 		// #endregion
-		// #region jest
-		"jest/consistent-test-it": ["error", { fn: "test" }],
-		"jest/expect-expect": "error",
-		"jest/prefer-todo": "error",
-		"jest/no-commented-out-tests": "error",
-		"jest/no-conditional-expect": "error",
-		"jest/no-disabled-tests": "error",
-		"jest/no-done-callback": "error",
-		"jest/no-export": "error",
-		"jest/no-focused-tests": "error",
-		"jest/no-identical-title": "error",
-		"jest/no-jasmine-globals": "error",
-		"jest/no-mocks-import": "error",
-		"jest/no-standalone-expect": "error",
-		"jest/no-test-prefixes": "error",
-		"jest/prefer-hooks-on-top": "error",
-		"jest/prefer-spy-on": "error",
-		"jest/prefer-strict-equal": "error",
-		"jest/prefer-to-be": "error",
-		"jest/prefer-to-contain": "error",
-		"jest/prefer-to-have-length": "error",
-		"jest/valid-title": [
-			"error",
-			{
-				mustMatch: { test: "^should" },
-			},
-		],
-		// #endregion
 		// #region react
 		"react/display-name": "error",
 		"react/jsx-boolean-value": "error",
@@ -468,7 +491,7 @@ module.exports = {
 		"sonarjs/prefer-single-boolean-return": "error",
 		"sonarjs/prefer-while": "error",
 		// #endregion
-		// #region eslint and others
+		// #region others
 		"no-alert": "error",
 		"no-return-await": "error",
 		"no-var": "error",
