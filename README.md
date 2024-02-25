@@ -1,1 +1,1 @@
-stack/README.md
+applications/stack/README.md
