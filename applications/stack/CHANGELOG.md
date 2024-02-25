@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 1.16.1
+
+### Patch Changes
+
+- [`98b9e4e`](https://github.com/adbayb/stack/commit/98b9e4ececfdaa41d6d21717a4d7dc6f5f9203bb) Thanks [@adbayb](https://github.com/adbayb)! - Update template to force include ignored files
+
 ## 1.16.0
 
 ### Minor Changes
