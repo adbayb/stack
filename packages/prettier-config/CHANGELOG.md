@@ -1,5 +1,22 @@
 # @adbayb/prettier-config
 
+## 1.5.0
+
+### Minor Changes
+
+- [#77](https://github.com/adbayb/stack/pull/77) [`3c65174`](https://github.com/adbayb/stack/commit/3c651743989a5e26307c4df3889f94a0c100a66b) Thanks [@renovate](https://github.com/apps/renovate)! - Updated dependency `@typescript-eslint/eslint-plugin` to `^6.21.0`.
+  Updated dependency `@typescript-eslint/parser` to `^6.21.0`.
+  Updated dependency `eslint-plugin-astro` to `^0.31.4`.
+  Updated dependency `prettier-plugin-astro` to `^0.13.0`.
+  Updated dependency `prettier` to `^3.2.5`.
+  Updated dependency `@commitlint/cli` to `^18.6.0`.
+  Updated dependency `@commitlint/config-conventional` to `^18.6.0`.
+  Updated dependency `turbo` to `^1.12.2`.
+
+### Patch Changes
+
+- [#73](https://github.com/adbayb/stack/pull/73) [`89beae6`](https://github.com/adbayb/stack/commit/89beae64788e861351136f3dffcc832cd4be7918) Thanks [@renovate](https://github.com/apps/renovate)! -
+
 ## 1.4.0
 
 ### Minor Changes

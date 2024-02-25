@@ -1,5 +1,28 @@
 # @adbayb/stack
 
+## 1.16.0
+
+### Minor Changes
+
+- [`0e50477`](https://github.com/adbayb/stack/commit/0e50477d747c8ca824560c3ae6bfac5bdbc4781c) Thanks [@adbayb](https://github.com/adbayb)! - Update default template to unify GitHub Action job names
+
+- [#77](https://github.com/adbayb/stack/pull/77) [`3c65174`](https://github.com/adbayb/stack/commit/3c651743989a5e26307c4df3889f94a0c100a66b) Thanks [@renovate](https://github.com/apps/renovate)! - Updated dependency `@typescript-eslint/eslint-plugin` to `^6.21.0`.
+  Updated dependency `@typescript-eslint/parser` to `^6.21.0`.
+  Updated dependency `eslint-plugin-astro` to `^0.31.4`.
+  Updated dependency `prettier-plugin-astro` to `^0.13.0`.
+  Updated dependency `prettier` to `^3.2.5`.
+  Updated dependency `@commitlint/cli` to `^18.6.0`.
+  Updated dependency `@commitlint/config-conventional` to `^18.6.0`.
+  Updated dependency `turbo` to `^1.12.2`.
+
+- [`dc8d29b`](https://github.com/adbayb/stack/commit/dc8d29bafe735739848dd2ceb042cea0f6728646) Thanks [@adbayb](https://github.com/adbayb)! - Update template and dependencies
+
+- [`b779292`](https://github.com/adbayb/stack/commit/b779292604a5d70cd72658fd4903325792ecaf67) Thanks [@adbayb](https://github.com/adbayb)! - Update GitHub Action template to sync Renovate change correctly
+
+### Patch Changes
+
+- [#73](https://github.com/adbayb/stack/pull/73) [`89beae6`](https://github.com/adbayb/stack/commit/89beae64788e861351136f3dffcc832cd4be7918) Thanks [@renovate](https://github.com/apps/renovate)! -
+
 ## 1.15.0
 
 ### Minor Changes

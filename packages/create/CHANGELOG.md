@@ -1,5 +1,12 @@
 # @adbayb/create
 
+## 1.16.0
+
+### Patch Changes
+
+- Updated dependencies [[`0e50477`](https://github.com/adbayb/stack/commit/0e50477d747c8ca824560c3ae6bfac5bdbc4781c), [`89beae6`](https://github.com/adbayb/stack/commit/89beae64788e861351136f3dffcc832cd4be7918), [`3c65174`](https://github.com/adbayb/stack/commit/3c651743989a5e26307c4df3889f94a0c100a66b), [`dc8d29b`](https://github.com/adbayb/stack/commit/dc8d29bafe735739848dd2ceb042cea0f6728646), [`b779292`](https://github.com/adbayb/stack/commit/b779292604a5d70cd72658fd4903325792ecaf67)]:
+  - @adbayb/stack@1.16.0
+
 ## 1.15.0
 
 ### Patch Changes
