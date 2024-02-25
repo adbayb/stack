@@ -63,11 +63,11 @@ stack release
 
 ```mermaid
 flowchart TD
-    N("npm init @adbayb"):::strokeWidth -- Calls --> C("<a href='https://github.com/adbayb/stack/tree/main/packages/create'>@adbayb/create</a>"):::strokeWidth
-    C -- Uses --> S("<a href='https://github.com/adbayb/stack/tree/main/stack'>@adbayb/stack</a>"):::strokeWidth
-    S -- "Installs" --> EC("<a href='https://github.com/adbayb/stack/tree/main/packages/eslint-config'>@adbayb/eslint-config</a>"):::strokeWidth
-    S -- "Installs" --> PC("<a href='https://github.com/adbayb/stack/tree/main/packages/prettier-config'>@adbayb/prettier-config</a>"):::strokeWidth
-    S -- "Installs" --> TC("<a href='https://github.com/adbayb/stack/tree/main/packages/ts-config'>@adbayb/ts-config</a>"):::strokeWidth
+    N("npm init @adbayb"):::strokeWidth -- Calls --> C("@adbayb/create"):::strokeWidth
+    C -- Uses --> S("@adbayb/stack"):::strokeWidth
+    S -- "Installs" --> EC("@adbayb/eslint-config"):::strokeWidth
+    S -- "Installs" --> PC("@adbayb/prettier-config"):::strokeWidth
+    S -- "Installs" --> TC("@adbayb/ts-config"):::strokeWidth
     S -- "Scaffolds" --> P("Created project"):::strokeWidth
     EC -- "Configures" --> P
     PC -- "Configures" --> P
