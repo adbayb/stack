@@ -30,11 +30,11 @@
 		"@adbayb/prettier-config": "workspace:*",
 		"@adbayb/stack": "workspace:*",
 		"@adbayb/ts-config": "workspace:*",
-		"@types/node": "20.11.20",
+		"@types/node": "20.11.30",
 		"quickbundle": "1.2.0"
 	},
 	"prettier": "@adbayb/prettier-config",
-	"packageManager": "pnpm@8.14.3",
+	"packageManager": "pnpm@8.15.5",
 	"engines": {
 		"node": ">=18.0.0",
 		"pnpm": ">=8.0.0",
