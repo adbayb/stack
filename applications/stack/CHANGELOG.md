@@ -1,5 +1,22 @@
 # @adbayb/stack
 
+## 1.17.0
+
+### Minor Changes
+
+- [#80](https://github.com/adbayb/stack/pull/80) [`36ad90e`](https://github.com/adbayb/stack/commit/36ad90e6754505a528fc48e61a2d47501c0fd831) Thanks [@renovate](https://github.com/apps/renovate)! - Updated dependency `@commitlint/config-conventional` to `^18.6.3`.
+  Updated dependency `eslint` to `^8.57.0`.
+  Updated dependency `turbo` to `^1.13.0`.
+  Updated dependency `typescript` to `^5.4.3`.
+  Updated dependency `@typescript-eslint/eslint-plugin` to `^7.4.0`.
+  Updated dependency `@typescript-eslint/parser` to `^7.4.0`.
+  Updated dependency `eslint-plugin-astro` to `^0.33.1`.
+  Updated dependency `eslint-plugin-jsdoc` to `^48.2.2`.
+  Updated dependency `eslint-plugin-react` to `^7.34.1`.
+  Updated dependency `eslint-plugin-sonarjs` to `^0.25.0`.
+  Updated dependency `eslint-plugin-vitest` to `^0.4.0`.
+  Updated dependency `@types/eslint` to `8.56.6`.
+
 ## 1.16.1
 
 ### Patch Changes
