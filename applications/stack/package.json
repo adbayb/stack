@@ -42,14 +42,14 @@
 	"license": "MIT",
 	"dependencies": {
 		"@changesets/changelog-github": "^0.5.0",
-		"@changesets/cli": "^2.27.1",
+		"@changesets/cli": "^2.27.5",
 		"@commitlint/cli": "^19.3.0",
 		"@commitlint/config-conventional": "^19.2.2",
-		"eslint": "^9.2.0",
+		"eslint": "^9.4.0",
 		"fdir": "^6.1.1",
-		"prettier": "^3.2.5",
+		"prettier": "^3.3.1",
 		"termost": "^0.12.0",
-		"turbo": "^1.13.0",
-		"typescript": "^5.4.3"
+		"turbo": "^1.13.4",
+		"typescript": "^5.4.5"
 	}
 }
