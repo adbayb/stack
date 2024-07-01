@@ -34,7 +34,7 @@
 		"quickbundle": "1.2.0"
 	},
 	"prettier": "@adbayb/prettier-config",
-	"packageManager": "pnpm@8.15.5",
+	"packageManager": "pnpm@9.4.0",
 	"engines": {
 		"node": ">=18.0.0",
 		"pnpm": ">=8.0.0",
