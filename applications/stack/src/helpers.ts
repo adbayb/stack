@@ -82,7 +82,7 @@ export const getRepositoryUrl = async () => {
 export const getNpmVersion = async () => {
 	try {
 		return await helpers.exec("pnpm -v");
-	} catch (error) {
+	} catch {
 		throw createError(
 			"pnpm",
 			"The project must use `pnpm` as a node package manager tool. Follow this installation guide https://pnpm.io/installation",
