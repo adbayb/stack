@@ -16,7 +16,7 @@ importers:
         version: link:libraries/prettier-config
       '@adbayb/stack':
         specifier: workspace:*
-        version: link:applications/stack
+        version: link:libraries/stack
       '@adbayb/ts-config':
         specifier: workspace:*
         version: link:libraries/ts-config
@@ -27,7 +27,7 @@ importers:
         specifier: 1.2.0
         version: 1.2.0
 
-  applications/create:
+  libraries/create:
     dependencies:
       '@adbayb/stack':
         specifier: workspace:^
@@ -35,39 +35,6 @@ importers:
       termost:
         specifier: ^0.13.0
         version: 0.13.0
-
-  applications/stack:
-    dependencies:
-      '@changesets/changelog-github':
-        specifier: ^0.5.0
-        version: 0.5.0
-      '@changesets/cli':
-        specifier: ^2.27.7
-        version: 2.27.7
-      '@commitlint/cli':
-        specifier: ^19.4.1
-        version: 19.4.1(@types/node@20.11.30)(typescript@5.5.4)
-      '@commitlint/config-conventional':
-        specifier: ^19.4.1
-        version: 19.4.1
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.0
-      fdir:
-        specifier: ^6.3.0
-        version: 6.3.0
-      prettier:
-        specifier: ^3.3.3
-        version: 3.3.3
-      termost:
-        specifier: ^0.13.0
-        version: 0.13.0
-      turbo:
-        specifier: ^2.1.0
-        version: 2.1.1
-      typescript:
-        specifier: ^5.5.4
-        version: 5.5.4
 
   libraries/eslint-config:
     dependencies:
@@ -142,6 +109,39 @@ importers:
       prettier:
         specifier: 3.3.3
         version: 3.3.3
+
+  libraries/stack:
+    dependencies:
+      '@changesets/changelog-github':
+        specifier: ^0.5.0
+        version: 0.5.0
+      '@changesets/cli':
+        specifier: ^2.27.7
+        version: 2.27.7
+      '@commitlint/cli':
+        specifier: ^19.4.1
+        version: 19.4.1(@types/node@20.11.30)(typescript@5.5.4)
+      '@commitlint/config-conventional':
+        specifier: ^19.4.1
+        version: 19.4.1
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      fdir:
+        specifier: ^6.3.0
+        version: 6.3.0
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
+      termost:
+        specifier: ^0.13.0
+        version: 0.13.0
+      turbo:
+        specifier: ^2.1.0
+        version: 2.1.1
+      typescript:
+        specifier: ^5.5.4
+        version: 5.5.4
 
   libraries/ts-config:
     dependencies:
