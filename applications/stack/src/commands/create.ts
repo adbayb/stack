@@ -149,9 +149,6 @@ export const createCreateCommand: CommandFactory = (program) => {
 				const localDevDependencies = ["quickbundle", "vitest"];
 
 				const globalDevDependencies = [
-					"@adbayb/eslint-config",
-					"@adbayb/prettier-config",
-					"@adbayb/ts-config",
 					"@adbayb/stack",
 				];
 

@@ -4,4 +4,4 @@ const { join } = require("node:path");
 
 const pkg = require("../package.json");
 
-require(join("../", pkg.main));
+require(join("../", pkg.exports["."]["default"]));

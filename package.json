@@ -27,14 +27,11 @@
 		"release:publish": "stack release --publish"
 	},
 	"devDependencies": {
-		"@adbayb/eslint-config": "workspace:*",
-		"@adbayb/prettier-config": "workspace:*",
 		"@adbayb/stack": "workspace:*",
-		"@adbayb/ts-config": "workspace:*",
 		"@types/node": "20.16.2",
 		"quickbundle": "1.2.0"
 	},
-	"prettier": "@adbayb/prettier-config",
+	"prettier": "@adbayb/stack/prettier",
 	"packageManager": "pnpm@9.9.0",
 	"engines": {
 		"node": ">=18.0.0",

@@ -63,20 +63,11 @@ stack release
 
 ```mermaid
 flowchart TD
-    N("npm init @adbayb"):::strokeWidth -- Calls --> C("@adbayb/create"):::strokeWidth
-    C -- Uses --> S("@adbayb/stack"):::strokeWidth
-    S -- "Installs" --> EC("@adbayb/eslint-config"):::strokeWidth
-    S -- "Installs" --> PC("@adbayb/prettier-config"):::strokeWidth
-    S -- "Installs" --> TC("@adbayb/ts-config"):::strokeWidth
-    S -- "Scaffolds" --> P("Created project"):::strokeWidth
-    EC -- "Configures" --> P
-    PC -- "Configures" --> P
-    TC -- "Configures" --> P
+    N("npm init @adbayb"):::strokeWidth -- Runs --> C("@adbayb/create"):::strokeWidth
+    C -- Runs --> S("@adbayb/stack"):::strokeWidth
+    S -- "Scaffolds (via template and shared configurations)" --> P("New project"):::strokeWidth
     style C fill:#daf2d7,stroke:#90cf8e
     style S fill:#daf2d7,stroke:#90cf8e
-    style EC fill:#daf2d7,stroke:#90cf8e
-    style PC fill:#daf2d7,stroke:#90cf8e
-    style TC fill:#daf2d7,stroke:#90cf8e
     classDef strokeWidth stroke-width:3px
 ```
 

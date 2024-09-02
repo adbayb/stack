@@ -1,3 +1,3 @@
 {
-	"extends": "@adbayb/ts-config"
+	"extends": "@adbayb/stack/typescript"
 }
