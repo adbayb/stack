@@ -29,7 +29,16 @@
 	"devDependencies": {
 		"@adbayb/stack": "workspace:*",
 		"@types/node": "20.16.2",
-		"quickbundle": "1.2.0"
+		"@rollup/plugin-json": "6.1.0",
+		"@rollup/plugin-commonjs": "26.0.1",
+		"@rollup/plugin-node-resolve": "15.2.3",
+		"execa": "9.3.1",
+		"rollup": "4.21.2",
+		"rollup-plugin-dts": "6.1.1",
+		"rollup-plugin-node-externals": "7.1.3",
+		"rollup-plugin-output-size": "1.4.1",
+		"rollup-plugin-swc3": "0.11.2",
+		"tsx": "4.19.0"
 	},
 	"prettier": "@adbayb/stack/prettier",
 	"packageManager": "pnpm@9.9.0",

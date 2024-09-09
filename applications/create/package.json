@@ -9,16 +9,20 @@
 		"bin",
 		"dist"
 	],
-	"bin": "bin/index.cjs",
-	"source": "src/index.ts",
-	"main": "dist/index.cjs",
-	"platform": "node",
+	"bin": "./bin/index.js",
+	"type": "module",
+	"exports": {
+		".": {
+			"source": "./src/index.ts",
+			"default": "./bin/index.js"
+		}
+	},
 	"scripts": {
 		"prepublishOnly": "pnpm build",
 		"prestart": "pnpm build",
 		"start": "bin/index.js",
-		"build": "quickbundle build",
-		"watch": "quickbundle watch"
+		"build": "tsx ../../tools/scripts/build && chmod +x bin/index.js",
+		"watch": "NODE_ENV=development tsx ../../tools/scripts/build"
 	},
 	"keywords": [
 		"setup",
@@ -33,11 +37,11 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/adbayb/stack.git",
-		"directory": "packages/create"
+		"directory": "applications/create"
 	},
 	"license": "MIT",
 	"dependencies": {
 		"@adbayb/stack": "workspace:^",
-		"termost": "^0.13.0"
+		"termost": "^0.14.0"
 	}
 }
