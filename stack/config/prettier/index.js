@@ -1,3 +1,4 @@
+/* eslint-disable import/no-default-export, import/no-anonymous-default-export */
 /**
  * @type {import("prettier").Config}
  */
@@ -13,7 +14,7 @@ export default {
 			},
 		},
 	],
-	plugins: [require.resolve("prettier-plugin-astro")],
+	// plugins: [require.resolve("prettier-plugin-astro")],
 	printWidth: 80,
 	semi: true,
 	singleAttributePerLine: true,

@@ -147,10 +147,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			label: label("Installing dependencies"),
 			async handler({ data }) {
 				const localDevDependencies = ["quickbundle", "vitest"];
-
-				const globalDevDependencies = [
-					"@adbayb/stack",
-				];
+				const globalDevDependencies = ["@adbayb/stack"];
 
 				try {
 					await helpers.exec(

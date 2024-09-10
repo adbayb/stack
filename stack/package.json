@@ -62,9 +62,10 @@
 		"@eslint/compat": "^1.1.1",
 		"@eslint/eslintrc": "^3.1.0",
 		"@eslint/js": "^9.10.0",
-		"@typescript-eslint/eslint-plugin": "^8.5.0",
-		"@typescript-eslint/parser": "^8.5.0",
 		"eslint": "^9.9.1",
+		"eslint-plugin-react": "^7.35.2",
+		"globals": "^15.9.0",
+		"typescript-eslint": "8.5.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-import-resolver-typescript": "^3.6.3",
 		"eslint-plugin-astro": "^1.2.3",
@@ -74,20 +75,15 @@
 		"eslint-plugin-jsdoc": "^50.2.2",
 		"eslint-plugin-mdx": "^3.1.5",
 		"eslint-plugin-prettier": "^5.2.1",
-		"eslint-plugin-react": "^7.35.2",
 		"eslint-plugin-react-hooks": "^4.6.2",
 		"eslint-plugin-sonarjs": "^1.0.4",
 		"eslint-plugin-sort-keys-custom-order": "^2.1.0",
 		"eslint-plugin-vitest": "^0.5.4",
 		"fdir": "^6.3.0",
-		"globals": "^15.9.0",
 		"prettier": "^3.3.3",
 		"prettier-plugin-astro": "^0.14.1",
 		"termost": "^0.14.0",
 		"turbo": "^2.1.1",
 		"typescript": "^5.6.2"
-	},
-	"devDependencies": {
-		"@types/eslint": "8.56.12"
 	}
 }

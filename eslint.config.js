@@ -1,3 +1,3 @@
-export default {
-	"extends": "@adbayb/stack/eslint"
-}
+import config from "@adbayb/stack/eslint";
+
+export default config;

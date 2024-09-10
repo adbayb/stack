@@ -254,10 +254,20 @@ export const changeset = async (command: string) => {
 };
 
 const TYPESCRIPT_EXTENSIONS = ["ts", "tsx", "cts", "mts"];
+
 /**
  * Extensions supported by ESLint.
  */
-const ESLINT_EXTENSIONS = ["js", "jsx", "cjs", "mjs", "md", "mdx", ...TYPESCRIPT_EXTENSIONS];
+const ESLINT_EXTENSIONS = [
+	"js",
+	"jsx",
+	"cjs",
+	"mjs",
+	"md",
+	"mdx",
+	...TYPESCRIPT_EXTENSIONS,
+];
+
 const PRETTIER_IGNORE_FILES = ["CHANGELOG.md", "pnpm-lock.yaml"];
 
 type FilenameCollection = string[];

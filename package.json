@@ -13,6 +13,7 @@
 		"url": "git@github.com:adbayb/stack.git"
 	},
 	"license": "MIT",
+	"type": "module",
 	"scripts": {
 		"prepare": "pnpm --filter stack build && stack install",
 		"clean": "stack clean",
