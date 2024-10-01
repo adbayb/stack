@@ -38,6 +38,6 @@
 	"license": "MIT",
 	"dependencies": {
 		"@adbayb/stack": "workspace:^",
-		"termost": "^0.13.0"
+		"termost": "^0.14.0"
 	}
 }
