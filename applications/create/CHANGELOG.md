@@ -1,5 +1,49 @@
 # @adbayb/create
 
+## 1.17.0
+
+### Minor Changes
+
+- [#94](https://github.com/adbayb/stack/pull/94) [`92d02db`](https://github.com/adbayb/stack/commit/92d02dbaeb212ae2e5c071725e5d597f4e2efc42) Thanks [@renovate](https://github.com/apps/renovate)! - Updated dependency `termost` to `^0.14.0`.
+  Updated dependency `@changesets/cli` to `^2.27.8`.
+  Updated dependency `@commitlint/cli` to `^19.5.0`.
+  Updated dependency `@commitlint/config-conventional` to `^19.5.0`.
+  Updated dependency `eslint` to `^8.57.1`.
+  Updated dependency `turbo` to `^2.1.2`.
+  Updated dependency `typescript` to `^5.6.2`.
+  Updated dependency `@typescript-eslint/eslint-plugin` to `^8.7.0`.
+  Updated dependency `@typescript-eslint/parser` to `^8.7.0`.
+  Updated dependency `eslint-plugin-astro` to `^1.2.4`.
+  Updated dependency `eslint-plugin-import` to `^2.30.0`.
+  Updated dependency `eslint-plugin-jsdoc` to `^50.3.0`.
+  Updated dependency `eslint-plugin-react` to `^7.37.0`.
+  Updated dependency `@vitest/eslint-plugin` to `^1.0.1`.
+
+- [#87](https://github.com/adbayb/stack/pull/87) [`1f1c9b3`](https://github.com/adbayb/stack/commit/1f1c9b3cf0d4bd7391519c493e29dbeb10eec2de) Thanks [@renovate](https://github.com/apps/renovate)! - Updated dependency `termost` to `^0.13.0`.
+  Updated dependency `@changesets/cli` to `^2.27.7`.
+  Updated dependency `@commitlint/cli` to `^19.4.1`.
+  Updated dependency `@commitlint/config-conventional` to `^19.4.1`.
+  Updated dependency `eslint` to `^9.9.1`.
+  Updated dependency `fdir` to `^6.3.0`.
+  Updated dependency `prettier` to `3.3.3`.
+  Updated dependency `turbo` to `^2.1.0`.
+  Updated dependency `typescript` to `^5.5.4`.
+  Updated dependency `@typescript-eslint/eslint-plugin` to `^8.3.0`.
+  Updated dependency `@typescript-eslint/parser` to `^8.3.0`.
+  Updated dependency `eslint-import-resolver-typescript` to `^3.6.3`.
+  Updated dependency `eslint-plugin-astro` to `^1.2.3`.
+  Updated dependency `eslint-plugin-jsdoc` to `^50.2.2`.
+  Updated dependency `eslint-plugin-prettier` to `^5.2.1`.
+  Updated dependency `eslint-plugin-react` to `^7.35.0`.
+  Updated dependency `eslint-plugin-sonarjs` to `^1.0.4`.
+  Updated dependency `@types/eslint` to `9.6.1`.
+  Updated dependency `prettier-plugin-astro` to `^0.14.1`.
+
+### Patch Changes
+
+- Updated dependencies [[`8b0ef01`](https://github.com/adbayb/stack/commit/8b0ef0141258ee9135533b53cb496db8bca23861), [`36ad90e`](https://github.com/adbayb/stack/commit/36ad90e6754505a528fc48e61a2d47501c0fd831), [`b4d5c40`](https://github.com/adbayb/stack/commit/b4d5c406daba350bd8a6e46da3c4870c9a6ced44), [`92d02db`](https://github.com/adbayb/stack/commit/92d02dbaeb212ae2e5c071725e5d597f4e2efc42), [`1f1c9b3`](https://github.com/adbayb/stack/commit/1f1c9b3cf0d4bd7391519c493e29dbeb10eec2de), [`17c2140`](https://github.com/adbayb/stack/commit/17c21402de47a435066047b988a572ae61b9f5ab)]:
+  - @adbayb/stack@1.17.0
+
 ## 1.16.1
 
 ### Patch Changes
