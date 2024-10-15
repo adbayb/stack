@@ -9,20 +9,20 @@
 		"bin",
 		"dist"
 	],
-	"bin": "./bin/index.js",
+	"bin": "./bin/index.mjs",
 	"type": "module",
 	"exports": {
 		".": {
 			"source": "./src/index.ts",
-			"default": "./bin/index.js"
+			"default": "./bin/index.mjs"
 		}
 	},
 	"scripts": {
 		"prepublishOnly": "pnpm build",
 		"prestart": "pnpm build",
 		"start": "bin/index.js",
-		"build": "tsx ../../tools/scripts/build && chmod +x bin/index.js",
-		"watch": "NODE_ENV=development tsx ../../tools/scripts/build"
+		"build": "quickbundle build && chmod +x bin/index.mjs",
+		"watch": "quickbundle watch"
 	},
 	"keywords": [
 		"setup",
@@ -40,8 +40,11 @@
 		"directory": "applications/create"
 	},
 	"license": "MIT",
+	"devDependencies": {
+		"quickbundle": "2.4.1"
+	},
 	"dependencies": {
 		"@adbayb/stack": "workspace:^",
-		"termost": "^0.14.0"
+		"termost": "^0.15.0"
 	}
 }
