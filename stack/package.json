@@ -27,7 +27,7 @@
 	"scripts": {
 		"prepublishOnly": "pnpm build",
 		"prestart": "echo 'prestart'",
-		"start": "bin/index.js",
+		"start": "./bin/index.mjs",
 		"build": "quickbundle build && chmod +x bin/index.mjs",
 		"watch": "quickbundle watch"
 	},
