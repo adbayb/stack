@@ -18,7 +18,7 @@
 	"exports": {
 		".": {
 			"source": "./src/index.ts",
-			"default": "./bin/index.mjs"
+			"default": "./dist/index.mjs"
 		},
 		"./eslint": "./config/eslint/index.mjs",
 		"./prettier": "./config/prettier/index.js",
@@ -28,7 +28,7 @@
 		"prepublishOnly": "pnpm build",
 		"prestart": "echo 'prestart'",
 		"start": "./bin/index.mjs",
-		"build": "quickbundle build && chmod +x bin/index.mjs",
+		"build": "quickbundle build",
 		"watch": "quickbundle watch"
 	},
 	"keywords": [

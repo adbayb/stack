@@ -14,14 +14,14 @@
 	"exports": {
 		".": {
 			"source": "./src/index.ts",
-			"default": "./bin/index.mjs"
+			"default": "./dist/index.mjs"
 		}
 	},
 	"scripts": {
 		"prepublishOnly": "pnpm build",
 		"prestart": "pnpm build",
-		"start": "bin/index.js",
-		"build": "quickbundle build && chmod +x bin/index.mjs",
+		"start": "./bin/index.mjs",
+		"build": "quickbundle build",
 		"watch": "quickbundle watch"
 	},
 	"keywords": [
