@@ -109,8 +109,8 @@ importers:
         version: 8.5.0(eslint@9.9.1(jiti@1.21.6))(typescript@5.6.2)
     devDependencies:
       quickbundle:
-        specifier: 2.4.1
-        version: 2.4.1(@swc/core@1.7.24)(typescript@5.6.2)
+        specifier: 2.5.0
+        version: 2.5.0(@swc/core@1.7.24)(typescript@5.6.2)
 
   stack/create:
     dependencies:
@@ -122,8 +122,8 @@ importers:
         version: 0.15.0
     devDependencies:
       quickbundle:
-        specifier: 2.4.1
-        version: 2.4.1(@swc/core@1.7.24)(typescript@5.6.2)
+        specifier: 2.5.0
+        version: 2.5.0(@swc/core@1.7.24)(typescript@5.6.2)
 
 packages:
 
@@ -1924,10 +1924,6 @@ packages:
     resolution: {integrity: sha512-wM1+Z03eypVAVUCE7QdSqpVIvelbOakn1M0bPDoA4SGWPx3sNDVUiMo3L6To6WWGClB7VyXnhQ4Sn7gxiJbE6A==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  listr2@8.2.4:
-    resolution: {integrity: sha512-opevsywziHd3zHCVQGAj8zu+Z3yHNkkoYhWIGnq54RrCVwLz0MozotJEDnKsIBLvkfLGN6BLOyAeRrYI0pKA4g==}
-    engines: {node: '>=18.0.0'}
-
   listr2@8.2.5:
     resolution: {integrity: sha512-iyAZCeyD+c1gPyE9qpFu8af0Y+MRtmKOncdGoA2S5EY8iFq99dmmvkNnHiWo+pj0s7yH7l3KPIgee77tKpXPWQ==}
     engines: {node: '>=18.0.0'}
@@ -2436,8 +2432,8 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  quickbundle@2.4.1:
-    resolution: {integrity: sha512-3OqSPk5c2+bku0GhHbXN2IsrZ9UYv4oBwGpy1UmkdC3PYRrsA7I5WwxeRTVjsguad//Bbc87xFiQJQtcZcxDSQ==}
+  quickbundle@2.5.0:
+    resolution: {integrity: sha512-nJ+KcN+i06Tasa5a2I9kNu/HeIuiP32XRScYKCWB3o389V0pSZfmiT2YwduNHaXzNpD3lBLALtyM2o0sKFgrmA==}
     hasBin: true
     peerDependencies:
       typescript: '>=4.7.0'
@@ -5116,15 +5112,6 @@ snapshots:
 
   lines-and-columns@2.0.4: {}
 
-  listr2@8.2.4:
-    dependencies:
-      cli-truncate: 4.0.0
-      colorette: 2.0.20
-      eventemitter3: 5.0.1
-      log-update: 6.1.0
-      rfdc: 1.4.1
-      wrap-ansi: 9.0.0
-
   listr2@8.2.5:
     dependencies:
       cli-truncate: 4.0.0
@@ -5804,7 +5791,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  quickbundle@2.4.1(@swc/core@1.7.24)(typescript@5.6.2):
+  quickbundle@2.5.0(@swc/core@1.7.24)(typescript@5.6.2):
     dependencies:
       '@rollup/plugin-commonjs': 28.0.1(rollup@4.24.0)
       '@rollup/plugin-json': 6.1.0(rollup@4.24.0)
@@ -6196,8 +6183,8 @@ snapshots:
   termost@0.14.0:
     dependencies:
       enquirer: 2.4.1
-      listr2: 8.2.4
-      picocolors: 1.1.0
+      listr2: 8.2.5
+      picocolors: 1.1.1
 
   termost@0.15.0:
     dependencies:
