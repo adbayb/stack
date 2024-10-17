@@ -212,7 +212,14 @@ export const fixFormatting = async (files: FilenameCollection) => {
 
 export const checkTypes = async () => {
 	try {
-		return await helpers.exec("pnpm --parallel exec tsc --noEmit");
+		return await helpers.exec(
+			/**
+			 * Simply running `pnpm --parallel exec tsc --noEmit` is not enough: it outputs different results than running `tsc --noEmit` locally on each package directory.
+			 * Indeed, it makes the `check` command not being able to resolve each package dependency locally (`@types/*` packages must be installed globally at the monorepo root level as a quick-and-dirty fix).
+			 * By using the `--filter` flag in combination with `--parallel` flag to run and retrieve the current package, the issue is fixed.
+			 */
+			"pnpm --parallel --shell exec pnpm --filter $PNPM_PACKAGE_NAME pnpm tsc --noEmit",
+		);
 	} catch (error) {
 		throw createError("tsc", error);
 	}
