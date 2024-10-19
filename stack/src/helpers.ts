@@ -154,12 +154,6 @@ const eslint =
 		// @note: prevent errors when no matched file is found
 		args.push("--no-error-on-unmatched-pattern");
 
-		const gitIgnoreFile = resolveFromProjectDirectory(".gitignore");
-
-		if (existsSync(gitIgnoreFile)) {
-			args.push(`--ignore-path ${gitIgnoreFile}`);
-		}
-
 		if (options.isFixMode) {
 			args.push("--fix");
 		}
@@ -167,7 +161,7 @@ const eslint =
 		try {
 			return await helpers.exec(`eslint ${args.join(" ")}`);
 		} catch (error) {
-			throw createError("eslint", error);
+			throw createError("eslint", error as Error);
 		}
 	};
 
@@ -206,7 +200,7 @@ export const fixFormatting = async (files: FilenameCollection) => {
 	try {
 		return await helpers.exec(`prettier ${args.join(" ")}`);
 	} catch (error) {
-		throw createError("prettier", error);
+		throw createError("prettier", error as Error);
 	}
 };
 
@@ -221,7 +215,7 @@ export const checkTypes = async () => {
 			"pnpm --parallel --shell exec pnpm --filter $PNPM_PACKAGE_NAME pnpm tsc --noEmit",
 		);
 	} catch (error) {
-		throw createError("tsc", error);
+		throw createError("tsc", error as Error);
 	}
 };
 
@@ -231,11 +225,11 @@ export const checkCommit = async () => {
 			'commitlint --extends "@commitlint/config-conventional" --edit',
 		);
 	} catch (error) {
-		throw createError("commitlint", error);
+		throw createError("commitlint", error as Error);
 	}
 };
 
-export const createError = (bin: string, error: Error | string | unknown) => {
+export const createError = (bin: string, error: Error | string) => {
 	return new Error(`\`${bin}\` failed:\n${String(error)}`);
 };
 
@@ -246,7 +240,7 @@ export const turbo = async (
 	try {
 		return await helpers.exec(`turbo run ${command}`, options);
 	} catch (error) {
-		throw createError("turbo", error);
+		throw createError("turbo", error as Error);
 	}
 };
 
@@ -256,7 +250,7 @@ export const changeset = async (command: string) => {
 			hasLiveOutput: true,
 		});
 	} catch (error) {
-		throw createError("changeset", error);
+		throw createError("changeset", error as Error);
 	}
 };
 

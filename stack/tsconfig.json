@@ -3,6 +3,6 @@
 	"compilerOptions": {
 		"outDir": "bin"
 	},
-	"include": ["src", "templates"],
+	"include": ["config", "src", "templates"],
 	"exclude": ["node_modules", "dist"]
 }

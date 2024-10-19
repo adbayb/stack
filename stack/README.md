@@ -19,6 +19,10 @@
 
 <br>
 
+```ts
+console.log("hello");
+```
+
 ## 🚀 Usage
 
 This section introduces the `stack` essentials by walking through its main commands:
