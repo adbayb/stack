@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { termost } from "termost";
 
 import { createBuildCommand } from "./commands/build";

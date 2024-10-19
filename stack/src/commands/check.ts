@@ -1,4 +1,10 @@
-import { checkCommit, checkLints, checkTypes, turbo } from "../helpers";
+import {
+	checkCommit,
+	checkLints,
+	checkTypes,
+	hasDependency,
+	turbo,
+} from "../helpers";
 import type { CommandFactory } from "../types";
 
 const onlyValues = ["commit", "lint", "type"] as const;
@@ -49,7 +55,7 @@ export const createCheckCommand: CommandFactory = (program) => {
 			skip(context, argv) {
 				return (
 					ifOnlyDefinedAndNotEqualTo("type")(context) ||
-					!require.resolve("typescript") ||
+					!hasDependency("typescript") ||
 					// For now, skip type-checking if some files are passed down
 					// @see: https://github.com/microsoft/TypeScript/issues/27379
 					argv.operands.length > 0

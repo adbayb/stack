@@ -1,6 +1,9 @@
 import { existsSync } from "node:fs";
+import { createRequire } from "node:module";
 import { resolve } from "node:path";
 import { helpers } from "termost";
+
+const require = createRequire(import.meta.url);
 
 /**
  * Helper to format log messages with a welcoming bot.
@@ -97,6 +100,10 @@ export const getStackCommand = (command: string, isNodeRuntime = true) => {
 	return [...(isNodeRuntime ? [] : ["npx --no"]), `stack ${command}`].join(
 		" ",
 	);
+};
+
+export const hasDependency = (packageName: string) => {
+	return Boolean(require.resolve(packageName));
 };
 
 export const setPkgManager = async () => {
@@ -206,14 +213,7 @@ export const fixFormatting = async (files: FilenameCollection) => {
 
 export const checkTypes = async () => {
 	try {
-		return await helpers.exec(
-			/**
-			 * Simply running `pnpm --parallel exec tsc --noEmit` is not enough: it outputs different results than running `tsc --noEmit` locally on each package directory.
-			 * Indeed, it makes the `check` command not being able to resolve each package dependency locally (`@types/*` packages must be installed globally at the monorepo root level as a quick-and-dirty fix).
-			 * By using the `--filter` flag in combination with `--parallel` flag to run and retrieve the current package, the issue is fixed.
-			 */
-			"pnpm --parallel --shell exec pnpm --filter $PNPM_PACKAGE_NAME pnpm tsc --noEmit",
-		);
+		return await helpers.exec("pnpm --parallel exec tsc --noEmit");
 	} catch (error) {
 		throw createError("tsc", error as Error);
 	}
@@ -230,7 +230,15 @@ export const checkCommit = async () => {
 };
 
 export const createError = (bin: string, error: Error | string) => {
-	return new Error(`\`${bin}\` failed:\n${String(error)}`);
+	const errorMessage = `\`${bin}\` failed:\n${String(error)}`;
+
+	if (error instanceof Error) {
+		error.message = errorMessage;
+
+		return error;
+	}
+
+	return new Error(errorMessage);
 };
 
 export const turbo = async (

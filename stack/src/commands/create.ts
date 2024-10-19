@@ -162,7 +162,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 						)} --save-dev --filter ${data.projectName}`,
 					);
 				} catch (error) {
-					throw createError("pnpm", error);
+					throw createError("pnpm", error as Error);
 				}
 			},
 		})
