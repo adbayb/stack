@@ -1,3 +1,4 @@
 {
-	"extends": "@adbayb/stack/typescript"
+	"extends": "@adbayb/stack/typescript",
+	"exclude": ["node_modules", "**/dist"]
 }

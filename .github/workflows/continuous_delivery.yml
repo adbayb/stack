@@ -37,11 +37,11 @@ jobs:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
-            - name: Publish a pre-release version
+            - name: Publish pre-release version(s)
               run: |
                   pnpm --recursive exec pnpm version "$(pnpm show ./ version)-next-${GITHUB_SHA::7}"
                   pnpm --recursive exec pnpm publish --tag next --no-git-checks
-            - name: Prepare or Publish a stable version
+            - name: Prepare or Publish stable version(s)
               uses: changesets/action@v1
               with:
                   commit: "chore: release package(s)"
