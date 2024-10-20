@@ -29,7 +29,7 @@
 	},
 	"devDependencies": {
 		"@adbayb/stack": "workspace:*",
-		"@types/node": "20.16.2"
+		"@types/node": "20.16.13"
 	},
 	"prettier": "@adbayb/stack/prettier",
 	"packageManager": "pnpm@9.9.0",

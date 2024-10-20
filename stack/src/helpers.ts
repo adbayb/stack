@@ -230,7 +230,7 @@ export const checkCommit = async () => {
 };
 
 export const createError = (bin: string, error: Error | string) => {
-	const errorMessage = `\`${bin}\` failed:\n${String(error)}`;
+	const errorMessage = `\`${bin}\` command failed.\n${String(error)}`;
 
 	if (error instanceof Error) {
 		error.message = errorMessage;
