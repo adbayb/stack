@@ -1,6 +1,6 @@
 {
 	"name": "@adbayb/stack",
-	"version": "1.16.1",
+	"version": "2.0.0",
 	"description": "My opinionated JavaScript-based toolchain",
 	"publishConfig": {
 		"access": "public"
