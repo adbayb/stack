@@ -1,5 +1,30 @@
 # @adbayb/stack
 
+## 2.0.0
+
+### Major Changes
+
+-   [#95](https://github.com/adbayb/stack/pull/95) [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb) Thanks [@adbayb](https://github.com/adbayb)! - Encapsulate `@adbayb/eslint-config`, `@adbayb/prettier-config`, and `@adbayb/ts-config` configurations inside `@adbayb/stack`.
+
+### Minor Changes
+
+-   [#95](https://github.com/adbayb/stack/pull/95) [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb) Thanks [@adbayb](https://github.com/adbayb)! - Update TypeScript config.
+
+    -   `moduleResolution` is now set to `Bundler` to allow `exports` package.json field resolution.
+    -   `target` and `module` are now set to `ESNext` to support, for example, syntaxes that can be used exclusively with `ESNext` module target (for example, import attributes). It should be fine since:
+        -   Down leveling the bundled code for wider browser compatibility is a bundler responsibility, not a TS one.
+        -   For server-side code, interpreting the code is a runtime responsibility (teams must use API compatible with their Node runtime).
+
+-   [`a1aa6ca`](https://github.com/adbayb/stack/commit/a1aa6ca07e81832444621bc12998f5270291c790) Thanks [@adbayb](https://github.com/adbayb)! - Update template to add pre-release workflow and hoist type-like package by default (to prevent such [issue](https://github.com/pnpm/pnpm/issues/5068) with, for example, `tsc` runs from where the recursive command has been initiated leading to omission of recursive packages dependencies).
+
+-   [`c59d48f`](https://github.com/adbayb/stack/commit/c59d48fffa276a5e4af6ffa05a2f3c768e0171a5) Thanks [@adbayb](https://github.com/adbayb)! - Update ESLint rules.
+
+-   [`023d8d0`](https://github.com/adbayb/stack/commit/023d8d05dee78cdc9e80128142994e8897570ab7) Thanks [@adbayb](https://github.com/adbayb)! - Update template to use new stack modules.
+
+### Patch Changes
+
+-   [#95](https://github.com/adbayb/stack/pull/95) [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb) Thanks [@adbayb](https://github.com/adbayb)! - Fix `check` command not being able to resolve each package dependency locally (`@types/*` packages must be installed globally at the monorepo root level as a quick-and-dirty fix) by running `tsc` command locally on each package with proper current working directory resolution.
+
 ## 1.16.1
 
 ### Patch Changes
