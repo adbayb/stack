@@ -1,5 +1,22 @@
 # @adbayb/create
 
+## 2.0.0
+
+### Major Changes
+
+-   [#95](https://github.com/adbayb/stack/pull/95) [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb) Thanks [@adbayb](https://github.com/adbayb)! - Encapsulate `@adbayb/eslint-config`, `@adbayb/prettier-config`, and `@adbayb/ts-config` configurations inside `@adbayb/stack`.
+
+### Minor Changes
+
+-   [`a1aa6ca`](https://github.com/adbayb/stack/commit/a1aa6ca07e81832444621bc12998f5270291c790) Thanks [@adbayb](https://github.com/adbayb)! - Update template to add pre-release workflow and hoist type-like package by default (to prevent such [issue](https://github.com/pnpm/pnpm/issues/5068) with, for example, `tsc` runs from where the recursive command has been initiated leading to omission of recursive packages dependencies).
+
+-   [`5671759`](https://github.com/adbayb/stack/commit/567175981e2a222c1a50f4ece6276876b7bfe4b7) Thanks [@adbayb](https://github.com/adbayb)! - Update ESLint rules.
+
+### Patch Changes
+
+-   Updated dependencies [[`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb), [`a1aa6ca`](https://github.com/adbayb/stack/commit/a1aa6ca07e81832444621bc12998f5270291c790), [`5671759`](https://github.com/adbayb/stack/commit/567175981e2a222c1a50f4ece6276876b7bfe4b7), [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb), [`023d8d0`](https://github.com/adbayb/stack/commit/023d8d05dee78cdc9e80128142994e8897570ab7), [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb)]:
+    -   @adbayb/stack@2.0.0
+
 ## 1.16.1
 
 ### Patch Changes
