@@ -4,7 +4,7 @@ import { mkdir, symlink } from "node:fs/promises";
 import { resolve } from "node:path";
 import { helpers } from "termost";
 
-import pkg from "../../package.json";
+import { VERSION } from "../constants";
 import {
 	botMessage,
 	createError,
@@ -43,7 +43,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			handler() {
 				botMessage(
 					{
-						title: `I'm Stack v${pkg.version}, your bot assistant`,
+						title: `I'm Stack v${VERSION}, your bot assistant`,
 						description:
 							"I can guarantee you a project creation in under 1 minute 🚀",
 					},
