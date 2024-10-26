@@ -9,13 +9,13 @@
 
 `Stack` allows creating an NPM project in a **quick**, **easy** and **opinionated** way with:
 
--   A unified monorepo-driven and git-driven approach for all kinds of projects (single-purpose library, multiple libraries, application(s), ...)
--   Support for several application templates (for now, only a default template is available, but others can be added later)
--   Standardized file structure including optional folder creation such as `examples`, `packages`, ...
--   Enable all project lifecycle steps with commands from the setup, check, fix, build, and test to the versioning and release
--   Built-in configuration preset setup (including Node/NPM runtime, Git ignore/hooks, TypeScript, ESLint, Prettier, EditorConfig, Renovate, Changesets, and VSCode)
--   A welcoming environment for users and contributors with the continuous integration setup, and the creation of `README.md`, `CONTRIBUTING.md`, and GitHub template files (including issue and pull request ones), ...
--   An optimized development environment with command caching (no build needed if nothing changes)
+- A unified monorepo-driven and git-driven approach for all kinds of projects (single-purpose library, multiple libraries, application(s), ...)
+- Support for several application templates (for now, only a default template is available, but others can be added later)
+- Standardized file structure including optional folder creation such as `examples`, `packages`, ...
+- Enable all project lifecycle steps with commands from the setup, check, fix, build, and test to the versioning and release
+- Built-in configuration preset setup (including Node/NPM runtime, Git ignore/hooks, TypeScript, ESLint, Prettier, EditorConfig, Renovate, Changesets, and VSCode)
+- A welcoming environment for users and contributors with the continuous integration setup, and the creation of `README.md`, `CONTRIBUTING.md`, and GitHub template files (including issue and pull request ones), ...
+- An optimized development environment with command caching (no build needed if nothing changes)
 
 <br>
 
@@ -75,27 +75,27 @@ flowchart TD
 
 ### Used technologies
 
--   **Static code analysis**: ESLint, Prettier
--   **Node package manager**: PNPM
--   **Task orchestration**: Turborepo
--   **Release**: Changesets
--   **Testing**: Vitest
+- **Static code analysis**: ESLint, Prettier
+- **Node package manager**: PNPM
+- **Task orchestration**: Turborepo
+- **Release**: Changesets
+- **Testing**: Vitest
 
 ### Used conventions
 
--   [Commits](https://www.conventionalcommits.org/)
--   [Scripts](https://conventionalscripts.org/)
--   [File Structure](https://nx.dev/concepts/more-concepts/folder-structure)
-    -   Monorepo-first structure to:
-        -   Keep a consistent file structure pattern across templates (ease template familiarity and onboarding)
-        -   Ease examples setup
-        -   Not clutter the published package with development-related context, metadata, and artifacts
+- [Commits](https://www.conventionalcommits.org/)
+- [Scripts](https://conventionalscripts.org/)
+- [File Structure](https://nx.dev/concepts/more-concepts/folder-structure)
+  - Monorepo-first structure to:
+    - Keep a consistent file structure pattern across templates (ease template familiarity and onboarding)
+    - Ease examples setup
+    - Not clutter the published package with development-related context, metadata, and artifacts
 
 <br>
 
 ## 👣 Roadmap
 
--   [ ] `stack check`: Lint packages (caret range for dependencies and strict ones for dev dependencies)
+- [ ] `stack check`: Lint packages (caret range for dependencies and strict ones for dev dependencies)
 
 <br>
 

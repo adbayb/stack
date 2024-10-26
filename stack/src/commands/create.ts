@@ -80,17 +80,11 @@ export const createCreateCommand: CommandFactory = (program) => {
 			label: label("Evaluating contextual data"),
 			async handler({ inputDescription, inputName, inputUrl }) {
 				const nodeVersion = (
-					await request.get(
-						"https://resolve-node.vercel.app/lts",
-						"text",
-					)
+					await request.get("https://resolve-node.vercel.app/lts", "text")
 				).replace("v", "");
 
 				const npmVersion = (
-					await request.get(
-						"https://registry.npmjs.org/pnpm/latest",
-						"json",
-					)
+					await request.get("https://registry.npmjs.org/pnpm/latest", "json")
 				).version as string;
 
 				const { repoName, repoOwner } =
@@ -172,10 +166,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			async handler({ data }) {
 				try {
 					// Symlink the package `README.md` file to the root project directory
-					await symlink(
-						`./${data.projectName}/README.md`,
-						"./README.md",
-					);
+					await symlink(`./${data.projectName}/README.md`, "./README.md");
 					// Set the Node package manager runtime by following the `packageManager` field instruction
 					await setPkgManager();
 					// Run install command to add git hooks
@@ -196,8 +187,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 					botMessage(
 						{
 							title: "Oops, an error occurred",
-							description:
-								"Keep calm and carry on with some coffee ☕️",
+							description: "Keep calm and carry on with some coffee ☕️",
 							body: String(error),
 						},
 						{

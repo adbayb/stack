@@ -22,9 +22,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 				const files = await retrieveIgnoredFiles();
 
 				if (
-					isDirectoryExistAndNotEmpty(
-						resolveFromProjectDirectory(cachePath),
-					)
+					isDirectoryExistAndNotEmpty(resolveFromProjectDirectory(cachePath))
 				) {
 					files.push(cachePath);
 				}
@@ -34,9 +32,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label({ files }) {
-				return files.length > 0
-					? label("Cleaning assets")
-					: "Already clean ✨";
+				return files.length > 0 ? label("Cleaning assets") : "Already clean ✨";
 			},
 			async handler({ files }) {
 				if (files.length === 0) return;
@@ -68,9 +64,7 @@ const isDirectoryExistAndNotEmpty = (path: string) => {
 
 const retrieveIgnoredFiles = async () => {
 	const rawFiles = await helpers.exec(
-		`git clean -fdXn | grep -v '${PRESERVE_FILES.join(
-			"\\|",
-		)}' | cut -c 14-`,
+		`git clean -fdXn | grep -v '${PRESERVE_FILES.join("\\|")}' | cut -c 14-`,
 	);
 
 	return rawFiles.split(/\n/).filter(Boolean);

@@ -193,10 +193,7 @@ export default tseslint.config(
 			"valid-typeof": "error",
 			//#endregion
 			//#region import
-			"import/consistent-type-specifier-style": [
-				"error",
-				"prefer-top-level",
-			],
+			"import/consistent-type-specifier-style": ["error", "prefer-top-level"],
 			"import/export": "error",
 			"import/first": "error",
 			"import/newline-after-import": "error",
@@ -530,27 +527,13 @@ export default tseslint.config(
 			"sort-keys-custom-order/object-keys": [
 				"error",
 				{
-					orderedKeys: [
-						"id",
-						"key",
-						"name",
-						"title",
-						"label",
-						"description",
-					],
+					orderedKeys: ["id", "key", "name", "title", "label", "description"],
 				},
 			],
 			"sort-keys-custom-order/type-keys": [
 				"error",
 				{
-					orderedKeys: [
-						"id",
-						"key",
-						"name",
-						"title",
-						"label",
-						"description",
-					],
+					orderedKeys: ["id", "key", "name", "title", "label", "description"],
 				},
 			],
 			//#endregion
@@ -572,18 +555,12 @@ export default tseslint.config(
 					"ts-nocheck": "allow-with-description",
 				},
 			],
-			"@typescript-eslint/class-literal-property-style": [
-				"error",
-				"fields",
-			],
+			"@typescript-eslint/class-literal-property-style": ["error", "fields"],
 			"@typescript-eslint/consistent-generic-constructors": [
 				"error",
 				"constructor",
 			],
-			"@typescript-eslint/consistent-indexed-object-style": [
-				"error",
-				"record",
-			],
+			"@typescript-eslint/consistent-indexed-object-style": ["error", "record"],
 			"@typescript-eslint/consistent-type-assertions": [
 				"error",
 				{
@@ -633,14 +610,12 @@ export default tseslint.config(
 			"@typescript-eslint/no-misused-promises": "error",
 			"@typescript-eslint/no-mixed-enums": "error",
 			"@typescript-eslint/no-namespace": "error",
-			"@typescript-eslint/no-non-null-asserted-nullish-coalescing":
-				"error",
+			"@typescript-eslint/no-non-null-asserted-nullish-coalescing": "error",
 			"@typescript-eslint/no-non-null-asserted-optional-chain": "error",
 			"@typescript-eslint/no-non-null-assertion": "error",
 			"@typescript-eslint/no-require-imports": "error",
 			"@typescript-eslint/no-this-alias": "error",
-			"@typescript-eslint/no-unnecessary-boolean-literal-compare":
-				"error",
+			"@typescript-eslint/no-unnecessary-boolean-literal-compare": "error",
 			"@typescript-eslint/no-unnecessary-condition": "error",
 			"@typescript-eslint/no-unnecessary-qualifier": "error",
 			"@typescript-eslint/no-unnecessary-type-arguments": "error",
@@ -822,16 +797,12 @@ export default tseslint.config(
 			"vitest/prefer-to-have-length": "error",
 			"vitest/prefer-todo": "error",
 			"vitest/require-hook": "error",
-			"vitest/require-local-test-context-for-concurrent-snapshots":
-				"error",
+			"vitest/require-local-test-context-for-concurrent-snapshots": "error",
 			"vitest/require-to-throw-message": "error",
 			"vitest/require-top-level-describe": "error",
 			"vitest/valid-describe-callback": "error",
 			"vitest/valid-expect": "error",
-			"vitest/valid-title": [
-				"error",
-				{ mustMatch: { test: ["^should "] } },
-			],
+			"vitest/valid-title": ["error", { mustMatch: { test: ["^should "] } }],
 		},
 	},
 	...new FlatCompat().extends("plugin:mdx/recommended").map((config) => ({

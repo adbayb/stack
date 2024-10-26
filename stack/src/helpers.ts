@@ -97,9 +97,7 @@ export const getStackCommand = (command: string, isNodeRuntime = true) => {
 	// @note: `isNodeRuntime` allows executing node bin executables in a non node environment such as in git hooks context
 	// Npx is used to make executable resolution independent from the build tool (npx is the built-in Node tool)
 	// `--no` flag to prevent installation prompt and throw an error if the binary is not installed
-	return [...(isNodeRuntime ? [] : ["npx --no"]), `stack ${command}`].join(
-		" ",
-	);
+	return [...(isNodeRuntime ? [] : ["npx --no"]), `stack ${command}`].join(" ");
 };
 
 export const hasDependency = (packageName: string) => {
@@ -129,9 +127,7 @@ export const request = {
 
 		return (
 			responseType === "text" ? response.text() : response.json()
-		) as Promise<
-			ResponseType extends "text" ? string : Record<string, string>
-		>;
+		) as Promise<ResponseType extends "text" ? string : Record<string, string>>;
 	},
 };
 
@@ -184,9 +180,7 @@ export const fixFormatting = async (files: FilenameCollection) => {
 	} else {
 		prettierFiles = files.filter((file) => {
 			return (
-				!PRETTIER_IGNORE_FILES.some((filename) =>
-					file.endsWith(filename),
-				) && // The root `README.md` file is ignored to prevent error due to its symbolic link nature when specified explicitly as a file
+				!PRETTIER_IGNORE_FILES.some((filename) => file.endsWith(filename)) && // The root `README.md` file is ignored to prevent error due to its symbolic link nature when specified explicitly as a file
 				file !== "README.md"
 			);
 		});
