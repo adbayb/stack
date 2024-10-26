@@ -1,0 +1,13 @@
+{
+	"$schema": "http://json.schemastore.org/tsconfig.json",
+	"compilerOptions": {
+		"lib": [
+			"ESNext",
+			"DOM",
+			"DOM.AsyncIterable",
+			"DOM.Iterable",
+			"WebWorker.ImportScripts"
+		],
+		"jsx": "react-jsx"
+	}
+}

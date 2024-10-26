@@ -1,0 +1,28 @@
+{
+	"$schema": "http://json.schemastore.org/tsconfig.json",
+	"compilerOptions": {
+		"allowArbitraryExtensions": true,
+		"allowImportingTsExtensions": false,
+		"allowJs": false,
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"checkJs": false,
+		"composite": true,
+		"exactOptionalPropertyTypes": true,
+		"lib": ["ESNext"],
+		"module": "Preserve",
+		"noEmit": true,
+		"noErrorTruncation": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noUncheckedIndexedAccess": true,
+		"noUncheckedSideEffectImports": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "ESNext",
+		"verbatimModuleSyntax": true
+	}
+}
