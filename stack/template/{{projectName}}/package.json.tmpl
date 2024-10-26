@@ -10,15 +10,13 @@
 	],
 	"sideEffects": false,
 	"type": "module",
-	"source": "./src/index.ts",
-	"main": "./dist/index.cjs",
-	"module": "./dist/index.mjs",
-	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
+			"source": "./src/index.ts",
+			"types": "./dist/index.d.ts",
 			"require": "./dist/index.cjs",
 			"import": "./dist/index.mjs",
-			"types": "./dist/index.d.ts"
+			"default": "./dist/index.mjs"
 		}
 	},
 	"license": "MIT",

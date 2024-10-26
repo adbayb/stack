@@ -279,7 +279,11 @@ export default tseslint.config(
 						"TSMethodSignature",
 						"TSPropertySignature",
 					],
-					publicOnly: true,
+					publicOnly: {
+						ancestorsOnly: true,
+						esm: true,
+						cjs: true,
+					},
 					require: {
 						ArrowFunctionExpression: true,
 						ClassDeclaration: true,
