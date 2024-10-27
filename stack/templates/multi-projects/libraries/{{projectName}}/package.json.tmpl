@@ -1,0 +1,39 @@
+{
+	"name": "{{projectName}}",
+	"description": "{{projectDescription}}",
+	"version": "0.0.0",
+	"publishConfig": {
+		"access": "public"
+	},
+	"files": [
+		"dist"
+	],
+	"sideEffects": false,
+	"type": "module",
+	"exports": {
+		".": {
+			"source": "./src/index.ts",
+			"types": "./dist/index.d.ts",
+			"require": "./dist/index.cjs",
+			"import": "./dist/index.mjs",
+			"default": "./dist/index.mjs"
+		}
+	},
+	"license": "MIT",
+	"author": "Ayoub Adib <adbayb@gmail.com> (https://twitter.com/adbayb)",
+	"bugs": "https://github.com/{{repoId}}/issues",
+	"homepage": "https://github.com/{{repoId}}/tree/main/{{projectName}}#readme",
+	"repository": {
+		"type": "git",
+		"url": "{{projectUrl}}",
+		"directory": "libraries/{{projectName}}"
+	},
+	"scripts": {
+		"prepublishOnly": "pnpm build",
+		"clean": "rm -rf dist",
+		"start": "pnpm watch",
+		"build": "pnpm clean && quickbundle build",
+		"watch": "quickbundle watch",
+		"test": "vitest"
+	}
+}

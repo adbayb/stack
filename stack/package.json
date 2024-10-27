@@ -9,7 +9,7 @@
 		"bin",
 		"config",
 		"dist",
-		"template"
+		"templates"
 	],
 	"bin": {
 		"stack": "./bin/index.mjs"
@@ -27,7 +27,7 @@
 	},
 	"scripts": {
 		"prepublishOnly": "pnpm build",
-		"prestart": "echo 'prestart'",
+		"prestart": "pnpm build",
 		"start": "./bin/index.mjs",
 		"build": "quickbundle build",
 		"watch": "quickbundle watch"

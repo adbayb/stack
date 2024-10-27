@@ -1,7 +1,8 @@
 import { fdir } from "fdir";
 import { cpSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { mkdir, symlink } from "node:fs/promises";
-import { resolve } from "node:path";
+import { join, resolve } from "node:path";
+import process from "process";
 import { helpers } from "termost";
 
 import { VERSION } from "../constants";
@@ -15,6 +16,8 @@ import {
 	setPkgManager,
 } from "../helpers";
 import type { CommandFactory } from "../types";
+
+type Template = "multi-projects" | "single-project";
 
 type CommandContext = {
 	data: Record<
@@ -30,6 +33,7 @@ type CommandContext = {
 	error: Error | undefined;
 	inputDescription: string;
 	inputName: string;
+	inputTemplate: Template;
 	inputUrl: string;
 };
 
@@ -66,7 +70,15 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.input({
 			key: "inputUrl",
 			label: "Where will it be stored? (Git remote URL)",
+			defaultValue: "git@github.com:adbayb/stack.git",
 			type: "text",
+		})
+		.input({
+			key: "inputTemplate",
+			label: "Which template you would like to apply?",
+			defaultValue: "single-project",
+			options: ["single-project", "multi-projects"],
+			type: "select",
 		})
 		.task({
 			label: label("Checking pre-requisites"),
@@ -133,8 +145,8 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label: label("Applying template"),
-			handler({ data }) {
-				applyTemplate(data);
+			handler({ data, inputTemplate }) {
+				applyTemplate(inputTemplate, data);
 			},
 		})
 		.task({
@@ -213,15 +225,23 @@ const label = (message: string) => `${message} 🔨`;
 
 /**
  * A simple template engine to evaluate dynamic expressions and apply side effets (such as hydrating a content with values from an input object) on impacted template files.
+ * @param template - The selected template.
  * @param dataModel - Data model mapping the template expression key with its corresponding value.
  * @example
  * applyTemplate(
  * 	{ toReplace: "value" },
  * );
  */
-const applyTemplate = (dataModel: CommandContext["data"]) => {
+const applyTemplate = (
+	template: Template,
+	dataModel: CommandContext["data"],
+) => {
 	const templateExtension = ".tmpl";
-	const templateRootPath = resolveFromStackDirectory("./template");
+
+	const templateRootPath = resolveFromStackDirectory(
+		join("./templates", template),
+	);
+
 	const projectRootPath = resolveFromProjectDirectory("./");
 	const templateExpressionRegExp = /{{(.*?)}}/g;
 

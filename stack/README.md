@@ -13,7 +13,7 @@
 - Support for several application templates (for now, only a default template is available, but others can be added later)
 - Standardized file structure including optional folder creation such as `examples`, `packages`, ...
 - Enable all project lifecycle steps with commands from the setup, check, fix, build, and test to the versioning and release
-- Built-in configuration preset setup (including Node/NPM runtime, Git ignore/hooks, TypeScript, ESLint, Prettier, EditorConfig, Renovate, Changesets, and VSCode)
+- Built-in configuration preset setup (including Node/NPM runtime, Git ignore/hooks, [TypeScript](./config/typescript/), [ESLint](./config/eslint), [Prettier](./config/prettier/), EditorConfig, Renovate, Changesets, and VSCode)
 - A welcoming environment for users and contributors with the continuous integration setup, and the creation of `README.md`, `CONTRIBUTING.md`, and GitHub template files (including issue and pull request ones), ...
 - An optimized development environment with command caching (no build needed if nothing changes)
 
@@ -85,7 +85,7 @@ flowchart TD
 
 - [Commits](https://www.conventionalcommits.org/)
 - [Scripts](https://conventionalscripts.org/)
-- [File Structure](https://nx.dev/concepts/more-concepts/folder-structure)
+- [File Structure](https://nx.dev/concepts/decisions/folder-structure)
   - Monorepo-first structure to:
     - Keep a consistent file structure pattern across templates (ease template familiarity and onboarding)
     - Ease examples setup

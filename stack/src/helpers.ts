@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { createRequire } from "node:module";
 import { resolve } from "node:path";
+import process from "node:process";
 import { helpers } from "termost";
 
 const require = createRequire(import.meta.url);
@@ -65,7 +66,7 @@ export const resolveFromProjectDirectory = (path: string) => {
  * resolveFromStackDirectory("./templates");
  */
 export const resolveFromStackDirectory = (path: string) => {
-	return resolve(__dirname, "../", path);
+	return resolve(import.meta.dirname, "../", path);
 };
 
 export const getRepositoryUrl = async () => {
