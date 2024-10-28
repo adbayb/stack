@@ -1,6 +1,7 @@
 /* eslint-disable sort-keys-custom-order/object-keys */
 import { cwd } from "node:process";
-import { resolve } from "node:path";
+import { join, resolve } from "node:path";
+import { createRequire } from "node:module";
 
 import tseslint from "typescript-eslint";
 import globals from "globals";
@@ -9,6 +10,7 @@ import sonarjsPlugin from "eslint-plugin-sonarjs";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 import reactPlugin from "eslint-plugin-react";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import nodePlugin from "eslint-plugin-n";
 import jsdocPlugin from "eslint-plugin-jsdoc";
 import jestFormattingPlugin from "eslint-plugin-jest-formatting";
 import importPlugin from "eslint-plugin-import-x";
@@ -19,10 +21,10 @@ import { includeIgnoreFile } from "@eslint/compat";
 /**
  * TODO:
  * - Review TS rules: attempt to include all rules from https://typescript-eslint.io/users/configs/#strict-type-checked and https://typescript-eslint.io/users/configs/#stylistic-type-checked ?
- * - Review import rules: at least, add a better behaviour for import order rules (node:* built-in imports should come first for example).
  * - Review JSDoc rules.
  */
 
+const require = createRequire(import.meta.url);
 const CWD = cwd();
 
 export default tseslint.config(
@@ -56,6 +58,7 @@ export default tseslint.config(
 		plugins: {
 			"import-x": importPlugin,
 			"jsdoc": jsdocPlugin,
+			"n": nodePlugin,
 			"sonarjs": sonarjsPlugin,
 			"sort-keys-custom-order": sortKeysCustomOrderPlugin,
 			"@typescript-eslint": tseslint.plugin,
@@ -64,6 +67,9 @@ export default tseslint.config(
 			"import-x/resolver": {
 				node: true,
 				typescript: true,
+			},
+			"node": {
+				version: require(join(CWD, "package.json")).engines.node,
 			},
 		},
 		rules: {
@@ -309,6 +315,37 @@ export default tseslint.config(
 			"jsdoc/sort-tags": "error",
 			"jsdoc/tag-lines": "error",
 			"jsdoc/valid-types": "error",
+			//#endregion
+			//#region n
+			"n/callback-return": "error",
+			"n/exports-style": ["error", "module.exports"],
+			"n/hashbang": "error",
+			"n/no-exports-assign": "error",
+			"n/no-path-concat": "error",
+			"n/no-process-env": [
+				"error",
+				{
+					allowedVariables: ["NODE_ENV"],
+				},
+			],
+			"n/no-unpublished-bin": "error",
+			"n/no-unsupported-features/es-builtins": "error",
+			"n/no-unsupported-features/es-syntax": "error",
+			"n/no-unsupported-features/node-builtins": [
+				"error",
+				{ allowExperimental: true },
+			],
+			"n/prefer-global/buffer": ["error", "never"],
+			"n/prefer-global/console": ["error", "always"],
+			"n/prefer-global/process": ["error", "never"],
+			"n/prefer-global/text-decoder": ["error", "always"],
+			"n/prefer-global/text-encoder": ["error", "always"],
+			"n/prefer-global/url": ["error", "always"],
+			"n/prefer-global/url-search-params": ["error", "always"],
+			"n/prefer-node-protocol": "error",
+			"n/prefer-promises/dns": "error",
+			"n/prefer-promises/fs": "error",
+			"n/process-exit-as-throw": "error",
 			//#endregion
 			//#region sonarjs
 			"sonarjs/alt-text": "error",

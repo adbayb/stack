@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /**
  * @file Package proxy using `@adbayb/stack` to benefit from NPM initializer `npm init @adbayb`.
  * @see {@link https://docs.npmjs.com/cli/v9/commands/npm-init}
