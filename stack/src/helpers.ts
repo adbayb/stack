@@ -1,7 +1,8 @@
-import { existsSync } from "node:fs";
-import { createRequire } from "node:module";
-import { resolve } from "node:path";
 import process from "node:process";
+import { resolve } from "node:path";
+import { createRequire } from "node:module";
+import { existsSync } from "node:fs";
+
 import { helpers } from "termost";
 
 const require = createRequire(import.meta.url);

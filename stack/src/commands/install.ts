@@ -1,7 +1,7 @@
 import { chmod, writeFile } from "node:fs/promises";
 
-import { getStackCommand, resolveFromProjectDirectory } from "../helpers";
 import type { CommandFactory } from "../types";
+import { getStackCommand, resolveFromProjectDirectory } from "../helpers";
 
 export const createInstallCommand: CommandFactory = (program) => {
 	program

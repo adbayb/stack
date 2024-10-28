@@ -1,5 +1,5 @@
-import { turbo } from "../helpers";
 import type { CommandFactory } from "../types";
+import { turbo } from "../helpers";
 
 export const createTestCommand: CommandFactory = (program) => {
 	program

@@ -13,7 +13,7 @@ export default {
 	plugins: [],
 	printWidth: 80,
 	proseWrap: "preserve",
-	quoteProps: "as-needed",
+	quoteProps: "consistent",
 	requirePragma: false,
 	semi: true,
 	singleAttributePerLine: true,

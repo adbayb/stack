@@ -1,11 +1,12 @@
-import { fdir } from "fdir";
-import { cpSync, readFileSync, renameSync, writeFileSync } from "node:fs";
-import { mkdir, symlink } from "node:fs/promises";
+import process from "node:process";
 import { join, resolve } from "node:path";
-import process from "process";
-import { helpers } from "termost";
+import { mkdir, symlink } from "node:fs/promises";
+import { cpSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 
-import { VERSION } from "../constants";
+import { helpers } from "termost";
+import { fdir } from "fdir";
+
+import type { CommandFactory } from "../types";
 import {
 	botMessage,
 	createError,
@@ -15,7 +16,7 @@ import {
 	resolveFromStackDirectory,
 	setPkgManager,
 } from "../helpers";
-import type { CommandFactory } from "../types";
+import { VERSION } from "../constants";
 
 type Template = "multi-projects" | "single-project";
 

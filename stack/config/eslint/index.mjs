@@ -1,23 +1,23 @@
 /* eslint-disable sort-keys-custom-order/object-keys */
-import { includeIgnoreFile } from "@eslint/compat";
-import { FlatCompat } from "@eslint/eslintrc";
-import vitestPlugin from "@vitest/eslint-plugin";
-import importPlugin from "eslint-plugin-import";
-import jestFormattingPlugin from "eslint-plugin-jest-formatting";
-import jsdocPlugin from "eslint-plugin-jsdoc";
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
-import reactPlugin from "eslint-plugin-react";
-import reactHooksPlugin from "eslint-plugin-react-hooks";
-import sonarjsPlugin from "eslint-plugin-sonarjs";
-import sortKeysCustomOrderPlugin from "eslint-plugin-sort-keys-custom-order";
-import globals from "globals";
-import { resolve } from "node:path";
 import { cwd } from "node:process";
+import { resolve } from "node:path";
+
 import tseslint from "typescript-eslint";
+import globals from "globals";
+import sortKeysCustomOrderPlugin from "eslint-plugin-sort-keys-custom-order";
+import sonarjsPlugin from "eslint-plugin-sonarjs";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import reactPlugin from "eslint-plugin-react";
+import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import jsdocPlugin from "eslint-plugin-jsdoc";
+import jestFormattingPlugin from "eslint-plugin-jest-formatting";
+import importPlugin from "eslint-plugin-import-x";
+import vitestPlugin from "@vitest/eslint-plugin";
+import { FlatCompat } from "@eslint/eslintrc";
+import { includeIgnoreFile } from "@eslint/compat";
 
 /**
  * TODO:
- * - Review Sonar rules: remove duplicated rules between SonarJS rules and ESLint/Import/TS rules.
  * - Review TS rules: attempt to include all rules from https://typescript-eslint.io/users/configs/#strict-type-checked and https://typescript-eslint.io/users/configs/#stylistic-type-checked ?
  * - Review import rules: at least, add a better behaviour for import order rules (node:* built-in imports should come first for example).
  * - Review JSDoc rules.
@@ -54,14 +54,14 @@ export default tseslint.config(
 			},
 		},
 		plugins: {
-			import: importPlugin,
-			jsdoc: jsdocPlugin,
-			sonarjs: sonarjsPlugin,
+			"import-x": importPlugin,
+			"jsdoc": jsdocPlugin,
+			"sonarjs": sonarjsPlugin,
 			"sort-keys-custom-order": sortKeysCustomOrderPlugin,
 			"@typescript-eslint": tseslint.plugin,
 		},
 		settings: {
-			"import/resolver": {
+			"import-x/resolver": {
 				node: true,
 				typescript: true,
 			},
@@ -69,7 +69,7 @@ export default tseslint.config(
 		rules: {
 			//#region eslint
 			"constructor-super": "error",
-			eqeqeq: "error",
+			"eqeqeq": "error",
 			"for-direction": "error",
 			"getter-return": "error",
 			"no-alert": "error",
@@ -193,53 +193,56 @@ export default tseslint.config(
 			"valid-typeof": "error",
 			//#endregion
 			//#region import
-			"import/consistent-type-specifier-style": ["error", "prefer-top-level"],
-			"import/export": "error",
-			"import/first": "error",
-			"import/newline-after-import": "error",
-			"import/no-absolute-path": "error",
-			"import/no-amd": "error",
-			"import/no-commonjs": "error",
-			"import/no-cycle": "error",
-			"import/no-default-export": "error",
-			"import/no-deprecated": "error",
-			"import/no-duplicates": "error",
-			"import/no-empty-named-blocks": "error",
-			"import/no-extraneous-dependencies": "error",
-			"import/no-import-module-exports": "error",
-			"import/no-mutable-exports": "error",
-			"import/no-named-as-default": "error",
-			"import/no-namespace": "error",
-			"import/no-relative-packages": "error",
-			"import/no-self-import": "error",
-			"import/no-unassigned-import": "error",
-			"import/no-unused-modules": "error",
-			"import/no-useless-path-segments": [
+			"import-x/consistent-type-specifier-style": ["error", "prefer-top-level"],
+			"import-x/export": "error",
+			"import-x/first": "error",
+			"import-x/newline-after-import": "error",
+			"import-x/no-absolute-path": "error",
+			"import-x/no-amd": "error",
+			"import-x/no-anonymous-default-export": "error",
+			"import-x/no-commonjs": "error",
+			"import-x/no-cycle": "error",
+			"import-x/no-default-export": "error",
+			"import-x/no-deprecated": "error",
+			"import-x/no-duplicates": "error",
+			"import-x/no-empty-named-blocks": "error",
+			"import-x/no-extraneous-dependencies": "error",
+			"import-x/no-import-module-exports": "error",
+			"import-x/no-mutable-exports": "error",
+			"import-x/no-named-default": "error",
+			"import-x/no-namespace": "error",
+			"import-x/no-relative-packages": "error",
+			"import-x/no-self-import": "error",
+			"import-x/no-unassigned-import": "error",
+			"import-x/no-unused-modules": "error",
+			"import-x/no-useless-path-segments": [
 				"error",
 				{
 					commonjs: true,
 					noUselessIndex: true,
 				},
 			],
-			"import/no-webpack-loader-syntax": "error",
-			"import/order": [
+			"import-x/no-webpack-loader-syntax": "error",
+			"import-x/order": [
 				"error",
 				{
-					alphabetize: {
+					"alphabetize": {
 						caseInsensitive: false,
-						order: "asc",
+						order: "desc",
 						orderImportKind: "desc",
 					},
-					groups: [
-						["builtin", "external"],
+					"groups": [
+						"builtin",
+						"external",
 						"internal",
+						["parent", "sibling", "index"],
+						"object",
 						"unknown",
-						"parent",
-						["sibling", "index"],
 					],
 					"newlines-between": "always",
 				},
 			],
+			"import-x/unambiguous": "error",
 			//#endregion
 			//#region jsdoc
 			"jsdoc/check-access": "error",
@@ -548,7 +551,7 @@ export default tseslint.config(
 			"@typescript-eslint/ban-ts-comment": [
 				"error",
 				{
-					minimumDescriptionLength: 3,
+					"minimumDescriptionLength": 3,
 					"ts-check": false,
 					"ts-expect-error": "allow-with-description",
 					"ts-ignore": "allow-with-description",
@@ -684,7 +687,7 @@ export default tseslint.config(
 	{
 		files: ["**/*.{jsx,tsx}"],
 		plugins: {
-			react: reactPlugin,
+			"react": reactPlugin,
 			"react-hooks": reactHooksPlugin,
 		},
 		settings: {
@@ -758,7 +761,7 @@ export default tseslint.config(
 		],
 		plugins: {
 			"jest-formatting": jestFormattingPlugin,
-			vitest: vitestPlugin,
+			"vitest": vitestPlugin,
 		},
 		rules: {
 			"jest-formatting/padding-around-all": "error",
@@ -828,7 +831,8 @@ export default tseslint.config(
 			"**/*.test.{js,ts,jsx,tsx,cjs,cts,mjs,mts}",
 		],
 		rules: {
-			"import/no-default-export": "off",
+			"import-x/no-anonymous-default-export": "off",
+			"import-x/no-default-export": "off",
 			"sonarjs/sonar-no-magic-numbers": "off",
 		},
 	},

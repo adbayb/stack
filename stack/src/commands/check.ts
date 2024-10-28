@@ -1,3 +1,4 @@
+import type { CommandFactory } from "../types";
 import {
 	checkCommit,
 	checkLints,
@@ -5,7 +6,6 @@ import {
 	hasDependency,
 	turbo,
 } from "../helpers";
-import type { CommandFactory } from "../types";
 
 const onlyValues = ["commit", "lint", "type"] as const;
 
