@@ -12,23 +12,23 @@
 		"templates"
 	],
 	"bin": {
-		"stack": "./bin/index.mjs"
+		"stack": "./bin/index.js"
 	},
 	"type": "module",
 	"exports": {
 		".": {
 			"source": "./src/index.ts",
-			"default": "./dist/index.mjs"
+			"default": "./dist/index.js"
 		},
-		"./eslint": "./config/eslint/index.mjs",
-		"./prettier": "./config/prettier/index.mjs",
+		"./eslint": "./config/eslint/index.js",
+		"./prettier": "./config/prettier/index.js",
 		"./typescript": "./config/typescript/base.json",
 		"./typescript/react": "./config/typescript/react.json"
 	},
 	"scripts": {
 		"prepublishOnly": "pnpm build",
 		"prestart": "pnpm build",
-		"start": "./bin/index.mjs",
+		"start": "./bin/index.js",
 		"build": "quickbundle build",
 		"watch": "quickbundle watch"
 	},

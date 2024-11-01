@@ -1,0 +1,33 @@
+import { config as uncategorizedConfig } from "./presets/uncategorized.js";
+import { config as typescriptConfig } from "./presets/typescript.js";
+import { config as testConfig } from "./presets/test.js";
+import { config as sonarConfig } from "./presets/sonar.js";
+import { config as reactConfig } from "./presets/react.js";
+import { config as overridableConfig } from "./presets/overridable.js";
+import { config as nodeConfig } from "./presets/node.js";
+import { config as jsdocConfig } from "./presets/jsdoc.js";
+import { config as importConfig } from "./presets/import.js";
+import { config as eslintConfig } from "./presets/eslint.js";
+import { config as baseConfig } from "./presets/base.js";
+import { createConfig } from "./helpers.js";
+
+/**
+ * TODO:
+ * - Review TS rules: attempt to include all rules from https://typescript-eslint.io/users/configs/#strict-type-checked and https://typescript-eslint.io/users/configs/#stylistic-type-checked ?
+ * - Review JSDoc rules.
+ */
+
+export default createConfig(
+	// The insertion order is important (last same config items overrides previous ones):
+	...baseConfig,
+	...eslintConfig,
+	...typescriptConfig,
+	...importConfig,
+	...nodeConfig,
+	...sonarConfig,
+	...jsdocConfig,
+	...reactConfig,
+	...testConfig,
+	...uncategorizedConfig,
+	...overridableConfig,
+);
