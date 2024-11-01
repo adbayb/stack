@@ -106,6 +106,7 @@ export default tseslint.config(
 			"no-import-assign": "error",
 			"no-invalid-regexp": "error",
 			"no-irregular-whitespace": "error",
+			"no-loss-of-precision": "error",
 			"no-misleading-character-class": "error",
 			"no-new-native-nonconstructor": "error",
 			"no-nonoctal-decimal-escape": "error",
