@@ -41,10 +41,10 @@
 	},
 	"license": "MIT",
 	"devDependencies": {
-		"quickbundle": "2.5.0"
+		"quickbundle": "2.6.0"
 	},
 	"dependencies": {
 		"@adbayb/stack": "workspace:^",
-		"termost": "^0.17.0"
+		"termost": "^0.18.0"
 	}
 }
