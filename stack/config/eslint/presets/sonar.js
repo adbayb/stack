@@ -1,10 +1,10 @@
 import sonarjsPlugin from "eslint-plugin-sonarjs";
 
-import { JAVASCRIPT_LIKE_FILES } from "../constants.js";
+import { JAVASCRIPT_LIKE_EXTENSIONS } from "../constants.js";
 
 export const config = [
 	{
-		files: JAVASCRIPT_LIKE_FILES,
+		files: JAVASCRIPT_LIKE_EXTENSIONS,
 		plugins: {
 			sonarjs: sonarjsPlugin,
 		},
@@ -175,8 +175,6 @@ export const config = [
 			"sonarjs/prefer-object-spread": "error",
 			"sonarjs/prefer-promise-shorthand": "error",
 			"sonarjs/prefer-single-boolean-return": "error",
-			"sonarjs/prefer-spread": "error",
-			"sonarjs/prefer-string-starts-ends-with": "error",
 			"sonarjs/prefer-type-guard": "error",
 			"sonarjs/prefer-while": "error",
 			"sonarjs/production-debug": "error",

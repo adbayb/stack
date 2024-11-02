@@ -2,4 +2,9 @@ import { cwd } from "node:process";
 
 export const CWD = cwd();
 
-export const JAVASCRIPT_LIKE_FILES = ["**/*.{js,ts,jsx,tsx,cjs,cts,mjs,mts}"];
+export const JAVASCRIPT_EXTENSIONS = ["**/*.{js,jsx,cjs,mjs}"];
+
+export const JAVASCRIPT_LIKE_EXTENSIONS = [
+	...JAVASCRIPT_EXTENSIONS,
+	"**/*.{ts,tsx,cts,mts}",
+];

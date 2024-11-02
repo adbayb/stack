@@ -1,11 +1,11 @@
 import importPlugin from "eslint-plugin-import-x";
 
-import { JAVASCRIPT_LIKE_FILES } from "../constants.js";
+import { JAVASCRIPT_LIKE_EXTENSIONS } from "../constants.js";
 
 export const config = [
 	importPlugin.flatConfigs.typescript,
 	{
-		files: JAVASCRIPT_LIKE_FILES,
+		files: JAVASCRIPT_LIKE_EXTENSIONS,
 		plugins: {
 			"import-x": importPlugin,
 		},

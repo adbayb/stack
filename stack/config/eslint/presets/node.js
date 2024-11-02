@@ -3,11 +3,11 @@ import { join } from "node:path";
 import nodePlugin from "eslint-plugin-n";
 
 import { require } from "../helpers.js";
-import { CWD, JAVASCRIPT_LIKE_FILES } from "../constants.js";
+import { CWD, JAVASCRIPT_LIKE_EXTENSIONS } from "../constants.js";
 
 export const config = [
 	{
-		files: JAVASCRIPT_LIKE_FILES,
+		files: JAVASCRIPT_LIKE_EXTENSIONS,
 		plugins: {
 			n: nodePlugin,
 		},

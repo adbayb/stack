@@ -11,12 +11,6 @@ import { config as eslintConfig } from "./presets/eslint.js";
 import { config as baseConfig } from "./presets/base.js";
 import { createConfig } from "./helpers.js";
 
-/**
- * TODO:
- * - Review TS rules: attempt to include all rules from https://typescript-eslint.io/users/configs/#strict-type-checked and https://typescript-eslint.io/users/configs/#stylistic-type-checked ?
- * - Review JSDoc rules.
- */
-
 export default createConfig(
 	// The insertion order is important (last same config items overrides previous ones):
 	...baseConfig,

@@ -1,11 +1,11 @@
 import sortKeysCustomOrderPlugin from "eslint-plugin-sort-keys-custom-order";
 import { FlatCompat } from "@eslint/eslintrc";
 
-import { JAVASCRIPT_LIKE_FILES } from "../constants.js";
+import { JAVASCRIPT_LIKE_EXTENSIONS } from "../constants.js";
 
 export const config = [
 	{
-		files: JAVASCRIPT_LIKE_FILES,
+		files: JAVASCRIPT_LIKE_EXTENSIONS,
 		plugins: {
 			"sort-keys-custom-order": sortKeysCustomOrderPlugin,
 		},
