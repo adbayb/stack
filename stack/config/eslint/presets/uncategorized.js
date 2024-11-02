@@ -10,7 +10,6 @@ export const config = [
 			"sort-keys-custom-order": sortKeysCustomOrderPlugin,
 		},
 		rules: {
-			//#region sort-keys-custom-order
 			"sort-keys-custom-order/object-keys": [
 				"error",
 				{
@@ -23,7 +22,6 @@ export const config = [
 					orderedKeys: ["id", "key", "name", "title", "label", "description"],
 				},
 			],
-			//#endregion
 		},
 	},
 	...new FlatCompat().extends("plugin:mdx/recommended").map((mdxConfig) => ({

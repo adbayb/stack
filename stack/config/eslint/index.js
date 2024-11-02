@@ -1,6 +1,7 @@
 import { config as uncategorizedConfig } from "./presets/uncategorized.js";
 import { config as typescriptConfig } from "./presets/typescript.js";
 import { config as testConfig } from "./presets/test.js";
+import { config as stylisticConfig } from "./presets/stylistic.js";
 import { config as sonarConfig } from "./presets/sonar.js";
 import { config as reactConfig } from "./presets/react.js";
 import { config as overridableConfig } from "./presets/overridable.js";
@@ -17,10 +18,11 @@ export default createConfig(
 	...eslintConfig,
 	...typescriptConfig,
 	...importConfig,
-	...nodeConfig,
-	...sonarConfig,
 	...jsdocConfig,
+	...nodeConfig,
 	...reactConfig,
+	...sonarConfig,
+	...stylisticConfig,
 	...testConfig,
 	...uncategorizedConfig,
 	...overridableConfig,

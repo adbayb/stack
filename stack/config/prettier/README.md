@@ -8,7 +8,7 @@
 
 ## ✨ Features
 
-This package offers an opinionated but extensible **[Prettier](https://prettier.io/)** configurations to align formatting rules and standards across my projects.
+This package offers opinionated but extensible **[Prettier](https://prettier.io/)** configurations to align formatting rules and standards across my projects.
 
 It allows to:
 

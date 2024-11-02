@@ -96,9 +96,11 @@ export const getNpmVersion = async () => {
 };
 
 export const getStackCommand = (command: string, isNodeRuntime = true) => {
-	// @note: `isNodeRuntime` allows executing node bin executables in a non node environment such as in git hooks context
-	// Npx is used to make executable resolution independent from the build tool (npx is the built-in Node tool)
-	// `--no` flag to prevent installation prompt and throw an error if the binary is not installed
+	/**
+	 * `isNodeRuntime` allows executing node bin executables in a non node environment such as in git hooks context
+	 * Npx is used to make executable resolution independent from the build tool (npx is the built-in Node tool)
+	 * `--no` flag to prevent installation prompt and throw an error if the binary is not installed.
+	 */
 	return [...(isNodeRuntime ? [] : ["npx --no"]), `stack ${command}`].join(" ");
 };
 

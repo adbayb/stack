@@ -5,8 +5,10 @@ import {
 
 export const config = [
 	{
-		// Specific ESLint rules for javascript-only files (as they're already handled for TypeScript files by the transpiler):
-		// This rule list is taken from https://typescript-eslint.io/users/configs/#recommended
+		/*
+		 * Specific ESLint rules for javascript-only files (as they're already handled for TypeScript files by the transpiler):
+		 * This rule list is taken from https://typescript-eslint.io/users/configs/#recommended
+		 */
 		files: JAVASCRIPT_EXTENSIONS,
 		rules: {
 			"constructor-super": "error", // ts(2335) & ts(2377)
@@ -84,54 +86,6 @@ export const config = [
 			"no-var": "error",
 			"no-with": "error",
 			"object-shorthand": ["error", "always"],
-			"padding-line-between-statements": [
-				"error",
-				{
-					blankLine: "always",
-					next: "*",
-					prev: "*",
-				},
-				{
-					blankLine: "never",
-					next: ["const", "let", "var"],
-					prev: ["const", "let", "var"],
-				},
-				{
-					blankLine: "never",
-					next: ["case", "default"],
-					prev: ["case", "default"],
-				},
-				{
-					blankLine: "always",
-					next: ["const", "let", "var"],
-					prev: ["multiline-const", "multiline-let", "multiline-var"],
-				},
-				{
-					blankLine: "always",
-					next: ["multiline-const", "multiline-let", "multiline-var"],
-					prev: ["const", "let", "var"],
-				},
-				{
-					blankLine: "any",
-					next: ["expression"],
-					prev: ["expression"],
-				},
-				{
-					blankLine: "any",
-					next: ["const", "let", "var"],
-					prev: ["cjs-import"],
-				},
-				{
-					blankLine: "any",
-					next: ["cjs-import", "import"],
-					prev: ["cjs-import", "import"],
-				},
-				{
-					blankLine: "any",
-					next: ["cjs-export", "export"],
-					prev: ["cjs-export", "export"],
-				},
-			],
 			"prefer-arrow-callback": ["error", { allowNamedFunctions: true }],
 			"prefer-const": "error",
 			"prefer-rest-params": "error",

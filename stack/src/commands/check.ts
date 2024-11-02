@@ -56,8 +56,10 @@ export const createCheckCommand: CommandFactory = (program) => {
 				return (
 					ifOnlyDefinedAndNotEqualTo("type")(context) ||
 					!hasDependency("typescript") ||
-					// For now, skip type-checking if some files are passed down
-					// @see: https://github.com/microsoft/TypeScript/issues/27379
+					/**
+					 * For now, skip type-checking if some files are passed down.
+					 * @see https://github.com/microsoft/TypeScript/issues/27379
+					 */
 					argv.operands.length > 0
 				);
 			},
