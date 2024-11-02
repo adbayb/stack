@@ -9,7 +9,14 @@
 		"checkJs": false,
 		"exactOptionalPropertyTypes": true,
 		"incremental": true,
-		"lib": ["ESNext"],
+		"jsx": "react-jsx",
+		"lib": [
+			"ESNext",
+			"DOM",
+			"DOM.AsyncIterable",
+			"DOM.Iterable",
+			"WebWorker.ImportScripts"
+		],
 		"module": "Preserve",
 		"noEmit": true,
 		"noErrorTruncation": true,

@@ -43,10 +43,4 @@ Edit the `tsconfig.json` file to include the following:
 
 The default configuration is versatile and suitable for all projects, whether back-end or front-end.
 
-However, certain configuration flavors are also available for tailoring project-specific needs, which require extending the base `@adbayb/stack/typescript` configuration:
-
-| Flavor                           | Description                                                   | Usage                                                                       |
-| -------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `@adbayb/stack/typescript/react` | React-based configurations to set up JSX and global DOM types | `"extends": ["@adbayb/stack/typescript", "@adbayb/stack/typescript/react"]` |
-
 <br />

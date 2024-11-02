@@ -22,8 +22,7 @@
 		},
 		"./eslint": "./config/eslint/index.js",
 		"./prettier": "./config/prettier/index.js",
-		"./typescript": "./config/typescript/base.json",
-		"./typescript/react": "./config/typescript/react.json"
+		"./typescript": "./config/typescript/index.json"
 	},
 	"scripts": {
 		"prepublishOnly": "pnpm build",
