@@ -8,9 +8,9 @@ helpers
 	.exec("pnpm dlx @adbayb/stack create", {
 		hasLiveOutput: true,
 	})
-	.catch((error) => {
+	.catch((error: unknown) => {
 		helpers.message(
-			`An error occurred while executing the npm initializer \`@adbayb/create\` (error: ${error})`,
+			`An error occurred while executing the npm initializer \`@adbayb/create\` (error: ${String(error)})`,
 			{ type: "error" },
 		);
 	});
