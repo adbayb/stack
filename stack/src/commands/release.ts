@@ -32,6 +32,7 @@ export const createReleaseCommand: CommandFactory = (program) => {
 		})
 		.task({
 			async handler() {
+				// TODO: label instead?
 				helpers.message("New changelog entry\n");
 
 				await changeset("changeset");

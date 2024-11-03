@@ -8,7 +8,7 @@
 
 ## ✨ Features
 
-This package offers opinionated but extensible **[TypeScript](https://www.typescriptlang.org/tsconfig/)** configurations to align type-checking and processing standards across my projects.
+This package offers opinionated but extensible **[TypeScript](https://www.typescriptlang.org/tsconfig/)** configurations to align type checking and processing across projects.
 
 It allows to:
 

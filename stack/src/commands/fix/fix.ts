@@ -1,5 +1,7 @@
-import type { CommandFactory } from "../types";
-import { fixFormatting, fixLints, turbo } from "../helpers";
+import type { CommandFactory } from "../../types";
+import { turbo } from "../../helpers";
+import { fixLinter } from "./fixLinter";
+import { fixFormatting } from "./fixFormatting";
 
 export const createFixCommand: CommandFactory = (program) => {
 	program
@@ -8,19 +10,19 @@ export const createFixCommand: CommandFactory = (program) => {
 			description: "Fix auto-fixable issues",
 		})
 		.task({
-			label: label("Preparing the project"),
+			label: label("Prepare the project"),
 			async handler() {
 				await turbo("build", { hasLiveOutput: false });
 			},
 		})
 		.task({
-			label: label("Fixing lints"),
+			label: label("Fix linter issues"),
 			async handler(_, argv) {
-				await fixLints(argv.operands);
+				await fixLinter(argv.operands);
 			},
 		})
 		.task({
-			label: label("Fixing formatting"),
+			label: label("Fix formatting issues"),
 			async handler(_, argv) {
 				await fixFormatting(argv.operands);
 			},

@@ -1,15 +1,13 @@
-import type { CommandFactory } from "../types";
-import {
-	checkCommit,
-	checkLints,
-	checkTypes,
-	hasDependency,
-	turbo,
-} from "../helpers";
+import type { CommandFactory } from "../../types";
+import { hasDependency, turbo } from "../../helpers";
+import { checkTypes } from "./checkTypes";
+import { checkPackages } from "./checkPackages";
+import { checkLinter } from "./checkLinter";
+import { checkCommit } from "./checkCommit";
 
-const onlyValues = ["commit", "lint", "type"] as const;
+const ONLY_VALUES = ["commit", "linter", "packages", "types"] as const;
 
-type Only = (typeof onlyValues)[number];
+type Only = (typeof ONLY_VALUES)[number];
 
 type CommandContext = {
 	only: Only | undefined;
@@ -24,13 +22,13 @@ export const createCheckCommand: CommandFactory = (program) => {
 		.option({
 			key: "only",
 			name: "only",
-			description: `Run only one specified task (accepted value: ${onlyValues.join(
+			description: `Run only one specified task (accepted value: ${ONLY_VALUES.join(
 				", ",
 			)})`,
 			defaultValue: undefined,
 		})
 		.task({
-			label: label("Preparing the project"),
+			label: label("Prepare the project"),
 			async handler() {
 				await turbo("build", { hasLiveOutput: false });
 			},
@@ -39,22 +37,29 @@ export const createCheckCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: label("Checking linters"),
+			label: label("Check package guidelines"),
+			async handler() {
+				await checkPackages();
+			},
+			skip: ifOnlyDefinedAndNotEqualTo("packages"),
+		})
+		.task({
+			label: label("Check linter rules"),
 			async handler(_, argv) {
 				const filenames = argv.operands;
 
-				await checkLints(filenames);
+				await checkLinter(filenames);
 			},
-			skip: ifOnlyDefinedAndNotEqualTo("lint"),
+			skip: ifOnlyDefinedAndNotEqualTo("linter"),
 		})
 		.task({
-			label: label("Checking types"),
+			label: label("Check types"),
 			async handler() {
 				await checkTypes();
 			},
 			skip(context, argv) {
 				return (
-					ifOnlyDefinedAndNotEqualTo("type")(context) ||
+					ifOnlyDefinedAndNotEqualTo("types")(context) ||
 					!hasDependency("typescript") ||
 					/**
 					 * For now, skip type-checking if some files are passed down.
@@ -65,7 +70,7 @@ export const createCheckCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: label("Checking commit"),
+			label: label("Check commit"),
 			async handler() {
 				await checkCommit();
 			},

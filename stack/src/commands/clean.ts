@@ -17,7 +17,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 		})
 		.task({
 			key: "files",
-			label: label("Retrieving removable assets"),
+			label: label("Retrieve removable files"),
 			async handler() {
 				const cachePath = "node_modules/.cache";
 				const files = await retrieveIgnoredFiles();

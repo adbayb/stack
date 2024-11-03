@@ -90,7 +90,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			key: "data",
-			label: label("Evaluating contextual data"),
+			label: label("Evaluate contextual data"),
 			async handler({ inputDescription, inputName, inputUrl }) {
 				const nodeVersion = (
 					await request.get("https://resolve-node.vercel.app/lts", "text")
@@ -128,7 +128,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label({ data }) {
-				return label(`Creating \`${data.projectName}\` folder`);
+				return label(`Create \`${data.projectName}\` folder`);
 			},
 			async handler({ data }) {
 				const projectPath = resolve(process.cwd(), data.projectName);
@@ -138,20 +138,20 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: label("Initializing `git`"),
+			label: label("Initialize `git`"),
 			async handler({ data }) {
 				await helpers.exec("git init");
 				await helpers.exec(`git remote add origin ${data.projectUrl}`);
 			},
 		})
 		.task({
-			label: label("Applying template"),
+			label: label("Apply template"),
 			handler({ data, inputTemplate }) {
 				applyTemplate(inputTemplate, data);
 			},
 		})
 		.task({
-			label: label("Installing dependencies"),
+			label: label("Install dependencies"),
 			async handler({ data }) {
 				const localDevDependencies = ["quickbundle", "vitest"];
 				const globalDevDependencies = ["@adbayb/stack"];
@@ -175,7 +175,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			key: "error",
-			label: label("Cleaning up"),
+			label: label("Clean up"),
 			async handler({ data }) {
 				try {
 					// Symlink the package `README.md` file to the root project directory

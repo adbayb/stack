@@ -8,7 +8,7 @@
 
 ## ✨ Features
 
-This package offers opinionated but extensible **[ESLint](https://eslint.org/)** configurations to align logical and stylistic rules across my projects.
+This package offers opinionated but extensible **[ESLint](https://eslint.org/)** configurations to align logical and stylistic rules across projects.
 
 It allows to:
 

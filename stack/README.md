@@ -59,19 +59,13 @@ stack release
 
 <br>
 
-## 🏗️ Architecture
+## 🌍 Ecosystem
 
-```mermaid
-flowchart TD
-    N("npm init @adbayb"):::strokeWidth -- Runs --> C("@adbayb/create"):::strokeWidth
-    C -- Runs --> S("@adbayb/stack"):::strokeWidth
-    S -- "Scaffolds (via template and shared configurations)" --> P("New project"):::strokeWidth
-    style C fill:#daf2d7,stroke:#90cf8e
-    style S fill:#daf2d7,stroke:#90cf8e
-    classDef strokeWidth stroke-width:3px
-```
+### Available configurations
 
-<br>
+- [@adbayb/stack/eslint](https://github.com/adbayb/stack/blob/main/stack/config/eslint/) to align logical and stylistic rules across projects.
+- [@adbayb/stack/prettier](https://github.com/adbayb/stack/blob/main/stack/config/prettier/) to align code formatting conventions across projects.
+- [@adbayb/stack/typescript](https://github.com/adbayb/stack/blob/main/stack/config/typescript/) to align type checking and processing across projects.
 
 ### Used technologies
 
@@ -87,15 +81,25 @@ flowchart TD
 - [Scripts](https://conventionalscripts.org/)
 - [File Structure](https://nx.dev/concepts/decisions/folder-structure)
   - Monorepo-first structure to:
-    - Keep a consistent file structure pattern across templates (ease template familiarity and onboarding)
-    - Ease examples setup
-    - Not clutter the published package with development-related context, metadata, and artifacts
+    - Keep a consistent file structure pattern across templates (ease template familiarity and onboarding).
+    - Ease examples setup.
+    - Not clutter the published package with development-related context, metadata, and artifacts.
 
 <br>
 
-## 👣 Roadmap
+## 🏗️ Architecture
 
-- [ ] `stack check`: Lint packages (caret range for dependencies and strict ones for dev dependencies)
+### Project creation workflow
+
+```mermaid
+flowchart TD
+    N("npm init @adbayb"):::strokeWidth -- Runs --> C("@adbayb/create"):::strokeWidth
+    C -- Runs --> S("@adbayb/stack create"):::strokeWidth
+    S -- "Scaffolds (via template and shared configurations)" --> P("New project"):::strokeWidth
+    style C fill:#daf2d7,stroke:#90cf8e
+    style S fill:#daf2d7,stroke:#90cf8e
+    classDef strokeWidth stroke-width:3px
+```
 
 <br>
 

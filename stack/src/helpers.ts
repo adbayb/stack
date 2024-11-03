@@ -1,11 +1,21 @@
 import process from "node:process";
 import { resolve } from "node:path";
 import { createRequire } from "node:module";
-import { existsSync } from "node:fs";
 
 import { helpers } from "termost";
 
-const require = createRequire(import.meta.url);
+import type { Filenames } from "./types";
+
+export const require = createRequire(import.meta.url);
+
+export function assert(
+	expectedCondition: unknown,
+	createError: () => Error,
+): asserts expectedCondition {
+	if (!expectedCondition) {
+		throw createError();
+	}
+}
 
 /**
  * Helper to format log messages with a welcoming bot.
@@ -68,6 +78,18 @@ export const resolveFromProjectDirectory = (path: string) => {
  */
 export const resolveFromStackDirectory = (path: string) => {
 	return resolve(import.meta.dirname, "../", path);
+};
+
+export const createError = (bin: string, error: Error | string) => {
+	const errorMessage = `\`${bin}\` command failed.\n${String(error)}`;
+
+	if (error instanceof Error) {
+		error.message = errorMessage;
+
+		return error;
+	}
+
+	return new Error(errorMessage);
 };
 
 export const getRepositoryUrl = async () => {
@@ -135,9 +157,9 @@ export const request = {
 	},
 };
 
-const eslint =
+export const eslint =
 	(options: { isFixMode: boolean }) =>
-	async (files: FilenameCollection = []) => {
+	async (files: Filenames = []) => {
 		let eslintFiles = [];
 
 		if (files.length === 0) {
@@ -172,73 +194,6 @@ const eslint =
 		}
 	};
 
-export const checkLints = eslint({ isFixMode: false });
-
-export const fixLints = eslint({ isFixMode: true });
-
-export const fixFormatting = async (files: FilenameCollection) => {
-	let prettierFiles = [];
-
-	if (files.length === 0) {
-		prettierFiles.push(`"**/!(${PRETTIER_IGNORE_FILES.join("|")})"`);
-	} else {
-		prettierFiles = files.filter((file) => {
-			return (
-				!PRETTIER_IGNORE_FILES.some((filename) => file.endsWith(filename)) && // The root `README.md` file is ignored to prevent error due to its symbolic link nature when specified explicitly as a file
-				file !== "README.md"
-			);
-		});
-
-		if (prettierFiles.length === 0) return Promise.resolve();
-	}
-
-	const args = [...prettierFiles];
-
-	if (existsSync(resolveFromProjectDirectory(".gitignore"))) {
-		args.push("--ignore-path .gitignore");
-	}
-
-	args.push("--write");
-	args.push("--ignore-unknown");
-	args.push("--no-error-on-unmatched-pattern");
-
-	try {
-		return await helpers.exec(`prettier ${args.join(" ")}`);
-	} catch (error) {
-		throw createError("prettier", error as Error);
-	}
-};
-
-export const checkTypes = async () => {
-	try {
-		return await helpers.exec("pnpm --parallel exec tsc --noEmit");
-	} catch (error) {
-		throw createError("tsc", error as Error);
-	}
-};
-
-export const checkCommit = async () => {
-	try {
-		return await helpers.exec(
-			'commitlint --extends "@commitlint/config-conventional" --edit',
-		);
-	} catch (error) {
-		throw createError("commitlint", error as Error);
-	}
-};
-
-export const createError = (bin: string, error: Error | string) => {
-	const errorMessage = `\`${bin}\` command failed.\n${String(error)}`;
-
-	if (error instanceof Error) {
-		error.message = errorMessage;
-
-		return error;
-	}
-
-	return new Error(errorMessage);
-};
-
 export const turbo = async (
 	command: "build" | "start" | "test" | "watch",
 	options: Parameters<typeof helpers.exec>[1] = { hasLiveOutput: true },
@@ -260,21 +215,15 @@ export const changeset = async (command: string) => {
 	}
 };
 
-const TYPESCRIPT_EXTENSIONS = ["ts", "tsx", "cts", "mts"];
-
-/**
- * Extensions supported by ESLint.
- */
 const ESLINT_EXTENSIONS = [
 	"js",
 	"jsx",
 	"cjs",
 	"mjs",
+	"ts",
+	"tsx",
+	"cts",
+	"mts",
 	"md",
 	"mdx",
-	...TYPESCRIPT_EXTENSIONS,
 ];
-
-const PRETTIER_IGNORE_FILES = ["CHANGELOG.md", "pnpm-lock.yaml"];
-
-type FilenameCollection = string[];

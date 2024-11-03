@@ -49,7 +49,6 @@
 	},
 	"license": "MIT",
 	"devDependencies": {
-		"@types/eslint-config-prettier": "6.11.3",
 		"@types/node": "22.8.6",
 		"quickbundle": "2.6.0"
 	},

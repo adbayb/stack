@@ -102,9 +102,6 @@ importers:
         specifier: ^8.12.2
         version: 8.12.2(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3)
     devDependencies:
-      '@types/eslint-config-prettier':
-        specifier: 6.11.3
-        version: 6.11.3
       '@types/node':
         specifier: 22.8.6
         version: 22.8.6
@@ -1301,9 +1298,6 @@ packages:
 
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
-
-  '@types/eslint-config-prettier@6.11.3':
-    resolution: {integrity: sha512-3wXCiM8croUnhg9LdtZUJQwNcQYGWxxdOWDjPe1ykCqJFPVpzAKfs/2dgSoCtAvdPeaponcWPI7mPcGGp9dkKQ==}
 
   '@types/eslint@8.56.12':
     resolution: {integrity: sha512-03ruubjWyOHlmljCVoxSuNDdmfZDzsrrz0P2LeJsOXr+ZwFQ+0yQIwNCwt/GYhV7Z31fgtXJTAEs+FYlEL851g==}
@@ -5449,8 +5443,6 @@ snapshots:
   '@types/debug@4.1.12':
     dependencies:
       '@types/ms': 0.7.34
-
-  '@types/eslint-config-prettier@6.11.3': {}
 
   '@types/eslint@8.56.12':
     dependencies:
