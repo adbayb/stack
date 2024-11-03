@@ -20,7 +20,7 @@ export const config = [
 			"n/no-process-env": [
 				"error",
 				{
-					allowedVariables: ["NODE_ENV"],
+					allowedVariables: ["NODE_ENV", "ENVIRONMENT"],
 				},
 			],
 			"n/no-unpublished-bin": "error",

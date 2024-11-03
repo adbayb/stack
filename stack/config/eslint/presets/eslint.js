@@ -66,10 +66,14 @@ export const config = [
 			"no-regex-spaces": "error",
 			"no-restricted-syntax": [
 				"error",
+				// https://medium.com/@hbarcelos/why-i-banned-null-from-my-js-code-and-why-you-should-too-13df90323cfa
 				{
 					message: "Use undefined instead of null",
-					// https://medium.com/@hbarcelos/why-i-banned-null-from-my-js-code-and-why-you-should-too-13df90323cfa
-					selector: "Literal[raw='null']",
+					selector: "VariableDeclarator > Literal[raw='null']",
+				},
+				{
+					message: "Use undefined instead of null",
+					selector: "AssignmentExpression > Literal[raw='null']",
 				},
 			],
 			"no-self-assign": "error",

@@ -159,17 +159,7 @@ export const config = [
 					allowRegExp: false,
 				},
 			],
-			"@typescript-eslint/restrict-template-expressions": [
-				"error",
-				{
-					allowAny: false,
-					allowBoolean: false,
-					allowNever: false,
-					allowNullish: false,
-					allowNumber: false,
-					allowRegExp: false,
-				},
-			],
+			"@typescript-eslint/restrict-template-expressions": "error",
 			"@typescript-eslint/return-await": "error",
 			"@typescript-eslint/sort-type-constituents": "error",
 			"@typescript-eslint/switch-exhaustiveness-check": "error",
