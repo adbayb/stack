@@ -28,13 +28,12 @@
 		"release:publish": "stack release --publish"
 	},
 	"devDependencies": {
-		"@adbayb/stack": "workspace:*",
-		"@types/node": "22.8.6"
+		"@adbayb/stack": "workspace:*"
 	},
 	"prettier": "@adbayb/stack/prettier",
 	"packageManager": "pnpm@9.12.3",
 	"engines": {
-		"node": ">=20.0.0",
+		"node": ">=22.0.0",
 		"pnpm": ">=9.0.0",
 		"npm": "please-use-pnpm",
 		"yarn": "please-use-pnpm"
