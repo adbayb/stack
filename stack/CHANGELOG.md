@@ -1,5 +1,44 @@
 # @adbayb/stack
 
+## 2.0.0
+
+### Major Changes
+
+- [#95](https://github.com/adbayb/stack/pull/95) [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb) Thanks [@adbayb](https://github.com/adbayb)! - Encapsulate `@adbayb/eslint-config`, `@adbayb/prettier-config`, and `@adbayb/ts-config` configurations inside `@adbayb/stack`.
+
+### Minor Changes
+
+- [#95](https://github.com/adbayb/stack/pull/95) [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb) Thanks [@adbayb](https://github.com/adbayb)! - Update TypeScript config.
+
+  - `moduleResolution` is now set to `Bundler` to allow `exports` package.json field resolution.
+  - `target` and `module` are now set to `ESNext` to support, for example, syntaxes that can be used exclusively with `ESNext` module target (for example, import attributes). It should be fine since:
+    - Down leveling the bundled code for wider browser compatibility is a bundler responsibility, not a TS one.
+    - For server-side code, interpreting the code is a runtime responsibility (teams must use API compatible with their Node runtime).
+
+- [`ece28ab`](https://github.com/adbayb/stack/commit/ece28ab39053f222f46f5c9f8969533a5696448b) Thanks [@adbayb](https://github.com/adbayb)! - Add `package.json` files check.
+
+- [`2ad39fd`](https://github.com/adbayb/stack/commit/2ad39fd99ac5a10b3c2f2cfae8791864cd211095) Thanks [@adbayb](https://github.com/adbayb)! - Review all TSConfig rules.
+
+- [`74da2e5`](https://github.com/adbayb/stack/commit/74da2e5633927414595da997d0989751ed4d06b0) Thanks [@adbayb](https://github.com/adbayb)! - Review all Prettier rules.
+
+- [`a1aa6ca`](https://github.com/adbayb/stack/commit/a1aa6ca07e81832444621bc12998f5270291c790) Thanks [@adbayb](https://github.com/adbayb)! - Update template to add pre-release workflow and hoist type-like package by default (to prevent such [issue](https://github.com/pnpm/pnpm/issues/5068) with, for example, `tsc` runs from where the recursive command has been initiated leading to omission of recursive packages dependencies).
+
+- [`9c647dc`](https://github.com/adbayb/stack/commit/9c647dc1b493c97ea973ee81600ae15f49567ca3) Thanks [@adbayb](https://github.com/adbayb)! - Update ESLint rules.
+
+- [`4a5e303`](https://github.com/adbayb/stack/commit/4a5e303bf72dbbf6b0770df47be5d823984e06ef) Thanks [@adbayb](https://github.com/adbayb)! - Update `@adbayb/stack/eslint` to configure Node ESLint plugin.
+
+- [`2a0b6a2`](https://github.com/adbayb/stack/commit/2a0b6a29b07f646d1aaebd7232672a215d13e368) Thanks [@adbayb](https://github.com/adbayb)! - Allow multiple template flavors by introducing `single-project` and `multi-projects` templates.
+
+- [`9478e34`](https://github.com/adbayb/stack/commit/9478e34fbfa85dae6dec220067638e1f66689f2f) Thanks [@adbayb](https://github.com/adbayb)! - Update `@adbayb/stack/eslint` config to use `eslint-plugin-import-x` and review import configs.
+
+- [`023d8d0`](https://github.com/adbayb/stack/commit/023d8d05dee78cdc9e80128142994e8897570ab7) Thanks [@adbayb](https://github.com/adbayb)! - Update template to use new stack modules.
+
+- [`912a585`](https://github.com/adbayb/stack/commit/912a58561388c3555b4691f9522623a49d9160cc) Thanks [@adbayb](https://github.com/adbayb)! - Add and configure ESLint Stylistic.
+
+### Patch Changes
+
+- [#95](https://github.com/adbayb/stack/pull/95) [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb) Thanks [@adbayb](https://github.com/adbayb)! - Fix `check` command not being able to resolve each package dependency locally (`@types/*` packages must be installed globally at the monorepo root level as a quick-and-dirty fix) by running `tsc` command locally on each package with proper current working directory resolution.
+
 ## 1.16.1
 
 ### Patch Changes
