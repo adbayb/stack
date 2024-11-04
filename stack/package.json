@@ -49,7 +49,7 @@
 	},
 	"license": "MIT",
 	"devDependencies": {
-		"@types/node": "22.8.6",
+		"@types/node": "22.8.7",
 		"quickbundle": "2.6.0"
 	},
 	"dependencies": {
