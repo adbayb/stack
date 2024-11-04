@@ -7,7 +7,7 @@
 	},
 	"files": [
 		"bin",
-		"config",
+		"configs",
 		"dist",
 		"templates"
 	],
@@ -20,9 +20,9 @@
 			"source": "./src/index.ts",
 			"default": "./dist/index.js"
 		},
-		"./eslint": "./config/eslint/index.js",
-		"./prettier": "./config/prettier/index.js",
-		"./typescript": "./config/typescript/index.json"
+		"./eslint": "./configs/eslint/index.js",
+		"./prettier": "./configs/prettier/index.js",
+		"./typescript": "./configs/typescript/index.json"
 	},
 	"scripts": {
 		"prepublishOnly": "pnpm build",

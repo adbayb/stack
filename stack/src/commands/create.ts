@@ -71,7 +71,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.input({
 			key: "inputUrl",
 			label: "Where will it be stored? (Git remote URL)",
-			defaultValue: "git@github.com:adbayb/stack.git",
+			defaultValue: "git@github.com:adbayb/xxx.git",
 			type: "text",
 		})
 		.input({
@@ -82,7 +82,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			type: "select",
 		})
 		.task({
-			label: label("Checking pre-requisites"),
+			label: label("Check pre-requisites"),
 			async handler() {
 				// Check pnpm availability by verifying its version
 				await getNpmVersion();

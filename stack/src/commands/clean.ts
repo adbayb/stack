@@ -33,7 +33,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label({ files }) {
-				return files.length > 0 ? label("Cleaning assets") : "Already clean ✨";
+				return files.length > 0 ? label("Clean assets") : "Already clean ✨";
 			},
 			async handler({ files }) {
 				if (files.length === 0) return;

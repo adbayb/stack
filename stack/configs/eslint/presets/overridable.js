@@ -10,7 +10,9 @@ export const config = [
 		// Relaxed rules for example-like folder, and [config-, story-, and test]-like files
 		files: [
 			"**/.config/**",
+			"**/.configs/**",
 			"**/config/**",
+			"**/configs/**",
 			"**/examples/**",
 			"**/scripts/**",
 			"**/website/**",
