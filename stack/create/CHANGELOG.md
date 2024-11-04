@@ -1,5 +1,22 @@
 # @adbayb/create
 
+## 2.0.0
+
+### Major Changes
+
+- [#95](https://github.com/adbayb/stack/pull/95) [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb) Thanks [@adbayb](https://github.com/adbayb)! - Encapsulate `@adbayb/eslint-config`, `@adbayb/prettier-config`, and `@adbayb/ts-config` configurations inside `@adbayb/stack`.
+
+### Minor Changes
+
+- [`a1aa6ca`](https://github.com/adbayb/stack/commit/a1aa6ca07e81832444621bc12998f5270291c790) Thanks [@adbayb](https://github.com/adbayb)! - Update template to add pre-release workflow and hoist type-like package by default (to prevent such [issue](https://github.com/pnpm/pnpm/issues/5068) with, for example, `tsc` runs from where the recursive command has been initiated leading to omission of recursive packages dependencies).
+
+- [`9c647dc`](https://github.com/adbayb/stack/commit/9c647dc1b493c97ea973ee81600ae15f49567ca3) Thanks [@adbayb](https://github.com/adbayb)! - Update ESLint rules.
+
+### Patch Changes
+
+- Updated dependencies [[`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb), [`ece28ab`](https://github.com/adbayb/stack/commit/ece28ab39053f222f46f5c9f8969533a5696448b), [`2ad39fd`](https://github.com/adbayb/stack/commit/2ad39fd99ac5a10b3c2f2cfae8791864cd211095), [`74da2e5`](https://github.com/adbayb/stack/commit/74da2e5633927414595da997d0989751ed4d06b0), [`a1aa6ca`](https://github.com/adbayb/stack/commit/a1aa6ca07e81832444621bc12998f5270291c790), [`9c647dc`](https://github.com/adbayb/stack/commit/9c647dc1b493c97ea973ee81600ae15f49567ca3), [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb), [`4a5e303`](https://github.com/adbayb/stack/commit/4a5e303bf72dbbf6b0770df47be5d823984e06ef), [`2a0b6a2`](https://github.com/adbayb/stack/commit/2a0b6a29b07f646d1aaebd7232672a215d13e368), [`9478e34`](https://github.com/adbayb/stack/commit/9478e34fbfa85dae6dec220067638e1f66689f2f), [`023d8d0`](https://github.com/adbayb/stack/commit/023d8d05dee78cdc9e80128142994e8897570ab7), [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb), [`912a585`](https://github.com/adbayb/stack/commit/912a58561388c3555b4691f9522623a49d9160cc)]:
+  - @adbayb/stack@2.0.0
+
 ## 1.16.1
 
 ### Patch Changes
