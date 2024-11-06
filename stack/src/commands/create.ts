@@ -153,6 +153,26 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
+			label: label("Create a symlink to `README.md` file"),
+			async handler({ data: { projectName }, inputTemplate }) {
+				await symlink(
+					join(
+						inputTemplate === "single-project"
+							? projectName
+							: join("libraries", projectName),
+						"README.md",
+					),
+					"./README.md",
+				);
+			},
+		})
+		.task({
+			label: label("Set up the package manager"),
+			async handler() {
+				await setPkgManager();
+			},
+		})
+		.task({
 			label: label("Install dependencies"),
 			async handler({ data }) {
 				const localDevDependencies = ["quickbundle", "vitest"];
@@ -175,26 +195,6 @@ export const createCreateCommand: CommandFactory = (program) => {
 				} catch (error) {
 					throw createError("pnpm", error as Error);
 				}
-			},
-		})
-		.task({
-			label: label("Set up the package manager"),
-			async handler() {
-				await setPkgManager();
-			},
-		})
-		.task({
-			label: label("Create a symlink to `README.md` file"),
-			async handler({ data: { projectName }, inputTemplate }) {
-				await symlink(
-					join(
-						inputTemplate === "single-project"
-							? projectName
-							: join("libraries", projectName),
-						"README.md",
-					),
-					"./README.md",
-				);
 			},
 		})
 		.task({
