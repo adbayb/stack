@@ -185,8 +185,16 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			label: label("Create a symlink to `README.md` file"),
-			async handler({ data }) {
-				await symlink(`./${data.projectName}/README.md`, "./README.md");
+			async handler({ data: { projectName }, inputTemplate }) {
+				await symlink(
+					join(
+						inputTemplate === "single-project"
+							? projectName
+							: join("libraries", projectName),
+						"README.md",
+					),
+					"./README.md",
+				);
 			},
 		})
 		.task({
