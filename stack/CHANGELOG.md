@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.2.0
+
+### Minor Changes
+
+- [`ab05550`](https://github.com/adbayb/stack/commit/ab0555037eaee90e01e8716b34a77fe9d8dd14f2) Thanks [@adbayb](https://github.com/adbayb)! - Reverse `create` command order to set Node package manager first before installing dependencies.
+
 ## 2.1.0
 
 ### Minor Changes
