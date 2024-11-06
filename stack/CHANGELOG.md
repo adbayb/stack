@@ -1,5 +1,16 @@
 # @adbayb/stack
 
+## 2.1.0
+
+### Minor Changes
+
+- [`b487c31`](https://github.com/adbayb/stack/commit/b487c3198a91f8dcfb6de40126d1309ed0542051) Thanks [@adbayb](https://github.com/adbayb)! - Improve `create` command output to give more visibility on each granular steps and allow better error reporting.
+  The installation step has been fixed as well.
+
+### Patch Changes
+
+- [`81b54cb`](https://github.com/adbayb/stack/commit/81b54cb19bb31f81628b1624b18347d864683549) Thanks [@adbayb](https://github.com/adbayb)! - Invalid created symlink for `multi-projects` template.
+
 ## 2.0.0
 
 ### Major Changes
