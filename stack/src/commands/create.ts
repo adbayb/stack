@@ -31,7 +31,6 @@ type CommandContext = {
 		| "repoId",
 		string
 	>;
-	error: Error | undefined;
 	inputDescription: string;
 	inputName: string;
 	inputTemplate: Template;
@@ -46,16 +45,19 @@ export const createCreateCommand: CommandFactory = (program) => {
 		})
 		.task({
 			handler() {
-				botMessage(
-					{
-						title: `I'm Stack v${VERSION}, your bot assistant`,
-						description:
-							"I can guarantee you a project creation in under 1 minute 🚀",
-					},
-					{
-						type: "information",
-					},
-				);
+				botMessage({
+					title: `I'm Stack v${VERSION}, your bot assistant`,
+					description:
+						"I can guarantee you a project creation in under 1 minute 🚀",
+					type: "information",
+				});
+			},
+		})
+		.task({
+			label: label("Check pre-requisites"),
+			async handler() {
+				// Check pnpm availability by verifying its version
+				await getNpmVersion();
 			},
 		})
 		.input({
@@ -82,23 +84,15 @@ export const createCreateCommand: CommandFactory = (program) => {
 			type: "select",
 		})
 		.task({
-			label: label("Check pre-requisites"),
-			async handler() {
-				// Check pnpm availability by verifying its version
-				await getNpmVersion();
-			},
-		})
-		.task({
 			key: "data",
-			label: label("Evaluate contextual data"),
+			label: label("Check and format input"),
 			async handler({ inputDescription, inputName, inputUrl }) {
-				const nodeVersion = (
-					await request.get("https://resolve-node.vercel.app/lts", "text")
-				).replace("v", "");
-
-				const npmVersion = (
-					await request.get("https://registry.npmjs.org/pnpm/latest", "json")
-				).version as string;
+				if (!inputName) {
+					throw createError(
+						"stack create",
+						"The project name is not optional. Make sure to provide a valid value (non-empty string).",
+					);
+				}
 
 				const { repoName, repoOwner } =
 					(inputUrl.startsWith("git")
@@ -112,6 +106,14 @@ export const createCreateCommand: CommandFactory = (program) => {
 						"The owner and repository name can not be extracted. Please make sure to follow either `/^git@.*:(?<repoOwner>.*)/(?<repoName>.*).git$/` or `/^https?://.*/(?<repoOwner>.*)/(?<repoName>.*).git$/` pattern.",
 					);
 				}
+
+				const nodeVersion = (
+					await request.get("https://resolve-node.vercel.app/lts", "text")
+				).replace("v", "");
+
+				const npmVersion = (
+					await request.get("https://registry.npmjs.org/pnpm/latest", "json")
+				).version as string;
 
 				return {
 					licenseYear: new Date().getFullYear().toString(),
@@ -168,56 +170,45 @@ export const createCreateCommand: CommandFactory = (program) => {
 							" ",
 						)} --save-dev --filter ${data.projectName}`,
 					);
+
+					await helpers.exec("pnpm install");
 				} catch (error) {
 					throw createError("pnpm", error as Error);
 				}
 			},
 		})
 		.task({
-			key: "error",
-			label: label("Clean up"),
-			async handler({ data }) {
-				try {
-					// Symlink the package `README.md` file to the root project directory
-					await symlink(`./${data.projectName}/README.md`, "./README.md");
-					// Set the Node package manager runtime by following the `packageManager` field instruction
-					await setPkgManager();
-					// Run install command to add git hooks
-					await helpers.exec("stack install");
-					// Commit (and run check/fix command via git hooks)
-					await helpers.exec("git add -A");
-					await helpers.exec('git commit -m "chore: initial commit"');
-
-					return;
-				} catch (error) {
-					return error as Error;
-				}
+			label: label("Set up the package manager"),
+			async handler() {
+				await setPkgManager();
 			},
 		})
 		.task({
-			handler({ data, error }) {
-				if (error) {
-					botMessage(
-						{
-							title: "Oops, an error occurred",
-							description: "Keep calm and carry on with some coffee ☕️",
-							body: String(error),
-						},
-						{
-							type: "error",
-						},
-					);
-
-					return;
-				}
-
-				botMessage(
-					{
-						title: "The project was successfully created",
-						description: `Run \`cd ./${data.projectName}\` and Enjoy 🚀`,
-					},
-					{ type: "success" },
-				);
+			label: label("Create a symlink to `README.md` file"),
+			async handler({ data }) {
+				await symlink(`./${data.projectName}/README.md`, "./README.md");
+			},
+		})
+		.task({
+			label: label("Run `stack install`"),
+			async handler() {
+				await helpers.exec("stack install");
+			},
+		})
+		.task({
+			label: label("Commit"),
+			async handler() {
+				await helpers.exec("git add -A");
+				await helpers.exec('git commit -m "chore: initial commit"');
+			},
+		})
+		.task({
+			handler({ data }) {
+				botMessage({
+					title: "The project was successfully created",
+					description: `Run \`cd ./${data.projectName}\` and Enjoy 🚀`,
+					type: "success",
+				});
 			},
 		});
 };

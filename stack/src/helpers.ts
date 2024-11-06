@@ -23,7 +23,7 @@ export function assert(
  * @param input.title - Title input.
  * @param input.description - Description input.
  * @param input.body - Body input.
- * @param options - Formatting option.
+ * @param input.type - Message type.
  * @example
  * botMessage(
  *	{
@@ -31,21 +31,31 @@ export function assert(
  * 		description:
  * 			"Keep calm and carry on with some coffee ☕️",
  * 		body: String(previousTaskError),
- * 	},
- * 	{
  * 		type: "error",
  * 	},
  * );
  */
-export const botMessage = (
-	input: { title: string; description: string; body?: string },
-	options: Parameters<typeof helpers.message>[1],
-) => {
-	helpers.message(
-		`
+export const botMessage = (input: {
+	title: string;
+	description: string;
+	body?: string;
+	type: "error" | "information" | "success";
+}) => {
+	const { type } = input;
+	const log = type === "error" ? console.error : console.log;
+
+	const colorByType = {
+		error: "red",
+		information: "blue",
+		success: "green",
+	} as const;
+
+	log(
+		helpers.format(
+			`
 ╭─────╮
 │ ◠   ◠  ${input.title}
-│   ${options?.type === "error" ? "◠" : "◡"} │  ${input.description}
+│   ${type === "error" ? "◠" : "◡"} │  ${input.description}
 ╰─────╯
 ${
 	!input.body
@@ -54,7 +64,10 @@ ${
 ${input.body}
 `
 }`,
-		options,
+			{
+				color: colorByType[type],
+			},
+		),
 	);
 };
 

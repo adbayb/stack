@@ -7,7 +7,7 @@ export const createInstallCommand: CommandFactory = (program) => {
 	program
 		.command({
 			name: "install",
-			description: "Setup initial requirements",
+			description: "Install required setup",
 		})
 		.task({
 			label: label("Install `git.pre-commit` hook"),

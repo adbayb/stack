@@ -1,6 +1,7 @@
 import { termost } from "termost";
 
 import type { CommandFactory } from "./types";
+import { botMessage } from "./helpers";
 import { VERSION } from "./constants";
 import { createWatchCommand } from "./commands/watch";
 import { createTestCommand } from "./commands/test";
@@ -14,11 +15,22 @@ import { createCheckCommand } from "./commands/check";
 import { createBuildCommand } from "./commands/build";
 
 const createProgram = (...commandFactories: CommandFactory[]) => {
-	const program = termost({
-		name: "stack",
-		description: "Toolbox to easily scaffold and maintain a project",
-		version: VERSION,
-	});
+	const program = termost(
+		{
+			name: "stack",
+			description: "Toolbox to easily scaffold and maintain a project",
+			version: VERSION,
+		},
+		{
+			onException() {
+				botMessage({
+					title: "Oops, an error occurred",
+					description: "Keep calm and carry on with some coffee ☕️",
+					type: "error",
+				});
+			},
+		},
+	);
 
 	for (const commandBuilder of commandFactories) {
 		commandBuilder(program);
