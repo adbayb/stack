@@ -158,7 +158,7 @@ const createPackageError = (message: string, context?: PackageErrorContext) => {
 		"stack check",
 		!context
 			? message
-			: `\`${context.name}\` consumed by \`${context.consumedBy}\` doesn't conform to our package policy.\n${message}`,
+			: `\`${context.name}\` consumed by \`${context.consumedBy}\` doesn't conform to \`package.json\` guidelines.\n${message}`,
 	);
 };
 
