@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.3.0
+
+### Minor Changes
+
+- [`2465bfc`](https://github.com/adbayb/stack/commit/2465bfc1b93ab17c923ea54073da8e410040739f) Thanks [@adbayb](https://github.com/adbayb)! - Update eslint-plugin-n version and remove n/hashbang rule.
+
 ## 2.2.0
 
 ### Minor Changes
