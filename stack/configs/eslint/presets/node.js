@@ -14,7 +14,6 @@ export const config = [
 		rules: {
 			"n/callback-return": "error",
 			"n/exports-style": ["error", "module.exports"],
-			"n/hashbang": "error",
 			"n/no-exports-assign": "error",
 			"n/no-path-concat": "error",
 			"n/no-process-env": [
