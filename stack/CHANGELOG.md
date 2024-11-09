@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.3.1
+
+### Patch Changes
+
+- [`c6727b1`](https://github.com/adbayb/stack/commit/c6727b1ab8c6a31ea01791e01afaa0e57689f2bd) Thanks [@adbayb](https://github.com/adbayb)! - Fix flaky builds due after cleaning a project by removing turbo cached files.
+
 ## 2.3.0
 
 ### Minor Changes
