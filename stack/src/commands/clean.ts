@@ -71,4 +71,4 @@ const retrieveIgnoredFiles = async () => {
 	return rawFiles.split(/\n/).filter(Boolean);
 };
 
-const PRESERVE_FILES = ["node_modules", ".turbo"];
+const PRESERVE_FILES = ["node_modules"];
