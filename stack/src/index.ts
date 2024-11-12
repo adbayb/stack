@@ -15,22 +15,18 @@ import { createCheckCommand } from "./commands/check";
 import { createBuildCommand } from "./commands/build";
 
 const createProgram = (...commandFactories: CommandFactory[]) => {
-	const program = termost(
-		{
-			name: "stack",
-			description: "Toolbox to easily scaffold and maintain a project",
-			version: VERSION,
+	const program = termost({
+		name: "stack",
+		description: "Toolbox to easily scaffold and maintain a project",
+		onException() {
+			botMessage({
+				title: "Oops, an error occurred",
+				description: "Keep calm and carry on with some coffee ☕️",
+				type: "error",
+			});
 		},
-		{
-			onException() {
-				botMessage({
-					title: "Oops, an error occurred",
-					description: "Keep calm and carry on with some coffee ☕️",
-					type: "error",
-				});
-			},
-		},
-	);
+		version: VERSION,
+	});
 
 	for (const commandBuilder of commandFactories) {
 		commandBuilder(program);
