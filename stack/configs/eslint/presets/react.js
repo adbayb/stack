@@ -1,4 +1,5 @@
 import reactHooksPlugin from "eslint-plugin-react-hooks";
+// eslint-disable-next-line depend/ban-dependencies
 import reactPlugin from "eslint-plugin-react";
 
 export const config = [
