@@ -1,5 +1,13 @@
 # @adbayb/stack
 
+## 2.4.0
+
+### Minor Changes
+
+- [`c6840d7`](https://github.com/adbayb/stack/commit/c6840d70aeb3e0c8438dc921fa7beff2cb0e529d) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies.
+
+- [`03de63d`](https://github.com/adbayb/stack/commit/03de63d1aaa2bd01ede3c06b10fac45b03560d91) Thanks [@adbayb](https://github.com/adbayb)! - Add `eslint-plugin-depend` to foster modern alternatives based on https://github.com/es-tooling/module-replacements.
+
 ## 2.3.1
 
 ### Patch Changes
