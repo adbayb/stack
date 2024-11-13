@@ -56,6 +56,7 @@ export const config = [
 			"react/no-this-in-sfc": "error",
 			"react/no-typos": "error",
 			"react/no-unescaped-entities": "error",
+			"react/no-unknown-property": "error",
 			"react/no-unsafe": "error",
 			"react/no-unstable-nested-components": "error",
 			"react/no-unused-class-component-methods": "error",

@@ -151,7 +151,6 @@ export const config = [
 			"sonarjs/no-unenclosed-multiline-block": "error",
 			"sonarjs/no-uniq-key": "error",
 			"sonarjs/no-unsafe-unzip": "error",
-			"sonarjs/no-unstable-nested-components": "error",
 			"sonarjs/no-unthrown-error": "error",
 			"sonarjs/no-unused-collection": "error",
 			"sonarjs/no-useless-call": "error",
@@ -196,7 +195,7 @@ export const config = [
 			"sonarjs/sonar-no-magic-numbers": "error",
 			"sonarjs/sonar-no-misleading-character-class": "error",
 			"sonarjs/sonar-no-regex-spaces": "error",
-			"sonarjs/sonar-no-unused-class-component-methods": "error",
+			// "sonarjs/sonar-no-unused-class-component-methods": "error", // Disabled since it involves `eslint-plugin-react` activation
 			"sonarjs/sonar-prefer-regexp-exec": "error",
 			"sonarjs/sql-queries": "error",
 			"sonarjs/stable-tests": "error",
