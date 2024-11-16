@@ -17,7 +17,6 @@ export const config = [
 			"import-x/no-absolute-path": "error",
 			"import-x/no-amd": "error",
 			"import-x/no-anonymous-default-export": "error",
-			"import-x/no-commonjs": "error",
 			"import-x/no-cycle": "error",
 			"import-x/no-default-export": "error",
 			"import-x/no-deprecated": "error",

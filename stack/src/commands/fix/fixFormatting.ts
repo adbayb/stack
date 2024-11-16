@@ -20,21 +20,23 @@ export const fixFormatting = async (files: Filenames) => {
 			);
 		});
 
-		if (prettierFiles.length === 0) return Promise.resolve();
+		if (prettierFiles.length === 0) return;
 	}
 
-	const args = [...prettierFiles];
+	const arguments_ = [...prettierFiles];
 
 	if (existsSync(resolveFromProjectDirectory(".gitignore"))) {
-		args.push("--ignore-path .gitignore");
+		arguments_.push("--ignore-path .gitignore");
 	}
 
-	args.push("--write");
-	args.push("--ignore-unknown");
-	args.push("--no-error-on-unmatched-pattern");
+	arguments_.push(
+		"--write",
+		"--ignore-unknown",
+		"--no-error-on-unmatched-pattern",
+	);
 
 	try {
-		return await helpers.exec(`prettier ${args.join(" ")}`);
+		return await helpers.exec(`prettier ${arguments_.join(" ")}`);
 	} catch (error) {
 		throw createError("prettier", error as Error);
 	}

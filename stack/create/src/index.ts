@@ -4,13 +4,13 @@
  */
 import { helpers } from "termost";
 
-helpers
-	.exec("pnpm dlx @adbayb/stack create", {
+try {
+	await helpers.exec("pnpm dlx @adbayb/stack create", {
 		hasLiveOutput: true,
-	})
-	.catch((error: unknown) => {
-		helpers.message(
-			`An error occurred while executing the npm initializer \`@adbayb/create\` (error: ${String(error)})`,
-			{ type: "error" },
-		);
 	});
+} catch (error) {
+	helpers.message(
+		`An error occurred while executing the npm initializer \`@adbayb/create\` (error: ${String(error)})`,
+		{ type: "error" },
+	);
+}

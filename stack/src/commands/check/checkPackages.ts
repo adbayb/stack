@@ -14,31 +14,31 @@ export const checkPackages = async () => {
 			name?: string;
 			path: string;
 		}[]
-	).map((pkg) => {
-		const pkgPath = join(pkg.path, "package.json");
+	).map((package_) => {
+		const packagePath = join(package_.path, "package.json");
 
-		assert(pkg.name, () =>
-			createPackageError(`\`${pkgPath}\` must have a name field.`),
+		assert(package_.name, () =>
+			createPackageError(`\`${packagePath}\` must have a name field.`),
 		);
 
-		const pkgContent = require(pkgPath) as Partial<PackageJson>;
-		const peerDependencies = pkgContent.peerDependencies ?? {};
-		const devDependencies = pkgContent.devDependencies ?? {};
-		const dependencies = pkgContent.dependencies ?? {};
+		const packageContent = require(packagePath) as Partial<PackageJson>;
+		const peerDependencies = packageContent.peerDependencies ?? {};
+		const devDependencies = packageContent.devDependencies ?? {};
+		const dependencies = packageContent.dependencies ?? {};
 
 		return {
-			name: pkg.name,
+			name: package_.name,
 			dependencies,
 			devDependencies,
 			peerDependencies,
 		};
 	});
 
-	for (const pkg of packages) {
+	for (const package_ of packages) {
 		// Check version mismatches to guarantee a single copy for a given package in the monorepo (use case: prevent singleton-like issues with React contexts)
-		checkPackagesVersionMismatch(pkg);
+		checkPackagesVersionMismatch(package_);
 		// Check version range accordingly to our dependency guidelines (ie. dev dependencies must be pinned and dependencies must have caret)
-		checkPackagesVersionRange(pkg);
+		checkPackagesVersionRange(package_);
 	}
 };
 
@@ -53,7 +53,7 @@ const checkPackagesVersionRange = ({
 
 		assertVersion(version, { name: dependencyName, consumedBy: name });
 
-		if (version !== "workspace:*" && !/^\d/.exec(version))
+		if (version !== "workspace:*" && !/^\d/.test(version))
 			throw createPackageError(
 				`As a dev dependency, \`${dependencyName}\` version must be fixed (or set as "workspace:*" for local packages) to reduce accidental breaking change risks due to an implicit semver upgrade.`,
 				{
@@ -62,12 +62,6 @@ const checkPackagesVersionRange = ({
 				},
 			);
 	}
-
-	const isPreReleaseVersion = (version: string) =>
-		/\d+\.\d+\.\d+-(alpha|beta|experimental|next|rc).*/.exec(version);
-
-	const hasNoCaret = (version: string) =>
-		!isPreReleaseVersion(version) && !/^\^/.exec(version);
 
 	for (const dependencyName of Object.keys(dependencies)) {
 		const version = dependencies[dependencyName];
@@ -107,13 +101,19 @@ const checkPackagesVersionRange = ({
 
 const createPackagesVersionMismatchChecker = () => {
 	const monorepoDependencies = new Map<string, string>();
-	const monorepoDevDependencies = new Map<string, string>();
+	const monorepoDevelopmentDependencies = new Map<string, string>();
 
-	const lint = (pkg: PackageJson, type: "development" | "production") => {
-		const pkgName = pkg.name;
-		const isDev = type === "development";
-		const store = isDev ? monorepoDevDependencies : monorepoDependencies;
-		const dependencies = isDev ? pkg.devDependencies : pkg.dependencies;
+	const lint = (package_: PackageJson, type: "development" | "production") => {
+		const packageName = package_.name;
+		const isDevelopment = type === "development";
+
+		const store = isDevelopment
+			? monorepoDevelopmentDependencies
+			: monorepoDependencies;
+
+		const dependencies = isDevelopment
+			? package_.devDependencies
+			: package_.dependencies;
 
 		for (const dependencyName of Object.keys(dependencies)) {
 			const depVersion = dependencies[dependencyName];
@@ -135,16 +135,16 @@ const createPackagesVersionMismatchChecker = () => {
 					`Mismatched versions: received version \`${depVersion}\` while others use \`${storedVersion}\`. To prevent issues with singleton-like code (React contexts, ...), please make sure to update all packages to use the same \`${dependencyName}\` version (either \`${storedVersion}\` or \`${depVersion}\`.`,
 					{
 						name: dependencyName,
-						consumedBy: pkgName,
+						consumedBy: packageName,
 					},
 				);
 			}
 		}
 	};
 
-	return (pkg: PackageJson) => {
-		lint(pkg, "development");
-		lint(pkg, "production");
+	return (package_: PackageJson) => {
+		lint(package_, "development");
+		lint(package_, "production");
 	};
 };
 
@@ -176,3 +176,9 @@ function assertVersion(
 		),
 	);
 }
+
+const isPreReleaseVersion = (version: string) =>
+	/\d+\.\d+\.\d+-(alpha|beta|experimental|next|rc).*/.exec(version);
+
+const hasNoCaret = (version: string) =>
+	!isPreReleaseVersion(version) && !version.startsWith("^");

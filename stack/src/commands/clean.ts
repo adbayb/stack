@@ -64,8 +64,10 @@ const isDirectoryExistAndNotEmpty = (path: string) => {
 };
 
 const retrieveIgnoredFiles = async () => {
+	const excludedFiles = PRESERVE_FILES.join(String.raw`\|`);
+
 	const rawFiles = await helpers.exec(
-		`git clean -fdXn | grep -v '${PRESERVE_FILES.join("\\|")}' | cut -c 14-`,
+		`git clean -fdXn | grep -v '${excludedFiles}' | cut -c 14-`,
 	);
 
 	return rawFiles.split(/\n/).filter(Boolean);

@@ -1,3 +1,4 @@
+import { config as unicornConfig } from "./presets/unicorn.js";
 import { config as uncategorizedConfig } from "./presets/uncategorized.js";
 import { config as typescriptConfig } from "./presets/typescript.js";
 import { config as testConfig } from "./presets/test.js";
@@ -24,6 +25,7 @@ export default createConfig(
 	...sonarConfig,
 	...stylisticConfig,
 	...testConfig,
+	...unicornConfig,
 	...uncategorizedConfig,
 	...overridableConfig,
 );

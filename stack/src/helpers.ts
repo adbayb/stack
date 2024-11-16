@@ -143,7 +143,7 @@ export const hasDependency = (packageName: string) => {
 	return Boolean(require.resolve(packageName));
 };
 
-export const setPkgManager = async () => {
+export const setPackageManager = async () => {
 	return helpers.exec("corepack enable");
 };
 
@@ -179,29 +179,28 @@ export const eslint =
 			eslintFiles.push(".");
 		} else {
 			eslintFiles = files.filter((file) => {
-				return ESLINT_EXTENSIONS.some((ext) => file.endsWith(ext));
+				return ESLINT_EXTENSIONS.some((extension) => file.endsWith(extension));
 			});
 
-			if (eslintFiles.length === 0) return Promise.resolve();
+			if (eslintFiles.length === 0) return;
 		}
 
-		const args = [...eslintFiles];
+		const arguments_ = [...eslintFiles];
 
-		args.push("--cache");
-		args.push(
+		arguments_.push(
+			"--cache",
 			`--cache-location ${resolveFromProjectDirectory(
 				"node_modules/.cache/.eslintcache",
 			)}`,
+			"--no-error-on-unmatched-pattern",
 		);
-		// @note: prevent errors when no matched file is found
-		args.push("--no-error-on-unmatched-pattern");
 
 		if (options.isFixMode) {
-			args.push("--fix");
+			arguments_.push("--fix");
 		}
 
 		try {
-			return await helpers.exec(`eslint ${args.join(" ")}`);
+			return await helpers.exec(`eslint ${arguments_.join(" ")}`);
 		} catch (error) {
 			throw createError("eslint", error as Error);
 		}
@@ -209,10 +208,15 @@ export const eslint =
 
 export const turbo = async (
 	command: "build" | "start" | "test" | "watch",
-	options: Parameters<typeof helpers.exec>[1] = { hasLiveOutput: true },
+	options: Parameters<typeof helpers.exec>[1] = {},
 ) => {
 	try {
-		return await helpers.exec(`turbo run ${command}`, options);
+		const { hasLiveOutput = true, ...restOptions } = options;
+
+		return await helpers.exec(`turbo run ${command}`, {
+			...restOptions,
+			hasLiveOutput,
+		});
 	} catch (error) {
 		throw createError("turbo", error as Error);
 	}

@@ -14,7 +14,7 @@ import {
 	request,
 	resolveFromProjectDirectory,
 	resolveFromStackDirectory,
-	setPkgManager,
+	setPackageManager,
 } from "../helpers";
 import { VERSION } from "../constants";
 
@@ -169,24 +169,24 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.task({
 			label: label("Set up the package manager"),
 			async handler() {
-				await setPkgManager();
+				await setPackageManager();
 			},
 		})
 		.task({
 			label: label("Install dependencies"),
 			async handler({ data }) {
-				const localDevDependencies = ["quickbundle", "vitest"];
-				const globalDevDependencies = ["@adbayb/stack"];
+				const localDevelopmentDependencies = ["quickbundle", "vitest"];
+				const globalDevelopmentDependencies = ["@adbayb/stack"];
 
 				try {
 					await helpers.exec(
-						`pnpm add ${globalDevDependencies.join(
+						`pnpm add ${globalDevelopmentDependencies.join(
 							" ",
 						)} --save-dev --ignore-workspace-root-check`,
 					);
 
 					await helpers.exec(
-						`pnpm add ${localDevDependencies.join(
+						`pnpm add ${localDevelopmentDependencies.join(
 							" ",
 						)} --save-dev --filter ${data.projectName}`,
 					);
@@ -246,7 +246,7 @@ const applyTemplate = (
 	const templateExpressionRegExp = /{{(.*?)}}/g;
 
 	const evaluate = (content: string) => {
-		return content.replace(
+		return content.replaceAll(
 			templateExpressionRegExp,
 			(_, key: keyof CommandContext["data"]) => dataModel[key] || "",
 		);
@@ -281,14 +281,14 @@ const applyTemplate = (
 		.withBasePath()
 		.onlyDirs()
 		.filter((path) => {
-			return Boolean(templateExpressionRegExp.exec(path));
+			return templateExpressionRegExp.test(path);
 		})
 		.crawl(projectRootPath)
 		.sync()
 		// Re-order from longest to lowest path length to apply first renaming operations on deepest file structure
 		.sort((a, b) => b.length - a.length)
 		.forEach((templateFolderPath) => {
-			const newPath = templateFolderPath.replace(
+			const newPath = templateFolderPath.replaceAll(
 				templateExpressionRegExp,
 				(_, dataModelKey) => {
 					return dataModel[dataModelKey as keyof typeof dataModel];

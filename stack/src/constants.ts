@@ -1,3 +1,1 @@
-import { version } from "../package.json" with { type: "json" };
-
-export const VERSION = version;
+export { version as VERSION } from "../package.json" with { type: "json" };

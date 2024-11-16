@@ -196,7 +196,6 @@ export const config = [
 			"sonarjs/sonar-no-misleading-character-class": "error",
 			"sonarjs/sonar-no-regex-spaces": "error",
 			// "sonarjs/sonar-no-unused-class-component-methods": "error", // Disabled since it involves `eslint-plugin-react` activation
-			"sonarjs/sonar-prefer-regexp-exec": "error",
 			"sonarjs/sql-queries": "error",
 			"sonarjs/stable-tests": "error",
 			"sonarjs/stateful-regex": "error",
