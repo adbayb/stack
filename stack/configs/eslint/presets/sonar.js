@@ -192,7 +192,6 @@ export const config = [
 			"sonarjs/sonar-no-empty-character-class": "error",
 			"sonarjs/sonar-no-fallthrough": "error",
 			"sonarjs/sonar-no-invalid-regexp": "error",
-			"sonarjs/sonar-no-magic-numbers": "error",
 			"sonarjs/sonar-no-misleading-character-class": "error",
 			"sonarjs/sonar-no-regex-spaces": "error",
 			// "sonarjs/sonar-no-unused-class-component-methods": "error", // Disabled since it involves `eslint-plugin-react` activation

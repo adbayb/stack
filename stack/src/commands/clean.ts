@@ -1,3 +1,4 @@
+import { rm } from "node:fs/promises";
 import { existsSync, readdirSync } from "node:fs";
 
 import { helpers } from "termost";
@@ -43,7 +44,8 @@ export const createCleanCommand: CommandFactory = (program) => {
 		})
 		.task({
 			handler({ files }) {
-				helpers.message(`Removed assets: ${files.join(", ")}\n`, {
+				helpers.message(files.join("\n   "), {
+					label: "Removed assets",
 					type: "information",
 				});
 			},
@@ -56,7 +58,9 @@ export const createCleanCommand: CommandFactory = (program) => {
 const label = (message: string) => `${message} 🧹`;
 
 const cleanFiles = async (files: string[]) => {
-	return helpers.exec(`rm -rf ${files.join(" ")}`);
+	return Promise.all(
+		files.map(async (file) => rm(file, { force: true, recursive: true })),
+	);
 };
 
 const isDirectoryExistAndNotEmpty = (path: string) => {
@@ -64,13 +68,17 @@ const isDirectoryExistAndNotEmpty = (path: string) => {
 };
 
 const retrieveIgnoredFiles = async () => {
-	const excludedFiles = PRESERVE_FILES.join(String.raw`\|`);
+	const rawFiles = await helpers.exec("git clean -fdXn");
 
-	const rawFiles = await helpers.exec(
-		`git clean -fdXn | grep -v '${excludedFiles}' | cut -c 14-`,
-	);
-
-	return rawFiles.split(/\n/).filter(Boolean);
+	return rawFiles
+		.split(/\n|\r\n/)
+		.filter(
+			(cleanOutput) =>
+				!PRESERVE_FILES.some((excludedFile) =>
+					cleanOutput.includes(excludedFile),
+				),
+		)
+		.map((cleanOutput) => cleanOutput.split(" ").at(-1) as string);
 };
 
 const PRESERVE_FILES = ["node_modules"];
