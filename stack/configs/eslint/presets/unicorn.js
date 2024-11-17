@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/string-content */
 import unicornPlugin from "eslint-plugin-unicorn";
 
 import { JAVASCRIPT_LIKE_EXTENSIONS } from "../constants.js";
@@ -111,6 +112,19 @@ export const config = [
 			"unicorn/relative-url-style": ["error", "always"],
 			"unicorn/require-array-join-separator": "error",
 			"unicorn/require-number-to-fixed-digits-argument": "error",
+			"unicorn/string-content": [
+				"error",
+				{
+					patterns: {
+						"->": "→",
+						"\\.\\.\\.": "…",
+						"^http:\\/\\/": String.raw`^https:\/\/`,
+					},
+				},
+			],
+			"unicorn/switch-case-braces": "error",
+			"unicorn/text-encoding-identifier-case": "error",
+			"unicorn/throw-new-error": "error",
 		},
 	},
 ];

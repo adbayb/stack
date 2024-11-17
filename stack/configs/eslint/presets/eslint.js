@@ -82,6 +82,7 @@ export const config = [
 			"no-self-assign": "error",
 			"no-shadow-restricted-names": "error",
 			"no-sparse-arrays": "error",
+			"no-template-curly-in-string": "error",
 			"no-unexpected-multiline": "error",
 			"no-unsafe-finally": "error",
 			"no-unsafe-optional-chaining": "error",

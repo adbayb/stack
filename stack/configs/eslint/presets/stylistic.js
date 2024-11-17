@@ -59,6 +59,11 @@ export const config = [
 					prev: ["cjs-export", "export"],
 				},
 			],
+			"@stylistic/quotes": [
+				"error",
+				"double",
+				{ allowTemplateLiterals: false, avoidEscape: true },
+			],
 			"@stylistic/spaced-comment": [
 				"error",
 				"always",

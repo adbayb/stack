@@ -270,10 +270,10 @@ const applyTemplate = (
 				templateFilePath.lastIndexOf(templateExtension),
 			);
 
-			const content = evaluate(readFileSync(templateFilePath, "utf-8"));
+			const content = evaluate(readFileSync(templateFilePath, "utf8"));
 
 			renameSync(templateFilePath, projectFilePath);
-			writeFileSync(projectFilePath, content, "utf-8");
+			writeFileSync(projectFilePath, content, "utf8");
 		});
 
 	/** Template folder mutations. */

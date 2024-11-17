@@ -132,7 +132,7 @@ const createPackagesVersionMismatchChecker = () => {
 
 			if (!isSameMonorepoVersion) {
 				throw createPackageError(
-					`Mismatched versions: received version \`${depVersion}\` while others use \`${storedVersion}\`. To prevent issues with singleton-like code (React contexts, ...), please make sure to update all packages to use the same \`${dependencyName}\` version (either \`${storedVersion}\` or \`${depVersion}\`.`,
+					`Mismatched versions: received version \`${depVersion}\` while others use \`${storedVersion}\`. To prevent issues with singleton-like code (React contexts, …), please make sure to update all packages to use the same \`${dependencyName}\` version (either \`${storedVersion}\` or \`${depVersion}\`.`,
 					{
 						name: dependencyName,
 						consumedBy: packageName,
