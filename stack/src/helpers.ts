@@ -231,6 +231,22 @@ export const turbo = async (
 	}
 };
 
+export const logCheckableFiles = (files: string[]) => {
+	if (files.length === 0) {
+		helpers.message("The whole project will be checked.", {
+			label: false,
+			lineBreak: { end: true, start: false },
+		});
+
+		return;
+	}
+
+	helpers.message(files.join("\n   "), {
+		label: "Following files will be checked:",
+		lineBreak: { end: true, start: false },
+	});
+};
+
 export const changeset = async (command: string) => {
 	try {
 		return await helpers.exec(command, {

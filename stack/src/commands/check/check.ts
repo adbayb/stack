@@ -1,5 +1,5 @@
 import type { CommandFactory } from "../../types";
-import { hasDependency, turbo } from "../../helpers";
+import { hasDependency, logCheckableFiles, turbo } from "../../helpers";
 import { checkTypes } from "./checkTypes";
 import { checkPackages } from "./checkPackages";
 import { checkLinter } from "./checkLinter";
@@ -28,12 +28,18 @@ export const createCheckCommand: CommandFactory = (program) => {
 			defaultValue: undefined,
 		})
 		.task({
+			handler(_, argv) {
+				logCheckableFiles(argv.operands);
+			},
+			skip: ifOnlyDefinedAndNotEqualTo("linter"),
+		})
+		.task({
 			label: label("Prepare the project"),
 			async handler() {
 				await turbo("build", { excludeExamples: true, hasLiveOutput: false });
 			},
 			skip({ only }) {
-				return only === "commit"; // No need to build if only commitlint is run
+				return only === "commit"; // No need to build if only commit is checked
 			},
 		})
 		.task({

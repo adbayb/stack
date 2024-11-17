@@ -99,8 +99,8 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3
       termost:
-        specifier: ^1.2.0
-        version: 1.2.0
+        specifier: ^1.4.0
+        version: 1.4.0
       turbo:
         specifier: ^2.3.0
         version: 2.3.0
@@ -124,8 +124,8 @@ importers:
         specifier: workspace:^
         version: link:..
       termost:
-        specifier: ^1.2.0
-        version: 1.2.0
+        specifier: ^1.4.0
+        version: 1.4.0
     devDependencies:
       quickbundle:
         specifier: 2.8.0
@@ -3921,8 +3921,8 @@ packages:
     resolution: {integrity: sha512-wK0Ri4fOGjv/XPy8SBHZChl8CM7uMc5VML7SqiQ0zG7+J5Vr+RMQDoHa2CNT6KHUnTGIXH34UDMkPzAUyapBZg==}
     engines: {node: '>=8'}
 
-  termost@1.2.0:
-    resolution: {integrity: sha512-IVma3eIzewbvjlhOrmElYwS7WTiIpNp3zBfpsNf2hYQDj0fbclvNBNR9ixdN6XPT6m2cOL1ki7Sfto4BGOgZLg==}
+  termost@1.4.0:
+    resolution: {integrity: sha512-+3faQvz4kqNauAY2cgN83v7/l1yTMokdEJxZ89iPwpufLoRUOXGnIBLIIBJRYqIFTNqqxXfsnIBATKmJwbo71Q==}
 
   text-extensions@2.4.0:
     resolution: {integrity: sha512-te/NtwBwfiNRLf9Ijqx3T0nlqZiQ2XrrtBvu+cLL8ZRrGkO0NHTug8MYFKyoSrv/sHTaSKfilUkizV6XhxMJ3g==}
@@ -8545,7 +8545,7 @@ snapshots:
       rollup-plugin-dts: 6.1.1(rollup@4.25.0)(typescript@5.6.3)
       rollup-plugin-node-externals: 7.1.3(rollup@4.25.0)
       rollup-plugin-swc3: 0.12.1(@swc/core@1.9.2)(rollup@4.25.0)
-      termost: 1.2.0
+      termost: 1.4.0
     optionalDependencies:
       typescript: 5.6.3
     transitivePeerDependencies:
@@ -9026,7 +9026,7 @@ snapshots:
 
   term-size@2.2.1: {}
 
-  termost@1.2.0:
+  termost@1.4.0:
     dependencies:
       enquirer: 2.4.1
       listr2: 8.2.5

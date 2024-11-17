@@ -46,6 +46,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 			handler({ files }) {
 				helpers.message(files.join("\n   "), {
 					label: "Removed assets",
+					lineBreak: { end: false, start: true },
 					type: "information",
 				});
 			},

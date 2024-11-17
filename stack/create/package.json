@@ -45,6 +45,6 @@
 	},
 	"dependencies": {
 		"@adbayb/stack": "workspace:^",
-		"termost": "^1.2.0"
+		"termost": "^1.4.0"
 	}
 }

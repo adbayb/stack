@@ -1,5 +1,5 @@
 import type { CommandFactory } from "../../types";
-import { turbo } from "../../helpers";
+import { logCheckableFiles, turbo } from "../../helpers";
 import { fixLinter } from "./fixLinter";
 import { fixFormatting } from "./fixFormatting";
 
@@ -8,6 +8,11 @@ export const createFixCommand: CommandFactory = (program) => {
 		.command({
 			name: "fix",
 			description: "Fix auto-fixable issues",
+		})
+		.task({
+			handler(_, argv) {
+				logCheckableFiles(argv.operands);
+			},
 		})
 		.task({
 			label: label("Prepare the project"),
