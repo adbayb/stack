@@ -1,5 +1,21 @@
 # @adbayb/stack
 
+## 2.5.0
+
+### Minor Changes
+
+- [`a66d467`](https://github.com/adbayb/stack/commit/a66d4673dc259549dc379b1f9e5cb8a5f53c8f6b) Thanks [@adbayb](https://github.com/adbayb)! - Add ESLint rule to forbid unecessary backticks.
+
+- [`fd6185e`](https://github.com/adbayb/stack/commit/fd6185eadd577c73ff950c414337f611cc823fe6) Thanks [@adbayb](https://github.com/adbayb)! - Add `eslint-plugin-unicorn` rules.
+
+- [`4a1a044`](https://github.com/adbayb/stack/commit/4a1a044950d8e826b951364d22005147ca50aa34) Thanks [@adbayb](https://github.com/adbayb)! - Make `clean` command cross platform.
+
+- [`0f6c3a3`](https://github.com/adbayb/stack/commit/0f6c3a3be8a8ed0a67f32d790c1a195a4f3adf14) Thanks [@adbayb](https://github.com/adbayb)! - Add react-x eslint rules and update dependencies.
+
+### Patch Changes
+
+- [`711fb0a`](https://github.com/adbayb/stack/commit/711fb0a932b052d869267324076f5de1d6cf6c7f) Thanks [@adbayb](https://github.com/adbayb)! - Fix ESLint React version warning by removing sonar-react-related rules.
+
 ## 2.4.0
 
 ### Minor Changes
