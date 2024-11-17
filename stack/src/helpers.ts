@@ -208,15 +208,24 @@ export const eslint =
 
 export const turbo = async (
 	command: "build" | "start" | "test" | "watch",
-	options: Parameters<typeof helpers.exec>[1] = {},
+	options: Parameters<typeof helpers.exec>[1] & {
+		excludeExamples?: boolean;
+	} = {},
 ) => {
 	try {
-		const { hasLiveOutput = true, ...restOptions } = options;
+		const {
+			excludeExamples = false,
+			hasLiveOutput = true,
+			...restOptions
+		} = options;
 
-		return await helpers.exec(`turbo run ${command}`, {
-			...restOptions,
-			hasLiveOutput,
-		});
+		return await helpers.exec(
+			`turbo run ${command} ${excludeExamples ? "--filter !@examples/*" : ""}`,
+			{
+				...restOptions,
+				hasLiveOutput,
+			},
+		);
 	} catch (error) {
 		throw createError("turbo", error as Error);
 	}
