@@ -1,3 +1,5 @@
+import reactWebApiPlugin from "eslint-plugin-react-web-api";
+import reactHooksExtraPlugin from "eslint-plugin-react-hooks-extra";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 // eslint-disable-next-line depend/ban-dependencies
 import reactPlugin from "eslint-plugin-react";
@@ -8,10 +10,22 @@ export const config = [
 		plugins: {
 			"react": reactPlugin,
 			"react-hooks": reactHooksPlugin,
+			"react-hooks-extra": reactHooksExtraPlugin,
+			"react-web-api": reactWebApiPlugin,
 		},
 		rules: {
+			"react-hooks-extra/no-direct-set-state-in-use-effect": "error",
+			"react-hooks-extra/no-direct-set-state-in-use-layout-effect": "error",
+			"react-hooks-extra/no-redundant-custom-hook": "error",
+			"react-hooks-extra/no-unnecessary-use-callback": "error",
+			"react-hooks-extra/no-unnecessary-use-memo": "error",
+			"react-hooks-extra/prefer-use-state-lazy-initialization": "error",
 			"react-hooks/exhaustive-deps": "warn",
 			"react-hooks/rules-of-hooks": "error",
+			"react-web-api/no-leaked-event-listener": "error",
+			"react-web-api/no-leaked-interval": "error",
+			"react-web-api/no-leaked-resize-observer": "error",
+			"react-web-api/no-leaked-timeout": "error",
 			"react/boolean-prop-naming": [
 				"error",
 				{ rule: "^(is|has)[A-Z]([A-Za-z0-9]?)+" },
@@ -35,9 +49,7 @@ export const config = [
 			"react/jsx-no-script-url": "error",
 			"react/jsx-no-target-blank": "error",
 			"react/jsx-no-useless-fragment": "error",
-			"react/jsx-pascal-case": "error",
 			"react/jsx-props-no-spread-multi": "error",
-			"react/jsx-sort-props": "error",
 			"react/jsx-uses-react": "error",
 			"react/jsx-uses-vars": "error",
 			"react/no-access-state-in-setstate": "error",
@@ -66,7 +78,6 @@ export const config = [
 			"react/no-will-update-set-state": "error",
 			"react/prefer-read-only-props": "error",
 			"react/prefer-stateless-function": "error",
-			"react/self-closing-comp": "error",
 			"react/sort-comp": "error",
 			"react/state-in-constructor": ["error", "never"],
 			"react/style-prop-object": "error",

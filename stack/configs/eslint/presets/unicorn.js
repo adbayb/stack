@@ -108,7 +108,15 @@ export const config = [
 			"unicorn/prefer-ternary": "error",
 			"unicorn/prefer-top-level-await": "error",
 			"unicorn/prefer-type-error": "error",
-			"unicorn/prevent-abbreviations": "error",
+			"unicorn/prevent-abbreviations": [
+				"error",
+				{
+					allowList: {
+						props: true,
+						Props: true,
+					},
+				},
+			],
 			"unicorn/relative-url-style": ["error", "always"],
 			"unicorn/require-array-join-separator": "error",
 			"unicorn/require-number-to-fixed-digits-argument": "error",

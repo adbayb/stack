@@ -9,6 +9,9 @@ export const config = [
 			"@stylistic": stylistic,
 		},
 		rules: {
+			"@stylistic/jsx-pascal-case": "error",
+			"@stylistic/jsx-self-closing-comp": "error",
+			"@stylistic/jsx-sort-props": "error",
 			"@stylistic/lines-between-class-members": ["error", "always"],
 			"@stylistic/multiline-comment-style": ["error", "starred-block"],
 			"@stylistic/padding-line-between-statements": [

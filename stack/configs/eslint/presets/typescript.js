@@ -1,6 +1,10 @@
 import tseslint from "typescript-eslint";
 
-import { CWD, JAVASCRIPT_LIKE_EXTENSIONS } from "../constants.js";
+import {
+	CWD,
+	JAVASCRIPT_EXTENSIONS,
+	JAVASCRIPT_LIKE_EXTENSIONS,
+} from "../constants.js";
 
 export const config = [
 	{
@@ -168,5 +172,9 @@ export const config = [
 			"@typescript-eslint/unified-signatures": "error",
 			"@typescript-eslint/use-unknown-in-catch-callback-variable": "error",
 		},
+	},
+	{
+		files: JAVASCRIPT_EXTENSIONS,
+		...tseslint.configs.disableTypeChecked,
 	},
 ];
