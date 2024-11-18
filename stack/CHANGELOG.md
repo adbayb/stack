@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.6.1
+
+### Patch Changes
+
+- [`fa0735e`](https://github.com/adbayb/stack/commit/fa0735e291de1fa63e9f966b0a35b5c93aef8725) Thanks [@adbayb](https://github.com/adbayb)! - Disable Unicorn ESLint rule prefer-export-from if the export variable is already used.
+
 ## 2.6.0
 
 ### Minor Changes
