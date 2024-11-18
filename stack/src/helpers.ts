@@ -235,7 +235,7 @@ export const logCheckableFiles = (files: string[]) => {
 	if (files.length === 0) {
 		helpers.message("The whole project will be checked.", {
 			label: false,
-			lineBreak: true,
+			lineBreak: { end: true, start: false },
 		});
 
 		return;
@@ -243,7 +243,7 @@ export const logCheckableFiles = (files: string[]) => {
 
 	helpers.message(files.join("\n   "), {
 		label: "Following files will be checked:",
-		lineBreak: true,
+		lineBreak: { end: true, start: false },
 	});
 };
 
