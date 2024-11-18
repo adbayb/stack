@@ -76,7 +76,7 @@ export const config = [
 			"unicorn/prefer-dom-node-remove": "error",
 			"unicorn/prefer-dom-node-text-content": "error",
 			"unicorn/prefer-event-target": "error",
-			"unicorn/prefer-export-from": "error",
+			"unicorn/prefer-export-from": ["error", { ignoreUsedVariables: true }],
 			"unicorn/prefer-global-this": "error",
 			"unicorn/prefer-includes": "error",
 			"unicorn/prefer-keyboard-event-key": "error",
