@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.6.2
+
+### Patch Changes
+
+- [`c00acf0`](https://github.com/adbayb/stack/commit/c00acf08ea9c880e39df8111b23639068d99853f) Thanks [@adbayb](https://github.com/adbayb)! - Remove beginning line break for check and fix logs.
+
 ## 2.6.1
 
 ### Patch Changes
