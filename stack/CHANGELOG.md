@@ -1,5 +1,13 @@
 # @adbayb/stack
 
+## 2.6.0
+
+### Minor Changes
+
+- [`389cf5e`](https://github.com/adbayb/stack/commit/389cf5e2520f0ecdfba27f19e19c02f776857f0b) Thanks [@adbayb](https://github.com/adbayb)! - Do not build examples while preparing the project.
+
+- [`f1ca685`](https://github.com/adbayb/stack/commit/f1ca68522a842a84a0862ef2d93c95c89e62372b) Thanks [@adbayb](https://github.com/adbayb)! - Make git hooks installation cross platform and add feedback for currently checked files.
+
 ## 2.5.0
 
 ### Minor Changes
