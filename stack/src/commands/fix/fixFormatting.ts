@@ -5,7 +5,7 @@ import { helpers } from "termost";
 import type { Filenames } from "../../types";
 import { createError, resolveFromProjectDirectory } from "../../helpers";
 
-const PRETTIER_IGNORE_FILES = ["CHANGELOG.md", "pnpm-lock.yaml"];
+const PRETTIER_IGNORE_FILES = ["pnpm-lock.yaml"];
 
 export const fixFormatting = async (files: Filenames) => {
 	let prettierFiles = [];
@@ -14,11 +14,8 @@ export const fixFormatting = async (files: Filenames) => {
 		prettierFiles.push(`"**/!(${PRETTIER_IGNORE_FILES.join("|")})"`);
 	} else {
 		prettierFiles = files.filter((file) => {
-			return (
-				!PRETTIER_IGNORE_FILES.some((filename) =>
-					file.endsWith(filename),
-				) && // The root `README.md` file is ignored to prevent error due to its symbolic link nature when specified explicitly as a file
-				file !== "README.md"
+			return !PRETTIER_IGNORE_FILES.some((filename) =>
+				file.endsWith(filename),
 			);
 		});
 
