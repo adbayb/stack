@@ -1,5 +1,16 @@
 # @adbayb/create
 
+## 2.7.0
+
+### Minor Changes
+
+-   [`387517b`](https://github.com/adbayb/stack/commit/387517b4de7cc947cf5060d471cbb2cbb989b95e) Thanks [@adbayb](https://github.com/adbayb)! - To ease indentation readability, update `tabWidth` Prettier and Editorconfig setting from 2 spaces to 4.
+
+### Patch Changes
+
+-   Updated dependencies [[`387517b`](https://github.com/adbayb/stack/commit/387517b4de7cc947cf5060d471cbb2cbb989b95e)]:
+    -   @adbayb/stack@2.7.0
+
 ## 2.6.2
 
 ### Patch Changes
