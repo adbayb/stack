@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.8.0
+
+### Minor Changes
+
+-   [`6d1495c`](https://github.com/adbayb/stack/commit/6d1495cc88c85699e6211b598c3f59c28f98281d) Thanks [@adbayb](https://github.com/adbayb)! - Accept `CHANGELOG.md` files to be fixed by Prettier.
+
 ## 2.7.0
 
 ### Minor Changes
