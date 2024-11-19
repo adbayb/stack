@@ -10,7 +10,10 @@ export const config = [
 			"import-x": importPlugin,
 		},
 		rules: {
-			"import-x/consistent-type-specifier-style": ["error", "prefer-top-level"],
+			"import-x/consistent-type-specifier-style": [
+				"error",
+				"prefer-top-level",
+			],
 			"import-x/export": "error",
 			"import-x/first": "error",
 			"import-x/newline-after-import": "error",

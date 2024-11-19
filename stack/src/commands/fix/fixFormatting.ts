@@ -15,7 +15,9 @@ export const fixFormatting = async (files: Filenames) => {
 	} else {
 		prettierFiles = files.filter((file) => {
 			return (
-				!PRETTIER_IGNORE_FILES.some((filename) => file.endsWith(filename)) && // The root `README.md` file is ignored to prevent error due to its symbolic link nature when specified explicitly as a file
+				!PRETTIER_IGNORE_FILES.some((filename) =>
+					file.endsWith(filename),
+				) && // The root `README.md` file is ignored to prevent error due to its symbolic link nature when specified explicitly as a file
 				file !== "README.md"
 			);
 		});

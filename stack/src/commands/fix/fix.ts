@@ -17,7 +17,10 @@ export const createFixCommand: CommandFactory = (program) => {
 		.task({
 			label: label("Prepare the project"),
 			async handler() {
-				await turbo("build", { excludeExamples: true, hasLiveOutput: false });
+				await turbo("build", {
+					excludeExamples: true,
+					hasLiveOutput: false,
+				});
 			},
 		})
 		.task({

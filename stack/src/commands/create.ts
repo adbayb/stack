@@ -108,11 +108,17 @@ export const createCreateCommand: CommandFactory = (program) => {
 				}
 
 				const nodeVersion = (
-					await request.get("https://resolve-node.vercel.app/lts", "text")
+					await request.get(
+						"https://resolve-node.vercel.app/lts",
+						"text",
+					)
 				).replace("v", "");
 
 				const npmVersion = (
-					await request.get("https://registry.npmjs.org/pnpm/latest", "json")
+					await request.get(
+						"https://registry.npmjs.org/pnpm/latest",
+						"json",
+					)
 				).version as string;
 
 				return {

@@ -48,12 +48,16 @@ export const config = [
 			"vitest/prefer-to-have-length": "error",
 			"vitest/prefer-todo": "error",
 			"vitest/require-hook": "error",
-			"vitest/require-local-test-context-for-concurrent-snapshots": "error",
+			"vitest/require-local-test-context-for-concurrent-snapshots":
+				"error",
 			"vitest/require-to-throw-message": "error",
 			"vitest/require-top-level-describe": "error",
 			"vitest/valid-describe-callback": "error",
 			"vitest/valid-expect": "error",
-			"vitest/valid-title": ["error", { mustMatch: { test: ["^should "] } }],
+			"vitest/valid-title": [
+				"error",
+				{ mustMatch: { test: ["^should "] } },
+			],
 		},
 	},
 ];

@@ -103,7 +103,10 @@ const createPackagesVersionMismatchChecker = () => {
 	const monorepoDependencies = new Map<string, string>();
 	const monorepoDevelopmentDependencies = new Map<string, string>();
 
-	const lint = (package_: PackageJson, type: "development" | "production") => {
+	const lint = (
+		package_: PackageJson,
+		type: "development" | "production",
+	) => {
 		const packageName = package_.name;
 		const isDevelopment = type === "development";
 

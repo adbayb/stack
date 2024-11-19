@@ -15,7 +15,8 @@ export const config = [
 		},
 		rules: {
 			"react-hooks-extra/no-direct-set-state-in-use-effect": "error",
-			"react-hooks-extra/no-direct-set-state-in-use-layout-effect": "error",
+			"react-hooks-extra/no-direct-set-state-in-use-layout-effect":
+				"error",
 			"react-hooks-extra/no-redundant-custom-hook": "error",
 			"react-hooks-extra/no-unnecessary-use-callback": "error",
 			"react-hooks-extra/no-unnecessary-use-memo": "error",

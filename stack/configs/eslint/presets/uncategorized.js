@@ -16,13 +16,27 @@ export const config = [
 			"sort-keys-custom-order/object-keys": [
 				"error",
 				{
-					orderedKeys: ["id", "key", "name", "title", "label", "description"],
+					orderedKeys: [
+						"id",
+						"key",
+						"name",
+						"title",
+						"label",
+						"description",
+					],
 				},
 			],
 			"sort-keys-custom-order/type-keys": [
 				"error",
 				{
-					orderedKeys: ["id", "key", "name", "title", "label", "description"],
+					orderedKeys: [
+						"id",
+						"key",
+						"name",
+						"title",
+						"label",
+						"description",
+					],
 				},
 			],
 		},

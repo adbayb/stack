@@ -12,9 +12,9 @@ This package offers opinionated but extensible **[TypeScript](https://www.typesc
 
 It allows to:
 
-- Make collaboration across my projects effective (including onboarding with a consistent look and writing patterns).
-- Include a minimum viable and required set of rules to foster maintainable, testable, secure, and green code over time.
-- Accelerate development by reusing common configuration and convention defaults.
+-   Make collaboration across my projects effective (including onboarding with a consistent look and writing patterns).
+-   Include a minimum viable and required set of rules to foster maintainable, testable, secure, and green code over time.
+-   Accelerate development by reusing common configuration and convention defaults.
 
 <br />
 

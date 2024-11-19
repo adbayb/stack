@@ -18,7 +18,7 @@ export default {
 	semi: true,
 	singleAttributePerLine: true,
 	singleQuote: false,
-	tabWidth: 2,
+	tabWidth: 4,
 	trailingComma: "all",
 	useTabs: true,
 	vueIndentScriptAndStyle: false,

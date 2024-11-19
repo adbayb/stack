@@ -136,7 +136,9 @@ export const getStackCommand = (command: string, isNodeRuntime = true) => {
 	 * Npx is used to make executable resolution independent from the build tool (npx is the built-in Node tool)
 	 * `--no` flag to prevent installation prompt and throw an error if the binary is not installed.
 	 */
-	return [...(isNodeRuntime ? [] : ["npx --no"]), `stack ${command}`].join(" ");
+	return [...(isNodeRuntime ? [] : ["npx --no"]), `stack ${command}`].join(
+		" ",
+	);
 };
 
 export const hasDependency = (packageName: string) => {
@@ -166,7 +168,9 @@ export const request = {
 
 		return (
 			responseType === "text" ? response.text() : response.json()
-		) as Promise<ResponseType extends "text" ? string : Record<string, string>>;
+		) as Promise<
+			ResponseType extends "text" ? string : Record<string, string>
+		>;
 	},
 };
 
@@ -179,7 +183,9 @@ export const eslint =
 			eslintFiles.push(".");
 		} else {
 			eslintFiles = files.filter((file) => {
-				return ESLINT_EXTENSIONS.some((extension) => file.endsWith(extension));
+				return ESLINT_EXTENSIONS.some((extension) =>
+					file.endsWith(extension),
+				);
 			});
 
 			if (eslintFiles.length === 0) return;
