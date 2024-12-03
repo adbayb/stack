@@ -31,7 +31,7 @@
 		"@adbayb/stack": "workspace:*"
 	},
 	"prettier": "@adbayb/stack/prettier",
-	"packageManager": "pnpm@9.12.3",
+	"packageManager": "pnpm@9.14.4",
 	"engines": {
 		"node": ">=22.0.0",
 		"pnpm": ">=9.0.0",
