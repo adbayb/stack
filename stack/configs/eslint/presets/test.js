@@ -39,7 +39,10 @@ export const config = [
 			"vitest/prefer-equality-matcher": "error",
 			"vitest/prefer-hooks-in-order": "error",
 			"vitest/prefer-hooks-on-top": "error",
-			"vitest/prefer-lowercase-title": "error",
+			"vitest/prefer-lowercase-title": [
+				"error",
+				{ ignore: ["describe"] },
+			],
 			"vitest/prefer-mock-promise-shorthand": "error",
 			"vitest/prefer-strict-equal": "error",
 			"vitest/prefer-to-be": "error",

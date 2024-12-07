@@ -10,7 +10,7 @@ export default {
 	htmlWhitespaceSensitivity: "css",
 	insertPragma: false,
 	jsxSingleQuote: false,
-	plugins: [],
+	plugins: ["prettier-plugin-packagejson"],
 	printWidth: 80,
 	proseWrap: "preserve",
 	quoteProps: "consistent",

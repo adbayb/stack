@@ -2,14 +2,22 @@
 	"name": "@adbayb/create",
 	"version": "2.8.0",
 	"description": "My opinionated scaffolding tool",
-	"publishConfig": {
-		"access": "public"
-	},
-	"files": [
-		"bin",
-		"dist"
+	"keywords": [
+		"setup",
+		"scaffolding",
+		"development"
 	],
-	"bin": "./bin/index.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/adbayb/stack.git",
+		"directory": "applications/create"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Ayoub Adib",
+		"email": "adbayb@gmail.com",
+		"url": "https://twitter.com/adbayb"
+	},
 	"type": "module",
 	"exports": {
 		".": {
@@ -17,34 +25,27 @@
 			"default": "./dist/index.js"
 		}
 	},
+	"bin": "./bin/index.js",
+	"files": [
+		"bin",
+		"dist"
+	],
 	"scripts": {
+		"build": "quickbundle build",
 		"prepublishOnly": "pnpm build",
 		"prestart": "pnpm build",
 		"start": "./bin/index.js",
-		"build": "quickbundle build",
 		"watch": "quickbundle watch"
-	},
-	"keywords": [
-		"setup",
-		"scaffolding",
-		"development"
-	],
-	"author": {
-		"name": "Ayoub Adib",
-		"email": "adbayb@gmail.com",
-		"url": "https://twitter.com/adbayb"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/adbayb/stack.git",
-		"directory": "applications/create"
-	},
-	"license": "MIT",
-	"devDependencies": {
-		"quickbundle": "2.8.0"
 	},
 	"dependencies": {
 		"@adbayb/stack": "workspace:^",
 		"termost": "^1.4.0"
+	},
+	"devDependencies": {
+		"quickbundle": "2.8.0"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org"
 	}
 }

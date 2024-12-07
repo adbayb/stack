@@ -1,41 +1,41 @@
 {
 	"name": "root",
-	"private": true,
 	"version": "0.0.0",
+	"private": true,
 	"description": "My opinionated stack to ease project building",
-	"author": {
-		"name": "Ayoub Adib",
-		"email": "adbayb@gmail.com",
-		"url": "https://twitter.com/adbayb"
-	},
 	"repository": {
 		"type": "git",
 		"url": "git@github.com:adbayb/stack.git"
 	},
 	"license": "MIT",
+	"author": {
+		"name": "Ayoub Adib",
+		"email": "adbayb@gmail.com",
+		"url": "https://twitter.com/adbayb"
+	},
 	"type": "module",
 	"scripts": {
-		"prepare": "pnpm --filter stack build && stack install",
-		"clean": "stack clean",
-		"check": "stack check",
-		"fix": "stack fix",
-		"start": "stack start",
 		"build": "stack build",
-		"watch": "stack watch",
-		"test": "stack test",
+		"check": "stack check",
+		"clean": "stack clean",
+		"fix": "stack fix",
+		"prepare": "pnpm --filter stack build && stack install",
 		"release:log": "stack release --log",
+		"release:publish": "stack release --publish",
 		"release:version": "stack release --tag",
-		"release:publish": "stack release --publish"
+		"start": "stack start",
+		"test": "stack test",
+		"watch": "stack watch"
 	},
+	"prettier": "@adbayb/stack/prettier",
 	"devDependencies": {
 		"@adbayb/stack": "workspace:*"
 	},
-	"prettier": "@adbayb/stack/prettier",
 	"packageManager": "pnpm@9.12.3",
 	"engines": {
 		"node": ">=22.0.0",
-		"pnpm": ">=9.0.0",
 		"npm": "please-use-pnpm",
+		"pnpm": ">=9.0.0",
 		"yarn": "please-use-pnpm"
 	}
 }

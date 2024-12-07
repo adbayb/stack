@@ -1,13 +1,16 @@
 {
 	"name": "{{projectName}}",
-	"description": "{{projectDescription}}",
 	"version": "0.0.0",
-	"publishConfig": {
-		"access": "public"
+	"description": "{{projectDescription}}",
+	"homepage": "https://github.com/{{repoId}}/tree/main/{{projectName}}#readme",
+	"bugs": "https://github.com/{{repoId}}/issues",
+	"repository": {
+		"type": "git",
+		"url": "{{projectUrl}}",
+		"directory": "{{projectName}}"
 	},
-	"files": [
-		"dist"
-	],
+	"license": "MIT",
+	"author": "Ayoub Adib <adbayb@gmail.com> (https://twitter.com/adbayb)",
 	"sideEffects": false,
 	"type": "module",
 	"exports": {
@@ -19,21 +22,19 @@
 			"default": "./dist/index.mjs"
 		}
 	},
-	"license": "MIT",
-	"author": "Ayoub Adib <adbayb@gmail.com> (https://twitter.com/adbayb)",
-	"bugs": "https://github.com/{{repoId}}/issues",
-	"homepage": "https://github.com/{{repoId}}/tree/main/{{projectName}}#readme",
-	"repository": {
-		"type": "git",
-		"url": "{{projectUrl}}",
-		"directory": "{{projectName}}"
-	},
+	"files": [
+		"dist"
+	],
 	"scripts": {
-		"prepublishOnly": "pnpm build",
-		"clean": "rm -rf dist",
-		"start": "pnpm watch",
 		"build": "pnpm clean && quickbundle build",
-		"watch": "quickbundle watch",
-		"test": "vitest"
+		"clean": "rm -rf dist",
+		"prepublishOnly": "pnpm build",
+		"start": "pnpm watch",
+		"test": "vitest",
+		"watch": "quickbundle watch"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org"
 	}
 }

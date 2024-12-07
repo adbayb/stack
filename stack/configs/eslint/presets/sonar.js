@@ -35,7 +35,6 @@ export const config = [
 			"sonarjs/cors": "error",
 			"sonarjs/csrf": "error",
 			"sonarjs/cyclomatic-complexity": ["error", { threshold: 10 }], // Measure code testability (the more paths are, the more test cases need to be implemented)
-			"sonarjs/different-types-comparison": "error",
 			"sonarjs/disabled-auto-escaping": "error",
 			"sonarjs/disabled-resource-integrity": "error",
 			"sonarjs/duplicates-in-character-class": "error",
@@ -52,7 +51,6 @@ export const config = [
 			"sonarjs/for-loop-increment-sign": "error",
 			"sonarjs/frame-ancestors": "error",
 			"sonarjs/function-inside-loop": "error",
-			"sonarjs/function-name": "error",
 			"sonarjs/generator-without-yield": "error",
 			"sonarjs/hashing": "error",
 			"sonarjs/hidden-files": "error",
