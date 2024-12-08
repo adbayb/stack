@@ -1,5 +1,17 @@
 # @adbayb/stack
 
+## 2.9.0
+
+### Minor Changes
+
+- [`f5db4d8`](https://github.com/adbayb/stack/commit/f5db4d8a98a23244cc160808eaad043a628514d4) Thanks [@adbayb](https://github.com/adbayb)! - Minor updates including:
+
+    - Review rules after testing the new stack on a project.
+    - Update template (package.json changes).
+    - Add `package.json` prettier plugin.
+
+- [`b5c484b`](https://github.com/adbayb/stack/commit/b5c484b20be9ec19ce67c4076009f0074dfd785f) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies.
+
 ## 2.8.0
 
 ### Minor Changes
