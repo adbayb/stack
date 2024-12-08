@@ -30,7 +30,7 @@
 		"clean": "rm -rf dist",
 		"prepublishOnly": "pnpm build",
 		"start": "pnpm watch",
-		"test": "vitest",
+		"test": "vitest --typecheck --reporter=verbose",
 		"watch": "quickbundle watch"
 	},
 	"publishConfig": {

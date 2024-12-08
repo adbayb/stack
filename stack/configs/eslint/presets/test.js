@@ -62,5 +62,10 @@ export const config = [
 				{ mustMatch: { test: ["^should "] } },
 			],
 		},
+		settings: {
+			vitest: {
+				typecheck: true,
+			},
+		},
 	},
 ];
