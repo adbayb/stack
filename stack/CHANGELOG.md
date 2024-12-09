@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.11.0
+
+### Minor Changes
+
+- [`949e218`](https://github.com/adbayb/stack/commit/949e2186bd659ac727087352ee95caec16f10fec) Thanks [@adbayb](https://github.com/adbayb)! - Update template to Git ignore Vitest type check artifact.
+
 ## 2.10.0
 
 ### Minor Changes
