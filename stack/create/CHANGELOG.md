@@ -1,5 +1,16 @@
 # @adbayb/create
 
+## 2.10.0
+
+### Minor Changes
+
+- [`4df72a5`](https://github.com/adbayb/stack/commit/4df72a55bdc654220d19c74943621fe2c8c4b199) Thanks [@adbayb](https://github.com/adbayb)! - Enable type testing feature.
+
+### Patch Changes
+
+- Updated dependencies [[`4df72a5`](https://github.com/adbayb/stack/commit/4df72a55bdc654220d19c74943621fe2c8c4b199)]:
+    - @adbayb/stack@2.10.0
+
 ## 2.9.0
 
 ### Minor Changes
