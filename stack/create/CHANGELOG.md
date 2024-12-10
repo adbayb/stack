@@ -1,5 +1,14 @@
 # @adbayb/create
 
+## 2.11.1
+
+### Patch Changes
+
+- [`f8bba1c`](https://github.com/adbayb/stack/commit/f8bba1ce0b479324ade8c43d19e70037071d84e9) Thanks [@adbayb](https://github.com/adbayb)! - Fix prettier formatting on template files.
+
+- Updated dependencies [[`f8bba1c`](https://github.com/adbayb/stack/commit/f8bba1ce0b479324ade8c43d19e70037071d84e9)]:
+    - @adbayb/stack@2.11.1
+
 ## 2.11.0
 
 ### Minor Changes
