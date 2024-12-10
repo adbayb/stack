@@ -138,7 +138,15 @@ export const config = [
 			"@typescript-eslint/no-unused-expressions": "error",
 			"@typescript-eslint/no-unused-vars": [
 				"error",
-				{ ignoreRestSiblings: true },
+				{
+					args: "all",
+					argsIgnorePattern: "^_",
+					caughtErrors: "all",
+					caughtErrorsIgnorePattern: "^_",
+					destructuredArrayIgnorePattern: "^_",
+					ignoreRestSiblings: true,
+					varsIgnorePattern: "^_",
+				},
 			],
 			"@typescript-eslint/no-useless-constructor": "error",
 			"@typescript-eslint/no-useless-empty-export": "error",
