@@ -1,5 +1,13 @@
 # @adbayb/stack
 
+## 2.11.0
+
+### Minor Changes
+
+- [`343e0e5`](https://github.com/adbayb/stack/commit/343e0e5d36581a8d0bb64a281705222fa67c3d37) Thanks [@adbayb](https://github.com/adbayb)! - Configure typescript-eslint no-unused-vars to follow TypeScript noUnusedLocals behavior.
+
+- [`949e218`](https://github.com/adbayb/stack/commit/949e2186bd659ac727087352ee95caec16f10fec) Thanks [@adbayb](https://github.com/adbayb)! - Update template to Git ignore Vitest type check artifact.
+
 ## 2.10.0
 
 ### Minor Changes
