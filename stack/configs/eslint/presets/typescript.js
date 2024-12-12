@@ -42,7 +42,13 @@ export const config = [
 				"error",
 				"fields",
 			],
-			"@typescript-eslint/class-methods-use-this": "error",
+			"@typescript-eslint/class-methods-use-this": [
+				"error",
+				{
+					ignoreClassesThatImplementAnInterface: true,
+					ignoreOverrideMethods: true,
+				},
+			],
 			"@typescript-eslint/consistent-generic-constructors": [
 				"error",
 				"constructor",

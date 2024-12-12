@@ -187,7 +187,6 @@ export const config = [
 			"sonarjs/unverified-hostname": "error",
 			"sonarjs/updated-loop-counter": "error",
 			"sonarjs/use-type-alias": "error",
-			"sonarjs/void-use": "error",
 			"sonarjs/weak-ssl": "error",
 			"sonarjs/x-powered-by": "error",
 			"sonarjs/xml-parser-xxe": "error",
