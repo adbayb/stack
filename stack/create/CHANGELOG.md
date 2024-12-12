@@ -1,5 +1,18 @@
 # @adbayb/create
 
+## 2.12.0
+
+### Minor Changes
+
+- [`ef282d9`](https://github.com/adbayb/stack/commit/ef282d92638f77effa57d7bf6c60746c0bcc7214) Thanks [@adbayb](https://github.com/adbayb)! - Review sonar and typescript ESLint rules.
+
+### Patch Changes
+
+- [`f8bba1c`](https://github.com/adbayb/stack/commit/f8bba1ce0b479324ade8c43d19e70037071d84e9) Thanks [@adbayb](https://github.com/adbayb)! - Fix prettier formatting on template files.
+
+- Updated dependencies [[`ef282d9`](https://github.com/adbayb/stack/commit/ef282d92638f77effa57d7bf6c60746c0bcc7214), [`f8bba1c`](https://github.com/adbayb/stack/commit/f8bba1ce0b479324ade8c43d19e70037071d84e9)]:
+    - @adbayb/stack@2.12.0
+
 ## 2.11.0
 
 ### Minor Changes
