@@ -4,8 +4,8 @@ import vitestPlugin from "@vitest/eslint-plugin";
 export const config = [
 	{
 		files: [
-			"**/test.{js,ts,jsx,tsx,cjs,cts,mjs,mts}",
-			"**/*.test.{js,ts,jsx,tsx,cjs,cts,mjs,mts}",
+			"**/{test,test-d}.{js,ts,jsx,tsx,cjs,cts,mjs,mts}",
+			"**/*.{test,test-d}.{js,ts,jsx,tsx,cjs,cts,mjs,mts}",
 		],
 		plugins: {
 			"jest-formatting": jestFormattingPlugin,
