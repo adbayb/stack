@@ -1,5 +1,15 @@
 # @adbayb/stack
 
+## 2.13.0
+
+### Minor Changes
+
+- [`2e5f625`](https://github.com/adbayb/stack/commit/2e5f625a537632bf25f50870f4feb248c60b36d8) Thanks [@adbayb](https://github.com/adbayb)! - Update template to not make test fails if no test file.
+
+### Patch Changes
+
+- [`184fcc6`](https://github.com/adbayb/stack/commit/184fcc664e19825f0e935606087c2aceac2ec724) Thanks [@adbayb](https://github.com/adbayb)! - Include missing type test file for ESLint vitest check.
+
 ## 2.12.0
 
 ### Minor Changes
