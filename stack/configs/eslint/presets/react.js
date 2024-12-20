@@ -4,9 +4,11 @@ import reactHooksPlugin from "eslint-plugin-react-hooks";
 // eslint-disable-next-line depend/ban-dependencies
 import reactPlugin from "eslint-plugin-react";
 
+import { JAVASCRIPT_LIKE_EXTENSIONS } from "../constants.js";
+
 export const config = [
 	{
-		files: ["**/*.{jsx,tsx}"],
+		files: JAVASCRIPT_LIKE_EXTENSIONS,
 		plugins: {
 			"react": reactPlugin,
 			"react-hooks": reactHooksPlugin,
