@@ -1,5 +1,15 @@
 # @adbayb/stack
 
+## 2.14.0
+
+### Minor Changes
+
+- [`7c8d608`](https://github.com/adbayb/stack/commit/7c8d608acfdbea2eabd0ebe48777cc7f64441c18) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies.
+
+### Patch Changes
+
+- [`400d90f`](https://github.com/adbayb/stack/commit/400d90fe672463ae4484994e631219bf69109598) Thanks [@adbayb](https://github.com/adbayb)! - Enable React ESLint check for js and ts extensions (for hooks checks).
+
 ## 2.13.0
 
 ### Minor Changes
