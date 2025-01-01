@@ -1,5 +1,16 @@
 # @adbayb/create
 
+## 2.15.0
+
+### Minor Changes
+
+- [`bb12fc2`](https://github.com/adbayb/stack/commit/bb12fc2990fcb1d60f4766b26b9622023b581f98) Thanks [@adbayb](https://github.com/adbayb)! - Update template to include new editor code actions (including removing unused imports).
+
+### Patch Changes
+
+- Updated dependencies [[`bb12fc2`](https://github.com/adbayb/stack/commit/bb12fc2990fcb1d60f4766b26b9622023b581f98)]:
+    - @adbayb/stack@2.15.0
+
 ## 2.14.0
 
 ### Patch Changes
