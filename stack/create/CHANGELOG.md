@@ -1,5 +1,20 @@
 # @adbayb/create
 
+## 2.15.0
+
+### Minor Changes
+
+- [`bb12fc2`](https://github.com/adbayb/stack/commit/bb12fc2990fcb1d60f4766b26b9622023b581f98) Thanks [@adbayb](https://github.com/adbayb)! - Update template to include new editor code actions (including removing unused imports).
+
+### Patch Changes
+
+- [`06abf09`](https://github.com/adbayb/stack/commit/06abf09f2b56aa7a88eda341dd5ec9ce43997496) Thanks [@adbayb](https://github.com/adbayb)! - Use proper lifecycle step to apply stack install.
+
+- [`c066f8e`](https://github.com/adbayb/stack/commit/c066f8e1a17650be76b25fb91cea14c95c82eb3e) Thanks [@adbayb](https://github.com/adbayb)! - Do not add unstaged files automatically on pre-commit git hook.
+
+- Updated dependencies [[`bb12fc2`](https://github.com/adbayb/stack/commit/bb12fc2990fcb1d60f4766b26b9622023b581f98), [`b1bf753`](https://github.com/adbayb/stack/commit/b1bf75351c9d52be8b927f2530c6a557b8a26ebf), [`06abf09`](https://github.com/adbayb/stack/commit/06abf09f2b56aa7a88eda341dd5ec9ce43997496), [`f1346b3`](https://github.com/adbayb/stack/commit/f1346b3a72b9581ac0c1069738c6691bccfae58c), [`c066f8e`](https://github.com/adbayb/stack/commit/c066f8e1a17650be76b25fb91cea14c95c82eb3e)]:
+    - @adbayb/stack@2.15.0
+
 ## 2.14.0
 
 ### Patch Changes
