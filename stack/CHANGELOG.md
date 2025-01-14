@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.16.0
+
+### Minor Changes
+
+- [`89c138a`](https://github.com/adbayb/stack/commit/89c138a71b420a483da7c8810e17b59bb6b72b92) Thanks [@adbayb](https://github.com/adbayb)! - Stash automatically files after fix.
+
 ## 2.15.0
 
 ### Minor Changes
