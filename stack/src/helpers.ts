@@ -119,6 +119,17 @@ export const getRepositoryUrl = async () => {
 	}
 };
 
+export const checkPackageManager = async () => {
+	try {
+		await helpers.exec("npx only-allow pnpm");
+	} catch {
+		throw createError(
+			"pnpm",
+			"The project must use `pnpm` as a node package manager tool. Follow this installation guide https://pnpm.io/installation",
+		);
+	}
+};
+
 export const getNpmVersion = async () => {
 	try {
 		return await helpers.exec("pnpm -v");

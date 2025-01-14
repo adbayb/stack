@@ -1,7 +1,11 @@
 import { chmod, writeFile } from "node:fs/promises";
 
 import type { CommandFactory } from "../types";
-import { getStackCommand, resolveFromProjectDirectory } from "../helpers";
+import {
+	checkPackageManager,
+	getStackCommand,
+	resolveFromProjectDirectory,
+} from "../helpers";
 
 export const createInstallCommand: CommandFactory = (program) => {
 	program
@@ -31,6 +35,12 @@ export const createInstallCommand: CommandFactory = (program) => {
 					"commit-msg",
 					getStackCommand("check --only commit", false),
 				);
+			},
+		})
+		.task({
+			label: label("Check the package manager"),
+			async handler() {
+				await checkPackageManager();
 			},
 		});
 };

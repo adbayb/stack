@@ -8,7 +8,7 @@
 		"check": "stack check",
 		"clean": "stack clean",
 		"fix": "stack fix",
-		"prepare": "stack install",
+		"preinstall": "stack install",
 		"release:log": "stack release --log",
 		"release:publish": "stack release --publish",
 		"release:version": "stack release --tag",
@@ -20,8 +20,6 @@
 	"packageManager": "pnpm@{{npmVersion}}",
 	"engines": {
 		"node": ">=22.0.0",
-		"npm": "please-use-pnpm",
-		"pnpm": ">=9.0.0",
-		"yarn": "please-use-pnpm"
+		"pnpm": ">=9.0.0"
 	}
 }
