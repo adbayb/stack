@@ -19,7 +19,7 @@
 		"check": "stack check",
 		"clean": "stack clean",
 		"fix": "stack fix",
-		"prepare": "pnpm --filter stack build && stack install",
+		"install": "pnpm --filter stack build && stack install",
 		"release:log": "stack release --log",
 		"release:publish": "stack release --publish",
 		"release:version": "stack release --tag",
