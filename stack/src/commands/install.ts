@@ -21,7 +21,10 @@ export const createInstallCommand: CommandFactory = (program) => {
 
 				await installGitHook(
 					"pre-commit",
-					getStackCommand(`fix $(${modifiedFilesCommand})`, false),
+					`${getStackCommand(
+						`fix $(${modifiedFilesCommand})`,
+						false,
+					)} && git add -A`,
 				);
 			},
 		})
