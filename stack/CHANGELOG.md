@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.17.0
+
+### Minor Changes
+
+- [`f366c38`](https://github.com/adbayb/stack/commit/f366c387540b49901b2a897a50cc972d8b2d87ea) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies.
+
 ## 2.16.0
 
 ### Minor Changes

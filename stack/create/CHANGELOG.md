@@ -1,5 +1,12 @@
 # @adbayb/create
 
+## 2.17.0
+
+### Patch Changes
+
+- Updated dependencies [[`f366c38`](https://github.com/adbayb/stack/commit/f366c387540b49901b2a897a50cc972d8b2d87ea)]:
+    - @adbayb/stack@2.17.0
+
 ## 2.16.0
 
 ### Patch Changes
