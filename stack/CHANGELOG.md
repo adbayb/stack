@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.17.1
+
+### Patch Changes
+
+- [`6c844b5`](https://github.com/adbayb/stack/commit/6c844b5288a948843166967efbe83656d5a6bb5b) Thanks [@adbayb](https://github.com/adbayb)! - Fix corepack error while creating a new project.
+
 ## 2.17.0
 
 ### Minor Changes
