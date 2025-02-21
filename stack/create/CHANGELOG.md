@@ -1,5 +1,16 @@
 # @adbayb/create
 
+## 2.18.0
+
+### Minor Changes
+
+- [`861fcae`](https://github.com/adbayb/stack/commit/861fcaef8f0bb02fd5eaae9b0f7d1fe8cafbfa35) Thanks [@adbayb](https://github.com/adbayb)! - Update template to disable unused code editor autofix.
+
+### Patch Changes
+
+- Updated dependencies [[`b4182bc`](https://github.com/adbayb/stack/commit/b4182bc1ea62a0e7f601e357e3ec55471c7640f6), [`861fcae`](https://github.com/adbayb/stack/commit/861fcaef8f0bb02fd5eaae9b0f7d1fe8cafbfa35)]:
+    - @adbayb/stack@2.18.0
+
 ## 2.17.1
 
 ### Patch Changes
