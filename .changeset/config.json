@@ -5,6 +5,10 @@
 	"changelog": ["@changesets/changelog-github", { "repo": "adbayb/stack" }],
 	"commit": false,
 	"fixed": [["@adbayb/create", "@adbayb/stack"]],
+	"privatePackages": {
+		"tag": true,
+		"version": true
+	},
 	"updateInternalDependencies": "patch",
 	"___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
 		"onlyUpdatePeerDependentsWhenOutOfRange": true,

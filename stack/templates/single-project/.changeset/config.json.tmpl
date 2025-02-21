@@ -5,6 +5,10 @@
 	"changelog": ["@changesets/changelog-github", { "repo": "{{repoId}}" }],
 	"commit": false,
 	"ignore": ["@examples/*"],
+	"privatePackages": {
+		"tag": true,
+		"version": true
+	},
 	"updateInternalDependencies": "patch",
 	"___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
 		"onlyUpdatePeerDependentsWhenOutOfRange": true,
