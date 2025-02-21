@@ -14,8 +14,8 @@
 		"source.addMissingImports.ts": "explicit",
 		"source.organizeImports": "never",
 		"source.organizeLinkDefinitions": "explicit",
-		"source.removeUnused.ts": "explicit",
-		"source.removeUnusedImports": "explicit",
+		"source.removeUnused.ts": "never",
+		"source.removeUnusedImports": "never",
 		"source.sortImports": "never"
 	},
 	"workbench.editor.labelFormat": "short",
