@@ -1,5 +1,15 @@
 # @adbayb/stack
 
+## 2.19.0
+
+### Minor Changes
+
+- [`4da7c72`](https://github.com/adbayb/stack/commit/4da7c72ddd06b0991e63df2cbb18e36326c33b37) Thanks [@adbayb](https://github.com/adbayb)! - Update template to allow private package tag and version management by Changesets.
+
+- [`86186df`](https://github.com/adbayb/stack/commit/86186df81e2aaf9cff022b82427e5aef0437205f) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies including eslint and prettier.
+
+- [`9ab8a09`](https://github.com/adbayb/stack/commit/9ab8a0998236ee4523fcb4afd9eac8bfee51f4a5) Thanks [@adbayb](https://github.com/adbayb)! - `@adbayb/stack/eslint`: disable `@typescript-eslint/no-unnecessary-type-arguments`rule.
+
 ## 2.18.0
 
 ### Minor Changes
