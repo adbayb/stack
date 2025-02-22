@@ -51,10 +51,10 @@
 		"@commitlint/cli": "^19.7.1",
 		"@commitlint/config-conventional": "^19.7.1",
 		"@eslint/compat": "^1.2.7",
-		"@eslint/eslintrc": "^3.2.0",
+		"@eslint/eslintrc": "^3.3.0",
 		"@stylistic/eslint-plugin": "^4.0.1",
 		"@vitest/eslint-plugin": "1.1.32-beta.1",
-		"eslint": "^9.20.1",
+		"eslint": "^9.21.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-import-resolver-typescript": "^3.8.3",
 		"eslint-plugin-depend": "^0.12.0",
@@ -73,7 +73,7 @@
 		"eslint-plugin-unicorn": "^57.0.0",
 		"fdir": "^6.4.3",
 		"globals": "^16.0.0",
-		"prettier": "^3.5.1",
+		"prettier": "^3.5.2",
 		"prettier-plugin-packagejson": "^2.5.8",
 		"termost": "^1.4.0",
 		"turbo": "^2.4.2",
@@ -81,8 +81,8 @@
 		"typescript-eslint": "^8.24.1"
 	},
 	"devDependencies": {
-		"@types/node": "22.13.4",
-		"quickbundle": "2.8.0"
+		"@types/node": "22.13.5",
+		"quickbundle": "2.9.0"
 	},
 	"publishConfig": {
 		"access": "public",
