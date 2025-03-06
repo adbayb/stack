@@ -1,5 +1,19 @@
 # @adbayb/stack
 
+## 2.20.0
+
+### Minor Changes
+
+- [`b978ac8`](https://github.com/adbayb/stack/commit/b978ac84f4486e33bd4a3f3909e8ca1a8c10fb11) Thanks [@renovate[bot]](https://github.com/renovate%5Bbot%5D)! - Update dependencies.
+
+- [`b978ac8`](https://github.com/adbayb/stack/commit/b978ac84f4486e33bd4a3f3909e8ca1a8c10fb11) Thanks [@renovate[bot]](https://github.com/renovate%5Bbot%5D)! - Updated dependency `@stylistic/eslint-plugin` to `^4.1.0`.
+  Updated dependency `@vitest/eslint-plugin` to `1.1.36`.
+  Updated dependency `eslint-config-prettier` to `^10.0.2`.
+  Updated dependency `eslint-plugin-react-hooks-extra` to `^1.28.0`.
+  Updated dependency `eslint-plugin-react-web-api` to `^1.28.0`.
+  Updated dependency `turbo` to `^2.4.4`.
+  Updated dependency `typescript-eslint` to `^8.25.0`.
+
 ## 2.19.0
 
 ### Minor Changes

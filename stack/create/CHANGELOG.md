@@ -1,5 +1,16 @@
 # @adbayb/create
 
+## 2.20.0
+
+### Minor Changes
+
+- [`b978ac8`](https://github.com/adbayb/stack/commit/b978ac84f4486e33bd4a3f3909e8ca1a8c10fb11) Thanks [@renovate[bot]](https://github.com/renovate%5Bbot%5D)! - Update dependencies.
+
+### Patch Changes
+
+- Updated dependencies [[`b978ac8`](https://github.com/adbayb/stack/commit/b978ac84f4486e33bd4a3f3909e8ca1a8c10fb11), [`b978ac8`](https://github.com/adbayb/stack/commit/b978ac84f4486e33bd4a3f3909e8ca1a8c10fb11)]:
+    - @adbayb/stack@2.20.0
+
 ## 2.19.0
 
 ### Minor Changes
