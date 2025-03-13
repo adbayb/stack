@@ -1,5 +1,15 @@
 # @adbayb/stack
 
+## 2.21.0
+
+### Minor Changes
+
+- [`95e93ca`](https://github.com/adbayb/stack/commit/95e93cab764326bf45e1d7cba4894882439bbf8c) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies.
+
+### Patch Changes
+
+- [`f4f2fe7`](https://github.com/adbayb/stack/commit/f4f2fe7ac725e2fecf4144ce2a0e9f5d0419959c) Thanks [@adbayb](https://github.com/adbayb)! - Make the CLI runnable for winOS users.
+
 ## 2.20.0
 
 ### Minor Changes
