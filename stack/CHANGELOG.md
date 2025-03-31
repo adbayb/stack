@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.22.0
+
+### Minor Changes
+
+- [`9833c9d`](https://github.com/adbayb/stack/commit/9833c9d160915e3cbb69fbb15b5474995ebe2257) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies and fix `import-x` plugin redefinition.
+
 ## 2.21.0
 
 ### Minor Changes
