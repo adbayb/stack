@@ -6,9 +6,6 @@ export const config = [
 	importPlugin.flatConfigs.typescript,
 	{
 		files: JAVASCRIPT_LIKE_EXTENSIONS,
-		plugins: {
-			"import-x": importPlugin,
-		},
 		rules: {
 			"import-x/consistent-type-specifier-style": [
 				"error",
