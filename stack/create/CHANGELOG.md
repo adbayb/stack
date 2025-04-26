@@ -1,5 +1,16 @@
 # @adbayb/create
 
+## 2.23.0
+
+### Minor Changes
+
+- [`ca3103e`](https://github.com/adbayb/stack/commit/ca3103e7ef5fdc4c76175906a321fdc65e33e419) Thanks [@adbayb](https://github.com/adbayb)! - Update templates to better filter workspaces for pre-release CI workflows.
+
+### Patch Changes
+
+- Updated dependencies [[`ca3103e`](https://github.com/adbayb/stack/commit/ca3103e7ef5fdc4c76175906a321fdc65e33e419), [`51dd413`](https://github.com/adbayb/stack/commit/51dd41355dfdf06cf72c9a2b2e3721caf64695ab)]:
+    - @adbayb/stack@2.23.0
+
 ## 2.22.0
 
 ### Patch Changes
