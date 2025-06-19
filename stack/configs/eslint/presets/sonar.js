@@ -112,7 +112,6 @@ export const config = [
 			"sonarjs/no-incorrect-string-concat": "error",
 			"sonarjs/no-internal-api-use": "error",
 			"sonarjs/no-intrusive-permissions": "error",
-			"sonarjs/no-invalid-await": "error",
 			"sonarjs/no-invalid-regexp": "error",
 			"sonarjs/no-invariant-returns": "error",
 			"sonarjs/no-inverted-boolean-check": "error",
