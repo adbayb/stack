@@ -1,5 +1,13 @@
 # @adbayb/stack
 
+## 2.24.0
+
+### Minor Changes
+
+- [`92accc5`](https://github.com/adbayb/stack/commit/92accc5d596ad7ed8bd6c251af4ad0d7c565a926) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies.
+
+- [`1446f0b`](https://github.com/adbayb/stack/commit/1446f0b7cb724763f1cc049ec9519e9728ffb2bf) Thanks [@adbayb](https://github.com/adbayb)! - Use exclusively `@eslint-react/eslint-plugin` rules instead of `eslint-plugin-react` and review React rules.
+
 ## 2.23.0
 
 ### Minor Changes
