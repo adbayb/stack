@@ -1,10 +1,7 @@
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 import reactPlugin from "@eslint-react/eslint-plugin";
 
-import {
-	JAVASCRIPT_LIKE_EXTENSIONS,
-	TYPESCRIPT_EXTENSIONS,
-} from "../constants.js";
+import { JAVASCRIPT_LIKE_EXTENSIONS } from "../constants.js";
 
 export const config = [
 	{
@@ -37,7 +34,6 @@ export const config = [
 			"react/hooks-extra/no-unnecessary-use-memo": "error",
 			"react/hooks-extra/no-unnecessary-use-prefix": "error",
 			"react/hooks-extra/prefer-use-state-lazy-initialization": "error",
-			"react/jsx-key-before-spread": "error",
 			"react/jsx-no-iife": "error",
 			"react/naming-convention/component-name": "error",
 			"react/naming-convention/context-name": "error",
@@ -71,15 +67,6 @@ export const config = [
 			"react/web-api/no-leaked-interval": "error",
 			"react/web-api/no-leaked-resize-observer": "error",
 			"react/web-api/no-leaked-timeout": "error",
-		},
-	},
-	{
-		files: TYPESCRIPT_EXTENSIONS,
-		plugins: {
-			react: reactPlugin,
-		},
-		rules: {
-			"react/prefer-read-only-props": "error",
 		},
 	},
 ];
