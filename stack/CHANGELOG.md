@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.25.0
+
+### Minor Changes
+
+- [`4fa05f0`](https://github.com/adbayb/stack/commit/4fa05f0a8f5b4fa5e544a47f19809be84d7aca16) Thanks [@adbayb](https://github.com/adbayb)! - Update unicorn eslint rules.
+
 ## 2.24.0
 
 ### Minor Changes
