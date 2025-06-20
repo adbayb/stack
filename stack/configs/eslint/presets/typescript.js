@@ -1,7 +1,6 @@
 import tseslint from "typescript-eslint";
 
 import {
-	CWD,
 	JAVASCRIPT_EXTENSIONS,
 	JAVASCRIPT_LIKE_EXTENSIONS,
 } from "../constants.js";
@@ -12,8 +11,8 @@ export const config = [
 		languageOptions: {
 			parser: tseslint.parser,
 			parserOptions: {
-				project: "./tsconfig.json",
-				tsconfigRootDir: CWD,
+				projectService: true,
+				tsconfigRootDir: import.meta.dirname,
 			},
 		},
 		plugins: {
