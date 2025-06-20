@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.26.0
+
+### Minor Changes
+
+- [`3160f04`](https://github.com/adbayb/stack/commit/3160f04b7ee91f3ed2a2b9deaf5127c99eb534dc) Thanks [@adbayb](https://github.com/adbayb)! - Update React ESLint rules to remove read-only-props enforcement (since it checks also library types on which we cannot have control) and spread key rule.
+
 ## 2.25.0
 
 ### Minor Changes
