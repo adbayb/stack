@@ -79,7 +79,7 @@
 		"typescript-eslint": "^8.34.1"
 	},
 	"devDependencies": {
-		"@types/node": "22.15.32",
+		"@types/node": "22.15.34",
 		"quickbundle": "2.13.0"
 	},
 	"publishConfig": {
