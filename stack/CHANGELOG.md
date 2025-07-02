@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.27.0
+
+### Minor Changes
+
+- [#135](https://github.com/adbayb/stack/pull/135) [`53713e8`](https://github.com/adbayb/stack/commit/53713e89a90bb2107148c21633254cdbf3b4d13c) Thanks [@renovate](https://github.com/apps/renovate)! - Updated dependency `@types/node` to `22.15.34`.
+
 ## 2.26.0
 
 ### Minor Changes
