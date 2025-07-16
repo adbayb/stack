@@ -47,13 +47,18 @@ const checkPackagesVersionRange = ({
 	dependencies,
 	devDependencies,
 	peerDependencies,
+	// eslint-disable-next-line sonarjs/cyclomatic-complexity
 }: PackageJson) => {
 	for (const dependencyName of Object.keys(devDependencies)) {
 		const version = devDependencies[dependencyName];
 
 		assertVersion(version, { name: dependencyName, consumedBy: name });
 
-		if (version !== "workspace:*" && !/^\d/.test(version))
+		if (
+			version !== "workspace:*" &&
+			!isException(version) &&
+			!/^\d/.test(version)
+		)
 			throw createPackageError(
 				`As a dev dependency, \`${dependencyName}\` version must be fixed (or set as "workspace:*" for local packages) to reduce accidental breaking change risks due to an implicit semver upgrade.`,
 				{
@@ -68,7 +73,11 @@ const checkPackagesVersionRange = ({
 
 		assertVersion(version, { name: dependencyName, consumedBy: name });
 
-		if (version !== "workspace:^" && hasNoCaret(version))
+		if (
+			version !== "workspace:^" &&
+			!hasCaret(version) &&
+			!isException(version)
+		)
 			throw createPackageError(
 				`As a dependency, \`${dependencyName}\` version must be prefixed with a caret (or set as "workspace:^" for local packages) to optimize the size (whether of installation or bundle output) on the consumer side.`,
 				{
@@ -83,7 +92,7 @@ const checkPackagesVersionRange = ({
 
 		assertVersion(version, { name: dependencyName, consumedBy: name });
 
-		if (hasNoCaret(version))
+		if (!hasCaret(version) && !isException(version))
 			/*
 			 * Why disallowing workspace protocol as a version resolver?
 			 * To reduce the update frequency needs consumer-side and guarantee on our side the minimum compatible version,
@@ -180,8 +189,13 @@ function assertVersion(
 	);
 }
 
-const isPreReleaseVersion = (version: string) =>
-	/\d+\.\d+\.\d+-(alpha|beta|experimental|next|rc).*/.exec(version);
+const isException = (version: string) => {
+	const isPreReleaseVersion =
+		/\d+\.\d+\.\d+-(alpha|beta|experimental|next|rc).*/.exec(version);
 
-const hasNoCaret = (version: string) =>
-	!isPreReleaseVersion(version) && !version.startsWith("^");
+	const isNpmProtocol = version.startsWith("npm:");
+
+	return isNpmProtocol || isPreReleaseVersion;
+};
+
+const hasCaret = (version: string) => version.startsWith("^");
