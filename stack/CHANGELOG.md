@@ -159,7 +159,6 @@
 ### Minor Changes
 
 - [`f5db4d8`](https://github.com/adbayb/stack/commit/f5db4d8a98a23244cc160808eaad043a628514d4) Thanks [@adbayb](https://github.com/adbayb)! - Minor updates including:
-
     - Review rules after testing the new stack on a project.
     - Update template (package.json changes).
     - Add `package.json` prettier plugin.
@@ -260,7 +259,6 @@
 ### Minor Changes
 
 - [#95](https://github.com/adbayb/stack/pull/95) [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb) Thanks [@adbayb](https://github.com/adbayb)! - Update TypeScript config.
-
     - `moduleResolution` is now set to `Bundler` to allow `exports` package.json field resolution.
     - `target` and `module` are now set to `ESNext` to support, for example, syntaxes that can be used exclusively with `ESNext` module target (for example, import attributes). It should be fine since:
         - Down leveling the bundled code for wider browser compatibility is a bundler responsibility, not a TS one.
@@ -408,7 +406,6 @@
 ### Minor Changes
 
 - [`7c79b87`](https://github.com/adbayb/stack/commit/7c79b87ce79c1f7858e78feb1ce97936a129ce2a) Thanks [@adbayb](https://github.com/adbayb)! - Update default template to include:
-
     - Redundant CI jobs on pull requests
     - Renovate config file updates to enable automerge
     - `@examples` workspace with a default example

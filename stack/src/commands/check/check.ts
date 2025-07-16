@@ -83,7 +83,9 @@ export const createCheckCommand: CommandFactory = (program) => {
 			async handler() {
 				await checkCommit();
 			},
-			skip: ifFilterDefinedAndNotEqualTo("commit"),
+			skip(context) {
+				return context.filter !== "commit";
+			},
 		});
 };
 
