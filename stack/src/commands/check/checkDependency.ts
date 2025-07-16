@@ -5,9 +5,11 @@ import { helpers } from "termost";
 import type { PackageJson } from "../../types";
 import { assert, createError, require } from "../../helpers";
 
-export const checkPackages = async () => {
+export const checkDependency = async () => {
 	const stdout = await helpers.exec("pnpm recursive ls --json");
-	const checkPackagesVersionMismatch = createPackagesVersionMismatchChecker();
+
+	const checkDependencyVersionMismatch =
+		createPackagesVersionMismatchChecker();
 
 	const packages = (
 		JSON.parse(stdout) as {
@@ -36,13 +38,13 @@ export const checkPackages = async () => {
 
 	for (const package_ of packages) {
 		// Check version mismatches to guarantee a single copy for a given package in the monorepo (use case: prevent singleton-like issues with React contexts)
-		checkPackagesVersionMismatch(package_);
+		checkDependencyVersionMismatch(package_);
 		// Check version range accordingly to our dependency guidelines (ie. dev dependencies must be pinned and dependencies must have caret)
-		checkPackagesVersionRange(package_);
+		checkDependencyVersionRange(package_);
 	}
 };
 
-const checkPackagesVersionRange = ({
+const checkDependencyVersionRange = ({
 	name,
 	dependencies,
 	devDependencies,

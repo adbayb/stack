@@ -1,16 +1,16 @@
 import type { CommandFactory } from "../../types";
 import { hasDependency, logCheckableFiles, turbo } from "../../helpers";
-import { checkTypes } from "./checkTypes";
-import { checkPackages } from "./checkPackages";
-import { checkLinter } from "./checkLinter";
+import { checkType } from "./checkType";
+import { checkDependency } from "./checkDependency";
 import { checkCommit } from "./checkCommit";
+import { checkCode } from "./checkCode";
 
-const ONLY_VALUES = ["commit", "linter", "packages", "types"] as const;
+const ONLY_VALUES = ["commit", "code", "dependency", "type"] as const;
 
-type Only = (typeof ONLY_VALUES)[number];
+type Filter = (typeof ONLY_VALUES)[number];
 
 type CommandContext = {
-	only: Only | undefined;
+	filter: Filter | undefined;
 };
 
 export const createCheckCommand: CommandFactory = (program) => {
@@ -20,9 +20,9 @@ export const createCheckCommand: CommandFactory = (program) => {
 			description: "Check code health (static analysis)",
 		})
 		.option({
-			key: "only",
-			name: "only",
-			description: `Run only one specified task (accepted value: ${ONLY_VALUES.join(
+			key: "filter",
+			name: "filter",
+			description: `Filter the compliance check to run (accepted value: ${ONLY_VALUES.join(
 				", ",
 			)})`,
 			defaultValue: undefined,
@@ -31,7 +31,7 @@ export const createCheckCommand: CommandFactory = (program) => {
 			handler(_, argv) {
 				logCheckableFiles(argv.operands);
 			},
-			skip: ifOnlyDefinedAndNotEqualTo("linter"),
+			skip: ifFilterDefinedAndNotEqualTo("code"),
 		})
 		.task({
 			label: label("Prepare the project"),
@@ -41,34 +41,34 @@ export const createCheckCommand: CommandFactory = (program) => {
 					hasLiveOutput: false,
 				});
 			},
-			skip({ only }) {
-				return only === "commit"; // No need to build if only commit is checked
+			skip({ filter }) {
+				return filter === "commit"; // No need to build if only commit is checked
 			},
 		})
 		.task({
-			label: label("Check package guidelines"),
+			label: label("Check dependency compliance"),
 			async handler() {
-				await checkPackages();
+				await checkDependency();
 			},
-			skip: ifOnlyDefinedAndNotEqualTo("packages"),
+			skip: ifFilterDefinedAndNotEqualTo("dependency"),
 		})
 		.task({
-			label: label("Check linter rules"),
+			label: label("Check code compliance"),
 			async handler(_, argv) {
 				const filenames = argv.operands;
 
-				await checkLinter(filenames);
+				await checkCode(filenames);
 			},
-			skip: ifOnlyDefinedAndNotEqualTo("linter"),
+			skip: ifFilterDefinedAndNotEqualTo("code"),
 		})
 		.task({
-			label: label("Check types"),
+			label: label("Check type compliance"),
 			async handler() {
-				await checkTypes();
+				await checkType();
 			},
 			skip(context, argv) {
 				return (
-					ifOnlyDefinedAndNotEqualTo("types")(context) ||
+					ifFilterDefinedAndNotEqualTo("type")(context) ||
 					!hasDependency("typescript") ||
 					/**
 					 * For now, skip type-checking if some files are passed down.
@@ -79,19 +79,17 @@ export const createCheckCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: label("Check commit"),
+			label: label("Check commit compliance"),
 			async handler() {
 				await checkCommit();
 			},
-			skip({ only }) {
-				return only !== "commit";
-			},
+			skip: ifFilterDefinedAndNotEqualTo("commit"),
 		});
 };
 
 const label = (message: string) => `${message} 🧐`;
 
-const ifOnlyDefinedAndNotEqualTo =
-	(only: Only) => (context: CommandContext) => {
-		return context.only !== undefined && context.only !== only;
+const ifFilterDefinedAndNotEqualTo =
+	(filter: Filter) => (context: CommandContext) => {
+		return context.filter !== undefined && context.filter !== filter;
 	};

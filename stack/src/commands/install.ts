@@ -33,7 +33,7 @@ export const createInstallCommand: CommandFactory = (program) => {
 			async handler() {
 				await installGitHook(
 					"commit-msg",
-					getStackCommand("check --only commit", false),
+					getStackCommand("check --filter commit", false),
 				);
 			},
 		})
