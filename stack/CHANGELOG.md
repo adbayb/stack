@@ -1,5 +1,30 @@
 # @adbayb/stack
 
+## 2.27.0
+
+### Minor Changes
+
+- [`9a3da2e`](https://github.com/adbayb/stack/commit/9a3da2e05328d4dc97bd4d5b12cf5a0d6c8d7770) Thanks [@adbayb](https://github.com/adbayb)! - Exclude version based on npm protocol from the dependency checks.
+
+- [`cec6814`](https://github.com/adbayb/stack/commit/cec681431417cd45ec450c6f9a1adbd76fd9d1c8) Thanks [@adbayb](https://github.com/adbayb)! - Update the `check` command option (only rename to filter with renamed accepted values).
+
+- [#135](https://github.com/adbayb/stack/pull/135) [`53713e8`](https://github.com/adbayb/stack/commit/53713e89a90bb2107148c21633254cdbf3b4d13c) Thanks [@renovate](https://github.com/apps/renovate)! - Updated dependency `@types/node` to `22.15.34`.
+
+- [#136](https://github.com/adbayb/stack/pull/136) [`b846d7b`](https://github.com/adbayb/stack/commit/b846d7b42f72a775660d58de4e3d7bb7d7394e30) Thanks [@renovate](https://github.com/apps/renovate)! - Updated dependency `@changesets/cli` to `^2.29.5`.
+  Updated dependency `@eslint/compat` to `^1.3.1`.
+  Updated dependency `@vitest/eslint-plugin` to `^1.3.3`.
+  Updated dependency `eslint` to `^9.30.0`.
+  Updated dependency `eslint-import-resolver-typescript` to `^4.4.4`.
+  Updated dependency `eslint-plugin-import-x` to `^4.16.1`.
+  Updated dependency `eslint-plugin-jsdoc` to `^51.3.1`.
+  Updated dependency `eslint-plugin-prettier` to `^5.5.1`.
+  Updated dependency `eslint-plugin-sonarjs` to `^3.0.4`.
+  Updated dependency `prettier` to `^3.6.2`.
+  Updated dependency `prettier-plugin-packagejson` to `^2.5.17`.
+  Updated dependency `typescript-eslint` to `^8.35.1`.
+
+- [`bd70187`](https://github.com/adbayb/stack/commit/bd7018778aee82c88db7519f05c4f1098e919d53) Thanks [@adbayb](https://github.com/adbayb)! - Remove `unicorn/string-content` rule.
+
 ## 2.26.0
 
 ### Minor Changes
