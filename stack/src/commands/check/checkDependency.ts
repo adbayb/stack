@@ -58,7 +58,7 @@ const checkDependencyVersionRange = ({
 
 		if (
 			version !== "workspace:*" &&
-			!isException(version) &&
+			!isExcluded(version) &&
 			!/^\d/.test(version)
 		)
 			throw createPackageError(
@@ -78,7 +78,7 @@ const checkDependencyVersionRange = ({
 		if (
 			version !== "workspace:^" &&
 			!hasCaret(version) &&
-			!isException(version)
+			!isExcluded(version)
 		)
 			throw createPackageError(
 				`As a dependency, \`${dependencyName}\` version must be prefixed with a caret (or set as "workspace:^" for local packages) to optimize the size (whether of installation or bundle output) on the consumer side.`,
@@ -94,7 +94,7 @@ const checkDependencyVersionRange = ({
 
 		assertVersion(version, { name: dependencyName, consumedBy: name });
 
-		if (!hasCaret(version) && !isException(version))
+		if (!hasCaret(version) && !isExcluded(version))
 			/*
 			 * Why disallowing workspace protocol as a version resolver?
 			 * To reduce the update frequency needs consumer-side and guarantee on our side the minimum compatible version,
@@ -191,7 +191,7 @@ function assertVersion(
 	);
 }
 
-const isException = (version: string) => {
+const isExcluded = (version: string) => {
 	const isPreReleaseVersion =
 		/\d+\.\d+\.\d+-(alpha|beta|experimental|next|rc).*/.exec(version);
 
