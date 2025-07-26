@@ -19,7 +19,6 @@ export const config = [
 			"import-x/no-anonymous-default-export": "error",
 			"import-x/no-cycle": "error",
 			"import-x/no-default-export": "error",
-			"import-x/no-deprecated": "error",
 			"import-x/no-duplicates": "error",
 			"import-x/no-empty-named-blocks": "error",
 			"import-x/no-extraneous-dependencies": "error",

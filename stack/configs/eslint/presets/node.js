@@ -14,6 +14,7 @@ export const config = [
 		rules: {
 			"n/callback-return": "error",
 			"n/exports-style": ["error", "module.exports"],
+			"n/hashbang": "error",
 			"n/no-exports-assign": "error",
 			"n/no-path-concat": "error",
 			"n/no-process-env": [
@@ -29,9 +30,9 @@ export const config = [
 				"error",
 				{ allowExperimental: true },
 			],
-			"n/prefer-global/buffer": ["error", "never"],
+			"n/prefer-global/buffer": ["error", "always"],
 			"n/prefer-global/console": ["error", "always"],
-			"n/prefer-global/process": ["error", "never"],
+			"n/prefer-global/process": ["error", "always"],
 			"n/prefer-global/text-decoder": ["error", "always"],
 			"n/prefer-global/text-encoder": ["error", "always"],
 			"n/prefer-global/url": ["error", "always"],
