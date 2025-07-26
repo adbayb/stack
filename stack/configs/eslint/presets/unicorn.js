@@ -3,6 +3,7 @@ import unicornPlugin from "eslint-plugin-unicorn";
 import { JAVASCRIPT_LIKE_EXTENSIONS } from "../constants.js";
 
 export const config = [
+	// TODO: Add new rules https://github.com/sindresorhus/eslint-plugin-unicorn/releases/tag/v60.0.0
 	{
 		files: JAVASCRIPT_LIKE_EXTENSIONS,
 		plugins: {

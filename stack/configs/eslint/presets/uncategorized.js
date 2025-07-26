@@ -1,6 +1,5 @@
 import sortKeysCustomOrderPlugin from "eslint-plugin-sort-keys-custom-order";
 import dependPlugin from "eslint-plugin-depend";
-import { FlatCompat } from "@eslint/eslintrc";
 
 import { JAVASCRIPT_LIKE_EXTENSIONS } from "../constants.js";
 
@@ -41,11 +40,4 @@ export const config = [
 			],
 		},
 	},
-	...new FlatCompat().extends("plugin:mdx/recommended").map((mdxConfig) => ({
-		...mdxConfig,
-		files: ["**/*.{md,mdx}"],
-		settings: {
-			"mdx/code-blocks": true,
-		},
-	})),
 ];

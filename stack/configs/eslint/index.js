@@ -7,6 +7,7 @@ import { config as sonarConfig } from "./presets/sonar.js";
 import { config as reactConfig } from "./presets/react.js";
 import { config as overridableConfig } from "./presets/overridable.js";
 import { config as nodeConfig } from "./presets/node.js";
+import { config as markdownConfig } from "./presets/markdown.js";
 import { config as jsdocConfig } from "./presets/jsdoc.js";
 import { config as importConfig } from "./presets/import.js";
 import { config as eslintConfig } from "./presets/eslint.js";
@@ -20,6 +21,7 @@ export default createConfig(
 	...typescriptConfig,
 	...importConfig,
 	...jsdocConfig,
+	...markdownConfig,
 	...nodeConfig,
 	...reactConfig,
 	...sonarConfig,
