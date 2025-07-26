@@ -116,10 +116,7 @@ export const config = [
 			"unicorn/prevent-abbreviations": [
 				"error",
 				{
-					allowList: {
-						props: true,
-						Props: true,
-					},
+					ignore: [/^props/i, /^ref/i],
 				},
 			],
 			"unicorn/relative-url-style": ["error", "always"],
