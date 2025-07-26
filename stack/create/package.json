@@ -39,7 +39,7 @@
 	},
 	"dependencies": {
 		"@adbayb/stack": "workspace:^",
-		"termost": "^1.4.0"
+		"termost": "^1.8.0"
 	},
 	"devDependencies": {
 		"quickbundle": "2.13.0"
