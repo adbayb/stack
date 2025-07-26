@@ -1,6 +1,4 @@
-import { cwd } from "node:process";
-
-export const CWD = cwd();
+export const CWD = process.cwd();
 
 export const JAVASCRIPT_EXTENSIONS = ["**/*.{js,jsx,cjs,mjs}"];
 

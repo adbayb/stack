@@ -1,4 +1,3 @@
-import process from "node:process";
 import { resolve } from "node:path";
 import { createRequire } from "node:module";
 

@@ -1,4 +1,3 @@
-import process from "node:process";
 import { join, resolve } from "node:path";
 import { mkdir, symlink } from "node:fs/promises";
 import { cpSync, readFileSync, renameSync, writeFileSync } from "node:fs";
