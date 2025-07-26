@@ -1,5 +1,16 @@
 # @adbayb/create
 
+## 2.28.0
+
+### Minor Changes
+
+- [`d8214c9`](https://github.com/adbayb/stack/commit/d8214c9a95a590e580495040ba5790c33d29114f) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies.
+
+### Patch Changes
+
+- Updated dependencies [[`9628f95`](https://github.com/adbayb/stack/commit/9628f95560dd01324668cbd5fb9157ab3db86100), [`17951ca`](https://github.com/adbayb/stack/commit/17951caa265df6c45b4795e2342d1e5556c14a43), [`d8214c9`](https://github.com/adbayb/stack/commit/d8214c9a95a590e580495040ba5790c33d29114f), [`7935416`](https://github.com/adbayb/stack/commit/793541692b9e52c2bef539b4b6ba07a631c99700), [`6f29ae2`](https://github.com/adbayb/stack/commit/6f29ae2bbc9fd026df3785cc070bef3d92abd952), [`b4358fb`](https://github.com/adbayb/stack/commit/b4358fb2b34fd0eb4fa8a82c32e3794af2943c44)]:
+    - @adbayb/stack@2.28.0
+
 ## 2.27.0
 
 ### Patch Changes
