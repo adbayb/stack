@@ -120,7 +120,7 @@ export const config = [
 			"unicorn/prevent-abbreviations": [
 				"error",
 				{
-					ignore: [/^props/i, /^ref/i],
+					ignore: [/^props/i, /props$/i, /^ref/i, /ref$/i],
 				},
 			],
 			"unicorn/relative-url-style": ["error", "always"],
