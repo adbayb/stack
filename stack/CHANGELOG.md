@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.28.1
+
+### Patch Changes
+
+- [`8cc57a0`](https://github.com/adbayb/stack/commit/8cc57a0d2803ad78a0e359ff494f7267610c4826) Thanks [@adbayb](https://github.com/adbayb)! - Add missing ignore cases to allow props and ref abbreviations (eslint unicorn settings).
+
 ## 2.28.0
 
 ### Minor Changes
