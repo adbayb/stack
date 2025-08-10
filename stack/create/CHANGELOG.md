@@ -1,5 +1,16 @@
 # @adbayb/create
 
+## 2.29.0
+
+### Minor Changes
+
+- [`a1f348e`](https://github.com/adbayb/stack/commit/a1f348ea4130b403320ad4725545f9f90b94f9ba) Thanks [@adbayb](https://github.com/adbayb)! - Update gitignore to include expo artifacts.
+
+### Patch Changes
+
+- Updated dependencies [[`ba8cc87`](https://github.com/adbayb/stack/commit/ba8cc87e83b05dad1039233afc708b83eae2acb9), [`a1f348e`](https://github.com/adbayb/stack/commit/a1f348ea4130b403320ad4725545f9f90b94f9ba)]:
+    - @adbayb/stack@2.29.0
+
 ## 2.28.1
 
 ### Patch Changes
