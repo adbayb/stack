@@ -21,6 +21,7 @@ export const config = [
 		rules: {
 			"import-x/no-anonymous-default-export": "off",
 			"import-x/no-default-export": "off",
+			"sonarjs/file-name-differ-from-class": "off",
 			"sonarjs/sonar-no-magic-numbers": "off",
 		},
 	},
