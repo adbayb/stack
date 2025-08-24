@@ -1,5 +1,15 @@
 # @adbayb/stack
 
+## 2.30.0
+
+### Minor Changes
+
+- [`1725f4f`](https://github.com/adbayb/stack/commit/1725f4f773985c3ec45529e207a21ab636d59c4b) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies.
+
+### Patch Changes
+
+- [`683ec6c`](https://github.com/adbayb/stack/commit/683ec6c0db0f42fb67be4b901e42a775ae7822a6) Thanks [@adbayb](https://github.com/adbayb)! - Disable `sonarjs/file-name-differ-from-class` ESLint rule for config-like files.
+
 ## 2.29.0
 
 ### Minor Changes
