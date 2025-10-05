@@ -1,10 +1,11 @@
 import sonarjsPlugin from "eslint-plugin-sonarjs";
 
-import { JAVASCRIPT_LIKE_EXTENSIONS } from "../constants.js";
+import { createConfig } from "../helpers.js";
+import { JAVASCRIPT_LIKE_FILES, RELAXED_LIKE_FILES } from "../constants.js";
 
-export const config = [
+export const config = createConfig(
 	{
-		files: JAVASCRIPT_LIKE_EXTENSIONS,
+		files: JAVASCRIPT_LIKE_FILES,
 		plugins: {
 			sonarjs: sonarjsPlugin,
 		},
@@ -71,15 +72,18 @@ export const config = [
 			"sonarjs/no-array-delete": "error",
 			"sonarjs/no-associative-arrays": "error",
 			"sonarjs/no-async-constructor": "error",
+			"sonarjs/no-built-in-override": "error",
 			"sonarjs/no-case-label-in-switch": "error",
 			"sonarjs/no-clear-text-protocols": "error",
 			"sonarjs/no-code-after-done": "error",
+			"sonarjs/no-collapsible-if": "error",
 			"sonarjs/no-collection-size-mischeck": "error",
 			"sonarjs/no-commented-code": "error",
 			"sonarjs/no-control-regex": "error",
 			"sonarjs/no-dead-store": "error",
 			"sonarjs/no-delete-var": "error",
 			"sonarjs/no-duplicate-in-composite": "error",
+			"sonarjs/no-duplicate-string": ["error", { threshold: 5 }],
 			"sonarjs/no-duplicated-branches": "error",
 			"sonarjs/no-element-overwrite": "error",
 			"sonarjs/no-empty-after-reluctant": "error",
@@ -122,11 +126,11 @@ export const config = [
 			"sonarjs/no-misleading-character-class": "error",
 			"sonarjs/no-mixed-content": "error",
 			"sonarjs/no-nested-assignment": "error",
+			"sonarjs/no-nested-conditional": "error",
 			"sonarjs/no-nested-functions": "error",
 			"sonarjs/no-nested-incdec": "error",
 			"sonarjs/no-nested-switch": "error",
 			"sonarjs/no-nested-template-literals": "error",
-			"sonarjs/no-one-iteration-loop": "error",
 			"sonarjs/no-os-command-from-path": "error",
 			"sonarjs/no-parameter-reassignment": "error",
 			"sonarjs/no-primitive-wrappers": "error",
@@ -148,7 +152,6 @@ export const config = [
 			"sonarjs/no-useless-increment": "error",
 			"sonarjs/no-useless-intersection": "error",
 			"sonarjs/no-useless-react-setstate": "error",
-			"sonarjs/no-vue-bypass-sanitization": "error",
 			"sonarjs/no-weak-cipher": "error",
 			"sonarjs/no-weak-keys": "error",
 			"sonarjs/non-existent-operator": "error",
@@ -191,4 +194,11 @@ export const config = [
 			"sonarjs/xml-parser-xxe": "error",
 		},
 	},
-];
+	{
+		files: RELAXED_LIKE_FILES,
+		rules: {
+			"sonarjs/file-name-differ-from-class": "off",
+			"sonarjs/sonar-no-magic-numbers": "off",
+		},
+	},
+);

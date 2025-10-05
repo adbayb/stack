@@ -291,7 +291,7 @@ const applyTemplate = (
 		.crawl(projectRootPath)
 		.sync()
 		// Re-order from longest to lowest path length to apply first renaming operations on deepest file structure
-		.sort((a, b) => b.length - a.length)
+		.toSorted((a, b) => b.length - a.length)
 		.forEach((templateFolderPath) => {
 			const newPath = templateFolderPath.replaceAll(
 				templateExpressionRegExp,

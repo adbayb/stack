@@ -31,9 +31,9 @@
 	"devDependencies": {
 		"@adbayb/stack": "workspace:*"
 	},
-	"packageManager": "pnpm@10.15.0",
+	"packageManager": "pnpm@10.18.0",
 	"engines": {
-		"node": ">=22.0.0",
+		"node": ">=22.16.0",
 		"pnpm": ">=10.0.0"
 	}
 }

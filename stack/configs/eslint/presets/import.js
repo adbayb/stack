@@ -1,11 +1,12 @@
 import importPlugin from "eslint-plugin-import-x";
 
-import { JAVASCRIPT_LIKE_EXTENSIONS } from "../constants.js";
+import { createConfig } from "../helpers.js";
+import { JAVASCRIPT_LIKE_FILES, RELAXED_LIKE_FILES } from "../constants.js";
 
-export const config = [
+export const config = createConfig(
 	importPlugin.flatConfigs.typescript,
 	{
-		files: JAVASCRIPT_LIKE_EXTENSIONS,
+		files: JAVASCRIPT_LIKE_FILES,
 		rules: {
 			"import-x/consistent-type-specifier-style": [
 				"error",
@@ -66,4 +67,11 @@ export const config = [
 			},
 		},
 	},
-];
+	{
+		files: RELAXED_LIKE_FILES,
+		rules: {
+			"import-x/no-anonymous-default-export": "off",
+			"import-x/no-default-export": "off",
+		},
+	},
+);

@@ -1,13 +1,11 @@
 import tseslint from "typescript-eslint";
 
-import {
-	JAVASCRIPT_EXTENSIONS,
-	JAVASCRIPT_LIKE_EXTENSIONS,
-} from "../constants.js";
+import { createConfig } from "../helpers.js";
+import { JAVASCRIPT_FILES, JAVASCRIPT_LIKE_FILES } from "../constants.js";
 
-export const config = [
+export const config = createConfig(
 	{
-		files: JAVASCRIPT_LIKE_EXTENSIONS,
+		files: JAVASCRIPT_LIKE_FILES,
 		languageOptions: {
 			parser: tseslint.parser,
 			parserOptions: {
@@ -195,7 +193,7 @@ export const config = [
 		},
 	},
 	{
-		files: JAVASCRIPT_EXTENSIONS,
+		files: JAVASCRIPT_FILES,
 		...tseslint.configs.disableTypeChecked,
 	},
-];
+);

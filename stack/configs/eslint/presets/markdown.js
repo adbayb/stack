@@ -1,3 +1,1 @@
-import { flat } from "eslint-plugin-mdx";
-
-export const config = [flat];
+export { flat as config } from "eslint-plugin-mdx";

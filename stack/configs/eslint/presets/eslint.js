@@ -1,15 +1,35 @@
-import {
-	JAVASCRIPT_EXTENSIONS,
-	JAVASCRIPT_LIKE_EXTENSIONS,
-} from "../constants.js";
+import { resolve } from "node:path";
 
-export const config = [
+import globals from "globals";
+import { includeIgnoreFile } from "@eslint/compat";
+
+import { createConfig } from "../helpers.js";
+import { CWD, JAVASCRIPT_FILES, JAVASCRIPT_LIKE_FILES } from "../constants.js";
+
+export const config = createConfig(
+	{
+		languageOptions: {
+			ecmaVersion: "latest",
+			globals: {
+				...globals.browser,
+				...globals.node,
+				...globals.worker,
+			},
+			parserOptions: {
+				ecmaFeatures: {
+					jsx: true,
+				},
+			},
+			sourceType: "module",
+		},
+	},
+	includeIgnoreFile(resolve(CWD, ".gitignore")),
 	{
 		/*
 		 * Specific ESLint rules for javascript-only files (as they're already handled for TypeScript files by the transpiler):
 		 * This rule list is taken from https://typescript-eslint.io/users/configs/#recommended
 		 */
-		files: JAVASCRIPT_EXTENSIONS,
+		files: JAVASCRIPT_FILES,
 		rules: {
 			"constructor-super": "error", // ts(2335) & ts(2377)
 			"getter-return": "error", // ts(2378)
@@ -31,7 +51,7 @@ export const config = [
 	},
 	{
 		// ESLint rules for JavaScript + TypeScript files:
-		files: JAVASCRIPT_LIKE_EXTENSIONS,
+		files: JAVASCRIPT_LIKE_FILES,
 		rules: {
 			"eqeqeq": "error",
 			"for-direction": "error",
@@ -111,4 +131,4 @@ export const config = [
 			"valid-typeof": "error",
 		},
 	},
-];
+);
