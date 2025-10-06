@@ -1,5 +1,16 @@
 # @adbayb/create
 
+## 2.31.0
+
+### Minor Changes
+
+- [`da224b8`](https://github.com/adbayb/stack/commit/da224b8c48eea6471552309626c7a671ed751b06) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies, fix deprecated/removed rules and add new rules (including unicorn, react, and sonarjs).
+
+### Patch Changes
+
+- Updated dependencies [[`da224b8`](https://github.com/adbayb/stack/commit/da224b8c48eea6471552309626c7a671ed751b06)]:
+    - @adbayb/stack@2.31.0
+
 ## 2.30.0
 
 ### Patch Changes
