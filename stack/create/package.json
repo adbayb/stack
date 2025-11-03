@@ -42,7 +42,7 @@
 		"termost": "^1.8.0"
 	},
 	"devDependencies": {
-		"quickbundle": "2.14.0"
+		"quickbundle": "2.15.0"
 	},
 	"publishConfig": {
 		"access": "public",
