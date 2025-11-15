@@ -78,7 +78,7 @@
 		"typescript-eslint": "^8.46.2"
 	},
 	"devDependencies": {
-		"@types/node": "22.19.0",
+		"@types/node": "24.10.1",
 		"quickbundle": "2.15.0"
 	},
 	"publishConfig": {
