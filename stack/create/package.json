@@ -39,10 +39,10 @@
 	},
 	"dependencies": {
 		"@adbayb/stack": "workspace:^",
-		"termost": "^1.8.0"
+		"termost": "^1.9.0"
 	},
 	"devDependencies": {
-		"quickbundle": "2.15.0"
+		"quickbundle": "2.16.0"
 	},
 	"publishConfig": {
 		"access": "public",

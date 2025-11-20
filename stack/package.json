@@ -72,14 +72,14 @@
 		"globals": "^16.5.0",
 		"prettier": "^3.6.2",
 		"prettier-plugin-packagejson": "^2.5.19",
-		"termost": "^1.8.0",
+		"termost": "^1.9.0",
 		"turbo": "^2.6.1",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.47.0"
 	},
 	"devDependencies": {
 		"@types/node": "24.10.1",
-		"quickbundle": "2.15.0"
+		"quickbundle": "2.16.0"
 	},
 	"publishConfig": {
 		"access": "public",
