@@ -1,5 +1,14 @@
 # @adbayb/create
 
+## 2.32.1
+
+### Patch Changes
+
+- [`3b09b5f`](https://github.com/adbayb/stack/commit/3b09b5ff14a4ff95b00070089f27a63a6e00e8e1) Thanks [@adbayb](https://github.com/adbayb)! - Update `quickbundle` and `termost` to fix Node v24 deprecation warning (child process executed with shell flag).
+
+- Updated dependencies [[`3b09b5f`](https://github.com/adbayb/stack/commit/3b09b5ff14a4ff95b00070089f27a63a6e00e8e1)]:
+    - @adbayb/stack@2.32.1
+
 ## 2.32.0
 
 ### Minor Changes
