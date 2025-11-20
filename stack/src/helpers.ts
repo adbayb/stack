@@ -205,15 +205,14 @@ export const eslint =
 			if (eslintFiles.length === 0) return;
 		}
 
-		const arguments_ = [...eslintFiles];
-
-		arguments_.push(
+		const arguments_ = [
+			...eslintFiles,
 			"--cache",
 			`--cache-location ${resolveFromProjectDirectory(
 				"node_modules/.cache/.eslintcache",
 			)}`,
 			"--no-error-on-unmatched-pattern",
-		);
+		];
 
 		if (options.isFixMode) {
 			arguments_.push("--fix");
