@@ -1,5 +1,28 @@
 # @adbayb/stack
 
+## 2.32.0
+
+### Minor Changes
+
+- [`36b2628`](https://github.com/adbayb/stack/commit/36b262807a6201f25a9b76e0f4cf75ac5fb09ebe) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies.
+
+- [`08ab88b`](https://github.com/adbayb/stack/commit/08ab88bb43c2795e7b9a440fc29997e1439168ab) Thanks [@adbayb](https://github.com/adbayb)! - Update template CI setup to simplify node version resolution.
+
+- [`36b2628`](https://github.com/adbayb/stack/commit/36b262807a6201f25a9b76e0f4cf75ac5fb09ebe) Thanks [@adbayb](https://github.com/adbayb)! - Update templates to use the latest Node.js LTS version (v24).
+
+- [#144](https://github.com/adbayb/stack/pull/144) [`f0241d6`](https://github.com/adbayb/stack/commit/f0241d6c6f436eb311b862ee49b16027fcad31dd) Thanks [@renovate](https://github.com/apps/renovate)! - Updated dependency `quickbundle` to `2.15.0`.
+  Updated dependency `@eslint-react/eslint-plugin` to `^2.2.4`.
+  Updated dependency `@eslint/compat` to `^1.4.1`.
+  Updated dependency `@stylistic/eslint-plugin` to `^5.5.0`.
+  Updated dependency `@vitest/eslint-plugin` to `^1.4.0`.
+  Updated dependency `eslint` to `^9.38.0`.
+  Updated dependency `eslint-plugin-jsdoc` to `^60.8.3`.
+  Updated dependency `typescript-eslint` to `^8.46.2`.
+
+- [#143](https://github.com/adbayb/stack/pull/143) [`8b94d94`](https://github.com/adbayb/stack/commit/8b94d9478dec5cbbfa31110431924ab77b6dc6c1) Thanks [@renovate](https://github.com/apps/renovate)! - Updated dependency `@types/node` to `22.19.0`.
+
+- [`a2409ef`](https://github.com/adbayb/stack/commit/a2409ef498353e1624d61ddd2f3acd9bd0fdf0fe) Thanks [@adbayb](https://github.com/adbayb)! - Add new React Hooks and Unicorn ESLint rules.
+
 ## 2.31.0
 
 ### Minor Changes
