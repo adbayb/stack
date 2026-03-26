@@ -1,7 +1,7 @@
 import importPlugin from "eslint-plugin-import-x";
 
-import { createConfig } from "../helpers.js";
 import { JAVASCRIPT_LIKE_FILES, RELAXED_LIKE_FILES } from "../constants.js";
+import { createConfig } from "../helpers.js";
 
 export const config = createConfig(
 	importPlugin.flatConfigs.typescript,
@@ -30,7 +30,14 @@ export const config = createConfig(
 			"import-x/no-relative-packages": "error",
 			"import-x/no-self-import": "error",
 			"import-x/no-unassigned-import": "error",
-			"import-x/no-unused-modules": "error",
+			"import-x/no-unused-modules": [
+				"error",
+				{
+					missingExports: true,
+					suppressMissingFileEnumeratorAPIWarning: true,
+					unusedExports: true,
+				},
+			],
 			"import-x/no-useless-path-segments": [
 				"error",
 				{
@@ -39,25 +46,6 @@ export const config = createConfig(
 				},
 			],
 			"import-x/no-webpack-loader-syntax": "error",
-			"import-x/order": [
-				"error",
-				{
-					"alphabetize": {
-						caseInsensitive: false,
-						order: "desc",
-						orderImportKind: "desc",
-					},
-					"groups": [
-						"builtin",
-						"external",
-						"internal",
-						["parent", "sibling", "index"],
-						"object",
-						"unknown",
-					],
-					"newlines-between": "always",
-				},
-			],
 			"import-x/unambiguous": "error",
 		},
 		settings: {

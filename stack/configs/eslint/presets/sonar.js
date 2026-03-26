@@ -1,7 +1,7 @@
 import sonarjsPlugin from "eslint-plugin-sonarjs";
 
-import { createConfig } from "../helpers.js";
 import { JAVASCRIPT_LIKE_FILES, RELAXED_LIKE_FILES } from "../constants.js";
+import { createConfig } from "../helpers.js";
 
 export const config = createConfig(
 	{
@@ -100,7 +100,6 @@ export const config = createConfig(
 			"sonarjs/no-globals-shadowing": "error",
 			"sonarjs/no-gratuitous-expressions": "error",
 			"sonarjs/no-hardcoded-ip": "error",
-			// eslint-disable-next-line sonarjs/no-hardcoded-passwords
 			"sonarjs/no-hardcoded-passwords": "error",
 			"sonarjs/no-hardcoded-secrets": "error",
 			"sonarjs/no-hook-setter-in-body": "error",
@@ -178,7 +177,6 @@ export const config = createConfig(
 			"sonarjs/stable-tests": "error",
 			"sonarjs/stateful-regex": "error",
 			"sonarjs/strict-transport-security": "error",
-			"sonarjs/super-invocation": "error",
 			"sonarjs/table-header": "error",
 			"sonarjs/table-header-reference": "error",
 			"sonarjs/test-check-exception": "error",

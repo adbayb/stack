@@ -1,9 +1,8 @@
+import nodePlugin from "eslint-plugin-n";
 import { join } from "node:path";
 
-import nodePlugin from "eslint-plugin-n";
-
-import { createConfig, require } from "../helpers.js";
 import { CWD, JAVASCRIPT_LIKE_FILES } from "../constants.js";
+import { createConfig, require } from "../helpers.js";
 
 export const config = createConfig({
 	files: JAVASCRIPT_LIKE_FILES,
@@ -31,9 +30,11 @@ export const config = createConfig({
 		],
 		"n/prefer-global/buffer": ["error", "always"],
 		"n/prefer-global/console": ["error", "always"],
+		"n/prefer-global/crypto": ["error", "always"],
 		"n/prefer-global/process": ["error", "always"],
 		"n/prefer-global/text-decoder": ["error", "always"],
 		"n/prefer-global/text-encoder": ["error", "always"],
+		"n/prefer-global/timers": ["error", "always"],
 		"n/prefer-global/url": ["error", "always"],
 		"n/prefer-global/url-search-params": ["error", "always"],
 		"n/prefer-node-protocol": "error",

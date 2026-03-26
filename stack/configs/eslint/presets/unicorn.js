@@ -1,7 +1,7 @@
 import unicornPlugin from "eslint-plugin-unicorn";
 
-import { createConfig } from "../helpers.js";
 import { JAVASCRIPT_LIKE_FILES } from "../constants.js";
+import { createConfig } from "../helpers.js";
 
 export const config = createConfig({
 	files: JAVASCRIPT_LIKE_FILES,
@@ -38,6 +38,7 @@ export const config = createConfig({
 		"unicorn/no-array-callback-reference": "error",
 		"unicorn/no-array-reverse": "error",
 		"unicorn/no-array-sort": "error",
+		"unicorn/no-await-expression-member": "error",
 		"unicorn/no-await-in-promise-methods": "error",
 		"unicorn/no-console-spaces": "error",
 		"unicorn/no-document-cookie": "error",
@@ -47,6 +48,9 @@ export const config = createConfig({
 		"unicorn/no-instanceof-array": "error",
 		"unicorn/no-invalid-fetch-options": "error",
 		"unicorn/no-invalid-remove-event-listener": "error",
+		"unicorn/no-lonely-if": "error",
+		"unicorn/no-negated-condition": "error",
+		"unicorn/no-nested-ternary": "error",
 		"unicorn/no-new-buffer": "error",
 		"unicorn/no-object-as-default-parameter": "error",
 		"unicorn/no-process-exit": "error",
@@ -68,12 +72,14 @@ export const config = createConfig({
 		"unicorn/no-useless-spread": "error",
 		"unicorn/no-zero-fractions": "error",
 		"unicorn/number-literal-case": "error",
+		"unicorn/numeric-separators-style": "error",
 		"unicorn/prefer-add-event-listener": "error",
 		"unicorn/prefer-array-find": "error",
 		"unicorn/prefer-array-flat": "error",
 		"unicorn/prefer-array-flat-map": "error",
 		"unicorn/prefer-array-index-of": "error",
 		"unicorn/prefer-array-some": "error",
+		"unicorn/prefer-at": "error",
 		"unicorn/prefer-bigint-literals": "error",
 		"unicorn/prefer-blob-reading-methods": "error",
 		"unicorn/prefer-class-fields": "error",
@@ -130,6 +136,7 @@ export const config = createConfig({
 		"unicorn/require-module-attributes": "error",
 		"unicorn/require-number-to-fixed-digits-argument": "error",
 		"unicorn/switch-case-braces": "error",
+		"unicorn/template-indent": "error",
 		"unicorn/text-encoding-identifier-case": "error",
 		"unicorn/throw-new-error": "error",
 	},

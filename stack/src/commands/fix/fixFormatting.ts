@@ -1,8 +1,8 @@
 import { existsSync } from "node:fs";
-
 import { helpers } from "termost";
 
 import type { Filenames } from "../../types";
+
 import { createError, resolveFromProjectDirectory } from "../../helpers";
 
 const PRETTIER_IGNORE_FILES = ["pnpm-lock.yaml"];

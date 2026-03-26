@@ -1,6 +1,5 @@
-import { resolve } from "node:path";
 import { createRequire } from "node:module";
-
+import { resolve } from "node:path";
 import { helpers } from "termost";
 
 import type { Filenames } from "./types";
@@ -35,9 +34,9 @@ export function assert(
  * );
  */
 export const botMessage = (input: {
-	title: string;
-	description: string;
 	body?: string;
+	description: string;
+	title: string;
 	type: "error" | "information" | "success";
 }) => {
 	const { type } = input;
@@ -57,11 +56,11 @@ export const botMessage = (input: {
 │   ${type === "error" ? "◠" : "◡"} │  ${input.description}
 ╰─────╯
 ${
-	!input.body
-		? ""
-		: `
+	input.body
+		? `
 ${input.body}
 `
+		: ""
 }`,
 			{
 				color: colorByType[type],
@@ -227,9 +226,9 @@ export const eslint =
 
 export const turbo = async (
 	command: "build" | "start" | "test" | "watch",
-	options: Parameters<typeof helpers.exec>[1] & {
+	options: {
 		excludeExamples?: boolean;
-	} = {},
+	} & Parameters<typeof helpers.exec>[1] = {},
 ) => {
 	try {
 		const {

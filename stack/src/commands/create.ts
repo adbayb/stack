@@ -1,11 +1,12 @@
-import { join, resolve } from "node:path";
-import { mkdir, symlink } from "node:fs/promises";
-import { cpSync, readFileSync, renameSync, writeFileSync } from "node:fs";
-
-import { helpers } from "termost";
 import { fdir } from "fdir";
+import { cpSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import { mkdir, symlink } from "node:fs/promises";
+import { join, resolve } from "node:path";
+import { helpers } from "termost";
 
 import type { CommandFactory } from "../types";
+
+import { VERSION } from "../constants";
 import {
 	botMessage,
 	createError,
@@ -15,9 +16,6 @@ import {
 	resolveFromStackDirectory,
 	setPackageManager,
 } from "../helpers";
-import { VERSION } from "../constants";
-
-type Template = "multi-projects" | "single-project";
 
 type CommandContext = {
 	data: Record<
@@ -36,28 +34,30 @@ type CommandContext = {
 	inputUrl: string;
 };
 
+type Template = "multi-projects" | "single-project";
+
 export const createCreateCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
-			name: "create",
 			description: "Scaffold a new project",
+			name: "create",
 		})
 		.task({
 			handler() {
 				botMessage({
-					title: `I'm Stack v${VERSION}, your bot assistant`,
 					description:
 						"I can guarantee you a project creation in under 1 minute 🚀",
+					title: `I'm Stack v${VERSION}, your bot assistant`,
 					type: "information",
 				});
 			},
 		})
 		.task({
-			label: label("Check pre-requisites"),
 			async handler() {
 				// Check pnpm availability by verifying its version
 				await getNpmVersion();
 			},
+			label: label("Check pre-requisites"),
 		})
 		.input({
 			key: "inputName",
@@ -70,21 +70,19 @@ export const createCreateCommand: CommandFactory = (program) => {
 			type: "text",
 		})
 		.input({
+			defaultValue: "git@github.com:adbayb/xxx.git",
 			key: "inputUrl",
 			label: "Where will it be stored? (Git remote URL)",
-			defaultValue: "git@github.com:adbayb/xxx.git",
 			type: "text",
 		})
 		.input({
+			defaultValue: "single-project",
 			key: "inputTemplate",
 			label: "Which template you would like to apply?",
-			defaultValue: "single-project",
 			options: ["single-project", "multi-projects"],
 			type: "select",
 		})
 		.task({
-			key: "data",
-			label: label("Check and format input"),
 			async handler({ inputDescription, inputName, inputUrl }) {
 				if (!inputName) {
 					throw createError(
@@ -106,24 +104,20 @@ export const createCreateCommand: CommandFactory = (program) => {
 					);
 				}
 
-				const nodeVersion = (
-					await request.get(
-						"https://resolve-node.vercel.app/lts",
-						"text",
-					)
-				).replace("v", "");
+				const nodeVersion = await request.get(
+					"https://resolve-node.vercel.app/lts",
+					"text",
+				);
 
-				const npmVersion = (
-					await request.get(
-						"https://registry.npmjs.org/pnpm/latest",
-						"json",
-					)
-				).version as string;
+				const { version: npmVersion } = await request.get(
+					"https://registry.npmjs.org/pnpm/latest",
+					"json",
+				);
 
 				return {
 					licenseYear: new Date().getFullYear().toString(),
-					nodeVersion,
-					npmVersion,
+					nodeVersion: nodeVersion.replace("v", ""),
+					npmVersion: String(npmVersion),
 					projectDescription:
 						inputDescription.charAt(0).toUpperCase() +
 						inputDescription.slice(1), // Enforce upper case for the first letter
@@ -132,33 +126,34 @@ export const createCreateCommand: CommandFactory = (program) => {
 					repoId: `${repoOwner}/${repoName}`,
 				};
 			},
+			key: "data",
+			label: label("Check and format input"),
 		})
 		.task({
-			label({ data }) {
-				return label(`Create \`${data.projectName}\` folder`);
-			},
 			async handler({ data }) {
 				const projectPath = resolve(process.cwd(), data.projectName);
 
 				await mkdir(projectPath);
 				process.chdir(projectPath);
 			},
+			label({ data }) {
+				return label(`Create \`${data.projectName}\` folder`);
+			},
 		})
 		.task({
-			label: label("Initialize `git`"),
 			async handler({ data }) {
 				await helpers.exec("git init");
 				await helpers.exec(`git remote add origin ${data.projectUrl}`);
 			},
+			label: label("Initialize `git`"),
 		})
 		.task({
-			label: label("Apply template"),
 			handler({ data, inputTemplate }) {
 				applyTemplate(inputTemplate, data);
 			},
+			label: label("Apply template"),
 		})
 		.task({
-			label: label("Create a symlink to `README.md` file"),
 			async handler({ data: { projectName }, inputTemplate }) {
 				await symlink(
 					join(
@@ -170,15 +165,15 @@ export const createCreateCommand: CommandFactory = (program) => {
 					"./README.md",
 				);
 			},
+			label: label("Create a symlink to `README.md` file"),
 		})
 		.task({
-			label: label("Set up the package manager"),
 			async handler() {
 				await setPackageManager();
 			},
+			label: label("Set up the package manager"),
 		})
 		.task({
-			label: label("Install dependencies"),
 			async handler({ data }) {
 				const localDevelopmentDependencies = ["quickbundle", "vitest"];
 				const globalDevelopmentDependencies = ["@adbayb/stack"];
@@ -201,25 +196,26 @@ export const createCreateCommand: CommandFactory = (program) => {
 					throw createError("pnpm", error as Error);
 				}
 			},
+			label: label("Install dependencies"),
 		})
 		.task({
-			label: label("Run `stack install`"),
 			async handler() {
 				await helpers.exec("stack install");
 			},
+			label: label("Run `stack install`"),
 		})
 		.task({
-			label: label("Commit"),
 			async handler() {
 				await helpers.exec("git add -A");
 				await helpers.exec('git commit -m "chore: initial commit"');
 			},
+			label: label("Commit"),
 		})
 		.task({
 			handler({ data }) {
 				botMessage({
-					title: "The project was successfully created",
 					description: `Run \`cd ./${data.projectName}\` and Enjoy 🚀`,
+					title: "The project was successfully created",
 					type: "success",
 				});
 			},

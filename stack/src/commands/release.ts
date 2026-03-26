@@ -1,6 +1,7 @@
 import { helpers } from "termost";
 
 import type { CommandFactory } from "../types";
+
 import { changeset } from "../helpers";
 
 type CommandContext = {
@@ -12,23 +13,23 @@ type CommandContext = {
 export const createReleaseCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
-			name: "release",
 			description: "Log, version, and publish package(s)",
+			name: "release",
 		})
 		.option({
+			description: "Add a new changelog entry",
 			key: "log",
 			name: "log",
-			description: "Add a new changelog entry",
 		})
 		.option({
+			description: "Bump the package(s) version",
 			key: "tag",
 			name: "tag",
-			description: "Bump the package(s) version",
 		})
 		.option({
+			description: "Publish package(s) to the registry",
 			key: "publish",
 			name: "publish",
-			description: "Publish package(s) to the registry",
 		})
 		.task({
 			async handler() {

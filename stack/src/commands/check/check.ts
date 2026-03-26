@@ -1,31 +1,32 @@
 import type { CommandFactory } from "../../types";
+
 import { hasDependency, logCheckableFiles, turbo } from "../../helpers";
-import { checkType } from "./checkType";
-import { checkDependency } from "./checkDependency";
-import { checkCommit } from "./checkCommit";
 import { checkCode } from "./checkCode";
+import { checkCommit } from "./checkCommit";
+import { checkDependency } from "./checkDependency";
+import { checkType } from "./checkType";
 
 const ONLY_VALUES = ["commit", "code", "dependency", "type"] as const;
-
-type Filter = (typeof ONLY_VALUES)[number];
 
 type CommandContext = {
 	filter: Filter | undefined;
 };
 
+type Filter = (typeof ONLY_VALUES)[number];
+
 export const createCheckCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
-			name: "check",
 			description: "Check code health (static analysis)",
+			name: "check",
 		})
 		.option({
-			key: "filter",
-			name: "filter",
+			defaultValue: undefined,
 			description: `Filter the compliance check to run (accepted value: ${ONLY_VALUES.join(
 				", ",
 			)})`,
-			defaultValue: undefined,
+			key: "filter",
+			name: "filter",
 		})
 		.task({
 			handler(_, argv) {
@@ -34,38 +35,38 @@ export const createCheckCommand: CommandFactory = (program) => {
 			skip: ifFilterDefinedAndNotEqualTo("code"),
 		})
 		.task({
-			label: label("Prepare the project"),
 			async handler() {
 				await turbo("build", {
 					excludeExamples: true,
 					hasLiveOutput: false,
 				});
 			},
+			label: label("Prepare the project"),
 			skip({ filter }) {
 				return filter === "commit"; // No need to build if only commit is checked
 			},
 		})
 		.task({
-			label: label("Check dependency compliance"),
 			async handler() {
 				await checkDependency();
 			},
+			label: label("Check dependency compliance"),
 			skip: ifFilterDefinedAndNotEqualTo("dependency"),
 		})
 		.task({
-			label: label("Check code compliance"),
 			async handler(_, argv) {
 				const filenames = argv.operands;
 
 				await checkCode(filenames);
 			},
+			label: label("Check code compliance"),
 			skip: ifFilterDefinedAndNotEqualTo("code"),
 		})
 		.task({
-			label: label("Check type compliance"),
 			async handler() {
 				await checkType();
 			},
+			label: label("Check type compliance"),
 			skip(context, argv) {
 				return (
 					ifFilterDefinedAndNotEqualTo("type")(context) ||
@@ -79,10 +80,10 @@ export const createCheckCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
-			label: label("Check commit compliance"),
 			async handler() {
 				await checkCommit();
 			},
+			label: label("Check commit compliance"),
 			skip(context) {
 				return context.filter !== "commit";
 			},

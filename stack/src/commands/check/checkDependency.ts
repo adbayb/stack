@@ -1,8 +1,8 @@
 import { join } from "node:path";
-
 import { helpers } from "termost";
 
 import type { PackageJson } from "../../types";
+
 import { assert, createError, require } from "../../helpers";
 
 export const checkDependency = async () => {
@@ -29,9 +29,9 @@ export const checkDependency = async () => {
 		const dependencies = packageContent.dependencies ?? {};
 
 		return {
-			name: package_.name,
 			dependencies,
 			devDependencies,
+			name: package_.name,
 			peerDependencies,
 		};
 	});
@@ -45,16 +45,16 @@ export const checkDependency = async () => {
 };
 
 const checkDependencyVersionRange = ({
-	name,
 	dependencies,
 	devDependencies,
+	name,
 	peerDependencies,
 	// eslint-disable-next-line sonarjs/cyclomatic-complexity
 }: PackageJson) => {
 	for (const dependencyName of Object.keys(devDependencies)) {
 		const version = devDependencies[dependencyName];
 
-		assertVersion(version, { name: dependencyName, consumedBy: name });
+		assertVersion(version, { consumedBy: name, name: dependencyName });
 
 		if (
 			version !== "workspace:*" &&
@@ -64,8 +64,8 @@ const checkDependencyVersionRange = ({
 			throw createPackageError(
 				`As a dev dependency, \`${dependencyName}\` version must be fixed (or set as "workspace:*" for local packages) to reduce accidental breaking change risks due to an implicit semver upgrade.`,
 				{
-					name: dependencyName,
 					consumedBy: name,
+					name: dependencyName,
 				},
 			);
 	}
@@ -73,7 +73,7 @@ const checkDependencyVersionRange = ({
 	for (const dependencyName of Object.keys(dependencies)) {
 		const version = dependencies[dependencyName];
 
-		assertVersion(version, { name: dependencyName, consumedBy: name });
+		assertVersion(version, { consumedBy: name, name: dependencyName });
 
 		if (
 			version !== "workspace:^" &&
@@ -83,8 +83,8 @@ const checkDependencyVersionRange = ({
 			throw createPackageError(
 				`As a dependency, \`${dependencyName}\` version must be prefixed with a caret (or set as "workspace:^" for local packages) to optimize the size (whether of installation or bundle output) on the consumer side.`,
 				{
-					name: dependencyName,
 					consumedBy: name,
+					name: dependencyName,
 				},
 			);
 	}
@@ -92,7 +92,7 @@ const checkDependencyVersionRange = ({
 	for (const dependencyName of Object.keys(peerDependencies)) {
 		const version = peerDependencies[dependencyName];
 
-		assertVersion(version, { name: dependencyName, consumedBy: name });
+		assertVersion(version, { consumedBy: name, name: dependencyName });
 
 		if (!hasCaret(version) && !isExcluded(version))
 			/*
@@ -103,8 +103,8 @@ const checkDependencyVersionRange = ({
 			throw createPackageError(
 				`As a peer dependency, \`${dependencyName}\` version must be explicit (i.e. the "workspace:^" protocol a version resolver is not allowed) and prefixed with a caret to optimize the size (whether of installation or bundle output) on the consumer side.`,
 				{
-					name: dependencyName,
 					consumedBy: name,
+					name: dependencyName,
 				},
 			);
 	}
@@ -148,8 +148,8 @@ const createPackagesVersionMismatchChecker = () => {
 				throw createPackageError(
 					`Mismatched versions: received version \`${depVersion}\` while others use \`${storedVersion}\`. To prevent issues with singleton-like code (React contexts, …), please make sure to update all packages to use the same \`${dependencyName}\` version (either \`${storedVersion}\` or \`${depVersion}\`).`,
 					{
-						name: dependencyName,
 						consumedBy: packageName,
+						name: dependencyName,
 					},
 				);
 			}
@@ -163,29 +163,29 @@ const createPackagesVersionMismatchChecker = () => {
 };
 
 type PackageErrorContext = {
-	name: PackageJson["name"];
 	consumedBy: PackageJson["name"];
+	name: PackageJson["name"];
 };
 
 const createPackageError = (message: string, context?: PackageErrorContext) => {
 	return createError(
 		"stack check",
-		!context
-			? message
-			: `\`${context.name}\` consumed by \`${context.consumedBy}\` doesn't conform to package guidelines.\n${message}`,
+		context
+			? `\`${context.name}\` consumed by \`${context.consumedBy}\` doesn't conform to package guidelines.\n${message}`
+			: message,
 	);
 };
 
 function assertVersion(
 	version: string | undefined,
-	{ name, consumedBy }: PackageErrorContext,
+	{ consumedBy, name }: PackageErrorContext,
 ): asserts version {
 	assert(version, () =>
 		createPackageError(
 			`\`${name}\` must have a valid version specified (current version equals to \`${String(version)}\`).`,
 			{
-				name,
 				consumedBy,
+				name,
 			},
 		),
 	);

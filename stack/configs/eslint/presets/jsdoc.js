@@ -1,7 +1,7 @@
 import jsdocPlugin from "eslint-plugin-jsdoc";
 
-import { createConfig } from "../helpers.js";
 import { JAVASCRIPT_LIKE_FILES } from "../constants.js";
+import { createConfig } from "../helpers.js";
 
 export const config = createConfig({
 	files: JAVASCRIPT_LIKE_FILES,

@@ -1,7 +1,7 @@
 import tseslint from "typescript-eslint";
 
-import { createConfig } from "../helpers.js";
 import { JAVASCRIPT_FILES, JAVASCRIPT_LIKE_FILES } from "../constants.js";
+import { createConfig } from "../helpers.js";
 
 export const config = createConfig(
 	{
@@ -183,7 +183,6 @@ export const config = createConfig(
 			],
 			"@typescript-eslint/restrict-template-expressions": "error",
 			"@typescript-eslint/return-await": "error",
-			"@typescript-eslint/sort-type-constituents": "error",
 			"@typescript-eslint/switch-exhaustiveness-check": "error",
 			"@typescript-eslint/triple-slash-reference": "error",
 			"@typescript-eslint/unbound-method": "error",

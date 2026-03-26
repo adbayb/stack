@@ -1,10 +1,9 @@
+import { includeIgnoreFile } from "@eslint/compat";
+import globals from "globals";
 import { resolve } from "node:path";
 
-import globals from "globals";
-import { includeIgnoreFile } from "@eslint/compat";
-
-import { createConfig } from "../helpers.js";
 import { CWD, JAVASCRIPT_FILES, JAVASCRIPT_LIKE_FILES } from "../constants.js";
+import { createConfig } from "../helpers.js";
 
 export const config = createConfig(
 	{

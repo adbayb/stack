@@ -11,6 +11,8 @@ const JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING =
 
 export const JAVASCRIPT_FILES = [`**/*.{${JAVASCRIPT_EXTENSIONS.join(",")}}`];
 
+export const TYPESCRIPT_FILES = [`**/*.{${TYPESCRIPT_EXTENSIONS.join(",")}}`];
+
 export const JAVASCRIPT_LIKE_FILES = [
 	`**/*.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
 ];

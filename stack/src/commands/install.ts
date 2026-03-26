@@ -1,6 +1,7 @@
 import { chmod, writeFile } from "node:fs/promises";
 
 import type { CommandFactory } from "../types";
+
 import {
 	checkPackageManager,
 	getStackCommand,
@@ -10,11 +11,10 @@ import {
 export const createInstallCommand: CommandFactory = (program) => {
 	program
 		.command({
-			name: "install",
 			description: "Install required setup",
+			name: "install",
 		})
 		.task({
-			label: label("Install `git.pre-commit` hook"),
 			async handler() {
 				const lineBreakMatcher = String.raw`\n|\r\n`;
 				const modifiedFilesCommand = `node -e 'console.log(require("child_process").execSync("git status --porcelain", {encoding: "utf8"}).split(/${lineBreakMatcher}/).filter(Boolean).map(item => item.split(" ").at(-1)).join(" "))'`;
@@ -27,21 +27,22 @@ export const createInstallCommand: CommandFactory = (program) => {
 					)} && git add -A`,
 				);
 			},
+			label: label("Install `git.pre-commit` hook"),
 		})
 		.task({
-			label: label("Install `git.commit-msg` hook"),
 			async handler() {
 				await installGitHook(
 					"commit-msg",
 					getStackCommand("check --filter commit", false),
 				);
 			},
+			label: label("Install `git.commit-msg` hook"),
 		})
 		.task({
-			label: label("Check the package manager"),
 			async handler() {
 				await checkPackageManager();
 			},
+			label: label("Check the package manager"),
 		});
 };
 

@@ -1,21 +1,28 @@
-import jestFormattingPlugin from "eslint-plugin-jest-formatting";
 import vitestPlugin from "@vitest/eslint-plugin";
 
-import { createConfig } from "../helpers.js";
 import { TEST_LIKE_FILES } from "../constants.js";
+import { createConfig } from "../helpers.js";
 
 export const config = createConfig({
 	files: TEST_LIKE_FILES,
 	plugins: {
-		"jest-formatting": jestFormattingPlugin,
-		"vitest": vitestPlugin,
+		vitest: vitestPlugin,
 	},
 	rules: {
-		"jest-formatting/padding-around-all": "error",
+		"vitest/consistent-each-for": [
+			"error",
+			{
+				describe: "for",
+				it: "for",
+				suite: "for",
+				test: "for",
+			},
+		],
 		"vitest/consistent-test-it": [
 			"error",
 			{ fn: "test", withinDescribe: "test" },
 		],
+		"vitest/consistent-vitest-vi": ["error", { fn: "vi" }],
 		"vitest/expect-expect": "error",
 		"vitest/max-nested-describe": ["error", { max: 1 }],
 		"vitest/no-alias-methods": "error",
@@ -29,29 +36,47 @@ export const config = createConfig({
 		"vitest/no-focused-tests": "error",
 		"vitest/no-identical-title": "error",
 		"vitest/no-import-node-test": "error",
+		"vitest/no-interpolation-in-snapshots": "error",
 		"vitest/no-mocks-import": "error",
 		"vitest/no-standalone-expect": "error",
+		"vitest/no-test-prefixes": "error",
 		"vitest/no-test-return-statement": "error",
+		"vitest/no-unneeded-async-expect-function": "error",
+		"vitest/padding-around-all": "error",
+		"vitest/prefer-called-exactly-once-with": "error",
+		"vitest/prefer-called-once": "error",
 		"vitest/prefer-called-with": "error",
 		"vitest/prefer-comparison-matcher": "error",
+		"vitest/prefer-describe-function-title": "error",
 		"vitest/prefer-each": "error",
 		"vitest/prefer-equality-matcher": "error",
+		"vitest/prefer-expect-resolves": "error",
+		"vitest/prefer-expect-type-of": "error",
 		"vitest/prefer-hooks-in-order": "error",
 		"vitest/prefer-hooks-on-top": "error",
+		"vitest/prefer-import-in-mock": "error",
+		"vitest/prefer-importing-vitest-globals": "error",
 		"vitest/prefer-lowercase-title": ["error", { ignore: ["describe"] }],
 		"vitest/prefer-mock-promise-shorthand": "error",
+		"vitest/prefer-mock-return-shorthand": "error",
+		"vitest/prefer-spy-on": "error",
+		"vitest/prefer-strict-boolean-matchers": "error",
 		"vitest/prefer-strict-equal": "error",
 		"vitest/prefer-to-be": "error",
 		"vitest/prefer-to-be-object": "error",
 		"vitest/prefer-to-contain": "error",
+		"vitest/prefer-to-have-been-called-times": "error",
 		"vitest/prefer-to-have-length": "error",
 		"vitest/prefer-todo": "error",
+		"vitest/prefer-vi-mocked": "error",
+		"vitest/require-awaited-expect-poll": "error",
 		"vitest/require-hook": "error",
 		"vitest/require-local-test-context-for-concurrent-snapshots": "error",
 		"vitest/require-to-throw-message": "error",
 		"vitest/require-top-level-describe": "error",
 		"vitest/valid-describe-callback": "error",
 		"vitest/valid-expect": "error",
+		"vitest/valid-expect-in-promise": "error",
 		"vitest/valid-title": ["error", { mustMatch: { test: ["^should "] } }],
 	},
 	settings: {
