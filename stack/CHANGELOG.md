@@ -1,5 +1,23 @@
 # @adbayb/stack
 
+## 2.33.0
+
+### Minor Changes
+
+- [`1601ea5`](https://github.com/adbayb/stack/commit/1601ea52227fd77b7137e3a64c683942eb36b869) Thanks [@adbayb](https://github.com/adbayb)! - Update template to allow trusted publishing for npm packages following the long-lived tokens npm deprecation.
+
+- [`932c4d7`](https://github.com/adbayb/stack/commit/932c4d7ca24e09b287ac8f8b451aaad74f21c504) Thanks [@adbayb](https://github.com/adbayb)! - Update ESLint configurations including:
+    - [x] Remove `eslint-plugin-jest-formatting` plugin (replaced by `@vitest/eslint-plugin` new rules)
+    - [x] Remove `eslint-plugin-react-hooks` plugin (replaced by `@eslint-react/eslint-plugin` new rules)
+    - [x] Replace `eslint-plugin-sort-keys-custom-order` plugin by `eslint-plugin-perfectionist`
+    - [x] Add new `eslint-plugin-n` rules
+    - [x] Add new `@vitest/eslint-plugin` rules
+    - [x] Add new `@eslint-react/eslint-plugin` rules
+
+### Patch Changes
+
+- [`35de536`](https://github.com/adbayb/stack/commit/35de536bc7f4dd02552cbc5bb39eccc1f8eef711) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies.
+
 ## 2.32.1
 
 ### Patch Changes
