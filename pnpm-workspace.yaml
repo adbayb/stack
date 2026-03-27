@@ -1,3 +1,11 @@
 packages:
     - "stack"
     - "stack/create"
+publicHoistPattern:
+    - "*changesets*"
+    - "*commitlint*"
+    - "*eslint*"
+    - "*prettier*"
+    - "*turbo*"
+    - "*typescript*"
+    - "*types*"
