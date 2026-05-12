@@ -46,15 +46,15 @@
 		"watch": "quickbundle watch"
 	},
 	"dependencies": {
-		"@changesets/changelog-github": "^0.6.0",
+		"@changesets/changelog-github": "^0.7.0",
 		"@changesets/cli": "^2.31.0",
-		"@commitlint/cli": "^20.5.2",
-		"@commitlint/config-conventional": "^20.5.0",
+		"@commitlint/cli": "^20.5.3",
+		"@commitlint/config-conventional": "^20.5.3",
 		"@eslint-react/eslint-plugin": "^3.0.0",
-		"@eslint/compat": "^2.0.5",
+		"@eslint/compat": "^2.1.0",
 		"@stylistic/eslint-plugin": "^5.10.0",
-		"@vitest/eslint-plugin": "^1.6.16",
-		"eslint": "^10.2.1",
+		"@vitest/eslint-plugin": "^1.6.17",
+		"eslint": "^10.3.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-import-resolver-typescript": "^4.4.4",
 		"eslint-plugin-depend": "^1.5.0",
@@ -67,13 +67,13 @@
 		"eslint-plugin-sonarjs": "^4.0.3",
 		"eslint-plugin-unicorn": "^63.0.0",
 		"fdir": "^6.5.0",
-		"globals": "^17.5.0",
+		"globals": "^17.6.0",
 		"prettier": "^3.8.3",
 		"prettier-plugin-packagejson": "^3.0.2",
 		"termost": "^1.9.0",
-		"turbo": "^2.9.6",
+		"turbo": "^2.9.12",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.59.0"
+		"typescript-eslint": "^8.59.2"
 	},
 	"devDependencies": {
 		"@types/node": "24.12.2",
