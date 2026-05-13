@@ -1,6 +1,9 @@
 packages:
     - "stack"
     - "stack/create"
+allowBuilds:
+    "@swc/core": true
+    unrs-resolver: true
 publicHoistPattern:
     - "*changesets*"
     - "*commitlint*"
