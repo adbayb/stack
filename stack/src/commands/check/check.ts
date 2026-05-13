@@ -1,12 +1,19 @@
 import type { CommandFactory } from "../../types";
 
 import { hasDependency, logCheckableFiles, turbo } from "../../helpers";
+import { checkChangelog } from "./checkChangelog";
 import { checkCode } from "./checkCode";
 import { checkCommit } from "./checkCommit";
 import { checkDependency } from "./checkDependency";
 import { checkType } from "./checkType";
 
-const ONLY_VALUES = ["commit", "code", "dependency", "type"] as const;
+const ONLY_VALUES = [
+	"changelog",
+	"commit",
+	"code",
+	"dependency",
+	"type",
+] as const;
 
 type CommandContext = {
 	filter: Filter | undefined;
@@ -45,6 +52,13 @@ export const createCheckCommand: CommandFactory = (program) => {
 			skip({ filter }) {
 				return filter === "commit"; // No need to build if only commit is checked
 			},
+		})
+		.task({
+			async handler() {
+				await checkChangelog();
+			},
+			label: label("Check changelog compliance"),
+			skip: ifFilterDefinedAndNotEqualTo("changelog"),
 		})
 		.task({
 			async handler() {
