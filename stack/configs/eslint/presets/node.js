@@ -44,7 +44,8 @@ export const config = createConfig({
 	},
 	settings: {
 		node: {
-			version: require(join(CWD, "package.json")).engines.node,
+			version: require(join(CWD, "package.json")).devEngines.runtime
+				.version,
 		},
 	},
 });

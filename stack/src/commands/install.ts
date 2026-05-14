@@ -2,11 +2,7 @@ import { chmod, writeFile } from "node:fs/promises";
 
 import type { CommandFactory } from "../types";
 
-import {
-	checkPackageManager,
-	getStackCommand,
-	resolveFromProjectDirectory,
-} from "../helpers";
+import { getStackCommand, resolveFromProjectDirectory } from "../helpers";
 
 export const createInstallCommand: CommandFactory = (program) => {
 	program
@@ -17,14 +13,14 @@ export const createInstallCommand: CommandFactory = (program) => {
 		.task({
 			async handler() {
 				const lineBreakMatcher = String.raw`\n|\r\n`;
-				const modifiedFilesCommand = `node -e 'console.log(require("child_process").execSync("git status --porcelain", {encoding: "utf8"}).split(/${lineBreakMatcher}/).filter(Boolean).map(item => item.split(" ").at(-1)).join(" "))'`;
+
+				const stackCommand = getStackCommand(
+					`fix $(node -e 'console.log(require("child_process").execSync("git status --porcelain", {encoding: "utf8"}).split(/${lineBreakMatcher}/).filter(Boolean).map(item => item.split(" ").at(-1)).join(" "))')`,
+				);
 
 				await installGitHook(
 					"pre-commit",
-					`${getStackCommand(
-						`fix $(${modifiedFilesCommand})`,
-						false,
-					)} && git add -A`,
+					`${stackCommand} && git add -A`,
 				);
 			},
 			label: label("Install `git.pre-commit` hook"),
@@ -33,16 +29,10 @@ export const createInstallCommand: CommandFactory = (program) => {
 			async handler() {
 				await installGitHook(
 					"commit-msg",
-					getStackCommand("check --filter commit", false),
+					getStackCommand("check --filter commit"),
 				);
 			},
 			label: label("Install `git.commit-msg` hook"),
-		})
-		.task({
-			async handler() {
-				await checkPackageManager();
-			},
-			label: label("Check the package manager"),
 		});
 };
 

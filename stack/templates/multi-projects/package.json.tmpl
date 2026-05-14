@@ -18,8 +18,16 @@
 	},
 	"prettier": "@adbayb/stack/prettier",
 	"packageManager": "pnpm@{{npmVersion}}",
-	"engines": {
-		"node": ">=24.0.0",
-		"pnpm": ">=10.0.0"
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "{{npmVersion}}",
+			"onFail": "download"
+		},
+		"runtime": {
+			"name": "node",
+			"version": ">=24.0.0",
+			"onFail": "error"
+		}
 	}
 }

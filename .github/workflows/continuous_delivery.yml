@@ -30,7 +30,7 @@ jobs:
             - name: Publish pre-release version(s)
               if: "!contains(github.event.head_commit.message, 'chore: release package(s)')"
               run: |
-                  pnpm --filter="!." --filter="!./(applications|examples|tools)/*" --recursive exec pnpm version "$(pnpm show ./ version)-next-${GITHUB_SHA::7}" --no-git-tag-version
+                  pnpm --filter="!." --filter="!./(applications|examples|tools)/*" --recursive exec pnpm version "$(pnpm show --version)-next-${GITHUB_SHA::7}" --no-git-tag-version
                   pnpm --filter="!." --filter="!./(applications|examples|tools)/*" --recursive exec pnpm publish --tag next --no-git-checks
             - name: Create release pull request
               if: "!contains(github.event.head_commit.message, 'chore: release package(s)')"
