@@ -19,11 +19,16 @@
 	"prettier": "@adbayb/stack/prettier",
 	"packageManager": "pnpm@{{npmVersion}}",
 	"devEngines": {
-		"packageManager": {
-			"name": "pnpm",
-			"version": "{{npmVersion}}",
-			"onFail": "download"
-		},
+		"packageManager": [
+			{
+				"name": "pnpm",
+				"version": "{{npmVersion}}",
+				"onFail": "download"
+			},
+			{
+				"name": "npm"
+			}
+		],
 		"runtime": {
 			"name": "node",
 			"version": ">=24.0.0",

@@ -33,11 +33,16 @@
 	},
 	"packageManager": "pnpm@11.1.2",
 	"devEngines": {
-		"packageManager": {
-			"name": "pnpm",
-			"version": "11.1.2",
-			"onFail": "download"
-		},
+		"packageManager": [
+			{
+				"name": "pnpm",
+				"version": "11.1.2",
+				"onFail": "download"
+			},
+			{
+				"name": "npm"
+			}
+		],
 		"runtime": {
 			"name": "node",
 			"version": ">=24.0.0",
