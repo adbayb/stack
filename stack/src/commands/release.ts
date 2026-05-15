@@ -5,6 +5,7 @@ import type { CommandFactory } from "../types";
 import { changeset } from "../helpers";
 
 type CommandContext = {
+	emptyLog: boolean;
 	log: boolean;
 	publish: boolean;
 	tag: boolean;
@@ -20,6 +21,11 @@ export const createReleaseCommand: CommandFactory = (program) => {
 			description: "Add a new changelog entry",
 			key: "log",
 			name: "log",
+		})
+		.option({
+			description: "Add an empty changelog entry",
+			key: "emptyLog",
+			name: "empty-log",
 		})
 		.option({
 			description: "Bump the package(s) version",
@@ -38,6 +44,14 @@ export const createReleaseCommand: CommandFactory = (program) => {
 				await changeset("changeset");
 			},
 			skip: ifNotEqualTo("log"),
+		})
+		.task({
+			async handler() {
+				helpers.message("New empty changelog entry\n");
+
+				await changeset("changeset --empty");
+			},
+			skip: ifNotEqualTo("emptyLog"),
 		})
 		.task({
 			async handler() {
