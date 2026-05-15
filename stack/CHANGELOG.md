@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.35.0
+
+### Minor Changes
+
+- [`3f9769a`](https://github.com/adbayb/stack/commit/3f9769a690f188076c6f7ca24da1861735f63f11) Thanks [@adbayb](https://github.com/adbayb)! - Add empty log generation support.
+
 ## 2.34.0
 
 ### Minor Changes
