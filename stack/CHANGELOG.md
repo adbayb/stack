@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 2.35.1
+
+### Patch Changes
+
+- [`4048dfb`](https://github.com/adbayb/stack/commit/4048dfbf97bb74cda5fc8031ad6e0c4f2a02000e) Thanks [@adbayb](https://github.com/adbayb)! - Update templates to fix vscode config setup.
+
 ## 2.35.0
 
 ### Minor Changes
