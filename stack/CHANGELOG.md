@@ -1,5 +1,17 @@
 # @adbayb/stack
 
+## 2.36.0
+
+### Minor Changes
+
+- [`c14b4b7`](https://github.com/adbayb/stack/commit/c14b4b7b18180b093649749e373c4d95c72a24e4) Thanks [@adbayb](https://github.com/adbayb)! - Remove changelog check.
+
+### Patch Changes
+
+- [`4048dfb`](https://github.com/adbayb/stack/commit/4048dfbf97bb74cda5fc8031ad6e0c4f2a02000e) Thanks [@adbayb](https://github.com/adbayb)! - Update templates to fix vscode config setup.
+
+- [`700302e`](https://github.com/adbayb/stack/commit/700302e37c3dd63d5c03f9557fc5e5bac18b8ccc) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies.
+
 ## 2.35.0
 
 ### Minor Changes
