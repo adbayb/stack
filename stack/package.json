@@ -1,6 +1,6 @@
 {
 	"name": "@adbayb/stack",
-	"version": "2.36.0",
+	"version": "2.36.1",
 	"description": "My opinionated JavaScript-based toolchain",
 	"keywords": [
 		"stack",
