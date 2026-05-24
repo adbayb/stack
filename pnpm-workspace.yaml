@@ -2,8 +2,10 @@ packages:
     - "stack"
     - "stack/create"
 allowBuilds:
-    "@swc/core": true
-    unrs-resolver: true
+    unrs-resolver: false
+minimumReleaseAgeExclude:
+    - "@vitest/eslint-plugin@1.6.18"
+    - termost@1.9.1
 publicHoistPattern:
     - "*changesets*"
     - "*commitlint*"
