@@ -5,7 +5,7 @@ allowBuilds:
     unrs-resolver: false
 minimumReleaseAgeExclude:
     - "@vitest/eslint-plugin@1.6.18"
-    - termost@1.9.1
+    - termost
 publicHoistPattern:
     - "*changesets*"
     - "*commitlint*"
