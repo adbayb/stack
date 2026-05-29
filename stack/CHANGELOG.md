@@ -1,5 +1,17 @@
 # @adbayb/stack
 
+## 2.37.0
+
+### Minor Changes
+
+- [`185924d`](https://github.com/adbayb/stack/commit/185924da79a5fcfbeb9371a8499513c942922d62) Thanks [@adbayb](https://github.com/adbayb)! - Update gitignore template files.
+
+- [`3989934`](https://github.com/adbayb/stack/commit/3989934733b1c6b902e5facd6ac76a73ffe8c4d6) Thanks [@adbayb](https://github.com/adbayb)! - Update templates to define `publicHoistPattern` config at pnpm workspace config level.
+
+### Patch Changes
+
+- [`2d037ee`](https://github.com/adbayb/stack/commit/2d037eefce1d874820d4e99cbaad99a8a6e5cf14) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies including eslint, turbo, and commitlint.
+
 ## 2.36.1
 
 ### Patch Changes
