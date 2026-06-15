@@ -77,11 +77,10 @@ const retrieveIgnoredFiles = async () => {
 
 	return rawFiles
 		.split(/\n|\r\n/)
-		.filter(
-			(cleanOutput) =>
-				!PRESERVE_FILES.some((excludedFile) =>
-					cleanOutput.includes(excludedFile),
-				),
+		.filter((cleanOutput) =>
+			PRESERVE_FILES.every(
+				(excludedFile) => !cleanOutput.includes(excludedFile),
+			),
 		)
 		.map((cleanOutput) => cleanOutput.split(" ").at(-1) as string);
 };

@@ -51,9 +51,7 @@ const checkDependencyVersionRange = ({
 	peerDependencies,
 	// eslint-disable-next-line sonarjs/cyclomatic-complexity
 }: PackageJson) => {
-	for (const dependencyName of Object.keys(devDependencies)) {
-		const version = devDependencies[dependencyName];
-
+	for (const [dependencyName, version] of Object.entries(devDependencies)) {
 		assertVersion(version, { consumedBy: name, name: dependencyName });
 
 		if (
@@ -70,9 +68,7 @@ const checkDependencyVersionRange = ({
 			);
 	}
 
-	for (const dependencyName of Object.keys(dependencies)) {
-		const version = dependencies[dependencyName];
-
+	for (const [dependencyName, version] of Object.entries(dependencies)) {
 		assertVersion(version, { consumedBy: name, name: dependencyName });
 
 		if (
@@ -89,9 +85,7 @@ const checkDependencyVersionRange = ({
 			);
 	}
 
-	for (const dependencyName of Object.keys(peerDependencies)) {
-		const version = peerDependencies[dependencyName];
-
+	for (const [dependencyName, version] of Object.entries(peerDependencies)) {
 		assertVersion(version, { consumedBy: name, name: dependencyName });
 
 		if (!hasCaret(version) && !isExcluded(version))
@@ -125,13 +119,12 @@ const createPackagesVersionMismatchChecker = () => {
 			? monorepoDevelopmentDependencies
 			: monorepoDependencies;
 
-		const dependencies = isDevelopment
-			? package_.devDependencies
-			: package_.dependencies;
+		const dependencies =
+			package_[isDevelopment ? "devDependencies" : "dependencies"];
 
-		for (const dependencyName of Object.keys(dependencies)) {
-			const depVersion = dependencies[dependencyName];
-
+		for (const [dependencyName, depVersion] of Object.entries(
+			dependencies,
+		)) {
 			if (!depVersion) continue;
 
 			const storedVersion = store.get(dependencyName);

@@ -5,31 +5,7 @@ allowBuilds:
     unrs-resolver: false
 minimumReleaseAgeExclude:
     - termost
-    - "@commitlint/cli@21.0.2"
-    - "@commitlint/config-conventional@21.0.2"
-    - "@commitlint/is-ignored@21.0.2"
-    - "@commitlint/lint@21.0.2"
-    - "@commitlint/load@21.0.2"
-    - "@commitlint/message@21.0.2"
-    - "@commitlint/parse@21.0.2"
-    - "@commitlint/read@21.0.2"
-    - "@commitlint/rules@21.0.2"
-    - "@commitlint/top-level@21.0.2"
-    - "@eslint-react/ast@5.8.7"
-    - "@eslint-react/core@5.8.7"
-    - "@eslint-react/eslint-plugin@5.8.7"
-    - "@eslint-react/eslint@5.8.7"
-    - "@eslint-react/jsx@5.8.7"
-    - "@eslint-react/shared@5.8.7"
-    - "@eslint-react/var@5.8.7"
-    - "@eslint/plugin-kit@0.7.2"
-    - eslint-plugin-react-dom@5.8.7
-    - eslint-plugin-react-jsx@5.8.7
-    - eslint-plugin-react-naming-convention@5.8.7
-    - eslint-plugin-react-rsc@5.8.7
-    - eslint-plugin-react-web-api@5.8.7
-    - eslint-plugin-react-x@5.8.7
-    - eslint@10.4.1
+    - eslint-plugin-unicorn@66.0.0
 publicHoistPattern:
     - "*changesets*"
     - "*commitlint*"

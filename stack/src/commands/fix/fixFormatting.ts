@@ -14,8 +14,8 @@ export const fixFormatting = async (files: Filenames) => {
 		prettierFiles.push(`"**/!(${PRETTIER_IGNORE_FILES.join("|")})"`);
 	} else {
 		prettierFiles = files.filter((file) => {
-			return !PRETTIER_IGNORE_FILES.some((filename) =>
-				file.endsWith(filename),
+			return PRETTIER_IGNORE_FILES.every(
+				(filename) => !file.endsWith(filename),
 			);
 		});
 

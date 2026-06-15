@@ -40,7 +40,7 @@ export const botMessage = (input: {
 	type: "error" | "information" | "success";
 }) => {
 	const { type } = input;
-	const log = type === "error" ? console.error : console.log;
+	const log = console[type === "error" ? "error" : "log"];
 
 	const colorByType = {
 		error: "red",
@@ -161,9 +161,7 @@ export const request = {
 			);
 		}
 
-		return (
-			responseType === "text" ? response.text() : response.json()
-		) as Promise<
+		return response[responseType === "text" ? "text" : "json"]() as Promise<
 			ResponseType extends "text" ? string : Record<string, string>
 		>;
 	},
