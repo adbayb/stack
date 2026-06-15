@@ -1,5 +1,19 @@
 # @adbayb/stack
 
+## 2.38.0
+
+### Minor Changes
+
+- [`7d1c5c9`](https://github.com/adbayb/stack/commit/7d1c5c9e430c4abc65764363c42bfd26fa5901c3) Thanks [@adbayb](https://github.com/adbayb)! - Add new unicorn and eslint rules.
+
+### Patch Changes
+
+- [`7d1c5c9`](https://github.com/adbayb/stack/commit/7d1c5c9e430c4abc65764363c42bfd26fa5901c3) Thanks [@adbayb](https://github.com/adbayb)! - Update exports contract in templates.
+
+- [`7d1c5c9`](https://github.com/adbayb/stack/commit/7d1c5c9e430c4abc65764363c42bfd26fa5901c3) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies.
+
+- [`7d1c5c9`](https://github.com/adbayb/stack/commit/7d1c5c9e430c4abc65764363c42bfd26fa5901c3) Thanks [@adbayb](https://github.com/adbayb)! - Disable sort-imports eslint rules to avoid conflicts with perfectionist one.
+
 ## 2.37.0
 
 ### Minor Changes
