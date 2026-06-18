@@ -1,5 +1,12 @@
 # @adbayb/create
 
+## 2.38.1
+
+### Patch Changes
+
+- Updated dependencies [[`e94e3af`](https://github.com/adbayb/stack/commit/e94e3af4de583e09cccc7121f66c8b74c11285ae)]:
+    - @adbayb/stack@2.38.1
+
 ## 2.38.0
 
 ### Patch Changes
