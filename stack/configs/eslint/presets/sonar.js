@@ -18,7 +18,6 @@ export const config = createConfig(
 			"sonarjs/bitwise-operators": "error",
 			"sonarjs/bool-param-default": "error",
 			"sonarjs/call-argument-line": "error",
-			"sonarjs/certificate-transparency": "error",
 			"sonarjs/class-name": "error",
 			"sonarjs/class-prototype": "error",
 			"sonarjs/code-eval": "error",

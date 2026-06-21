@@ -122,24 +122,24 @@ const createPackagesVersionMismatchChecker = () => {
 		const dependencies =
 			package_[isDevelopment ? "devDependencies" : "dependencies"];
 
-		for (const [dependencyName, depVersion] of Object.entries(
+		for (const [dependencyName, dependencyVersion] of Object.entries(
 			dependencies,
 		)) {
-			if (!depVersion) continue;
+			if (!dependencyVersion) continue;
 
 			const storedVersion = store.get(dependencyName);
 
 			if (!storedVersion) {
-				store.set(dependencyName, depVersion);
+				store.set(dependencyName, dependencyVersion);
 
 				continue;
 			}
 
-			const isSameMonorepoVersion = depVersion === storedVersion;
+			const isSameMonorepoVersion = dependencyVersion === storedVersion;
 
 			if (!isSameMonorepoVersion) {
 				throw createPackageError(
-					`Mismatched versions: received version \`${depVersion}\` while others use \`${storedVersion}\`. To prevent issues with singleton-like code (React contexts, …), please make sure to update all packages to use the same \`${dependencyName}\` version (either \`${storedVersion}\` or \`${depVersion}\`).`,
+					`Mismatched versions: received version \`${dependencyVersion}\` while others use \`${storedVersion}\`. To prevent issues with singleton-like code (React contexts, …), please make sure to update all packages to use the same \`${dependencyName}\` version (either \`${storedVersion}\` or \`${dependencyVersion}\`).`,
 					{
 						consumedBy: packageName,
 						name: dependencyName,

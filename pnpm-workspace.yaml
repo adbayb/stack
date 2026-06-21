@@ -4,8 +4,8 @@ packages:
 allowBuilds:
     unrs-resolver: false
 minimumReleaseAgeExclude:
+    - "@adbayb/*"
     - termost
-    - eslint-plugin-unicorn@66.0.0
 publicHoistPattern:
     - "*changesets*"
     - "*commitlint*"

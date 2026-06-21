@@ -44,6 +44,23 @@ export const config = createConfig({
 		],
 		"unicorn/isolated-functions": "error",
 		"unicorn/max-nested-calls": ["error", { max: 3 }],
+		"unicorn/name-replacements": [
+			"error",
+			{
+				ignore: [
+					/^application/i,
+					/application$/i,
+					/^applications/i,
+					/applications$/i,
+					/^props/i,
+					/props$/i,
+					/^ref/i,
+					/ref$/i,
+					/^repository/i,
+					/repository$/i,
+				],
+			},
+		],
 		"unicorn/new-for-builtins": "error",
 		"unicorn/no-abusive-eslint-disable": "error",
 		"unicorn/no-array-callback-reference": "error",
@@ -184,12 +201,6 @@ export const config = createConfig({
 		"unicorn/prefer-uint8array-base64": "error",
 		"unicorn/prefer-unicode-code-point-escapes": "error",
 		"unicorn/prefer-url-href": "error",
-		"unicorn/prevent-abbreviations": [
-			"error",
-			{
-				ignore: [/^props/i, /props$/i, /^ref/i, /ref$/i],
-			},
-		],
 		"unicorn/relative-url-style": ["error", "always"],
 		"unicorn/require-array-join-separator": "error",
 		"unicorn/require-array-sort-compare": "error",
