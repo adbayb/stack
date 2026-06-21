@@ -1,5 +1,15 @@
 # @adbayb/stack
 
+## 2.39.0
+
+### Minor Changes
+
+- [`8fb6f23`](https://github.com/adbayb/stack/commit/8fb6f230256ca34b7524f8f8ca1a272cbd191d18) Thanks [@adbayb](https://github.com/adbayb)! - Add new Unicorn ESLint rules and update templates to exclude `@adbayb` packages from pnpm releage age checks.
+
+### Patch Changes
+
+- [`dc05217`](https://github.com/adbayb/stack/commit/dc0521708f41097dc217578aee7a7f7801ff1a0f) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies.
+
 ## 2.38.1
 
 ### Patch Changes
