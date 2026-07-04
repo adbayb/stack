@@ -2,7 +2,7 @@ import { chmod, writeFile } from "node:fs/promises";
 
 import type { CommandFactory } from "../types";
 
-import { getStackCommand, resolveFromProjectDirectory } from "../helpers";
+import { getStackCommand, resolveFromWorkingDirectory } from "../helpers";
 
 export const createInstallCommand: CommandFactory = (program) => {
 	program
@@ -42,7 +42,7 @@ const installGitHook = async (
 	hook: "commit-msg" | "pre-commit",
 	content: string,
 ) => {
-	const filename = resolveFromProjectDirectory(`.git/hooks/${hook}`);
+	const filename = resolveFromWorkingDirectory(`.git/hooks/${hook}`);
 
 	await writeFile(filename, content);
 

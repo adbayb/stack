@@ -14,3 +14,4 @@ publicHoistPattern:
     - "*turbo*"
     - "*typescript*"
     - "*types*"
+verifyDepsBeforeRun: "warn"

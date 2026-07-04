@@ -17,12 +17,12 @@
 		"watch": "stack watch"
 	},
 	"prettier": "@adbayb/stack/prettier",
-	"packageManager": "pnpm@{{npmVersion}}",
+	"packageManager": "pnpm@{{pnpmVersion}}",
 	"devEngines": {
 		"packageManager": [
 			{
 				"name": "pnpm",
-				"version": "{{npmVersion}}",
+				"version": "{{pnpmVersion}}",
 				"onFail": "download"
 			},
 			{
