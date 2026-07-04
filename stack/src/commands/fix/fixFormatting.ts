@@ -3,7 +3,7 @@ import { helpers } from "termost";
 
 import type { Filenames } from "../../types";
 
-import { createError, resolveFromProjectDirectory } from "../../helpers";
+import { createError, resolveFromWorkingDirectory } from "../../helpers";
 
 const PRETTIER_IGNORE_FILES = ["pnpm-lock.yaml"];
 
@@ -24,7 +24,7 @@ export const fixFormatting = async (files: Filenames) => {
 
 	const arguments_ = [...prettierFiles];
 
-	if (existsSync(resolveFromProjectDirectory(".gitignore"))) {
+	if (existsSync(resolveFromWorkingDirectory(".gitignore"))) {
 		arguments_.push("--ignore-path .gitignore");
 	}
 

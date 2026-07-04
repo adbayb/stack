@@ -273,9 +273,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: ^68.0.0
         version: 68.0.0(eslint@10.5.0(jiti@2.6.1))
-      fdir:
-        specifier: ^6.5.0
-        version: 6.5.0(picomatch@4.0.4)
       globals:
         specifier: ^17.6.0
         version: 17.6.0
@@ -1921,6 +1918,7 @@ packages:
   git-raw-commits@5.0.1:
     resolution: {integrity: sha512-Y+csSm2GD/PCSh6Isd/WiMjNAydu0VBiG9J7EdQsNA5P9uXvLayqjmTsNlK5Gs9IhblFZqOU0yid5Il5JPoLiQ==}
     engines: {node: '>=18'}
+    deprecated: Deprecated and no longer maintained. Use @conventional-changelog/git-client instead.
     hasBin: true
 
   glob-parent@5.1.2:

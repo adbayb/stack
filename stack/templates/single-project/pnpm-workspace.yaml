@@ -1,3 +1,6 @@
+allowBuilds:
+    esbuild: true
+    unrs-resolver: true
 minimumReleaseAgeExclude:
     - "@adbayb/*"
 packages:
@@ -12,3 +15,4 @@ publicHoistPattern:
     - "*turbo*"
     - "*typescript*"
     - "*types*"
+verifyDepsBeforeRun: "warn"

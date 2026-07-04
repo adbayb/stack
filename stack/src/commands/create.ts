@@ -1,7 +1,15 @@
-import { fdir } from "fdir";
-import { cpSync, readFileSync, renameSync, writeFileSync } from "node:fs";
-import { mkdir, symlink } from "node:fs/promises";
-import { join, resolve } from "node:path";
+import { existsSync } from "node:fs";
+import {
+	cp,
+	mkdir,
+	readdir,
+	readFile,
+	rename,
+	rm,
+	symlink,
+	writeFile,
+} from "node:fs/promises";
+import { basename, join, resolve } from "node:path";
 import { helpers } from "termost";
 
 import type { CommandFactory } from "../types";
@@ -10,32 +18,37 @@ import { VERSION } from "../constants";
 import {
 	botMessage,
 	createError,
-	getNpmVersion,
+	getPnpmVersion,
 	request,
-	resolveFromProjectDirectory,
-	resolveFromStackDirectory,
+	resolveFromPackageDirectory,
+	resolveFromWorkingDirectory,
 	setPackageManager,
 } from "../helpers";
 
 type CommandContext = {
+	canRemoveExistingDirectoryInput: boolean;
 	data: Record<
 		| "licenseYear"
 		| "nodeVersion"
-		| "npmVersion"
+		| "pnpmVersion"
 		| "projectDescription"
 		| "projectName"
 		| "projectUrl"
-		| "repoId",
+		| "repoId"
+		| "templatePath"
+		| "workingPath",
 		string
 	>;
 	inputDescription: string;
 	inputName: string;
 	inputTemplate: Template;
 	inputUrl: string;
+	templateEngine: TemplateEngine;
 };
 
 type Template = "multi-projects" | "single-project";
 
+// eslint-disable-next-line sonarjs/max-lines-per-function
 export const createCreateCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
@@ -47,7 +60,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 				botMessage({
 					description:
 						"I can guarantee you a project creation in under 1 minute 🚀",
-					title: `I'm Stack v${VERSION}, your bot assistant`,
+					title: `I'm Stack v${VERSION} 👋`,
 					type: "information",
 				});
 			},
@@ -55,7 +68,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.task({
 			async handler() {
 				// Check pnpm availability by verifying its version
-				await getNpmVersion();
+				await getPnpmVersion();
 			},
 			label: label("Check pre-requisites"),
 		})
@@ -83,7 +96,12 @@ export const createCreateCommand: CommandFactory = (program) => {
 			type: "select",
 		})
 		.task({
-			async handler({ inputDescription, inputName, inputUrl }) {
+			async handler({
+				inputDescription,
+				inputName,
+				inputTemplate,
+				inputUrl,
+			}) {
 				if (!inputName) {
 					throw createError(
 						"stack create",
@@ -109,63 +127,115 @@ export const createCreateCommand: CommandFactory = (program) => {
 					"text",
 				);
 
-				const { version: npmVersion } = await request.get(
+				const { version: pnpmVersion } = await request.get(
 					"https://registry.npmjs.org/pnpm/latest",
 					"json",
 				);
 
+				const projectName = slugify(inputName);
+
 				return {
 					licenseYear: new Date().getFullYear().toString(),
 					nodeVersion: nodeVersion.replace("v", ""),
-					npmVersion: String(npmVersion),
-					projectDescription:
-						inputDescription.charAt(0).toUpperCase() +
-						inputDescription.slice(1), // Enforce upper case for the first letter
-					projectName: inputName.toLowerCase(), // Enforce lower case for folder and package name
+					pnpmVersion: String(pnpmVersion),
+					projectDescription: toCapitalLetter(inputDescription),
+					projectName,
 					projectUrl: inputUrl,
 					repoId: `${repoOwner}/${repoName}`,
+					templatePath: resolveFromPackageDirectory(
+						"templates",
+						inputTemplate,
+					),
+					workingPath: resolveFromWorkingDirectory(projectName),
 				};
 			},
 			key: "data",
 			label: label("Check and format input"),
 		})
-		.task({
-			async handler({ data }) {
-				const projectPath = resolve(process.cwd(), data.projectName);
-
-				await mkdir(projectPath);
-				process.chdir(projectPath);
-			},
-			label({ data }) {
-				return label(`Create \`${data.projectName}\` folder`);
-			},
-		})
-		.task({
-			async handler({ data }) {
-				await helpers.exec("git init");
-				await helpers.exec(`git remote add origin ${data.projectUrl}`);
-			},
-			label: label("Initialize `git`"),
-		})
-		.task({
-			handler({ data, inputTemplate }) {
-				applyTemplate(inputTemplate, data);
-			},
-			label: label("Apply template"),
-		})
-		.task({
-			async handler({ data: { projectName }, inputTemplate }) {
-				await symlink(
-					join(
-						inputTemplate === "single-project"
-							? projectName
-							: join("libraries", projectName),
-						"README.md",
-					),
-					"./README.md",
+		.input({
+			defaultValue: true,
+			key: "canRemoveExistingDirectoryInput",
+			label({ data: { projectName } }) {
+				return label(
+					`\`${projectName}\` directory already exists, do you want to remove it?`,
 				);
 			},
-			label: label("Create a symlink to `README.md` file"),
+			skip({ data: { workingPath } }) {
+				return !existsSync(workingPath);
+			},
+			type: "confirm",
+			validate({
+				canRemoveExistingDirectoryInput,
+				data: { projectName },
+			}) {
+				if (canRemoveExistingDirectoryInput) return;
+
+				return createError(
+					"mkdir",
+					`Remove or rename the \`${projectName}\` existing directory to apply the template from a clean state.`,
+				);
+			},
+		})
+		.task({
+			async handler({
+				canRemoveExistingDirectoryInput,
+				data: {
+					licenseYear,
+					nodeVersion,
+					pnpmVersion,
+					projectDescription,
+					projectName,
+					projectUrl,
+					repoId,
+					templatePath,
+					workingPath,
+				},
+				inputTemplate,
+			}) {
+				if (canRemoveExistingDirectoryInput) {
+					await rm(workingPath, {
+						force: true,
+						recursive: true,
+					});
+				}
+
+				return createTemplateEngine(workingPath, {
+					projectName,
+					templateModel: {
+						licenseYear,
+						nodeVersion,
+						pnpmVersion,
+						projectDescription,
+						projectName,
+						projectUrl,
+						repoId,
+					},
+					templateName: inputTemplate,
+					templatePath,
+				});
+			},
+			key: "templateEngine",
+			label({ data: { projectName }, inputTemplate }) {
+				return label(
+					`Copy \`${inputTemplate}\` template to \`${projectName}\` directory`,
+				);
+			},
+		})
+		.task({
+			async handler({ templateEngine }) {
+				await templateEngine.processContents();
+				await templateEngine.processPaths();
+			},
+			label() {
+				return label("Process template");
+			},
+		})
+		.task({
+			async handler({ data: { projectUrl } }) {
+				await helpers.exec("git init");
+				await helpers.exec(`git remote add origin ${projectUrl}`);
+			},
+			label: label("Initialize `git`"),
 		})
 		.task({
 			async handler() {
@@ -174,7 +244,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			label: label("Set up the package manager"),
 		})
 		.task({
-			async handler({ data }) {
+			async handler({ data: { projectName } }) {
 				const localDevelopmentDependencies = ["quickbundle", "vitest"];
 				const globalDevelopmentDependencies = ["@adbayb/stack"];
 
@@ -188,7 +258,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 					await helpers.exec(
 						`pnpm add ${localDevelopmentDependencies.join(
 							" ",
-						)} --save-dev --filter ${data.projectName}`,
+						)} --save-dev --filter ${projectName}`,
 					);
 
 					await helpers.exec("pnpm install");
@@ -212,9 +282,9 @@ export const createCreateCommand: CommandFactory = (program) => {
 			label: label("Commit"),
 		})
 		.task({
-			handler({ data }) {
+			handler({ data: { projectName } }) {
 				botMessage({
-					description: `Run \`cd ./${data.projectName}\` and Enjoy 🚀`,
+					description: `Run \`cd ./${projectName}\` and Enjoy 🚀`,
 					title: "The project was successfully created",
 					type: "success",
 				});
@@ -224,78 +294,185 @@ export const createCreateCommand: CommandFactory = (program) => {
 
 const label = (message: string) => `${message} 🔨`;
 
-/**
- * A simple template engine to evaluate dynamic expressions and apply side effets (such as hydrating a content with values from an input object) on impacted template files.
- * @param template - The selected template.
- * @param dataModel - Data model mapping the template expression key with its corresponding value.
- * @example
- * applyTemplate(
- * 	{ toReplace: "value" },
- * );
- */
-const applyTemplate = (
-	template: Template,
-	dataModel: CommandContext["data"],
-) => {
-	const templateExtension = ".tmpl";
+const slugify = (input: string) => {
+	return input
+		.toLowerCase()
+		.replaceAll(/[^a-z0-9\s-]/g, "")
+		.trim()
+		.replaceAll(/\s+/g, "-")
+		.replaceAll(/-+/g, "-");
+};
 
-	const templateRootPath = resolveFromStackDirectory(
-		join("./templates", template),
-	);
+const toCapitalLetter = (input: string) => {
+	return input.charAt(0).toUpperCase() + input.slice(1);
+};
 
-	const projectRootPath = resolveFromProjectDirectory("./");
-	const templateExpressionRegExp = /{{(.*?)}}/g;
+type TemplateEngine = {
+	processContents: () => Promise<void>;
+	processPaths: () => Promise<void>;
+};
 
-	const evaluate = (content: string) => {
-		return content.replaceAll(
-			templateExpressionRegExp,
-			(_, key: keyof CommandContext["data"]) => dataModel[key] || "",
-		);
-	};
+type TemplateEntry = {
+	content: string;
+	path: string;
+	type: "content" | "path.directory" | "path.file";
+};
 
-	/** Copy the template before mutations. */
-	cpSync(templateRootPath, projectRootPath, {
+type TemplateMetadata = {
+	projectName: string;
+	templateModel: Record<string, string>;
+	templateName: string;
+	templatePath: string;
+};
+
+export const createTemplateEngine = async (
+	workingPath: string,
+	{
+		projectName,
+		templateModel,
+		templateName,
+		templatePath,
+	}: TemplateMetadata,
+): Promise<TemplateEngine> => {
+	if (!existsSync(workingPath)) {
+		await mkdir(workingPath);
+	}
+
+	// Copy the selected template before mutation
+	await cp(templatePath, workingPath, {
 		force: true,
 		recursive: true,
 	});
 
-	/** Template file mutations. */
-	new fdir()
-		.withBasePath()
-		.glob(`**/*${templateExtension}`)
-		.crawl(projectRootPath)
-		.sync()
-		.forEach((templateFilePath) => {
-			const projectFilePath = templateFilePath.slice(
-				0,
-				templateFilePath.lastIndexOf(templateExtension),
+	// Rename back `.gitignore` if available (since NPM prevents its inclusion during publication: https://docs.npmjs.com/cli/v10/using-npm/developers#keeping-files-out-of-your-package)
+	const gitignoreFile = join(workingPath, ".gitignore.tmpl");
+
+	if (existsSync(gitignoreFile)) {
+		await rename(gitignoreFile, join(workingPath, ".gitignore"));
+	}
+
+	// Rename back `eslint.config.js` (since eslint use the nearest config file found to prevent false positives)
+	const eslintConfigFile = join(workingPath, "eslint.config.js.tmpl");
+
+	if (existsSync(eslintConfigFile)) {
+		await rename(eslintConfigFile, join(workingPath, "eslint.config.js"));
+	}
+
+	const templateEntries = await getTemplateEntries(workingPath);
+
+	process.chdir(workingPath);
+
+	return {
+		async processContents() {
+			await Promise.all(
+				templateEntries
+					.filter(({ type }) => type === "content")
+					.map(async (entry) => {
+						return writeFile(
+							entry.path,
+							setTemplateVariables(entry, templateModel),
+						);
+					}),
 			);
+		},
+		async processPaths() {
+			const sortedDirectoryEntries = templateEntries
+				.filter(({ content, type }) => {
+					if (type === "path.directory" || type === "path.file") {
+						// Process only the basename to avoid renaming errors in deeply nested paths that rely on the original, non-computed template variable.
+						return hasTemplateVariable(basename(content));
+					}
 
-			const content = evaluate(readFileSync(templateFilePath, "utf8"));
+					return false;
+				})
+				.toSorted(
+					// Re-order from longest to lowest path length to rename deepest directory paths first
+					({ path: pathA }, { path: pathB }) =>
+						pathB.length - pathA.length,
+				);
 
-			renameSync(templateFilePath, projectFilePath);
-			writeFileSync(projectFilePath, content, "utf8");
-		});
+			for (const entry of sortedDirectoryEntries) {
+				const newPath = setTemplateVariables(entry, templateModel);
 
-	/** Template folder mutations. */
-	new fdir()
-		.withBasePath()
-		.onlyDirs()
-		.filter((path) => {
-			return templateExpressionRegExp.test(path);
-		})
-		.crawl(projectRootPath)
-		.sync()
-		// Re-order from longest to lowest path length to apply first renaming operations on deepest file structure
-		.toSorted((a, b) => b.length - a.length)
-		.forEach((templateFolderPath) => {
-			const newPath = templateFolderPath.replaceAll(
-				templateExpressionRegExp,
-				(_, dataModelKey) => {
-					return dataModel[dataModelKey as keyof typeof dataModel];
-				},
+				await rename(entry.path, newPath);
+			}
+
+			await symlink(
+				join(
+					templateName === "single-project"
+						? projectName
+						: join("libraries", projectName),
+					"README.md",
+				),
+				"./README.md",
 			);
+		},
+	};
+};
 
-			renameSync(templateFolderPath, newPath);
-		});
+const getTemplateEntries = async (path: string) => {
+	const entries = await readdir(path, {
+		recursive: true,
+		withFileTypes: true,
+	});
+
+	const templateEntries = await Promise.all(
+		entries.map(async (entry): Promise<TemplateEntry[]> => {
+			const isDirectory = entry.isDirectory();
+
+			if (!isDirectory && !entry.isFile()) return [];
+
+			const entryPath = resolve(entry.parentPath, entry.name);
+
+			const processableItems: Pick<TemplateEntry, "content" | "type">[] =
+				isDirectory
+					? [{ content: entryPath, type: "path.directory" }]
+					: [
+							{ content: entryPath, type: "path.file" },
+							{
+								content: await readFile(entryPath, "utf8"),
+								type: "content",
+							},
+						];
+
+			return processableItems
+				.map(({ content, type }) => {
+					if (!hasTemplateVariable(content)) return undefined;
+
+					return {
+						content,
+						path: entryPath,
+						type,
+					};
+				})
+				.filter((input): input is TemplateEntry => Boolean(input));
+		}),
+	);
+
+	return templateEntries.flat();
+};
+
+const setTemplateVariables = (
+	entry: TemplateEntry,
+	model: TemplateMetadata["templateModel"],
+) => {
+	return entry.content.replaceAll(
+		TEMPLATE_VARIABLE_MATCHER,
+		(match, dataModelKey: string) => {
+			return model[dataModelKey] ?? match;
+		},
+	);
+};
+
+const TEMPLATE_VARIABLE_MATCHER = new RegExp(/{{(.*?)}}/g, "gi");
+
+const hasTemplateVariable = (input: string) => {
+	/**
+	 * TemplateVariableMatcher.test() is not used since the `RegExp` is stateful when the global is used leading to some unstable results
+	 * (relying on latest `lastIndex` set (lastIndex specifies the index at which to start the next match)).
+	 * String.search is stateless.
+	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test MDN documentation}.
+	 */
+	// eslint-disable-next-line unicorn/prefer-regexp-test
+	return input.search(TEMPLATE_VARIABLE_MATCHER) >= 0;
 };
