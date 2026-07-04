@@ -141,7 +141,7 @@ export const setPackageManager = async () => {
 	 * Corepack is downloaded remotely to get always up-to-date npm registry fingerprints since they're hardcoded.
 	 * @see {@link https://github.com/nodejs/corepack/issues/613}
 	 */
-	return helpers.exec("npx corepack enable");
+	return helpers.exec("pnx corepack enable");
 };
 
 export const request = {
