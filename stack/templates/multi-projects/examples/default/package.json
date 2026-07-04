@@ -9,6 +9,6 @@
 		"{{projectName}}": "workspace:^"
 	},
 	"devDependencies": {
-		"tsx": "4.19.1"
+		"tsx": "4.22.4"
 	}
 }
