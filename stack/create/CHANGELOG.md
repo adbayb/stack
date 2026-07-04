@@ -1,5 +1,14 @@
 # @adbayb/create
 
+## 2.40.0
+
+### Patch Changes
+
+- [`634411b`](https://github.com/adbayb/stack/commit/634411b062cece9fd46c5711141b0c2cf5124797) Thanks [@adbayb](https://github.com/adbayb)! - Enable back save-exact config following pnpm 11 migration (`.npmrc` is no longer needed). Templates are updated as well.
+
+- Updated dependencies [[`84d6a79`](https://github.com/adbayb/stack/commit/84d6a79966b24f9fd3bdee097a6bfb8d7c382f49), [`634411b`](https://github.com/adbayb/stack/commit/634411b062cece9fd46c5711141b0c2cf5124797)]:
+    - @adbayb/stack@2.40.0
+
 ## 2.39.0
 
 ### Patch Changes
