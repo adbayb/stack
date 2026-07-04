@@ -4,7 +4,7 @@ import { helpers } from "termost";
 
 import type { CommandFactory } from "../types";
 
-import { resolveFromProjectDirectory } from "../helpers";
+import { resolveFromWorkingDirectory } from "../helpers";
 
 type CommandContext = {
 	files: string[];
@@ -23,7 +23,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 
 				if (
 					isDirectoryExistAndNotEmpty(
-						resolveFromProjectDirectory(cachePath),
+						resolveFromWorkingDirectory(cachePath),
 					)
 				) {
 					files.push(cachePath);

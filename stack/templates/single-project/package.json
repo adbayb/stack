@@ -17,18 +17,13 @@
 		"watch": "stack watch"
 	},
 	"prettier": "@adbayb/stack/prettier",
-	"packageManager": "pnpm@{{npmVersion}}",
+	"packageManager": "pnpm@{{pnpmVersion}}",
 	"devEngines": {
-		"packageManager": [
-			{
-				"name": "pnpm",
-				"version": "{{npmVersion}}",
-				"onFail": "download"
-			},
-			{
-				"name": "npm"
-			}
-		],
+		"packageManager": {
+			"name": "pnpm",
+			"version": "{{pnpmVersion}}",
+			"onFail": "download"
+		},
 		"runtime": {
 			"name": "node",
 			"version": ">=24.0.0",

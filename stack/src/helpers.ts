@@ -74,10 +74,10 @@ ${input.body}
  * @param path - The relative path.
  * @returns The resolved absolute path.
  * @example
- * resolveFromProjectDirectory(".gitignore");
+ * resolveFromWorkingDirectory(".gitignore");
  */
-export const resolveFromProjectDirectory = (path: string) => {
-	return resolve(process.cwd(), path);
+export const resolveFromWorkingDirectory = (...path: string[]) => {
+	return resolve(process.cwd(), ...path);
 };
 
 /**
@@ -85,10 +85,10 @@ export const resolveFromProjectDirectory = (path: string) => {
  * @param path - The relative path.
  * @returns The resolved absolute path.
  * @example
- * resolveFromStackDirectory("./templates");
+ * resolveFromPackageDirectory("./templates");
  */
-export const resolveFromStackDirectory = (path: string) => {
-	return resolve(import.meta.dirname, "../", path);
+export const resolveFromPackageDirectory = (...path: string[]) => {
+	return resolve(import.meta.dirname, "../", ...path);
 };
 
 export const createError = (bin: string, error: Error | string) => {
@@ -117,7 +117,7 @@ export const getRepositoryUrl = async () => {
 	}
 };
 
-export const getNpmVersion = async () => {
+export const getPnpmVersion = async () => {
 	try {
 		return await helpers.exec("pnpm -v");
 	} catch {
@@ -187,7 +187,7 @@ export const eslint =
 		const arguments_ = [
 			...eslintFiles,
 			"--cache",
-			`--cache-location ${resolveFromProjectDirectory(
+			`--cache-location ${resolveFromWorkingDirectory(
 				"node_modules/.cache/.eslintcache",
 			)}`,
 			"--no-error-on-unmatched-pattern",
