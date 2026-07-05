@@ -1,6 +1,5 @@
-import type { CommandFactory } from "../../types";
-
 import { logCheckableFiles, turbo } from "../../helpers";
+import type { CommandFactory } from "../../types";
 import { fixFormatting } from "./fixFormatting";
 import { fixLinter } from "./fixLinter";
 

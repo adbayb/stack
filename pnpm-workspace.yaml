@@ -10,9 +10,10 @@ publicHoistPattern:
     - "*changesets*"
     - "*commitlint*"
     - "*eslint*"
-    - "*prettier*"
+    - "*oxfmt*"
     - "*turbo*"
     - "*typescript*"
     - "*types*"
+    # TODO: remove eslint, prettier and add oxlint/oxfmt?
 saveExact: true
 verifyDepsBeforeRun: "warn"

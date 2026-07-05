@@ -1,15 +1,11 @@
 import { join } from "node:path";
 import { helpers } from "termost";
-
-import type { PackageJson } from "../../types";
-
 import { assert, createError, require } from "../../helpers";
+import type { PackageJson } from "../../types";
 
 export const checkDependency = async () => {
 	const stdout = await helpers.exec("pnpm recursive ls --json");
-
-	const checkDependencyVersionMismatch =
-		createPackagesVersionMismatchChecker();
+	const checkDependencyVersionMismatch = createPackagesVersionMismatchChecker();
 
 	const packages = (
 		JSON.parse(stdout) as {
@@ -54,11 +50,7 @@ const checkDependencyVersionRange = ({
 	for (const [dependencyName, version] of Object.entries(devDependencies)) {
 		assertVersion(version, { consumedBy: name, name: dependencyName });
 
-		if (
-			version !== "workspace:*" &&
-			!isExcluded(version) &&
-			!/^\d/.test(version)
-		)
+		if (version !== "workspace:*" && !isExcluded(version) && !/^\d/.test(version))
 			throw createPackageError(
 				`As a dev dependency, \`${dependencyName}\` version must be fixed (or set as "workspace:*" for local packages) to reduce accidental breaking change risks due to an implicit semver upgrade.`,
 				{
@@ -71,11 +63,7 @@ const checkDependencyVersionRange = ({
 	for (const [dependencyName, version] of Object.entries(dependencies)) {
 		assertVersion(version, { consumedBy: name, name: dependencyName });
 
-		if (
-			version !== "workspace:^" &&
-			!hasCaret(version) &&
-			!isExcluded(version)
-		)
+		if (version !== "workspace:^" && !hasCaret(version) && !isExcluded(version))
 			throw createPackageError(
 				`As a dependency, \`${dependencyName}\` version must be prefixed with a caret (or set as "workspace:^" for local packages) to optimize the size (whether of installation or bundle output) on the consumer side.`,
 				{
@@ -108,23 +96,13 @@ const createPackagesVersionMismatchChecker = () => {
 	const monorepoDependencies = new Map<string, string>();
 	const monorepoDevelopmentDependencies = new Map<string, string>();
 
-	const lint = (
-		package_: PackageJson,
-		type: "development" | "production",
-	) => {
+	const lint = (package_: PackageJson, type: "development" | "production") => {
 		const packageName = package_.name;
 		const isDevelopment = type === "development";
+		const store = isDevelopment ? monorepoDevelopmentDependencies : monorepoDependencies;
+		const dependencies = package_[isDevelopment ? "devDependencies" : "dependencies"];
 
-		const store = isDevelopment
-			? monorepoDevelopmentDependencies
-			: monorepoDependencies;
-
-		const dependencies =
-			package_[isDevelopment ? "devDependencies" : "dependencies"];
-
-		for (const [dependencyName, dependencyVersion] of Object.entries(
-			dependencies,
-		)) {
+		for (const [dependencyName, dependencyVersion] of Object.entries(dependencies)) {
 			if (!dependencyVersion) continue;
 
 			const storedVersion = store.get(dependencyName);
@@ -185,9 +163,7 @@ function assertVersion(
 }
 
 const isExcluded = (version: string) => {
-	const isPreReleaseVersion =
-		/\d+\.\d+\.\d+-(alpha|beta|experimental|next|rc).*/.exec(version);
-
+	const isPreReleaseVersion = /\d+\.\d+\.\d+-(alpha|beta|experimental|next|rc).*/.exec(version);
 	const isNpmProtocol = version.startsWith("npm:");
 
 	return isNpmProtocol || isPreReleaseVersion;

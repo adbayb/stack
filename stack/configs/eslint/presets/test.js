@@ -18,10 +18,7 @@ export const config = createConfig({
 				test: "for",
 			},
 		],
-		"vitest/consistent-test-it": [
-			"error",
-			{ fn: "test", withinDescribe: "test" },
-		],
+		"vitest/consistent-test-it": ["error", { fn: "test", withinDescribe: "test" }],
 		"vitest/consistent-vitest-vi": ["error", { fn: "vi" }],
 		"vitest/expect-expect": "error",
 		"vitest/max-nested-describe": ["error", { max: 1 }],

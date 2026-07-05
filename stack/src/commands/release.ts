@@ -1,8 +1,6 @@
 import { helpers } from "termost";
-
-import type { CommandFactory } from "../types";
-
 import { changeset } from "../helpers";
+import type { CommandFactory } from "../types";
 
 type CommandContext = {
 	emptyLog: boolean;
@@ -57,9 +55,7 @@ export const createReleaseCommand: CommandFactory = (program) => {
 			async handler() {
 				helpers.message("Bumping the package(s) version\n");
 
-				await changeset(
-					"changeset version && pnpm install --no-frozen-lockfile",
-				);
+				await changeset("changeset version && pnpm install --no-frozen-lockfile");
 			},
 			skip: ifNotEqualTo("tag"),
 		})
@@ -73,7 +69,6 @@ export const createReleaseCommand: CommandFactory = (program) => {
 		});
 };
 
-const ifNotEqualTo =
-	(validOption: keyof CommandContext) => (context: CommandContext) => {
-		return !context[validOption];
-	};
+const ifNotEqualTo = (validOption: keyof CommandContext) => (context: CommandContext) => {
+	return !context[validOption];
+};

@@ -1,10 +1,6 @@
 import reactPlugin from "@eslint-react/eslint-plugin";
 
-import {
-	JAVASCRIPT_FILES,
-	JAVASCRIPT_LIKE_FILES,
-	TYPESCRIPT_FILES,
-} from "../constants.js";
+import { JAVASCRIPT_FILES, JAVASCRIPT_LIKE_FILES, TYPESCRIPT_FILES } from "../constants.js";
 import { createConfig } from "../helpers.js";
 
 export const config = createConfig(
@@ -15,8 +11,7 @@ export const config = createConfig(
 		},
 		rules: {
 			"@eslint-react/dom-no-dangerously-set-innerhtml": "error",
-			"@eslint-react/dom-no-dangerously-set-innerhtml-with-children":
-				"error",
+			"@eslint-react/dom-no-dangerously-set-innerhtml-with-children": "error",
 			"@eslint-react/dom-no-find-dom-node": "error",
 			"@eslint-react/dom-no-flush-sync": "error",
 			"@eslint-react/dom-no-hydrate": "error",

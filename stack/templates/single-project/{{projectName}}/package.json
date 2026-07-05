@@ -4,15 +4,18 @@
 	"description": "{{projectDescription}}",
 	"homepage": "https://github.com/{{repoId}}/tree/main/{{projectName}}#readme",
 	"bugs": "https://github.com/{{repoId}}/issues",
+	"license": "MIT",
+	"author": "Ayoub Adib <adbayb@gmail.com> (https://twitter.com/adbayb)",
 	"repository": {
 		"type": "git",
 		"url": "{{projectUrl}}",
 		"directory": "{{projectName}}"
 	},
-	"license": "MIT",
-	"author": "Ayoub Adib <adbayb@gmail.com> (https://twitter.com/adbayb)",
-	"sideEffects": false,
+	"files": [
+		"dist"
+	],
 	"type": "module",
+	"sideEffects": false,
 	"exports": {
 		"source": "./src/index.ts",
 		"types": "./dist/index.d.ts",
@@ -20,9 +23,10 @@
 		"import": "./dist/index.mjs",
 		"default": "./dist/index.mjs"
 	},
-	"files": [
-		"dist"
-	],
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org"
+	},
 	"scripts": {
 		"build": "pnpm clean && quickbundle build",
 		"clean": "rm -rf dist",
@@ -30,9 +34,5 @@
 		"start": "pnpm watch",
 		"test": "vitest --passWithNoTests --typecheck --reporter=verbose",
 		"watch": "quickbundle watch"
-	},
-	"publishConfig": {
-		"access": "public",
-		"registry": "https://registry.npmjs.org"
 	}
 }

@@ -1,10 +1,8 @@
 import { existsSync, readdirSync } from "node:fs";
 import { rm } from "node:fs/promises";
 import { helpers } from "termost";
-
-import type { CommandFactory } from "../types";
-
 import { resolveFromWorkingDirectory } from "../helpers";
+import type { CommandFactory } from "../types";
 
 type CommandContext = {
 	files: string[];
@@ -21,11 +19,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 				const cachePath = "node_modules/.cache";
 				const files = await retrieveIgnoredFiles();
 
-				if (
-					isDirectoryExistAndNotEmpty(
-						resolveFromWorkingDirectory(cachePath),
-					)
-				) {
+				if (isDirectoryExistAndNotEmpty(resolveFromWorkingDirectory(cachePath))) {
 					files.push(cachePath);
 				}
 
@@ -41,9 +35,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 				await cleanFiles(files);
 			},
 			label({ files }) {
-				return files.length > 0
-					? label("Clean assets")
-					: "Already clean ✨";
+				return files.length > 0 ? label("Clean assets") : "Already clean ✨";
 			},
 		})
 		.task({
@@ -63,9 +55,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 const label = (message: string) => `${message} 🧹`;
 
 const cleanFiles = async (files: string[]) => {
-	return Promise.all(
-		files.map(async (file) => rm(file, { force: true, recursive: true })),
-	);
+	return Promise.all(files.map(async (file) => rm(file, { force: true, recursive: true })));
 };
 
 const isDirectoryExistAndNotEmpty = (path: string) => {
@@ -78,9 +68,7 @@ const retrieveIgnoredFiles = async () => {
 	return rawFiles
 		.split(/\n|\r\n/)
 		.filter((cleanOutput) =>
-			PRESERVE_FILES.every(
-				(excludedFile) => !cleanOutput.includes(excludedFile),
-			),
+			PRESERVE_FILES.every((excludedFile) => !cleanOutput.includes(excludedFile)),
 		)
 		.map((cleanOutput) => cleanOutput.split(" ").at(-1) as string);
 };

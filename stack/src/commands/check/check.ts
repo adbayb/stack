@@ -1,12 +1,12 @@
-import type { CommandFactory } from "../../types";
-
 import { hasDependency, logCheckableFiles, turbo } from "../../helpers";
+import type { CommandFactory } from "../../types";
 import { checkCode } from "./checkCode";
 import { checkCommit } from "./checkCommit";
 import { checkDependency } from "./checkDependency";
+import { checkFormatting } from "./checkFormatting";
 import { checkType } from "./checkType";
 
-const ONLY_VALUES = ["commit", "code", "dependency", "type"] as const;
+const ONLY_VALUES = ["commit", "code", "dependency", "formatting", "type"] as const;
 
 type CommandContext = {
 	filter: Filter | undefined;
@@ -57,6 +57,15 @@ export const createCheckCommand: CommandFactory = (program) => {
 			async handler(_, argv) {
 				const filenames = argv.operands;
 
+				await checkFormatting(filenames);
+			},
+			label: label("Check formatting compliance"),
+			skip: ifFilterDefinedAndNotEqualTo("formatting"),
+		})
+		.task({
+			async handler(_, argv) {
+				const filenames = argv.operands;
+
 				await checkCode(filenames);
 			},
 			label: label("Check code compliance"),
@@ -73,6 +82,7 @@ export const createCheckCommand: CommandFactory = (program) => {
 					!hasDependency("typescript") ||
 					/**
 					 * For now, skip type-checking if some files are passed down.
+					 *
 					 * @see https://github.com/microsoft/TypeScript/issues/27379
 					 */
 					argv.operands.length > 0
@@ -92,7 +102,6 @@ export const createCheckCommand: CommandFactory = (program) => {
 
 const label = (message: string) => `${message} 🧐`;
 
-const ifFilterDefinedAndNotEqualTo =
-	(filter: Filter) => (context: CommandContext) => {
-		return context.filter !== undefined && context.filter !== filter;
-	};
+const ifFilterDefinedAndNotEqualTo = (filter: Filter) => (context: CommandContext) => {
+	return context.filter !== undefined && context.filter !== filter;
+};

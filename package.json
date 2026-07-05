@@ -3,15 +3,15 @@
 	"version": "0.0.0",
 	"private": true,
 	"description": "My opinionated stack to ease project building",
-	"repository": {
-		"type": "git",
-		"url": "git@github.com:adbayb/stack.git"
-	},
 	"license": "MIT",
 	"author": {
 		"name": "Ayoub Adib",
 		"email": "adbayb@gmail.com",
 		"url": "https://twitter.com/adbayb"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:adbayb/stack.git"
 	},
 	"type": "module",
 	"scripts": {
@@ -27,11 +27,9 @@
 		"test": "stack test",
 		"watch": "stack watch"
 	},
-	"prettier": "@adbayb/stack/prettier",
 	"devDependencies": {
 		"@adbayb/stack": "workspace:*"
 	},
-	"packageManager": "pnpm@11.10.0",
 	"devEngines": {
 		"packageManager": [
 			{
@@ -48,5 +46,6 @@
 			"version": ">=24.0.0",
 			"onFail": "error"
 		}
-	}
+	},
+	"packageManager": "pnpm@11.10.0"
 }

@@ -3,31 +3,21 @@
 	"version": "2.40.0",
 	"description": "My opinionated JavaScript-based toolchain",
 	"keywords": [
-		"stack",
+		"development",
 		"scripts",
-		"toolchain",
-		"development"
+		"stack",
+		"toolchain"
 	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/adbayb/stack.git",
-		"directory": "applications/stack"
-	},
 	"license": "MIT",
 	"author": {
 		"name": "Ayoub Adib",
 		"email": "adbayb@gmail.com",
 		"url": "https://twitter.com/adbayb"
 	},
-	"type": "module",
-	"exports": {
-		".": {
-			"source": "./src/index.ts",
-			"default": "./dist/index.js"
-		},
-		"./eslint": "./configs/eslint/index.js",
-		"./prettier": "./configs/prettier/index.js",
-		"./typescript": "./configs/typescript/index.json"
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/adbayb/stack.git",
+		"directory": "applications/stack"
 	},
 	"bin": {
 		"stack": "./bin/index.js"
@@ -38,6 +28,20 @@
 		"dist",
 		"templates"
 	],
+	"type": "module",
+	"exports": {
+		".": {
+			"source": "./src/index.ts",
+			"default": "./dist/index.js"
+		},
+		"./eslint": "./configs/eslint/index.js",
+		"./oxfmt": "./configs/oxfmt/index.ts",
+		"./typescript": "./configs/typescript/index.json"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org"
+	},
 	"scripts": {
 		"build": "quickbundle build",
 		"prepublishOnly": "pnpm build",
@@ -55,7 +59,6 @@
 		"@stylistic/eslint-plugin": "^5.10.0",
 		"@vitest/eslint-plugin": "^1.6.20",
 		"eslint": "^10.5.0",
-		"eslint-config-prettier": "^10.1.8",
 		"eslint-import-resolver-typescript": "^4.4.5",
 		"eslint-plugin-depend": "^1.5.0",
 		"eslint-plugin-import-x": "^4.16.2",
@@ -63,12 +66,10 @@
 		"eslint-plugin-mdx": "^3.8.1",
 		"eslint-plugin-n": "^18.1.0",
 		"eslint-plugin-perfectionist": "^5.9.1",
-		"eslint-plugin-prettier": "^5.5.6",
 		"eslint-plugin-sonarjs": "^4.1.0",
 		"eslint-plugin-unicorn": "^68.0.0",
 		"globals": "^17.6.0",
-		"prettier": "^3.8.4",
-		"prettier-plugin-packagejson": "^3.0.2",
+		"oxfmt": "^0.57.0",
 		"termost": "^1.9.1",
 		"turbo": "^2.9.18",
 		"typescript": "^6.0.3",
@@ -77,9 +78,5 @@
 	"devDependencies": {
 		"@types/node": "24.13.2",
 		"quickbundle": "3.0.0"
-	},
-	"publishConfig": {
-		"access": "public",
-		"registry": "https://registry.npmjs.org"
 	}
 }

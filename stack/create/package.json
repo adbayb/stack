@@ -3,21 +3,26 @@
 	"version": "2.40.0",
 	"description": "My opinionated scaffolding tool",
 	"keywords": [
-		"setup",
+		"development",
 		"scaffolding",
-		"development"
+		"setup"
 	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/adbayb/stack.git",
-		"directory": "applications/create"
-	},
 	"license": "MIT",
 	"author": {
 		"name": "Ayoub Adib",
 		"email": "adbayb@gmail.com",
 		"url": "https://twitter.com/adbayb"
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/adbayb/stack.git",
+		"directory": "applications/create"
+	},
+	"bin": "./bin/index.js",
+	"files": [
+		"bin",
+		"dist"
+	],
 	"type": "module",
 	"exports": {
 		".": {
@@ -25,11 +30,10 @@
 			"default": "./dist/index.js"
 		}
 	},
-	"bin": "./bin/index.js",
-	"files": [
-		"bin",
-		"dist"
-	],
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org"
+	},
 	"scripts": {
 		"build": "quickbundle build",
 		"prepublishOnly": "pnpm build",
@@ -43,9 +47,5 @@
 	},
 	"devDependencies": {
 		"quickbundle": "3.0.0"
-	},
-	"publishConfig": {
-		"access": "public",
-		"registry": "https://registry.npmjs.org"
 	}
 }

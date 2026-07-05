@@ -1,6 +1,5 @@
-import type { CommandFactory } from "../types";
-
 import { turbo } from "../helpers";
+import type { CommandFactory } from "../types";
 
 export const createStartCommand: CommandFactory = (program) => {
 	program

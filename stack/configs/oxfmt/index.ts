@@ -1,23 +1,29 @@
-/** @type {import("prettier").Config} */
-export default {
+import { defineConfig } from "oxfmt";
+
+export default defineConfig({
 	arrowParens: "always",
 	bracketSameLine: false,
 	bracketSpacing: true,
 	embeddedLanguageFormatting: "auto",
 	endOfLine: "lf",
 	htmlWhitespaceSensitivity: "css",
-	insertPragma: false,
+	ignorePatterns: [],
+	insertFinalNewline: true,
+	jsdoc: true,
 	jsxSingleQuote: false,
-	plugins: ["prettier-plugin-packagejson"],
-	printWidth: 80,
+	objectWrap: "preserve",
+	printWidth: 100,
 	proseWrap: "preserve",
 	quoteProps: "consistent",
-	requirePragma: false,
 	semi: true,
 	singleAttributePerLine: true,
 	singleQuote: false,
+	sortImports: {
+		newlinesBetween: false,
+	},
+	sortPackageJson: true,
 	tabWidth: 4,
 	trailingComma: "all",
 	useTabs: true,
 	vueIndentScriptAndStyle: false,
-};
+});

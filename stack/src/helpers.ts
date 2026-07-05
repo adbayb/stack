@@ -1,7 +1,6 @@
 import { createRequire } from "node:module";
 import { resolve } from "node:path";
 import { helpers } from "termost";
-
 import type { Filenames } from "./types";
 
 export const require = createRequire(import.meta.url);
@@ -17,21 +16,20 @@ export function assert(
 
 /**
  * Helper to format log messages with a welcoming bot.
+ *
+ * @example
+ * 	botMessage({
+ * 		title: "Oops, an error occurred",
+ * 		description: "Keep calm and carry on with some coffee ☕️",
+ * 		body: String(previousTaskError),
+ * 		type: "error",
+ * 	});
+ *
  * @param input - Message factory.
  * @param input.title - Title input.
  * @param input.description - Description input.
  * @param input.body - Body input.
  * @param input.type - Message type.
- * @example
- * botMessage(
- *	{
- * 		title: "Oops, an error occurred",
- * 		description:
- * 			"Keep calm and carry on with some coffee ☕️",
- * 		body: String(previousTaskError),
- * 		type: "error",
- * 	},
- * );
  */
 export const botMessage = (input: {
 	body?: string;
@@ -71,10 +69,12 @@ ${input.body}
 
 /**
  * Resolve a relative path to an absolute one resolved from the generated project root directory.
+ *
+ * @example
+ * 	resolveFromWorkingDirectory(".gitignore");
+ *
  * @param path - The relative path.
  * @returns The resolved absolute path.
- * @example
- * resolveFromWorkingDirectory(".gitignore");
  */
 export const resolveFromWorkingDirectory = (...path: string[]) => {
 	return resolve(process.cwd(), ...path);
@@ -82,10 +82,12 @@ export const resolveFromWorkingDirectory = (...path: string[]) => {
 
 /**
  * Resolve a relative path to an absolute one resolved from the `stack` node module directory.
+ *
+ * @example
+ * 	resolveFromPackageDirectory("./templates");
+ *
  * @param path - The relative path.
  * @returns The resolved absolute path.
- * @example
- * resolveFromPackageDirectory("./templates");
  */
 export const resolveFromPackageDirectory = (...path: string[]) => {
 	return resolve(import.meta.dirname, "../", ...path);
@@ -138,17 +140,16 @@ export const hasDependency = (packageName: string) => {
 
 export const setPackageManager = async () => {
 	/**
-	 * Corepack is downloaded remotely to get always up-to-date npm registry fingerprints since they're hardcoded.
+	 * Corepack is downloaded remotely to get always up-to-date npm registry fingerprints since
+	 * they're hardcoded.
+	 *
 	 * @see {@link https://github.com/nodejs/corepack/issues/613}
 	 */
 	return helpers.exec("pnx corepack enable");
 };
 
 export const request = {
-	async get<ResponseType extends "json" | "text">(
-		url: string,
-		responseType: ResponseType,
-	) {
+	async get<ResponseType extends "json" | "text">(url: string, responseType: ResponseType) {
 		const response = await fetch(url);
 
 		if (!response.ok) {
@@ -176,9 +177,7 @@ export const eslint =
 			eslintFiles.push(".");
 		} else {
 			eslintFiles = files.filter((file) => {
-				return ESLINT_EXTENSIONS.some((extension) =>
-					file.endsWith(extension),
-				);
+				return ESLINT_EXTENSIONS.some((extension) => file.endsWith(extension));
 			});
 
 			if (eslintFiles.length === 0) return;
@@ -187,9 +186,7 @@ export const eslint =
 		const arguments_ = [
 			...eslintFiles,
 			"--cache",
-			`--cache-location ${resolveFromWorkingDirectory(
-				"node_modules/.cache/.eslintcache",
-			)}`,
+			`--cache-location ${resolveFromWorkingDirectory("node_modules/.cache/.eslintcache")}`,
 			"--no-error-on-unmatched-pattern",
 		];
 
@@ -204,6 +201,23 @@ export const eslint =
 		}
 	};
 
+export const oxfmt =
+	(options: { isFixMode: boolean }) =>
+	async (files: Filenames = []) => {
+		const arguments_ = [
+			...files,
+			"--disable-nested-config",
+			"--no-error-on-unmatched-pattern",
+			options.isFixMode ? "--write" : "--check",
+		];
+
+		try {
+			return await helpers.exec(`oxfmt ${arguments_.join(" ")}`);
+		} catch (error) {
+			throw createError("oxfmt", error as Error);
+		}
+	};
+
 export const turbo = async (
 	command: "build" | "start" | "test" | "watch",
 	options: {
@@ -211,11 +225,7 @@ export const turbo = async (
 	} & Parameters<typeof helpers.exec>[1] = {},
 ) => {
 	try {
-		const {
-			excludeExamples = false,
-			hasLiveOutput = true,
-			...restOptions
-		} = options;
+		const { excludeExamples = false, hasLiveOutput = true, ...restOptions } = options;
 
 		return await helpers.exec(
 			`turbo run ${command} ${excludeExamples ? "--filter !@examples/*" : ""}`,
@@ -255,15 +265,4 @@ export const changeset = async (command: string) => {
 	}
 };
 
-const ESLINT_EXTENSIONS = [
-	"js",
-	"jsx",
-	"cjs",
-	"mjs",
-	"ts",
-	"tsx",
-	"cts",
-	"mts",
-	"md",
-	"mdx",
-];
+const ESLINT_EXTENSIONS = ["js", "jsx", "cjs", "mjs", "ts", "tsx", "cts", "mts", "md", "mdx"];

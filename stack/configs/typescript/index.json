@@ -10,13 +10,7 @@
 		"exactOptionalPropertyTypes": true,
 		"incremental": true,
 		"jsx": "react-jsx",
-		"lib": [
-			"ESNext",
-			"DOM",
-			"DOM.AsyncIterable",
-			"DOM.Iterable",
-			"WebWorker.ImportScripts"
-		],
+		"lib": ["ESNext", "DOM", "DOM.AsyncIterable", "DOM.Iterable", "WebWorker.ImportScripts"],
 		"module": "Preserve",
 		"noEmit": true,
 		"noErrorTruncation": true,

@@ -1,7 +1,4 @@
 import { termost } from "termost";
-
-import type { CommandFactory } from "./types";
-
 import { createBuildCommand } from "./commands/build";
 import { createCheckCommand } from "./commands/check";
 import { createCleanCommand } from "./commands/clean";
@@ -14,6 +11,7 @@ import { createTestCommand } from "./commands/test";
 import { createWatchCommand } from "./commands/watch";
 import { VERSION } from "./constants";
 import { botMessage } from "./helpers";
+import type { CommandFactory } from "./types";
 
 const createProgram = (...commandFactories: CommandFactory[]) => {
 	const program = termost({

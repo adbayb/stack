@@ -1,19 +1,7 @@
 import { existsSync } from "node:fs";
-import {
-	cp,
-	mkdir,
-	readdir,
-	readFile,
-	rename,
-	rm,
-	symlink,
-	writeFile,
-} from "node:fs/promises";
+import { cp, mkdir, readdir, readFile, rename, rm, symlink, writeFile } from "node:fs/promises";
 import { basename, join, resolve } from "node:path";
 import { helpers } from "termost";
-
-import type { CommandFactory } from "../types";
-
 import { VERSION } from "../constants";
 import {
 	botMessage,
@@ -24,6 +12,7 @@ import {
 	resolveFromWorkingDirectory,
 	setPackageManager,
 } from "../helpers";
+import type { CommandFactory } from "../types";
 
 type CommandContext = {
 	canRemoveExistingDirectoryInput: boolean;
@@ -58,8 +47,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.task({
 			handler() {
 				botMessage({
-					description:
-						"I can guarantee you a project creation in under 1 minute 🚀",
+					description: "I can guarantee you a project creation in under 1 minute 🚀",
 					title: `I'm Stack v${VERSION} 👋`,
 					type: "information",
 				});
@@ -96,12 +84,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			type: "select",
 		})
 		.task({
-			async handler({
-				inputDescription,
-				inputName,
-				inputTemplate,
-				inputUrl,
-			}) {
+			async handler({ inputDescription, inputName, inputTemplate, inputUrl }) {
 				if (!inputName) {
 					throw createError(
 						"stack create",
@@ -142,10 +125,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 					projectName,
 					projectUrl: inputUrl,
 					repoId: `${repoOwner}/${repoName}`,
-					templatePath: resolveFromPackageDirectory(
-						"templates",
-						inputTemplate,
-					),
+					templatePath: resolveFromPackageDirectory("templates", inputTemplate),
 					workingPath: resolveFromWorkingDirectory(projectName),
 				};
 			},
@@ -164,10 +144,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 				return !existsSync(workingPath);
 			},
 			type: "confirm",
-			validate({
-				canRemoveExistingDirectoryInput,
-				data: { projectName },
-			}) {
+			validate({ canRemoveExistingDirectoryInput, data: { projectName } }) {
 				if (canRemoveExistingDirectoryInput) return;
 
 				return createError(
@@ -216,9 +193,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 			key: "templateEngine",
 			label({ data: { projectName }, inputTemplate }) {
-				return label(
-					`Copy \`${inputTemplate}\` template to \`${projectName}\` directory`,
-				);
+				return label(`Copy \`${inputTemplate}\` template to \`${projectName}\` directory`);
 			},
 		})
 		.task({
@@ -327,12 +302,7 @@ type TemplateMetadata = {
 
 export const createTemplateEngine = async (
 	workingPath: string,
-	{
-		projectName,
-		templateModel,
-		templateName,
-		templatePath,
-	}: TemplateMetadata,
+	{ projectName, templateModel, templateName, templatePath }: TemplateMetadata,
 ): Promise<TemplateEngine> => {
 	if (!existsSync(workingPath)) {
 		await mkdir(workingPath);
@@ -368,10 +338,7 @@ export const createTemplateEngine = async (
 				templateEntries
 					.filter(({ type }) => type === "content")
 					.map(async (entry) => {
-						return writeFile(
-							entry.path,
-							setTemplateVariables(entry, templateModel),
-						);
+						return writeFile(entry.path, setTemplateVariables(entry, templateModel));
 					}),
 			);
 		},
@@ -387,8 +354,7 @@ export const createTemplateEngine = async (
 				})
 				.toSorted(
 					// Re-order from longest to lowest path length to rename deepest directory paths first
-					({ path: pathA }, { path: pathB }) =>
-						pathB.length - pathA.length,
+					({ path: pathA }, { path: pathB }) => pathB.length - pathA.length,
 				);
 
 			for (const entry of sortedDirectoryEntries) {
@@ -424,16 +390,15 @@ const getTemplateEntries = async (path: string) => {
 
 			const entryPath = resolve(entry.parentPath, entry.name);
 
-			const processableItems: Pick<TemplateEntry, "content" | "type">[] =
-				isDirectory
-					? [{ content: entryPath, type: "path.directory" }]
-					: [
-							{ content: entryPath, type: "path.file" },
-							{
-								content: await readFile(entryPath, "utf8"),
-								type: "content",
-							},
-						];
+			const processableItems: Pick<TemplateEntry, "content" | "type">[] = isDirectory
+				? [{ content: entryPath, type: "path.directory" }]
+				: [
+						{ content: entryPath, type: "path.file" },
+						{
+							content: await readFile(entryPath, "utf8"),
+							type: "content",
+						},
+					];
 
 			return processableItems
 				.map(({ content, type }) => {
@@ -452,25 +417,20 @@ const getTemplateEntries = async (path: string) => {
 	return templateEntries.flat();
 };
 
-const setTemplateVariables = (
-	entry: TemplateEntry,
-	model: TemplateMetadata["templateModel"],
-) => {
-	return entry.content.replaceAll(
-		TEMPLATE_VARIABLE_MATCHER,
-		(match, dataModelKey: string) => {
-			return model[dataModelKey] ?? match;
-		},
-	);
+const setTemplateVariables = (entry: TemplateEntry, model: TemplateMetadata["templateModel"]) => {
+	return entry.content.replaceAll(TEMPLATE_VARIABLE_MATCHER, (match, dataModelKey: string) => {
+		return model[dataModelKey] ?? match;
+	});
 };
 
 const TEMPLATE_VARIABLE_MATCHER = new RegExp(/{{(.*?)}}/g, "gi");
 
 const hasTemplateVariable = (input: string) => {
 	/**
-	 * TemplateVariableMatcher.test() is not used since the `RegExp` is stateful when the global is used leading to some unstable results
-	 * (relying on latest `lastIndex` set (lastIndex specifies the index at which to start the next match)).
-	 * String.search is stateless.
+	 * TemplateVariableMatcher.test() is not used since the `RegExp` is stateful when the global is
+	 * used leading to some unstable results (relying on latest `lastIndex` set (lastIndex specifies
+	 * the index at which to start the next match)). String.search is stateless.
+	 *
 	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test MDN documentation}.
 	 */
 	// eslint-disable-next-line unicorn/prefer-regexp-test

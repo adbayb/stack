@@ -1,6 +1,5 @@
-import nodePlugin from "eslint-plugin-n";
 import { join } from "node:path";
-
+import nodePlugin from "eslint-plugin-n";
 import { CWD, JAVASCRIPT_LIKE_FILES } from "../constants.js";
 import { createConfig, require } from "../helpers.js";
 
@@ -24,10 +23,7 @@ export const config = createConfig({
 		"n/no-unpublished-bin": "error",
 		"n/no-unsupported-features/es-builtins": "error",
 		"n/no-unsupported-features/es-syntax": "error",
-		"n/no-unsupported-features/node-builtins": [
-			"error",
-			{ allowExperimental: true },
-		],
+		"n/no-unsupported-features/node-builtins": ["error", { allowExperimental: true }],
 		"n/prefer-global/buffer": ["error", "always"],
 		"n/prefer-global/console": ["error", "always"],
 		"n/prefer-global/crypto": ["error", "always"],
@@ -44,8 +40,7 @@ export const config = createConfig({
 	},
 	settings: {
 		node: {
-			version: require(join(CWD, "package.json")).devEngines.runtime
-				.version,
+			version: require(join(CWD, "package.json")).devEngines.runtime.version,
 		},
 	},
 });

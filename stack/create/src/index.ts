@@ -5,7 +5,7 @@
 import { helpers } from "termost";
 
 try {
-	await helpers.exec("pnpm dlx @adbayb/stack create", {
+	await helpers.exec("pnx @adbayb/stack create", {
 		hasLiveOutput: true,
 	});
 } catch (error) {

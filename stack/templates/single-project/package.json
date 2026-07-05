@@ -16,8 +16,6 @@
 		"test": "stack test",
 		"watch": "stack watch"
 	},
-	"prettier": "@adbayb/stack/prettier",
-	"packageManager": "pnpm@{{pnpmVersion}}",
 	"devEngines": {
 		"packageManager": {
 			"name": "pnpm",
@@ -29,5 +27,6 @@
 			"version": ">=24.0.0",
 			"onFail": "error"
 		}
-	}
+	},
+	"packageManager": "pnpm@{{pnpmVersion}}"
 }
