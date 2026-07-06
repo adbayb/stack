@@ -1,6 +1,6 @@
 <br>
 <div align="center">
-    <h1>@adbayb/stack/eslint</h1>
+    <h1>@adbayb/stack/oxlint</h1>
     <strong>My opinionated linter standards</strong>
 </div>
 <br>
@@ -8,7 +8,7 @@
 
 ## ✨ Features
 
-This package offers opinionated but extensible **[ESLint](https://eslint.org/)** configurations to align logical and stylistic rules across projects.
+This package offers opinionated but extensible **[Oxlint](https://oxc.rs/docs/guide/usage/linter.html)** configurations to align logical and stylistic rules across projects.
 
 It allows to:
 
@@ -30,10 +30,10 @@ pnpm add @adbayb/stack --save-dev --workspace-root
 
 ### 2️⃣ Usage
 
-Create a `eslint.config.js` file and include the following:
+Create a `oxlint.config.ts` file and include the following:
 
 ```ts
-export { default } from "@adbayb/stack/eslint";
+export { default } from "@adbayb/stack/oxlint";
 ```
 
 <br />

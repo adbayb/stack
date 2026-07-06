@@ -1,7 +1,7 @@
 import { logCheckableFiles, turbo } from "../../helpers";
 import type { CommandFactory } from "../../types";
+import { fixCode } from "./fixCode";
 import { fixFormatting } from "./fixFormatting";
-import { fixLinter } from "./fixLinter";
 
 export const createFixCommand: CommandFactory = (program) => {
 	program
@@ -25,15 +25,15 @@ export const createFixCommand: CommandFactory = (program) => {
 		})
 		.task({
 			async handler(_, argv) {
-				await fixLinter(argv.operands);
-			},
-			label: label("Fix linter issues"),
-		})
-		.task({
-			async handler(_, argv) {
 				await fixFormatting(argv.operands);
 			},
 			label: label("Fix formatting issues"),
+		})
+		.task({
+			async handler(_, argv) {
+				await fixCode(argv.operands);
+			},
+			label: label("Fix code issues"),
 		});
 };
 

@@ -1,12 +1,11 @@
-import { hasDependency, logCheckableFiles, turbo } from "../../helpers";
+import { logCheckableFiles, turbo } from "../../helpers";
 import type { CommandFactory } from "../../types";
 import { checkCode } from "./checkCode";
 import { checkCommit } from "./checkCommit";
 import { checkDependency } from "./checkDependency";
 import { checkFormatting } from "./checkFormatting";
-import { checkType } from "./checkType";
 
-const ONLY_VALUES = ["commit", "code", "dependency", "formatting", "type"] as const;
+const ONLY_VALUES = ["commit", "code", "dependency", "formatting"] as const;
 
 type CommandContext = {
 	filter: Filter | undefined;
@@ -70,24 +69,6 @@ export const createCheckCommand: CommandFactory = (program) => {
 			},
 			label: label("Check code compliance"),
 			skip: ifFilterDefinedAndNotEqualTo("code"),
-		})
-		.task({
-			async handler() {
-				await checkType();
-			},
-			label: label("Check type compliance"),
-			skip(context, argv) {
-				return (
-					ifFilterDefinedAndNotEqualTo("type")(context) ||
-					!hasDependency("typescript") ||
-					/**
-					 * For now, skip type-checking if some files are passed down.
-					 *
-					 * @see https://github.com/microsoft/TypeScript/issues/27379
-					 */
-					argv.operands.length > 0
-				);
-			},
 		})
 		.task({
 			async handler() {

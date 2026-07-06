@@ -1,8 +1,6 @@
 packages:
     - "stack"
     - "stack/create"
-allowBuilds:
-    unrs-resolver: false
 minimumReleaseAgeExclude:
     - "@adbayb/*"
     - termost
@@ -11,6 +9,7 @@ publicHoistPattern:
     - "*commitlint*"
     - "*eslint*"
     - "*oxfmt*"
+    - "*oxlint*"
     - "*turbo*"
     - "*typescript*"
     - "*types*"

@@ -1,6 +1,6 @@
 <br>
 <div align="center">
-    <h1>@adbayb/stack/prettier</h1>
+    <h1>@adbayb/stack/oxfmt</h1>
     <strong>My opinionated formatting standards</strong>
 </div>
 <br>
@@ -8,7 +8,7 @@
 
 ## ✨ Features
 
-This package offers opinionated but extensible **[Prettier](https://prettier.io/)** configurations to align code formatting conventions across projects.
+This package offers opinionated but extensible **[Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html)** configurations to align code formatting conventions across projects.
 
 It allows to:
 
@@ -30,18 +30,10 @@ pnpm add @adbayb/stack --save-dev --workspace-root
 
 ### 2️⃣ Usage
 
-Edit the root `package.json` file to include the following:
+Create a `oxfmt.config.ts` file and include the following:
 
-```jsonc
-{
-	"scripts": {
-		"check:format": "prettier \"**/!(pnpm-lock.yaml)\" --check --ignore-unknown --ignore-path .gitignore --log-level warn",
-		"fix:format": "pnpm check:format --write",
-		// ...
-	},
-	"prettier": "@adbayb/stack/prettier",
-	// ...
-}
+```ts
+export { default } from "@adbayb/stack/oxfmt";
 ```
 
 <br />

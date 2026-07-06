@@ -134,10 +134,6 @@ export const getStackCommand = (command: string) => {
 	return `pnpm stack ${command}`;
 };
 
-export const hasDependency = (packageName: string) => {
-	return Boolean(require.resolve(packageName));
-};
-
 export const setPackageManager = async () => {
 	/**
 	 * Corepack is downloaded remotely to get always up-to-date npm registry fingerprints since
@@ -168,36 +164,19 @@ export const request = {
 	},
 };
 
-export const eslint =
+export const oxlint =
 	(options: { isFixMode: boolean }) =>
 	async (files: Filenames = []) => {
-		let eslintFiles = [];
-
-		if (files.length === 0) {
-			eslintFiles.push(".");
-		} else {
-			eslintFiles = files.filter((file) => {
-				return ESLINT_EXTENSIONS.some((extension) => file.endsWith(extension));
-			});
-
-			if (eslintFiles.length === 0) return;
-		}
-
-		const arguments_ = [
-			...eslintFiles,
-			"--cache",
-			`--cache-location ${resolveFromWorkingDirectory("node_modules/.cache/.eslintcache")}`,
-			"--no-error-on-unmatched-pattern",
-		];
+		const arguments_ = [...files, "--disable-nested-config", "--no-error-on-unmatched-pattern"];
 
 		if (options.isFixMode) {
 			arguments_.push("--fix");
 		}
 
 		try {
-			return await helpers.exec(`eslint ${arguments_.join(" ")}`);
+			return await helpers.exec(`oxlint ${arguments_.join(" ")}`);
 		} catch (error) {
-			throw createError("eslint", error as Error);
+			throw createError("oxlint", error as Error);
 		}
 	};
 
@@ -264,5 +243,3 @@ export const changeset = async (command: string) => {
 		throw createError("changeset", error as Error);
 	}
 };
-
-const ESLINT_EXTENSIONS = ["js", "jsx", "cjs", "mjs", "ts", "tsx", "cts", "mts", "md", "mdx"];

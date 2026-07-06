@@ -1,3 +1,3 @@
-import { eslint } from "../../helpers";
+import { oxlint } from "../../helpers";
 
-export const checkCode = eslint({ isFixMode: false });
+export const checkCode = oxlint({ isFixMode: false });

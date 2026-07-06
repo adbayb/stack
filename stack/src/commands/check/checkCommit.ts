@@ -1,5 +1,4 @@
 import { helpers } from "termost";
-
 import { createError } from "../../helpers";
 
 export const checkCommit = async () => {
