@@ -144,46 +144,55 @@ export const setPackageManager = async () => {
 	return helpers.exec("pnx corepack enable");
 };
 
+async function getRequest(url: string, responseType: "text"): Promise<string>;
+async function getRequest(url: string, responseType: "json"): Promise<Record<string, string>>;
+async function getRequest(
+	url: string,
+	responseType: "json" | "text",
+): Promise<string | Record<string, string>> {
+	const response = await fetch(url);
+
+	if (!response.ok) {
+		throw createError(
+			"fetch",
+			`Failed to fetch resources from ${url} (${JSON.stringify({
+				status: response.status,
+				statusText: response.statusText,
+			})})`,
+		);
+	}
+
+	if (responseType === "text") {
+		return response.text();
+	}
+
+	return response.json();
+}
+
 export const request = {
-	async get<ResponseType extends "json" | "text">(url: string, responseType: ResponseType) {
-		const response = await fetch(url);
-
-		if (!response.ok) {
-			throw createError(
-				"fetch",
-				`Failed to fetch resources from ${url} (${JSON.stringify({
-					status: response.status,
-					statusText: response.statusText,
-				})})`,
-			);
-		}
-
-		return response[responseType === "text" ? "text" : "json"]() as Promise<
-			ResponseType extends "text" ? string : Record<string, string>
-		>;
-	},
+	get: getRequest,
 };
 
 export const oxlint =
 	(options: { isFixMode: boolean }) =>
 	async (files: Filenames = []) => {
-		const arguments_ = [...files, "--disable-nested-config", "--no-error-on-unmatched-pattern"];
+		const args = [...files, "--disable-nested-config", "--no-error-on-unmatched-pattern"];
 
 		if (options.isFixMode) {
-			arguments_.push("--fix");
+			args.push("--fix");
 		}
 
 		try {
-			return await helpers.exec(`oxlint ${arguments_.join(" ")}`);
+			return await helpers.exec(`oxlint ${args.join(" ")}`);
 		} catch (error) {
-			throw createError("oxlint", error as Error);
+			throw createError("oxlint", error instanceof Error ? error : new Error(String(error)));
 		}
 	};
 
 export const oxfmt =
 	(options: { isFixMode: boolean }) =>
 	async (files: Filenames = []) => {
-		const arguments_ = [
+		const args = [
 			...files,
 			"--disable-nested-config",
 			"--no-error-on-unmatched-pattern",
@@ -191,9 +200,9 @@ export const oxfmt =
 		];
 
 		try {
-			return await helpers.exec(`oxfmt ${arguments_.join(" ")}`);
+			return await helpers.exec(`oxfmt ${args.join(" ")}`);
 		} catch (error) {
-			throw createError("oxfmt", error as Error);
+			throw createError("oxfmt", error instanceof Error ? error : new Error(String(error)));
 		}
 	};
 
@@ -214,7 +223,7 @@ export const turbo = async (
 			},
 		);
 	} catch (error) {
-		throw createError("turbo", error as Error);
+		throw createError("turbo", error instanceof Error ? error : new Error(String(error)));
 	}
 };
 
@@ -240,6 +249,6 @@ export const changeset = async (command: string) => {
 			hasLiveOutput: true,
 		});
 	} catch (error) {
-		throw createError("changeset", error as Error);
+		throw createError("changeset", error instanceof Error ? error : new Error(String(error)));
 	}
 };

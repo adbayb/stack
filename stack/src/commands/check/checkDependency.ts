@@ -6,20 +6,14 @@ import type { PackageJson } from "../../types";
 export const checkDependency = async () => {
 	const stdout = await helpers.exec("pnpm recursive ls --json");
 	const checkDependencyVersionMismatch = createPackagesVersionMismatchChecker();
+	const parsedCommandOutput: { name?: string; path: string }[] = JSON.parse(stdout);
 
-	const packages = (
-		JSON.parse(stdout) as {
-			name?: string;
-			path: string;
-		}[]
-	).map((package_) => {
-		const packagePath = join(package_.path, "package.json");
+	const packages = parsedCommandOutput.map((pkg) => {
+		const packagePath = join(pkg.path, "package.json");
 
-		assert(package_.name, () =>
-			createPackageError(`\`${packagePath}\` must have a name field.`),
-		);
+		assert(pkg.name, () => createPackageError(`\`${packagePath}\` must have a name field.`));
 
-		const packageContent = require(packagePath) as Partial<PackageJson>;
+		const packageContent: Partial<PackageJson> = require(packagePath);
 		const peerDependencies = packageContent.peerDependencies ?? {};
 		const devDependencies = packageContent.devDependencies ?? {};
 		const dependencies = packageContent.dependencies ?? {};
@@ -27,16 +21,16 @@ export const checkDependency = async () => {
 		return {
 			dependencies,
 			devDependencies,
-			name: package_.name,
+			name: pkg.name,
 			peerDependencies,
 		};
 	});
 
-	for (const package_ of packages) {
+	for (const pkg of packages) {
 		// Check version mismatches to guarantee a single copy for a given package in the monorepo (use case: prevent singleton-like issues with React contexts)
-		checkDependencyVersionMismatch(package_);
+		checkDependencyVersionMismatch(pkg);
 		// Check version range accordingly to our dependency guidelines (ie. dev dependencies must be pinned and dependencies must have caret)
-		checkDependencyVersionRange(package_);
+		checkDependencyVersionRange(pkg);
 	}
 };
 
@@ -96,11 +90,11 @@ const createPackagesVersionMismatchChecker = () => {
 	const monorepoDependencies = new Map<string, string>();
 	const monorepoDevelopmentDependencies = new Map<string, string>();
 
-	const lint = (package_: PackageJson, type: "development" | "production") => {
-		const packageName = package_.name;
+	const lint = (pkg: PackageJson, type: "development" | "production") => {
+		const packageName = pkg.name;
 		const isDevelopment = type === "development";
 		const store = isDevelopment ? monorepoDevelopmentDependencies : monorepoDependencies;
-		const dependencies = package_[isDevelopment ? "devDependencies" : "dependencies"];
+		const dependencies = pkg[isDevelopment ? "devDependencies" : "dependencies"];
 
 		for (const [dependencyName, dependencyVersion] of Object.entries(dependencies)) {
 			if (!dependencyVersion) continue;
@@ -127,9 +121,9 @@ const createPackagesVersionMismatchChecker = () => {
 		}
 	};
 
-	return (package_: PackageJson) => {
-		lint(package_, "development");
-		lint(package_, "production");
+	return (pkg: PackageJson) => {
+		lint(pkg, "development");
+		lint(pkg, "production");
 	};
 };
 

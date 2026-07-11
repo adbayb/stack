@@ -17,6 +17,8 @@ export default defineConfig({
 	],
 	categories: {
 		correctness: "error",
+		perf: "error",
+		suspicious: "error",
 	},
 	options: {
 		denyWarnings: true,

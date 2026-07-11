@@ -145,7 +145,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 			type: "confirm",
 			validate({ canRemoveExistingDirectoryInput, data: { projectName } }) {
-				if (canRemoveExistingDirectoryInput) return;
+				if (canRemoveExistingDirectoryInput) return undefined;
 
 				return createError(
 					"mkdir",
@@ -238,7 +238,10 @@ export const createCreateCommand: CommandFactory = (program) => {
 
 					await helpers.exec("pnpm install");
 				} catch (error) {
-					throw createError("pnpm", error as Error);
+					throw createError(
+						"pnpm",
+						error instanceof Error ? error : new Error(String(error)),
+					);
 				}
 			},
 			label: label("Install dependencies"),
@@ -360,6 +363,7 @@ export const createTemplateEngine = async (
 			for (const entry of sortedDirectoryEntries) {
 				const newPath = setTemplateVariables(entry, templateModel);
 
+				// oxlint-disable-next-line no-await-in-loop
 				await rename(entry.path, newPath);
 			}
 

@@ -70,7 +70,8 @@ const retrieveIgnoredFiles = async () => {
 		.filter((cleanOutput) =>
 			PRESERVE_FILES.every((excludedFile) => !cleanOutput.includes(excludedFile)),
 		)
-		.map((cleanOutput) => cleanOutput.split(" ").at(-1) as string);
+		.map((cleanOutput) => cleanOutput.split(" ").at(-1) ?? "")
+		.filter(Boolean);
 };
 
 const PRESERVE_FILES = ["node_modules"];
