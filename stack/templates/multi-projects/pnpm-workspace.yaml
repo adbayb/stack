@@ -8,8 +8,8 @@ packages:
 publicHoistPattern:
     - "*changesets*"
     - "*commitlint*"
-    - "*eslint*"
-    - "*prettier*"
+    - "*oxfmt*"
+    - "*oxlint*"
     - "*turbo*"
     - "*typescript*"
     - "*types*"

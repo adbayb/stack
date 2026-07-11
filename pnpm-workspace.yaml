@@ -7,12 +7,10 @@ minimumReleaseAgeExclude:
 publicHoistPattern:
     - "*changesets*"
     - "*commitlint*"
-    - "*eslint*"
     - "*oxfmt*"
     - "*oxlint*"
     - "*turbo*"
     - "*typescript*"
     - "*types*"
-    # TODO: remove eslint, prettier and add oxlint/oxfmt?
 saveExact: true
 verifyDepsBeforeRun: "warn"
