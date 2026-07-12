@@ -6,14 +6,14 @@ import type { PackageJson } from "../../types";
 export const checkDependency = async () => {
 	const stdout = await helpers.exec("pnpm recursive ls --json");
 	const checkDependencyVersionMismatch = createPackagesVersionMismatchChecker();
-	const parsedCommandOutput: { name?: string; path: string }[] = JSON.parse(stdout);
+	const parsedCommandOutput = JSON.parse(stdout) as { name?: string; path: string }[];
 
 	const packages = parsedCommandOutput.map((pkg) => {
 		const packagePath = join(pkg.path, "package.json");
 
 		assert(pkg.name, () => createPackageError(`\`${packagePath}\` must have a name field.`));
 
-		const packageContent: Partial<PackageJson> = require(packagePath);
+		const packageContent = require(packagePath) as Partial<PackageJson>;
 		const peerDependencies = packageContent.peerDependencies ?? {};
 		const devDependencies = packageContent.devDependencies ?? {};
 		const dependencies = packageContent.dependencies ?? {};
@@ -44,7 +44,7 @@ const checkDependencyVersionRange = ({
 	for (const [dependencyName, version] of Object.entries(devDependencies)) {
 		assertVersion(version, { consumedBy: name, name: dependencyName });
 
-		if (version !== "workspace:*" && !isExcluded(version) && !/^\d/.test(version))
+		if (version !== "workspace:*" && !isExcluded(version) && !/^\d/u.test(version))
 			throw createPackageError(
 				`As a dev dependency, \`${dependencyName}\` version must be fixed (or set as "workspace:*" for local packages) to reduce accidental breaking change risks due to an implicit semver upgrade.`,
 				{
@@ -157,7 +157,7 @@ function assertVersion(
 }
 
 const isExcluded = (version: string) => {
-	const isPreReleaseVersion = /\d+\.\d+\.\d+-(alpha|beta|experimental|next|rc).*/.exec(version);
+	const isPreReleaseVersion = /\d+\.\d+\.\d+-(alpha|beta|experimental|next|rc).*/u.exec(version);
 	const isNpmProtocol = version.startsWith("npm:");
 
 	return isNpmProtocol || isPreReleaseVersion;

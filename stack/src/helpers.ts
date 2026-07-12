@@ -141,7 +141,7 @@ export const setPackageManager = async () => {
 	 *
 	 * @see {@link https://github.com/nodejs/corepack/issues/613}
 	 */
-	return helpers.exec("pnx corepack enable");
+	await helpers.exec("pnx corepack enable");
 };
 
 async function getRequest(url: string, responseType: "text"): Promise<string>;
@@ -166,7 +166,7 @@ async function getRequest(
 		return response.text();
 	}
 
-	return response.json();
+	return response.json() as Promise<Record<string, string>>;
 }
 
 export const request = {

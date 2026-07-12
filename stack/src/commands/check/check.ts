@@ -42,7 +42,8 @@ export const createCheckCommand: CommandFactory = (program) => {
 			},
 			label: label("Prepare the project"),
 			skip({ filter }) {
-				return filter === "commit"; // No need to build if only commit is checked
+				// No need to build if only commit is checked
+				return filter === "commit";
 			},
 		})
 		.task({

@@ -94,8 +94,8 @@ export const createCreateCommand: CommandFactory = (program) => {
 
 				const { repoName, repoOwner } =
 					(inputUrl.startsWith("git")
-						? /^git@.*:(?<repoOwner>.*)\/(?<repoName>.*)\.git$/
-						: /^https?:\/\/.*\/(?<repoOwner>.*)\/(?<repoName>.*)\.git$/
+						? /^git@.*:(?<repoOwner>.*)\/(?<repoName>.*)\.git$/u
+						: /^https?:\/\/.*\/(?<repoOwner>.*)\/(?<repoName>.*)\.git$/u
 					).exec(inputUrl)?.groups ?? {};
 
 				if (!repoOwner || !repoName) {
@@ -145,7 +145,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 			type: "confirm",
 			validate({ canRemoveExistingDirectoryInput, data: { projectName } }) {
-				if (canRemoveExistingDirectoryInput) return undefined;
+				if (canRemoveExistingDirectoryInput) return;
 
 				return createError(
 					"mkdir",
@@ -275,10 +275,10 @@ const label = (message: string) => `${message} 🔨`;
 const slugify = (input: string) => {
 	return input
 		.toLowerCase()
-		.replaceAll(/[^a-z0-9\s-]/g, "")
+		.replaceAll(/[^a-z0-9\s-]/gu, "")
 		.trim()
-		.replaceAll(/\s+/g, "-")
-		.replaceAll(/-+/g, "-");
+		.replaceAll(/\s+/gu, "-")
+		.replaceAll(/-+/gu, "-");
 };
 
 const toCapitalLetter = (input: string) => {
@@ -341,7 +341,7 @@ export const createTemplateEngine = async (
 				templateEntries
 					.filter(({ type }) => type === "content")
 					.map(async (entry) => {
-						return writeFile(entry.path, setTemplateVariables(entry, templateModel));
+						await writeFile(entry.path, setTemplateVariables(entry, templateModel));
 					}),
 			);
 		},
@@ -406,7 +406,7 @@ const getTemplateEntries = async (path: string) => {
 
 			return processableItems
 				.map(({ content, type }) => {
-					if (!hasTemplateVariable(content)) return undefined;
+					if (!hasTemplateVariable(content)) return;
 
 					return {
 						content,
@@ -427,7 +427,7 @@ const setTemplateVariables = (entry: TemplateEntry, model: TemplateMetadata["tem
 	});
 };
 
-const TEMPLATE_VARIABLE_MATCHER = new RegExp(/{{(.*?)}}/g, "gi");
+const TEMPLATE_VARIABLE_MATCHER = /\{\{(.*?)\}\}/giu;
 
 const hasTemplateVariable = (input: string) => {
 	/**

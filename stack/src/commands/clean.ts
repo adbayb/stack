@@ -55,7 +55,11 @@ export const createCleanCommand: CommandFactory = (program) => {
 const label = (message: string) => `${message} 🧹`;
 
 const cleanFiles = async (files: string[]) => {
-	return Promise.all(files.map(async (file) => rm(file, { force: true, recursive: true })));
+	await Promise.all(
+		files.map(async (file) => {
+			await rm(file, { force: true, recursive: true });
+		}),
+	);
 };
 
 const isDirectoryExistAndNotEmpty = (path: string) => {
@@ -66,7 +70,7 @@ const retrieveIgnoredFiles = async () => {
 	const rawFiles = await helpers.exec("git clean -fdXn");
 
 	return rawFiles
-		.split(/\n|\r\n/)
+		.split(/\n|\r\n/u)
 		.filter((cleanOutput) =>
 			PRESERVE_FILES.every((excludedFile) => !cleanOutput.includes(excludedFile)),
 		)
