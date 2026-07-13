@@ -62,6 +62,7 @@ export default defineConfig({
 	],
 	// TODO: add jsPlugins for perfectionist and padding-line-between-statements + add React rules (such as set-state-in-effect) from React X https://github.com/oxc-project/oxc/issues/1022 + potentially https://github.com/es-tooling/eslint-plugin-depend/blob/main/docs/rules/ban-dependencies.md
 	plugins: [
+		// TODO: check perfectionist sorting here
 		"eslint",
 		"import",
 		"jsdoc",
@@ -93,6 +94,10 @@ export default defineConfig({
 		"max-lines": "off",
 		"max-lines-per-function": "off",
 		"max-statements": "off",
+		"nextjs/google-font-display": "error",
+		"nextjs/google-font-preconnect": "error",
+		"nextjs/no-sync-scripts": "error",
+		"nextjs/no-unwanted-polyfillio": "error",
 		"no-async-await": "off",
 		"no-continue": "off",
 		"no-magic-numbers": "off",
