@@ -5,14 +5,14 @@ import type { Filenames } from "./types";
 
 export const require = createRequire(import.meta.url);
 
-export function assert(
+export const assert: (
 	expectedCondition: unknown,
 	createError: () => Error,
-): asserts expectedCondition {
+) => asserts expectedCondition = (expectedCondition, createError) => {
 	if (!expectedCondition) {
 		throw createError();
 	}
-}
+};
 
 /**
  * Helper to format log messages with a welcoming bot.
@@ -173,9 +173,8 @@ export const request = {
 	get: getRequest,
 };
 
-export const oxlint =
-	(options: { isFixMode: boolean }) =>
-	async (files: Filenames = []) => {
+export const oxlint = (options: { isFixMode: boolean }) => {
+	return async (files: Filenames = []) => {
 		const args = [...files, "--disable-nested-config", "--no-error-on-unmatched-pattern"];
 
 		if (options.isFixMode) {
@@ -188,10 +187,10 @@ export const oxlint =
 			throw createError("oxlint", error instanceof Error ? error : new Error(String(error)));
 		}
 	};
+};
 
-export const oxfmt =
-	(options: { isFixMode: boolean }) =>
-	async (files: Filenames = []) => {
+export const oxfmt = (options: { isFixMode: boolean }) => {
+	return async (files: Filenames = []) => {
 		const args = [
 			...files,
 			"--disable-nested-config",
@@ -205,6 +204,7 @@ export const oxfmt =
 			throw createError("oxfmt", error instanceof Error ? error : new Error(String(error)));
 		}
 	};
+};
 
 export const turbo = async (
 	command: "build" | "start" | "test" | "watch",

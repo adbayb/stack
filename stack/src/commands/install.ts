@@ -28,7 +28,9 @@ export const createInstallCommand: CommandFactory = (program) => {
 		});
 };
 
-const label = (message: string) => `${message} 📲`;
+const label = (message: string) => {
+	return `${message} 📲`;
+};
 
 const installGitHook = async (hook: "commit-msg" | "pre-commit", content: string) => {
 	const filename = resolveFromWorkingDirectory(`.git/hooks/${hook}`);

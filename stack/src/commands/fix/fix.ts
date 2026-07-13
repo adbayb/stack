@@ -37,4 +37,6 @@ export const createFixCommand: CommandFactory = (program) => {
 		});
 };
 
-const label = (message: string) => `${message} 🚑`;
+const label = (message: string) => {
+	return `${message} 🚑`;
+};

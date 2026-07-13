@@ -30,7 +30,9 @@ export const createCleanCommand: CommandFactory = (program) => {
 		})
 		.task({
 			async handler({ files }) {
-				if (files.length === 0) return;
+				if (files.length === 0) {
+					return;
+				}
 
 				await cleanFiles(files);
 			},
@@ -52,7 +54,9 @@ export const createCleanCommand: CommandFactory = (program) => {
 		});
 };
 
-const label = (message: string) => `${message} 🧹`;
+const label = (message: string) => {
+	return `${message} 🧹`;
+};
 
 const cleanFiles = async (files: string[]) => {
 	await Promise.all(
@@ -71,10 +75,14 @@ const retrieveIgnoredFiles = async () => {
 
 	return rawFiles
 		.split(/\n|\r\n/u)
-		.filter((cleanOutput) =>
-			PRESERVE_FILES.every((excludedFile) => !cleanOutput.includes(excludedFile)),
-		)
-		.map((cleanOutput) => cleanOutput.split(" ").at(-1) ?? "")
+		.filter((cleanOutput) => {
+			return PRESERVE_FILES.every((excludedFile) => {
+				return !cleanOutput.includes(excludedFile);
+			});
+		})
+		.map((cleanOutput) => {
+			return cleanOutput.split(" ").at(-1) ?? "";
+		})
 		.filter(Boolean);
 };
 

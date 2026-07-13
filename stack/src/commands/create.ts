@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { cp, mkdir, readdir, readFile, rename, rm, symlink, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, readdir, rename, rm, symlink, writeFile } from "node:fs/promises";
 import { basename, join, resolve } from "node:path";
 import { helpers } from "termost";
 import { VERSION } from "../constants";
@@ -145,7 +145,9 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 			type: "confirm",
 			validate({ canRemoveExistingDirectoryInput, data: { projectName } }) {
-				if (canRemoveExistingDirectoryInput) return;
+				if (canRemoveExistingDirectoryInput) {
+					return;
+				}
 
 				return createError(
 					"mkdir",
@@ -270,7 +272,9 @@ export const createCreateCommand: CommandFactory = (program) => {
 		});
 };
 
-const label = (message: string) => `${message} 🔨`;
+const label = (message: string) => {
+	return `${message} 🔨`;
+};
 
 const slugify = (input: string) => {
 	return input
@@ -339,7 +343,9 @@ export const createTemplateEngine = async (
 		async processContents() {
 			await Promise.all(
 				templateEntries
-					.filter(({ type }) => type === "content")
+					.filter(({ type }) => {
+						return type === "content";
+					})
 					.map(async (entry) => {
 						await writeFile(entry.path, setTemplateVariables(entry, templateModel));
 					}),
@@ -357,7 +363,9 @@ export const createTemplateEngine = async (
 				})
 				.toSorted(
 					// Re-order from longest to lowest path length to rename deepest directory paths first
-					({ path: pathA }, { path: pathB }) => pathB.length - pathA.length,
+					({ path: pathA }, { path: pathB }) => {
+						return pathB.length - pathA.length;
+					},
 				);
 
 			for (const entry of sortedDirectoryEntries) {
@@ -390,7 +398,9 @@ const getTemplateEntries = async (path: string) => {
 		entries.map(async (entry): Promise<TemplateEntry[]> => {
 			const isDirectory = entry.isDirectory();
 
-			if (!isDirectory && !entry.isFile()) return [];
+			if (!isDirectory && !entry.isFile()) {
+				return [];
+			}
 
 			const entryPath = resolve(entry.parentPath, entry.name);
 
@@ -406,7 +416,9 @@ const getTemplateEntries = async (path: string) => {
 
 			return processableItems
 				.map(({ content, type }) => {
-					if (!hasTemplateVariable(content)) return;
+					if (!hasTemplateVariable(content)) {
+						return;
+					}
 
 					return {
 						content,
@@ -414,7 +426,9 @@ const getTemplateEntries = async (path: string) => {
 						type,
 					};
 				})
-				.filter((input): input is TemplateEntry => Boolean(input));
+				.filter((input): input is TemplateEntry => {
+					return Boolean(input);
+				});
 		}),
 	);
 

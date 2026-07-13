@@ -82,8 +82,12 @@ export const createCheckCommand: CommandFactory = (program) => {
 		});
 };
 
-const label = (message: string) => `${message} 🧐`;
+const label = (message: string) => {
+	return `${message} 🧐`;
+};
 
-const ifFilterDefinedAndNotEqualTo = (filter: Filter) => (context: CommandContext) => {
-	return context.filter !== undefined && context.filter !== filter;
+const ifFilterDefinedAndNotEqualTo = (filter: Filter) => {
+	return (context: CommandContext) => {
+		return context.filter !== undefined && context.filter !== filter;
+	};
 };

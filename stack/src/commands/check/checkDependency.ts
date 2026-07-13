@@ -11,7 +11,9 @@ export const checkDependency = async () => {
 	const packages = parsedCommandOutput.map((pkg) => {
 		const packagePath = join(pkg.path, "package.json");
 
-		assert(pkg.name, () => createPackageError(`\`${packagePath}\` must have a name field.`));
+		assert(pkg.name, () => {
+			return createPackageError(`\`${packagePath}\` must have a name field.`);
+		});
 
 		const packageContent = require(packagePath) as Partial<PackageJson>;
 		const peerDependencies = packageContent.peerDependencies ?? {};
@@ -44,7 +46,7 @@ const checkDependencyVersionRange = ({
 	for (const [dependencyName, version] of Object.entries(devDependencies)) {
 		assertVersion(version, { consumedBy: name, name: dependencyName });
 
-		if (version !== "workspace:*" && !isExcluded(version) && !/^\d/u.test(version))
+		if (version !== "workspace:*" && !isExcluded(version) && !/^\d/u.test(version)) {
 			throw createPackageError(
 				`As a dev dependency, \`${dependencyName}\` version must be fixed (or set as "workspace:*" for local packages) to reduce accidental breaking change risks due to an implicit semver upgrade.`,
 				{
@@ -52,12 +54,13 @@ const checkDependencyVersionRange = ({
 					name: dependencyName,
 				},
 			);
+		}
 	}
 
 	for (const [dependencyName, version] of Object.entries(dependencies)) {
 		assertVersion(version, { consumedBy: name, name: dependencyName });
 
-		if (version !== "workspace:^" && !hasCaret(version) && !isExcluded(version))
+		if (version !== "workspace:^" && !hasCaret(version) && !isExcluded(version)) {
 			throw createPackageError(
 				`As a dependency, \`${dependencyName}\` version must be prefixed with a caret (or set as "workspace:^" for local packages) to optimize the size (whether of installation or bundle output) on the consumer side.`,
 				{
@@ -65,12 +68,13 @@ const checkDependencyVersionRange = ({
 					name: dependencyName,
 				},
 			);
+		}
 	}
 
 	for (const [dependencyName, version] of Object.entries(peerDependencies)) {
 		assertVersion(version, { consumedBy: name, name: dependencyName });
 
-		if (!hasCaret(version) && !isExcluded(version))
+		if (!hasCaret(version) && !isExcluded(version)) {
 			/*
 			 * Why disallowing workspace protocol as a version resolver?
 			 * To reduce the update frequency needs consumer-side and guarantee on our side the minimum compatible version,
@@ -83,6 +87,7 @@ const checkDependencyVersionRange = ({
 					name: dependencyName,
 				},
 			);
+		}
 	}
 };
 
@@ -97,7 +102,9 @@ const createPackagesVersionMismatchChecker = () => {
 		const dependencies = pkg[isDevelopment ? "devDependencies" : "dependencies"];
 
 		for (const [dependencyName, dependencyVersion] of Object.entries(dependencies)) {
-			if (!dependencyVersion) continue;
+			if (!dependencyVersion) {
+				continue;
+			}
 
 			const storedVersion = store.get(dependencyName);
 
@@ -141,20 +148,20 @@ const createPackageError = (message: string, context?: PackageErrorContext) => {
 	);
 };
 
-function assertVersion(
+const assertVersion: (
 	version: string | undefined,
-	{ consumedBy, name }: PackageErrorContext,
-): asserts version {
-	assert(version, () =>
-		createPackageError(
+	context: PackageErrorContext,
+) => asserts version = (version, { consumedBy, name }) => {
+	assert(version, () => {
+		return createPackageError(
 			`\`${name}\` must have a valid version specified (current version equals to \`${String(version)}\`).`,
 			{
 				consumedBy,
 				name,
 			},
-		),
-	);
-}
+		);
+	});
+};
 
 const isExcluded = (version: string) => {
 	const isPreReleaseVersion = /\d+\.\d+\.\d+-(alpha|beta|experimental|next|rc).*/u.exec(version);
@@ -163,4 +170,6 @@ const isExcluded = (version: string) => {
 	return isNpmProtocol || isPreReleaseVersion;
 };
 
-const hasCaret = (version: string) => version.startsWith("^");
+const hasCaret = (version: string) => {
+	return version.startsWith("^");
+};

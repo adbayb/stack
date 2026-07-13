@@ -69,6 +69,8 @@ export const createReleaseCommand: CommandFactory = (program) => {
 		});
 };
 
-const ifNotEqualTo = (validOption: keyof CommandContext) => (context: CommandContext) => {
-	return !context[validOption];
+const ifNotEqualTo = (validOption: keyof CommandContext) => {
+	return (context: CommandContext) => {
+		return !context[validOption];
+	};
 };
