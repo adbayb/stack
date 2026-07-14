@@ -29,10 +29,12 @@ const config = defineConfig({
 	vueIndentScriptAndStyle: false,
 });
 
-export const createConfig = (input: Required<Pick<OxfmtConfig, "overrides">>): OxfmtConfig => {
+export const createConfig = ({
+	overrides,
+}: Required<Pick<OxfmtConfig, "overrides">>): OxfmtConfig => {
 	return {
 		...config,
-		...input,
+		overrides,
 	};
 };
 

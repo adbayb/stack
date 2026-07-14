@@ -4,8 +4,8 @@ import type { CommandFactory } from "../types";
 export const createTestCommand: CommandFactory = (program) => {
 	program
 		.command({
-			description: "Test the code execution",
 			name: "test",
+			description: "Test the code execution",
 		})
 		.task({
 			async handler() {

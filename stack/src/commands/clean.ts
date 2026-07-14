@@ -11,10 +11,12 @@ type CommandContext = {
 export const createCleanCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
-			description: "Clean the project",
 			name: "clean",
+			description: "Clean the project",
 		})
 		.task({
+			key: "files",
+			label: label("Retrieve removable files"),
 			async handler() {
 				const cachePath = "node_modules/.cache";
 				const files = await retrieveIgnoredFiles();
@@ -25,19 +27,17 @@ export const createCleanCommand: CommandFactory = (program) => {
 
 				return files;
 			},
-			key: "files",
-			label: label("Retrieve removable files"),
 		})
 		.task({
+			label({ files }) {
+				return files.length > 0 ? label("Clean assets") : "Already clean ✨";
+			},
 			async handler({ files }) {
 				if (files.length === 0) {
 					return;
 				}
 
 				await cleanFiles(files);
-			},
-			label({ files }) {
-				return files.length > 0 ? label("Clean assets") : "Already clean ✨";
 			},
 		})
 		.task({

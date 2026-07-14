@@ -5,10 +5,11 @@ import type { CommandFactory } from "../types";
 export const createInstallCommand: CommandFactory = (program) => {
 	program
 		.command({
-			description: "Install required setup",
 			name: "install",
+			description: "Install required setup",
 		})
 		.task({
+			label: label("Install `git.pre-commit` hook"),
 			async handler() {
 				const lineBreakMatcher = String.raw`\n|\r\n`;
 
@@ -18,13 +19,12 @@ export const createInstallCommand: CommandFactory = (program) => {
 
 				await installGitHook("pre-commit", `${stackCommand} && git add -A`);
 			},
-			label: label("Install `git.pre-commit` hook"),
 		})
 		.task({
+			label: label("Install `git.commit-msg` hook"),
 			async handler() {
 				await installGitHook("commit-msg", getStackCommand("check --filter commit"));
 			},
-			label: label("Install `git.commit-msg` hook"),
 		});
 };
 

@@ -6,8 +6,8 @@ import { fixFormatting } from "./fixFormatting";
 export const createFixCommand: CommandFactory = (program) => {
 	program
 		.command({
-			description: "Fix auto-fixable issues",
 			name: "fix",
+			description: "Fix auto-fixable issues",
 		})
 		.task({
 			handler(_, argv) {
@@ -15,25 +15,25 @@ export const createFixCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
+			label: label("Prepare the project"),
 			async handler() {
 				await turbo("build", {
 					excludeExamples: true,
 					hasLiveOutput: false,
 				});
 			},
-			label: label("Prepare the project"),
 		})
 		.task({
+			label: label("Fix formatting issues"),
 			async handler(_, argv) {
 				await fixFormatting(argv.operands);
 			},
-			label: label("Fix formatting issues"),
 		})
 		.task({
+			label: label("Fix code issues"),
 			async handler(_, argv) {
 				await fixCode(argv.operands);
 			},
-			label: label("Fix code issues"),
 		});
 };
 

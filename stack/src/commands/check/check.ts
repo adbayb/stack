@@ -16,16 +16,16 @@ type Filter = (typeof ONLY_VALUES)[number];
 export const createCheckCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
-			description: "Check code health (static analysis)",
 			name: "check",
+			description: "Check code health (static analysis)",
 		})
 		.option({
-			defaultValue: undefined,
+			key: "filter",
+			name: "filter",
 			description: `Filter the compliance check to run (accepted value: ${ONLY_VALUES.join(
 				", ",
 			)})`,
-			key: "filter",
-			name: "filter",
+			defaultValue: undefined,
 		})
 		.task({
 			handler(_, argv) {
@@ -34,48 +34,48 @@ export const createCheckCommand: CommandFactory = (program) => {
 			skip: ifFilterDefinedAndNotEqualTo("code"),
 		})
 		.task({
+			label: label("Prepare the project"),
 			async handler() {
 				await turbo("build", {
 					excludeExamples: true,
 					hasLiveOutput: false,
 				});
 			},
-			label: label("Prepare the project"),
 			skip({ filter }) {
 				// No need to build if only commit is checked
 				return filter === "commit";
 			},
 		})
 		.task({
+			label: label("Check dependency compliance"),
 			async handler() {
 				await checkDependency();
 			},
-			label: label("Check dependency compliance"),
 			skip: ifFilterDefinedAndNotEqualTo("dependency"),
 		})
 		.task({
+			label: label("Check formatting compliance"),
 			async handler(_, argv) {
 				const filenames = argv.operands;
 
 				await checkFormatting(filenames);
 			},
-			label: label("Check formatting compliance"),
 			skip: ifFilterDefinedAndNotEqualTo("formatting"),
 		})
 		.task({
+			label: label("Check code compliance"),
 			async handler(_, argv) {
 				const filenames = argv.operands;
 
 				await checkCode(filenames);
 			},
-			label: label("Check code compliance"),
 			skip: ifFilterDefinedAndNotEqualTo("code"),
 		})
 		.task({
+			label: label("Check commit compliance"),
 			async handler() {
 				await checkCommit();
 			},
-			label: label("Check commit compliance"),
 			skip(context) {
 				return context.filter !== "commit";
 			},
