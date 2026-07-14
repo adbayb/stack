@@ -34,8 +34,16 @@
 			"source": "./src/index.ts",
 			"default": "./dist/index.js"
 		},
-		"./oxfmt": "./configs/oxfmt/index.ts",
-		"./oxlint": "./configs/oxlint/index.ts",
+		"./oxfmt": {
+			"source": "./configs/oxfmt/index.ts",
+			"types": "./dist/configs/oxfmt.d.ts",
+			"default": "./dist/configs/oxfmt.js"
+		},
+		"./oxlint": {
+			"source": "./configs/oxlint/index.ts",
+			"types": "./dist/configs/oxlint.d.ts",
+			"default": "./dist/configs/oxlint.js"
+		},
 		"./typescript": "./configs/typescript/index.json"
 	},
 	"publishConfig": {
