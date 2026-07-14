@@ -21,9 +21,9 @@ export const checkDependency = async () => {
 		const dependencies = packageContent.dependencies ?? {};
 
 		return {
+			name: pkg.name,
 			dependencies,
 			devDependencies,
-			name: pkg.name,
 			peerDependencies,
 		};
 	});
@@ -39,13 +39,13 @@ export const checkDependency = async () => {
 const STARTING_WITH_DIGIT_REGEXP = /^\d/u;
 
 const checkDependencyVersionRange = ({
+	name,
 	dependencies,
 	devDependencies,
-	name,
 	peerDependencies,
 }: PackageJson) => {
 	for (const [dependencyName, version] of Object.entries(devDependencies)) {
-		assertVersion(version, { consumedBy: name, name: dependencyName });
+		assertVersion(version, { name: dependencyName, consumedBy: name });
 
 		if (
 			version !== "workspace:*" &&
@@ -55,29 +55,29 @@ const checkDependencyVersionRange = ({
 			throw createPackageError(
 				`As a dev dependency, \`${dependencyName}\` version must be fixed (or set as "workspace:*" for local packages) to reduce accidental breaking change risks due to an implicit semver upgrade.`,
 				{
-					consumedBy: name,
 					name: dependencyName,
+					consumedBy: name,
 				},
 			);
 		}
 	}
 
 	for (const [dependencyName, version] of Object.entries(dependencies)) {
-		assertVersion(version, { consumedBy: name, name: dependencyName });
+		assertVersion(version, { name: dependencyName, consumedBy: name });
 
 		if (version !== "workspace:^" && !hasCaret(version) && !isExcluded(version)) {
 			throw createPackageError(
 				`As a dependency, \`${dependencyName}\` version must be prefixed with a caret (or set as "workspace:^" for local packages) to optimize the size (whether of installation or bundle output) on the consumer side.`,
 				{
-					consumedBy: name,
 					name: dependencyName,
+					consumedBy: name,
 				},
 			);
 		}
 	}
 
 	for (const [dependencyName, version] of Object.entries(peerDependencies)) {
-		assertVersion(version, { consumedBy: name, name: dependencyName });
+		assertVersion(version, { name: dependencyName, consumedBy: name });
 
 		if (!hasCaret(version) && !isExcluded(version)) {
 			/*
@@ -88,8 +88,8 @@ const checkDependencyVersionRange = ({
 			throw createPackageError(
 				`As a peer dependency, \`${dependencyName}\` version must be explicit (i.e. the "workspace:^" protocol a version resolver is not allowed) and prefixed with a caret to optimize the size (whether of installation or bundle output) on the consumer side.`,
 				{
-					consumedBy: name,
 					name: dependencyName,
+					consumedBy: name,
 				},
 			);
 		}
@@ -125,8 +125,8 @@ const createPackagesVersionMismatchChecker = () => {
 				throw createPackageError(
 					`Mismatched versions: received version \`${dependencyVersion}\` while others use \`${storedVersion}\`. To prevent issues with singleton-like code (React contexts, …), please make sure to update all packages to use the same \`${dependencyName}\` version (either \`${storedVersion}\` or \`${dependencyVersion}\`).`,
 					{
-						consumedBy: packageName,
 						name: dependencyName,
+						consumedBy: packageName,
 					},
 				);
 			}
@@ -140,8 +140,8 @@ const createPackagesVersionMismatchChecker = () => {
 };
 
 type PackageErrorContext = {
-	consumedBy: PackageJson["name"];
 	name: PackageJson["name"];
+	consumedBy: PackageJson["name"];
 };
 
 const createPackageError = (message: string, context?: PackageErrorContext) => {
@@ -156,13 +156,13 @@ const createPackageError = (message: string, context?: PackageErrorContext) => {
 const assertVersion: (
 	version: string | undefined,
 	context: PackageErrorContext,
-) => asserts version = (version, { consumedBy, name }) => {
+) => asserts version = (version, { name, consumedBy }) => {
 	assert(version, () => {
 		return createPackageError(
 			`\`${name}\` must have a valid version specified (current version equals to \`${String(version)}\`).`,
 			{
-				consumedBy,
 				name,
+				consumedBy,
 			},
 		);
 	});

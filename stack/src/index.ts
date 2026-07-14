@@ -15,12 +15,12 @@ import type { CommandFactory } from "./types";
 
 const createProgram = (...commandFactories: CommandFactory[]) => {
 	const program = termost({
-		description: "Toolbox to easily scaffold and maintain a project",
 		name: "stack",
+		description: "Toolbox to easily scaffold and maintain a project",
 		onException() {
 			botMessage({
-				description: "Keep calm and carry on with some coffee ☕️",
 				title: "Oops, an error occurred",
+				description: "Keep calm and carry on with some coffee ☕️",
 				type: "error",
 			});
 		},

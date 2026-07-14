@@ -43,24 +43,24 @@ const REPOSITORY_REGEXP =
 export const createCreateCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
-			description: "Scaffold a new project",
 			name: "create",
+			description: "Scaffold a new project",
 		})
 		.task({
 			handler() {
 				botMessage({
-					description: "I can guarantee you a project creation in under 1 minute 🚀",
 					title: `I'm Stack v${VERSION} 👋`,
+					description: "I can guarantee you a project creation in under 1 minute 🚀",
 					type: "information",
 				});
 			},
 		})
 		.task({
+			label: label("Check pre-requisites"),
 			async handler() {
 				// Check pnpm availability by verifying its version
 				await getPnpmVersion();
 			},
-			label: label("Check pre-requisites"),
 		})
 		.input({
 			key: "inputName",
@@ -73,19 +73,21 @@ export const createCreateCommand: CommandFactory = (program) => {
 			type: "text",
 		})
 		.input({
-			defaultValue: "git@github.com:adbayb/xxx.git",
 			key: "inputUrl",
 			label: "Where will it be stored? (Git remote URL)",
+			defaultValue: "git@github.com:adbayb/xxx.git",
 			type: "text",
 		})
 		.input({
-			defaultValue: "single-project",
 			key: "inputTemplate",
 			label: "Which template you would like to apply?",
+			defaultValue: "single-project",
 			options: ["single-project", "multi-projects"],
 			type: "select",
 		})
 		.task({
+			key: "data",
+			label: label("Check and format input"),
 			async handler({ inputDescription, inputName, inputTemplate, inputUrl }) {
 				if (!inputName) {
 					throw createError(
@@ -127,17 +129,15 @@ export const createCreateCommand: CommandFactory = (program) => {
 					workingPath: resolveFromWorkingDirectory(projectName),
 				};
 			},
-			key: "data",
-			label: label("Check and format input"),
 		})
 		.input({
-			defaultValue: true,
 			key: "canRemoveExistingDirectoryInput",
 			label({ data: { projectName } }) {
 				return label(
 					`\`${projectName}\` directory already exists, do you want to remove it?`,
 				);
 			},
+			defaultValue: true,
 			skip({ data: { workingPath } }) {
 				return !existsSync(workingPath);
 			},
@@ -154,6 +154,10 @@ export const createCreateCommand: CommandFactory = (program) => {
 			},
 		})
 		.task({
+			key: "templateEngine",
+			label({ data: { projectName }, inputTemplate }) {
+				return label(`Copy \`${inputTemplate}\` template to \`${projectName}\` directory`);
+			},
 			async handler({
 				canRemoveExistingDirectoryInput,
 				data: {
@@ -191,34 +195,31 @@ export const createCreateCommand: CommandFactory = (program) => {
 					templatePath,
 				});
 			},
-			key: "templateEngine",
-			label({ data: { projectName }, inputTemplate }) {
-				return label(`Copy \`${inputTemplate}\` template to \`${projectName}\` directory`);
-			},
 		})
 		.task({
+			label() {
+				return label("Process template");
+			},
 			async handler({ templateEngine }) {
 				await templateEngine.processContents();
 				await templateEngine.processPaths();
 			},
-			label() {
-				return label("Process template");
-			},
 		})
 		.task({
+			label: label("Initialize `git`"),
 			async handler({ data: { projectUrl } }) {
 				await helpers.exec("git init");
 				await helpers.exec(`git remote add origin ${projectUrl}`);
 			},
-			label: label("Initialize `git`"),
 		})
 		.task({
+			label: label("Set up the package manager"),
 			async handler() {
 				await setPackageManager();
 			},
-			label: label("Set up the package manager"),
 		})
 		.task({
+			label: label("Install dependencies"),
 			async handler({ data: { projectName } }) {
 				const localDevelopmentDependencies = ["quickbundle", "vitest"];
 				const globalDevelopmentDependencies = ["@adbayb/stack"];
@@ -244,26 +245,25 @@ export const createCreateCommand: CommandFactory = (program) => {
 					);
 				}
 			},
-			label: label("Install dependencies"),
 		})
 		.task({
+			label: label("Run `stack install`"),
 			async handler() {
 				await helpers.exec("stack install");
 			},
-			label: label("Run `stack install`"),
 		})
 		.task({
+			label: label("Commit"),
 			async handler() {
 				await helpers.exec("git add -A");
 				await helpers.exec('git commit -m "chore: initial commit"');
 			},
-			label: label("Commit"),
 		})
 		.task({
 			handler({ data: { projectName } }) {
 				botMessage({
-					description: `Run \`cd ./${projectName}\` and Enjoy 🚀`,
 					title: "The project was successfully created",
+					description: `Run \`cd ./${projectName}\` and Enjoy 🚀`,
 					type: "success",
 				});
 			},
@@ -408,7 +408,7 @@ const getTemplateEntries = async (path: string) => {
 			return processableItems
 				.map(({ content, type }) => {
 					if (!hasTemplateVariable(content)) {
-						return;
+						return undefined;
 					}
 
 					return {

@@ -4,8 +4,8 @@ import type { CommandFactory } from "../types";
 export const createStartCommand: CommandFactory = (program) => {
 	program
 		.command({
-			description: "Start the project in production mode",
 			name: "start",
+			description: "Start the project in production mode",
 		})
 		.task({
 			async handler() {

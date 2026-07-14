@@ -12,28 +12,28 @@ type CommandContext = {
 export const createReleaseCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
-			description: "Log, version, and publish package(s)",
 			name: "release",
+			description: "Log, version, and publish package(s)",
 		})
 		.option({
-			description: "Add a new changelog entry",
 			key: "log",
 			name: "log",
+			description: "Add a new changelog entry",
 		})
 		.option({
-			description: "Add an empty changelog entry",
 			key: "emptyLog",
 			name: "empty-log",
+			description: "Add an empty changelog entry",
 		})
 		.option({
-			description: "Bump the package(s) version",
 			key: "tag",
 			name: "tag",
+			description: "Bump the package(s) version",
 		})
 		.option({
-			description: "Publish package(s) to the registry",
 			key: "publish",
 			name: "publish",
+			description: "Publish package(s) to the registry",
 		})
 		.task({
 			async handler() {

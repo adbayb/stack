@@ -32,9 +32,9 @@ export const assert: (
  * @param input.type - Message type.
  */
 export const botMessage = (input: {
-	body?: string;
-	description: string;
 	title: string;
+	description: string;
+	body?: string;
 	type: "error" | "information" | "success";
 }) => {
 	const { type } = input;
