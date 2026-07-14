@@ -1,7 +1,5 @@
-import baseConfig from "@adbayb/stack/oxlint";
+import { createConfig } from "@adbayb/stack/oxlint";
 
-// TODO: expose createConfig? Same for oxfmt?
-export default {
-	...baseConfig,
+export default createConfig({
 	ignorePatterns: ["**/templates/**"],
-};
+});

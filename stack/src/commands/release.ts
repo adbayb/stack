@@ -38,7 +38,6 @@ export const createReleaseCommand: CommandFactory = (program) => {
 		.task({
 			async handler() {
 				helpers.message("New changelog entry\n");
-
 				await changeset("changeset");
 			},
 			skip: ifNotEqualTo("log"),
@@ -46,7 +45,6 @@ export const createReleaseCommand: CommandFactory = (program) => {
 		.task({
 			async handler() {
 				helpers.message("New empty changelog entry\n");
-
 				await changeset("changeset --empty");
 			},
 			skip: ifNotEqualTo("emptyLog"),
@@ -54,7 +52,6 @@ export const createReleaseCommand: CommandFactory = (program) => {
 		.task({
 			async handler() {
 				helpers.message("Bumping the package(s) version\n");
-
 				await changeset("changeset version && pnpm install --no-frozen-lockfile");
 			},
 			skip: ifNotEqualTo("tag"),
@@ -62,7 +59,6 @@ export const createReleaseCommand: CommandFactory = (program) => {
 		.task({
 			async handler() {
 				helpers.message("Publishing package(s) to the registry\n");
-
 				await changeset("stack build && pnpm changeset publish");
 			},
 			skip: ifNotEqualTo("publish"),

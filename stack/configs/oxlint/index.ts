@@ -1,3 +1,6 @@
+import e18ePlugin from "@e18e/eslint-plugin";
+import { configs as perfectionistPlugin } from "eslint-plugin-perfectionist";
+import type { OxlintConfig } from "oxlint";
 import { defineConfig } from "oxlint";
 
 const JAVASCRIPT_EXTENSIONS = ["js", "jsx", "cjs", "mjs", "mjsx"];
@@ -10,24 +13,7 @@ const TEST_LIKE_FILES = [
 	`**/*.{test,test-d}.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
 ];
 
-const RELAXED_LIKE_FILES = [
-	...TEST_LIKE_FILES,
-	"**/.config/**",
-	"**/.configs/**",
-	"**/config/**",
-	"**/configs/**",
-	"**/examples/**",
-	"**/scripts/**",
-	"**/tools/**",
-	`**/config.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
-	`**/configs.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
-	`**/*.config.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
-	`**/*.configs.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
-	`**/stories.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
-	`**/*.stories.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
-];
-
-export default defineConfig({
+const config = defineConfig({
 	categories: {
 		correctness: "error",
 		nursery: "error",
@@ -37,6 +23,7 @@ export default defineConfig({
 		style: "error",
 		suspicious: "error",
 	},
+	jsPlugins: ["@e18e/eslint-plugin", "@stylistic/eslint-plugin", "eslint-plugin-perfectionist"],
 	options: {
 		denyWarnings: true,
 		reportUnusedDisableDirectives: "error",
@@ -51,8 +38,20 @@ export default defineConfig({
 		},
 		{
 			files: [
-				...RELAXED_LIKE_FILES,
-				`*.config(s)?.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
+				...TEST_LIKE_FILES,
+				"**/.config/**",
+				"**/.configs/**",
+				"**/config/**",
+				"**/configs/**",
+				"**/examples/**",
+				"**/scripts/**",
+				"**/tools/**",
+				`**/config.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
+				`**/configs.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
+				`**/*.config.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
+				`**/*.configs.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
+				`**/stories.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
+				`**/*.stories.{${JAVASCRIPT_LIKE_EXTENSIONS_AS_STRING}}`,
 			],
 			rules: {
 				"import/no-anonymous-default-export": "off",
@@ -60,9 +59,7 @@ export default defineConfig({
 			},
 		},
 	],
-	// TODO: add jsPlugins for perfectionist and padding-line-between-statements + add React rules (such as set-state-in-effect) from React X https://github.com/oxc-project/oxc/issues/1022 + potentially https://github.com/es-tooling/eslint-plugin-depend/blob/main/docs/rules/ban-dependencies.md
 	plugins: [
-		// TODO: check perfectionist sorting here
 		"eslint",
 		"import",
 		"jsdoc",
@@ -76,6 +73,78 @@ export default defineConfig({
 		"unicorn",
 	],
 	rules: {
+		...e18ePlugin.configs.recommended.rules,
+		...perfectionistPlugin["recommended-natural"].rules,
+		"@stylistic/jsx-pascal-case": "error",
+		"@stylistic/jsx-self-closing-comp": "error",
+		"@stylistic/lines-between-class-members": "error",
+		"@stylistic/multiline-comment-style": "error",
+		"@stylistic/padding-line-between-statements": [
+			"error",
+			// Default: separate everything.
+			{
+				blankLine: "always",
+				next: "*",
+				prev: "*",
+			},
+			// Keep single-line variable declarations together
+			{
+				blankLine: "never",
+				next: ["singleline-const", "singleline-let", "singleline-var"],
+				prev: ["singleline-const", "singleline-let", "singleline-var"],
+			},
+			// Keep single-line exports together
+			{
+				blankLine: "never",
+				next: ["singleline-export"],
+				prev: ["singleline-export"],
+			},
+			{
+				blankLine: "never",
+				next: ["cjs-export"],
+				prev: ["cjs-export"],
+			},
+			// Keep statements together
+			{
+				blankLine: "never",
+				next: ["singleline-expression"],
+				prev: ["singleline-expression"],
+			},
+			// Keep imports together.
+			{
+				blankLine: "never",
+				next: ["import"],
+				prev: ["import"],
+			},
+			{
+				blankLine: "never",
+				next: ["cjs-import"],
+				prev: ["cjs-import"],
+			},
+			// Keep directives together
+			{
+				blankLine: "never",
+				next: "directive",
+				prev: "directive",
+			},
+			// Keep switch labels together
+			{
+				blankLine: "never",
+				next: ["case", "default"],
+				prev: ["case", "default"],
+			},
+			{
+				blankLine: "never",
+				next: "*",
+				prev: ["case", "default"],
+			},
+		],
+		"@stylistic/quotes": [
+			"error",
+			"double",
+			{ allowTemplateLiterals: "avoidEscape", avoidEscape: true },
+		],
+		"@stylistic/spaced-comment": "error",
 		"array-callback-return": ["error", { allowImplicit: true }],
 		"arrow-body-style": ["error", "always"],
 		"id-length": "off",
@@ -99,7 +168,10 @@ export default defineConfig({
 		"nextjs/no-sync-scripts": "error",
 		"nextjs/no-unwanted-polyfillio": "error",
 		"no-async-await": "off",
+		"no-console": "off",
 		"no-continue": "off",
+		"no-duplicate-imports": ["error", { allowSeparateTypeImports: true }],
+		"no-inline-comments": "off",
 		"no-magic-numbers": "off",
 		"no-optional-chaining": "off",
 		"no-rest-spread-properties": "off",
@@ -110,6 +182,8 @@ export default defineConfig({
 		"no-void": "off",
 		"no-warning-comments": "off",
 		"node/no-sync": "off",
+		"perfectionist/sort-imports": "off", // Already supported by Oxfmt
+		"perfectionist/sort-named-imports": "off", // Already supported by eslint/sort-imports
 		"prefer-named-capture-group": "off",
 		"prefer-readonly-parameter-types": "off",
 		"react/jsx-max-depth": "off",
@@ -124,3 +198,14 @@ export default defineConfig({
 		"unicorn/import-style": "off",
 	},
 });
+
+export const createConfig = (
+	input: Required<Pick<OxlintConfig, "ignorePatterns">>,
+): OxlintConfig => {
+	return {
+		...config,
+		...input,
+	};
+};
+
+export default config;

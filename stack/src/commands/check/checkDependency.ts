@@ -36,6 +36,8 @@ export const checkDependency = async () => {
 	}
 };
 
+const STARTING_WITH_DIGIT_REGEXP = /^\d/u;
+
 const checkDependencyVersionRange = ({
 	dependencies,
 	devDependencies,
@@ -46,7 +48,11 @@ const checkDependencyVersionRange = ({
 	for (const [dependencyName, version] of Object.entries(devDependencies)) {
 		assertVersion(version, { consumedBy: name, name: dependencyName });
 
-		if (version !== "workspace:*" && !isExcluded(version) && !/^\d/u.test(version)) {
+		if (
+			version !== "workspace:*" &&
+			!isExcluded(version) &&
+			!STARTING_WITH_DIGIT_REGEXP.test(version)
+		) {
 			throw createPackageError(
 				`As a dev dependency, \`${dependencyName}\` version must be fixed (or set as "workspace:*" for local packages) to reduce accidental breaking change risks due to an implicit semver upgrade.`,
 				{
@@ -163,8 +169,10 @@ const assertVersion: (
 	});
 };
 
+const PRERELEASE_VERSION_REGEXP = /\d+\.\d+\.\d+-(alpha|beta|experimental|next|rc).*/u;
+
 const isExcluded = (version: string) => {
-	const isPreReleaseVersion = /\d+\.\d+\.\d+-(alpha|beta|experimental|next|rc).*/u.exec(version);
+	const isPreReleaseVersion = PRERELEASE_VERSION_REGEXP.exec(version);
 	const isNpmProtocol = version.startsWith("npm:");
 
 	return isNpmProtocol || isPreReleaseVersion;

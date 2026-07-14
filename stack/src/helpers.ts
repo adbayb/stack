@@ -144,33 +144,24 @@ export const setPackageManager = async () => {
 	await helpers.exec("pnx corepack enable");
 };
 
-async function getRequest(url: string, responseType: "text"): Promise<string>;
-async function getRequest(url: string, responseType: "json"): Promise<Record<string, string>>;
-async function getRequest(
-	url: string,
-	responseType: "json" | "text",
-): Promise<string | Record<string, string>> {
-	const response = await fetch(url);
-
-	if (!response.ok) {
-		throw createError(
-			"fetch",
-			`Failed to fetch resources from ${url} (${JSON.stringify({
-				status: response.status,
-				statusText: response.statusText,
-			})})`,
-		);
-	}
-
-	if (responseType === "text") {
-		return response.text();
-	}
-
-	return response.json() as Promise<Record<string, string>>;
-}
-
 export const request = {
-	get: getRequest,
+	async get<ResponseType extends "json" | "text">(url: string, responseType: ResponseType) {
+		const response = await fetch(url);
+
+		if (!response.ok) {
+			throw createError(
+				"fetch",
+				`Failed to fetch resources from ${url} (${JSON.stringify({
+					status: response.status,
+					statusText: response.statusText,
+				})})`,
+			);
+		}
+
+		return (responseType === "text" ? response.text() : response.json()) as Promise<
+			ResponseType extends "text" ? string : Record<string, string>
+		>;
+	},
 };
 
 export const oxlint = (options: { isFixMode: boolean }) => {
@@ -178,7 +169,7 @@ export const oxlint = (options: { isFixMode: boolean }) => {
 		const args = [...files, "--disable-nested-config", "--no-error-on-unmatched-pattern"];
 
 		if (options.isFixMode) {
-			args.push("--fix");
+			args.push("--fix-dangerously");
 		}
 
 		try {
@@ -208,9 +199,9 @@ export const oxfmt = (options: { isFixMode: boolean }) => {
 
 export const turbo = async (
 	command: "build" | "start" | "test" | "watch",
-	options: {
+	options: Parameters<typeof helpers.exec>[1] & {
 		excludeExamples?: boolean;
-	} & Parameters<typeof helpers.exec>[1] = {},
+	} = {},
 ) => {
 	try {
 		const { excludeExamples = false, hasLiveOutput = true, ...restOptions } = options;

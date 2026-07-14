@@ -1,6 +1,7 @@
+import type { OxfmtConfig } from "oxfmt";
 import { defineConfig } from "oxfmt";
 
-export default defineConfig({
+const config = defineConfig({
 	arrowParens: "always",
 	bracketSameLine: false,
 	bracketSpacing: true,
@@ -27,3 +28,12 @@ export default defineConfig({
 	useTabs: true,
 	vueIndentScriptAndStyle: false,
 });
+
+export const createConfig = (input: Required<Pick<OxfmtConfig, "overrides">>): OxfmtConfig => {
+	return {
+		...config,
+		...input,
+	};
+};
+
+export default config;

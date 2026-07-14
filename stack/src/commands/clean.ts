@@ -70,11 +70,13 @@ const isDirectoryExistAndNotEmpty = (path: string) => {
 	return existsSync(path) && readdirSync(path).length > 0;
 };
 
+const LINEBREAK_REGEXP = /\n|\r\n/u;
+
 const retrieveIgnoredFiles = async () => {
 	const rawFiles = await helpers.exec("git clean -fdXn");
 
 	return rawFiles
-		.split(/\n|\r\n/u)
+		.split(LINEBREAK_REGEXP)
 		.filter((cleanOutput) => {
 			return PRESERVE_FILES.every((excludedFile) => {
 				return !cleanOutput.includes(excludedFile);

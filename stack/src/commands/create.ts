@@ -37,6 +37,9 @@ type CommandContext = {
 
 type Template = "multi-projects" | "single-project";
 
+const REPOSITORY_REGEXP =
+	/^(?:git@.*:|https?:\/\/.*\/)(?<repoOwner>[^/]+)\/(?<repoName>[^/]+)\.git$/u;
+
 // eslint-disable-next-line sonarjs/max-lines-per-function
 export const createCreateCommand: CommandFactory = (program) => {
 	program
@@ -92,11 +95,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 					);
 				}
 
-				const { repoName, repoOwner } =
-					(inputUrl.startsWith("git")
-						? /^git@.*:(?<repoOwner>.*)\/(?<repoName>.*)\.git$/u
-						: /^https?:\/\/.*\/(?<repoOwner>.*)\/(?<repoName>.*)\.git$/u
-					).exec(inputUrl)?.groups ?? {};
+				const { repoName, repoOwner } = REPOSITORY_REGEXP.exec(inputUrl)?.groups ?? {};
 
 				if (!repoOwner || !repoName) {
 					throw createError(
