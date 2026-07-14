@@ -43,7 +43,6 @@ const checkDependencyVersionRange = ({
 	devDependencies,
 	name,
 	peerDependencies,
-	// eslint-disable-next-line sonarjs/cyclomatic-complexity
 }: PackageJson) => {
 	for (const [dependencyName, version] of Object.entries(devDependencies)) {
 		assertVersion(version, { consumedBy: name, name: dependencyName });

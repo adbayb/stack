@@ -40,7 +40,6 @@ type Template = "multi-projects" | "single-project";
 const REPOSITORY_REGEXP =
 	/^(?:git@.*:|https?:\/\/.*\/)(?<repoOwner>[^/]+)\/(?<repoName>[^/]+)\.git$/u;
 
-// eslint-disable-next-line sonarjs/max-lines-per-function
 export const createCreateCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
@@ -327,13 +326,6 @@ export const createTemplateEngine = async (
 		await rename(gitignoreFile, join(workingPath, ".gitignore"));
 	}
 
-	// Rename back `eslint.config.js` (since eslint use the nearest config file found to prevent false positives)
-	const eslintConfigFile = join(workingPath, "eslint.config.js.tmpl");
-
-	if (existsSync(eslintConfigFile)) {
-		await rename(eslintConfigFile, join(workingPath, "eslint.config.js"));
-	}
-
 	const templateEntries = await getTemplateEntries(workingPath);
 
 	process.chdir(workingPath);
@@ -450,6 +442,5 @@ const hasTemplateVariable = (input: string) => {
 	 *
 	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test MDN documentation}.
 	 */
-	// eslint-disable-next-line unicorn/prefer-regexp-test
 	return input.search(TEMPLATE_VARIABLE_MATCHER) >= 0;
 };
