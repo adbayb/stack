@@ -1,5 +1,17 @@
 # @adbayb/stack
 
+## 3.0.0
+
+### Major Changes
+
+- [`995fa31`](https://github.com/adbayb/stack/commit/995fa310da56fecfcf722819e03db49687c85a14) Thanks [@adbayb](https://github.com/adbayb)! - Migrate from Prettier to Oxfmt (OXC).
+
+- [`7baa8ed`](https://github.com/adbayb/stack/commit/7baa8ed751818720825d174c56f8750cdbb5d4c3) Thanks [@adbayb](https://github.com/adbayb)! - Migrate from ESLint to Oxlint (OXC).
+
+### Patch Changes
+
+- [`b5dafe3`](https://github.com/adbayb/stack/commit/b5dafe302644e69fdf668d437b1723e19af8c4a3) Thanks [@adbayb](https://github.com/adbayb)! - Update commitlint and turbo dependencies.
+
 ## 2.40.0
 
 ### Minor Changes
@@ -187,6 +199,7 @@
 - [`7935416`](https://github.com/adbayb/stack/commit/793541692b9e52c2bef539b4b6ba07a631c99700) Thanks [@adbayb](https://github.com/adbayb)! - Use flat configuration for mdx eslint plugin.
 
 - [`6f29ae2`](https://github.com/adbayb/stack/commit/6f29ae2bbc9fd026df3785cc070bef3d92abd952) Thanks [@adbayb](https://github.com/adbayb)! - Import and Node Eslint plugin updates including:
+
     - Remove `import-x/no-deprecated` rule (already handled by TypeScript Eslint rule).
     - Update `n/prefer-global` rule to always enforce no import (enable cross-platform compatibility).
     - Add `n/hashbang` check.
@@ -377,6 +390,7 @@
 ### Minor Changes
 
 - [`f5db4d8`](https://github.com/adbayb/stack/commit/f5db4d8a98a23244cc160808eaad043a628514d4) Thanks [@adbayb](https://github.com/adbayb)! - Minor updates including:
+
     - Review rules after testing the new stack on a project.
     - Update template (package.json changes).
     - Add `package.json` prettier plugin.
@@ -477,6 +491,7 @@
 ### Minor Changes
 
 - [#95](https://github.com/adbayb/stack/pull/95) [`513249d`](https://github.com/adbayb/stack/commit/513249df1b76d1d9832b34fdc13a81569ecce9eb) Thanks [@adbayb](https://github.com/adbayb)! - Update TypeScript config.
+
     - `moduleResolution` is now set to `Bundler` to allow `exports` package.json field resolution.
     - `target` and `module` are now set to `ESNext` to support, for example, syntaxes that can be used exclusively with `ESNext` module target (for example, import attributes). It should be fine since:
         - Down leveling the bundled code for wider browser compatibility is a bundler responsibility, not a TS one.
