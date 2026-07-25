@@ -5,6 +5,7 @@
 import { helpers } from "termost";
 
 try {
+	// oxlint-disable-next-line node/no-top-level-await
 	await helpers.exec("pnx @adbayb/stack create", {
 		hasLiveOutput: true,
 	});

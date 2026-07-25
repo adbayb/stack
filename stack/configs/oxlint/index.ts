@@ -262,17 +262,18 @@ const config = defineConfig({
 		"no-warning-comments": "off",
 		"node/no-process-env": "off",
 		"node/no-sync": "off",
+		"node/no-top-level-await": ["error", { ignoreBin: true }],
 		"oxc/no-async-endpoint-handlers": "off",
 		"perfectionist/sort-imports": "off", // Already supported by Oxfmt
 		"perfectionist/sort-named-imports": "off", // Already supported by eslint/sort-imports
 		"prefer-named-capture-group": "off",
 		"prefer-readonly-parameter-types": "off",
+		"react/function-component-definition": "off",
 		"react/jsx-filename-extension": ["error", { extensions: ["jsx", "tsx"] }],
 		"react/jsx-max-depth": "off",
 		"react/jsx-no-literals": "off",
 		"react/jsx-props-no-spreading": "off",
 		"react/no-multi-comp": "off",
-		"react/only-export-components": ["error", { allowConstantExport: true }],
 		"react/prefer-function-component": [
 			"error",
 			{ allowErrorBoundary: true, allowJsxUtilityClass: true },

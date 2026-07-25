@@ -46,6 +46,6 @@
 		"termost": "^1.9.1"
 	},
 	"devDependencies": {
-		"quickbundle": "3.0.0"
+		"quickbundle": "3.1.0"
 	}
 }
