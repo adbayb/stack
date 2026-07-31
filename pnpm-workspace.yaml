@@ -1,6 +1,10 @@
 packages:
     - "stack"
     - "stack/create"
+saveExact: true
+verifyDepsBeforeRun: "warn"
+update:
+    githubActions: true
 minimumReleaseAgeExclude:
     - "@adbayb/*"
     - termost
@@ -20,5 +24,3 @@ publicHoistPattern:
     - "*turbo*"
     - "*typescript*"
     - "*types*"
-saveExact: true
-verifyDepsBeforeRun: "warn"

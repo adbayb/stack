@@ -1,10 +1,14 @@
-minimumReleaseAgeExclude:
-    - "@adbayb/*"
 packages:
     - "applications/*"
     - "examples/*"
     - "libraries/*"
     - "tools/*"
+saveExact: true
+verifyDepsBeforeRun: "warn"
+update:
+    githubActions: true
+minimumReleaseAgeExclude:
+    - "@adbayb/*"
 publicHoistPattern:
     - "*changesets*"
     - "*commitlint*"
@@ -13,5 +17,3 @@ publicHoistPattern:
     - "*turbo*"
     - "*typescript*"
     - "*types*"
-saveExact: true
-verifyDepsBeforeRun: "warn"
