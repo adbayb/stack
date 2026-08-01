@@ -362,7 +362,6 @@ export const createTemplateEngine = async (
 			for (const entry of sortedDirectoryEntries) {
 				const newPath = setTemplateVariables(entry, templateModel);
 
-				// oxlint-disable-next-line no-await-in-loop
 				await rename(entry.path, newPath);
 			}
 

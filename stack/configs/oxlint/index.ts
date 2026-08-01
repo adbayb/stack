@@ -244,6 +244,7 @@ const config = defineConfig({
 		"nextjs/no-sync-scripts": "error",
 		"nextjs/no-unwanted-polyfillio": "error",
 		"no-async-await": "off",
+		"no-await-in-loop": "off",
 		"no-bitwise": "off",
 		"no-console": "off",
 		"no-continue": "off",
@@ -268,6 +269,7 @@ const config = defineConfig({
 		"perfectionist/sort-named-imports": "off", // Already supported by eslint/sort-imports
 		"prefer-named-capture-group": "off",
 		"prefer-readonly-parameter-types": "off",
+		"promise/avoid-new": "off",
 		"react/function-component-definition": "off",
 		"react/jsx-filename-extension": ["error", { extensions: ["jsx", "tsx"] }],
 		"react/jsx-max-depth": "off",
@@ -296,6 +298,7 @@ const config = defineConfig({
 		"unicorn/no-array-for-each": "off",
 		"unicorn/no-array-reduce": "off",
 		"unicorn/no-useless-undefined": "off",
+		"vitest/max-expects": "off",
 	},
 });
 
