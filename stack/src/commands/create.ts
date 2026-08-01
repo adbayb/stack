@@ -119,7 +119,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 
 				return {
 					licenseYear: new Date().getFullYear().toString(),
-					nodeVersion: nodeVersion.replace("v", ""),
+					nodeVersion: `^${Number(nodeVersion.replace("v", "").split(".")[0])}.0.0`,
 					pnpmVersion: String(pnpmVersion),
 					projectDescription: toCapitalLetter(inputDescription),
 					projectName,

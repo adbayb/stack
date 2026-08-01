@@ -55,8 +55,10 @@ const config = defineConfig({
 			plugins: ["vitest"],
 			rules: {
 				"vitest/consistent-test-it": ["error", { fn: "test", withinDescribe: "test" }],
+				"vitest/max-expects": "off",
 				"vitest/no-hooks": "off",
 				"vitest/no-importing-vitest-globals": "off",
+				"vitest/prefer-expect-assertions": "off",
 				"vitest/prefer-to-be-falsy": "off",
 				"vitest/prefer-to-be-truthy": "off",
 				"vitest/require-mock-type-parameters": "off",
@@ -259,6 +261,7 @@ const config = defineConfig({
 		"no-undefined": "off",
 		"no-underscore-dangle": "off",
 		"no-use-before-define": "off",
+		"no-useless-return": "off",
 		"no-void": "off",
 		"no-warning-comments": "off",
 		"node/no-process-env": "off",
@@ -297,8 +300,8 @@ const config = defineConfig({
 		"unicorn/import-style": "off",
 		"unicorn/no-array-for-each": "off",
 		"unicorn/no-array-reduce": "off",
+		"unicorn/no-useless-switch-case": "off",
 		"unicorn/no-useless-undefined": "off",
-		"vitest/max-expects": "off",
 	},
 });
 
