@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 3.0.1
+
+### Patch Changes
+
+- [`492a290`](https://github.com/adbayb/stack/commit/492a2909395415f9cb1f3846027825494cccf3dd) Thanks [@adbayb](https://github.com/adbayb)! - Disable `no-plusplus` and `unicorn/prefer-math-trunc` rules.
+
 ## 3.0.0
 
 ### Major Changes
