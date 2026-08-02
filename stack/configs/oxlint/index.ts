@@ -255,6 +255,7 @@ const config = defineConfig({
 		"no-magic-numbers": "off",
 		"no-optional-chaining": "off",
 		"no-param-reassign": "off",
+		"no-plusplus": "off",
 		"no-rest-spread-properties": "off",
 		"no-ternary": "off",
 		"no-undef": "off",
@@ -302,6 +303,7 @@ const config = defineConfig({
 		"unicorn/no-array-reduce": "off",
 		"unicorn/no-useless-switch-case": "off",
 		"unicorn/no-useless-undefined": "off",
+		"unicorn/prefer-math-trunc": "off", // No really identical replacement especially for `hash >>> 0` ensuring a positive integer
 	},
 });
 

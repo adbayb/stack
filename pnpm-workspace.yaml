@@ -7,15 +7,8 @@ update:
     githubActions: true
 minimumReleaseAgeExclude:
     - "@adbayb/*"
-    - termost
-    - "@turbo/darwin-64@2.10.7"
-    - "@turbo/darwin-arm64@2.10.7"
-    - "@turbo/linux-64@2.10.7"
-    - "@turbo/linux-arm64@2.10.7"
-    - "@turbo/windows-64@2.10.7"
-    - "@turbo/windows-arm64@2.10.7"
-    - quickbundle@3.1.0
-    - turbo@2.10.7
+    - "quickbundle"
+    - "termost"
 publicHoistPattern:
     - "*changesets*"
     - "*commitlint*"
