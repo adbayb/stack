@@ -1,5 +1,18 @@
 # @adbayb/create
 
+## 3.0.0
+
+### Major Changes
+
+- [`995fa31`](https://github.com/adbayb/stack/commit/995fa310da56fecfcf722819e03db49687c85a14) Thanks [@adbayb](https://github.com/adbayb)! - Migrate from Prettier to Oxfmt (OXC).
+
+- [`7baa8ed`](https://github.com/adbayb/stack/commit/7baa8ed751818720825d174c56f8750cdbb5d4c3) Thanks [@adbayb](https://github.com/adbayb)! - Migrate from ESLint to Oxlint (OXC).
+
+### Patch Changes
+
+- Updated dependencies [[`b5dafe3`](https://github.com/adbayb/stack/commit/b5dafe302644e69fdf668d437b1723e19af8c4a3), [`123ec23`](https://github.com/adbayb/stack/commit/123ec23fa9c50e813184aa511707800a702bde77), [`995fa31`](https://github.com/adbayb/stack/commit/995fa310da56fecfcf722819e03db49687c85a14), [`f223d10`](https://github.com/adbayb/stack/commit/f223d10922ec88cc968c7e88eb983b1bf05c3ffb), [`7baa8ed`](https://github.com/adbayb/stack/commit/7baa8ed751818720825d174c56f8750cdbb5d4c3), [`14cf131`](https://github.com/adbayb/stack/commit/14cf13189abf294fa582d6aefcf787a5e35dcdf8)]:
+    - @adbayb/stack@3.0.0
+
 ## 2.40.0
 
 ### Patch Changes
