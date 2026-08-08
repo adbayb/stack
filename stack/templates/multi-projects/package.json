@@ -27,6 +27,5 @@
 			"version": "{{nodeVersion}}",
 			"onFail": "error"
 		}
-	},
-	"packageManager": "pnpm@{{pnpmVersion}}"
+	}
 }

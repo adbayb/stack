@@ -4,6 +4,7 @@
 	"baseBranch": "main",
 	"changelog": ["@changesets/changelog-github", { "repo": "{{repoId}}" }],
 	"commit": false,
+	"format": false,
 	"ignore": ["@examples/*"],
 	"privatePackages": {
 		"tag": true,

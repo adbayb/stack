@@ -5,6 +5,7 @@
 	"changelog": ["@changesets/changelog-github", { "repo": "adbayb/stack" }],
 	"commit": false,
 	"fixed": [["@adbayb/create", "@adbayb/stack"]],
+	"format": false,
 	"privatePackages": {
 		"tag": true,
 		"version": true
