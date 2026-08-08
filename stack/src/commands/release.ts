@@ -52,7 +52,7 @@ export const createReleaseCommand: CommandFactory = (program) => {
 		.task({
 			async handler() {
 				helpers.message("Bumping the package(s) version\n");
-				await changeset("changeset version && pnpm install --no-frozen-lockfile");
+				await changeset("changeset version");
 			},
 			skip: ifNotEqualTo("tag"),
 		})
