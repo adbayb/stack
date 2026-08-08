@@ -4,6 +4,13 @@
 
 ### Patch Changes
 
+- Updated dependencies [[`8e0d811`](https://github.com/adbayb/stack/commit/8e0d811a010c66fa424cbb73932a257e061e2642)]:
+  - @adbayb/stack@3.0.1
+
+## 3.0.1
+
+### Patch Changes
+
 - Updated dependencies [[`492a290`](https://github.com/adbayb/stack/commit/492a2909395415f9cb1f3846027825494cccf3dd)]:
     - @adbayb/stack@3.0.1
 
