@@ -4,9 +4,9 @@ import type { CommandFactory } from "../types";
 
 type CommandContext = {
 	emptyLog: boolean;
+	increment: boolean;
 	log: boolean;
 	publish: boolean;
-	tag: boolean;
 };
 
 export const createReleaseCommand: CommandFactory = (program) => {
@@ -26,8 +26,8 @@ export const createReleaseCommand: CommandFactory = (program) => {
 			description: "Add an empty changelog entry",
 		})
 		.option({
-			key: "tag",
-			name: "tag",
+			key: "increment",
+			name: "increment",
 			description: "Bump the package(s) version",
 		})
 		.option({
@@ -54,7 +54,7 @@ export const createReleaseCommand: CommandFactory = (program) => {
 				helpers.message("Bumping the package(s) version\n");
 				await changeset("changeset version");
 			},
-			skip: ifNotEqualTo("tag"),
+			skip: ifNotEqualTo("increment"),
 		})
 		.task({
 			async handler() {

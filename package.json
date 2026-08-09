@@ -22,7 +22,7 @@
 		"install": "pnpm --filter stack build && stack install",
 		"release:log": "stack release --log",
 		"release:publish": "stack release --publish",
-		"release:version": "stack release --tag",
+		"release:version": "stack release --increment",
 		"start": "stack start",
 		"test": "stack test",
 		"watch": "stack watch"
