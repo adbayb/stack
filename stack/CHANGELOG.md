@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 3.0.2
+
+### Patch Changes
+
+- [`f6e2dc1`](https://github.com/adbayb/stack/commit/f6e2dc12d2aa1bf9b252ab1d04de0d5afdeb7d1d) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies including changesets to v3 (next version) to support `devEngines` setup.
+
 ## 3.0.1
 
 ### Patch Changes
