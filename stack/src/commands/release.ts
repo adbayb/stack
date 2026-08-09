@@ -6,7 +6,7 @@ type CommandContext = {
 	emptyLog: boolean;
 	log: boolean;
 	publish: boolean;
-	tag: boolean;
+	version: boolean;
 };
 
 export const createReleaseCommand: CommandFactory = (program) => {
@@ -26,8 +26,8 @@ export const createReleaseCommand: CommandFactory = (program) => {
 			description: "Add an empty changelog entry",
 		})
 		.option({
-			key: "tag",
-			name: "tag",
+			key: "version",
+			name: "version",
 			description: "Bump the package(s) version",
 		})
 		.option({
@@ -54,7 +54,7 @@ export const createReleaseCommand: CommandFactory = (program) => {
 				helpers.message("Bumping the package(s) version\n");
 				await changeset("changeset version");
 			},
-			skip: ifNotEqualTo("tag"),
+			skip: ifNotEqualTo("version"),
 		})
 		.task({
 			async handler() {
