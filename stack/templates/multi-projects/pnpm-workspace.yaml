@@ -3,6 +3,8 @@ packages:
     - "examples/*"
     - "libraries/*"
     - "tools/*"
+allowBuilds:
+    esbuild: true
 saveExact: true
 verifyDepsBeforeRun: "warn"
 update:
