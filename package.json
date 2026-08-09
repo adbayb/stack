@@ -31,15 +31,21 @@
 		"@adbayb/stack": "workspace:*"
 	},
 	"devEngines": {
-		"packageManager": {
-			"name": "pnpm",
-			"version": "11.20.0",
-			"onFail": "download"
-		},
+		"packageManager": [
+			{
+				"name": "pnpm",
+				"version": "11.20.0",
+				"onFail": "download"
+			},
+			{
+				"name": "npm"
+			}
+		],
 		"runtime": {
 			"name": "node",
 			"version": "^24.0.0",
 			"onFail": "error"
 		}
-	}
+	},
+	"packageManager": "pnpm@11.20.0"
 }

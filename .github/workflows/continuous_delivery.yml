@@ -34,10 +34,11 @@ jobs:
                     node -e "const fs=require('fs'),pkg=JSON.parse(fs.readFileSync('package.json'));pkg.version=pkg.version+'-next-${GITHUB_SHA::7}';fs.writeFileSync('package.json',JSON.stringify(pkg,null,2)+'\n');"
                   pnpm --filter="!." --filter="!./applications/*" --filter="!./examples/*" --filter="!./tools/*" --recursive exec pnpm publish --tag next --no-git-checks
             - name: Publish stable version(s)
-              uses: changesets/action@v2.0.0-next.4
+              uses: changesets/action@v1
               with:
-                  commit-message: "chore: release package(s)"
-                  create-github-releases: true
-                  pr-title: "chore: release package(s)"
-                  publish-script: pnpm release:publish
-                  version-script: pnpm release:version
+                  commit: "chore: release package(s)"
+                  title: "chore: release package(s)"
+                  version: pnpm release:version
+                  publish: pnpm release:publish
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
