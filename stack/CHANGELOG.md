@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 3.0.3
+
+### Patch Changes
+
+- [`c73ef81`](https://github.com/adbayb/stack/commit/c73ef815f99f5599240ae1c8421c2418d0b98f56) Thanks [@adbayb](https://github.com/adbayb)! - Revert changesets v3 update since it introduces github action regression.
+
 ## 3.0.2
 
 ### Patch Changes
