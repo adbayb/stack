@@ -59,7 +59,7 @@ export const createReleaseCommand: CommandFactory = (program) => {
 		.task({
 			async handler() {
 				helpers.message("Publishing package(s) to the registry\n");
-				await changeset("stack build && pnpm changeset publish");
+				await changeset("stack build && changeset publish");
 			},
 			skip: ifNotEqualTo("publish"),
 		});
