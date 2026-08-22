@@ -2,6 +2,13 @@
 
 ## 3.1.0
 
+### Patch Changes
+
+- [`02eabe3`](https://github.com/adbayb/stack/commit/02eabe3262819fe78ea0f49347bf4d320487803e) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies including changesets, oxc, and turbo.
+  Remove `packageManager` field in favor of `devEngines.packageManager`.
+
+## 3.1.0
+
 ### Minor Changes
 
 - [`ed5b4c5`](https://github.com/adbayb/stack/commit/ed5b4c59cf89a93f91c7e277f1f8e20a54776ded) Thanks [@adbayb](https://github.com/adbayb)! - Rename `release --tag` to `release --increment`.
