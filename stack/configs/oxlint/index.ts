@@ -268,6 +268,7 @@ const config = defineConfig({
 		"node/no-process-env": "off",
 		"node/no-sync": "off",
 		"node/no-top-level-await": ["error", { ignoreBin: true }],
+		"one-var": "off",
 		"oxc/no-async-endpoint-handlers": "off",
 		"perfectionist/sort-imports": "off", // Already supported by Oxfmt
 		"perfectionist/sort-named-imports": "off", // Already supported by eslint/sort-imports

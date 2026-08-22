@@ -3,11 +3,11 @@
 	"access": "public",
 	"baseBranch": "main",
 	"changelog": ["@changesets/changelog-github", { "repo": "{{repoId}}" }],
-	"commit": false,
 	"ignore": ["@examples/*"],
-	"privatePackages": {
-		"tag": true,
-		"version": true
+	"privatePackages": true,
+	"snapshot": {
+		"prereleaseTemplate": "{tag}-{commit-short}",
+		"useCalculatedVersion": true
 	},
 	"updateInternalDependencies": "patch",
 	"___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {

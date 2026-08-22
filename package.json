@@ -20,9 +20,10 @@
 		"clean": "stack clean",
 		"fix": "stack fix",
 		"install": "pnpm --filter stack build && stack install",
-		"release:log": "stack release --log",
+		"release:changelog": "stack release --changelog",
 		"release:publish": "stack release --publish",
-		"release:version": "stack release --increment",
+		"release:snapshot": "stack release --snapshot",
+		"release:version": "stack release --bump",
 		"start": "stack start",
 		"test": "stack test",
 		"watch": "stack watch"
@@ -31,21 +32,15 @@
 		"@adbayb/stack": "workspace:*"
 	},
 	"devEngines": {
-		"packageManager": [
-			{
-				"name": "pnpm",
-				"version": "11.20.0",
-				"onFail": "download"
-			},
-			{
-				"name": "npm"
-			}
-		],
+		"packageManager": {
+			"name": "pnpm",
+			"version": "11.22.0",
+			"onFail": "download"
+		},
 		"runtime": {
 			"name": "node",
 			"version": "^24.0.0",
 			"onFail": "error"
 		}
-	},
-	"packageManager": "pnpm@11.20.0"
+	}
 }
