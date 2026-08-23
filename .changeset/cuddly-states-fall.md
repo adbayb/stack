@@ -1,5 +1,4 @@
 ---
-"@adbayb/create": patch
 "@adbayb/stack": patch
 ---
 

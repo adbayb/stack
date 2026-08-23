@@ -115,12 +115,16 @@ export const createCreateCommand: CommandFactory = (program) => {
 					"json",
 				);
 
+				if (!pnpmVersion) {
+					throw createError("fetch", "The pnpm version cannot be resolved remotely.");
+				}
+
 				const projectName = slugify(inputName);
 
 				return {
 					licenseYear: new Date().getFullYear().toString(),
-					nodeVersion: `^${Number(nodeVersion.replace("v", "").split(".")[0])}.0.0`,
-					pnpmVersion: String(pnpmVersion),
+					nodeVersion: toMajorCaretVersion(nodeVersion.replace("v", "")),
+					pnpmVersion: toMajorCaretVersion(pnpmVersion),
 					projectDescription: toCapitalLetter(inputDescription),
 					projectName,
 					projectUrl: inputUrl,
@@ -442,4 +446,8 @@ const hasTemplateVariable = (input: string) => {
 	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test MDN documentation}.
 	 */
 	return input.search(TEMPLATE_VARIABLE_MATCHER) >= 0;
+};
+
+const toMajorCaretVersion = (semanticVersion: string) => {
+	return `^${Number(semanticVersion.split(".")[0])}.0.0`;
 };
