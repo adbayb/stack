@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 3.3.0
+
+### Minor Changes
+
+- [`b4cfe7a`](https://github.com/adbayb/stack/commit/b4cfe7adf20619bf4b2b731d055bccd4b8472aa7) Thanks [@adbayb](https://github.com/adbayb)! - Refresh the UI and update dependencies.
+
 ## 3.2.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
 	"name": "@adbayb/create",
-	"version": "3.2.1",
+	"version": "3.3.0",
 	"description": "My opinionated scaffolding tool",
 	"keywords": [
 		"development",
