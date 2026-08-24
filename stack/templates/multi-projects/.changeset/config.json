@@ -6,7 +6,7 @@
 	"ignore": ["@examples/*"],
 	"privatePackages": true,
 	"snapshot": {
-		"prereleaseTemplate": "{tag}-{commit-short}",
+		"prereleaseTemplate": "{tag}.{timestamp}.{commit-short}",
 		"useCalculatedVersion": true
 	},
 	"updateInternalDependencies": "patch",
