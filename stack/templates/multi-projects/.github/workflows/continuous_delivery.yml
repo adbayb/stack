@@ -37,7 +37,7 @@ jobs:
                   publish-script: pnpm release:publish
                   version-script: pnpm release:version
             - name: Publish snapshot version(s)
-              if: steps.changesets.outputs.published == 'false'
+              if: steps.changesets.outputs.published == 'false' && steps.changesets.outputs.has-changesets == 'true'
               run: |
                   git stash # To avoid being affected by changes made in the previous step, including the removal of changeset files that could lead to errors.
                   pnpm release:snapshot
