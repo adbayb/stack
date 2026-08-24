@@ -1,5 +1,25 @@
 # @adbayb/stack
 
+## 3.2.0
+
+### Minor Changes
+
+- [`acb316a`](https://github.com/adbayb/stack/commit/acb316ac268549e7a374e718b86a8d4922bb0738) Thanks [@adbayb](https://github.com/adbayb)! - The release command flags have been updated:
+
+    - Add a `snapshot` flag.
+    - Rename `log` flag to `changelog`.
+    - Rename `empty-log` flag to `empty-changelog`.
+    - Rename `increment` flag to `bump`.
+
+- [`70d4843`](https://github.com/adbayb/stack/commit/70d4843dc9d892666cabb667e997b3835375e23e) Thanks [@adbayb](https://github.com/adbayb)! - Set caret version `devEngines.packageManager`.
+
+- [`3fddc64`](https://github.com/adbayb/stack/commit/3fddc64301b88035da9bf06f76b537887fc707da) Thanks [@adbayb](https://github.com/adbayb)! - Update snapshot versions to use Unix timestamps for chronological SemVer ordering and the commit SHA as a secondary prerelease identifier for traceability (e.g. 1.0.0-next.1787559720.70d4843). SemVer build metadata is not used since npm [strips](https://github.com/npm/cli/issues/1479) `+xxxx` build metadata on publication.
+
+### Patch Changes
+
+- [`acb316a`](https://github.com/adbayb/stack/commit/acb316ac268549e7a374e718b86a8d4922bb0738) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies including `oxc`, `turbo`, and `changeset`.
+  Replace `packageManager` by `devEngines.packageManager`.
+
 ## 3.1.0
 
 ### Minor Changes
