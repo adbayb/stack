@@ -1,7 +1,7 @@
 import { existsSync, readdirSync } from "node:fs";
 import { rm } from "node:fs/promises";
-import { helpers } from "termost";
-import { resolveFromWorkingDirectory } from "../helpers";
+import { exec } from "termost";
+import { logger, resolveFromWorkingDirectory } from "../helpers";
 import type { CommandFactory } from "../types";
 
 type CommandContext = {
@@ -42,11 +42,7 @@ export const createCleanCommand: CommandFactory = (program) => {
 		})
 		.task({
 			handler({ files }) {
-				helpers.message(files.join("\n   "), {
-					label: "Removed assets",
-					lineBreak: { end: false, start: true },
-					type: "information",
-				});
+				logger.info(`Removed assets\n   ${files.join("\n   ")}`);
 			},
 			skip({ files }) {
 				return files.length === 0;
@@ -73,7 +69,7 @@ const isDirectoryExistAndNotEmpty = (path: string) => {
 const LINEBREAK_REGEXP = /\n|\r\n/u;
 
 const retrieveIgnoredFiles = async () => {
-	const rawFiles = await helpers.exec("git clean -fdXn");
+	const rawFiles = await exec("git clean -fdXn");
 
 	return rawFiles
 		.split(LINEBREAK_REGEXP)

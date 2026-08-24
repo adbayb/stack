@@ -1,8 +1,9 @@
 import { createRequire } from "node:module";
 import { resolve } from "node:path";
-import { helpers } from "termost";
+import { exec, createLogger } from "termost";
 import type { Filenames } from "./types";
 
+export const logger = createLogger();
 export const require = createRequire(import.meta.url);
 
 export const assert: (
@@ -12,59 +13,6 @@ export const assert: (
 	if (!expectedCondition) {
 		throw createError();
 	}
-};
-
-/**
- * Helper to format log messages with a welcoming bot.
- *
- * @example
- * 	botMessage({
- * 		title: "Oops, an error occurred",
- * 		description: "Keep calm and carry on with some coffee ☕️",
- * 		body: String(previousTaskError),
- * 		type: "error",
- * 	});
- *
- * @param input - Message factory.
- * @param input.title - Title input.
- * @param input.description - Description input.
- * @param input.body - Body input.
- * @param input.type - Message type.
- */
-export const botMessage = (input: {
-	title: string;
-	description: string;
-	body?: string;
-	type: "error" | "information" | "success";
-}) => {
-	const { type } = input;
-	const log = console[type === "error" ? "error" : "log"];
-
-	const colorByType = {
-		error: "red",
-		information: "blue",
-		success: "green",
-	} as const;
-
-	log(
-		helpers.format(
-			`
-╭─────╮
-│ ◠   ◠  ${input.title}
-│   ${type === "error" ? "◠" : "◡"} │  ${input.description}
-╰─────╯
-${
-	input.body
-		? `
-${input.body}
-`
-		: ""
-}`,
-			{
-				color: colorByType[type],
-			},
-		),
-	);
 };
 
 /**
@@ -108,7 +56,7 @@ export const createError = (bin: string, error: Error | string) => {
 export const getRepositoryUrl = async () => {
 	try {
 		// This step is used as well to persist the repository url value:
-		return await helpers.exec("git config --get remote.origin.url");
+		return await exec("git config --get remote.origin.url");
 	} catch (error) {
 		throw createError(
 			"git",
@@ -121,7 +69,7 @@ export const getRepositoryUrl = async () => {
 
 export const getPnpmVersion = async () => {
 	try {
-		return await helpers.exec("pnpm -v");
+		return await exec("pnpm -v");
 	} catch {
 		throw createError(
 			"pnpm",
@@ -141,7 +89,7 @@ export const setPackageManager = async () => {
 	 *
 	 * @see {@link https://github.com/nodejs/corepack/issues/613}
 	 */
-	await helpers.exec("pnx corepack enable");
+	await exec("pnx corepack enable");
 };
 
 export const request = {
@@ -173,7 +121,7 @@ export const oxlint = (options: { isFixMode: boolean }) => {
 		}
 
 		try {
-			return await helpers.exec(`oxlint ${args.join(" ")}`);
+			return await exec(`oxlint ${args.join(" ")}`);
 		} catch (error) {
 			throw createError("oxlint", error instanceof Error ? error : new Error(String(error)));
 		}
@@ -190,7 +138,7 @@ export const oxfmt = (options: { isFixMode: boolean }) => {
 		];
 
 		try {
-			return await helpers.exec(`oxfmt ${args.join(" ")}`);
+			return await exec(`oxfmt ${args.join(" ")}`);
 		} catch (error) {
 			throw createError("oxfmt", error instanceof Error ? error : new Error(String(error)));
 		}
@@ -199,14 +147,14 @@ export const oxfmt = (options: { isFixMode: boolean }) => {
 
 export const turbo = async (
 	command: "build" | "start" | "test" | "watch",
-	options: Parameters<typeof helpers.exec>[1] & {
+	options: Parameters<typeof exec>[1] & {
 		excludeExamples?: boolean;
 	} = {},
 ) => {
 	try {
 		const { excludeExamples = false, hasLiveOutput = true, ...restOptions } = options;
 
-		return await helpers.exec(
+		return await exec(
 			`turbo run ${command} ${excludeExamples ? "--filter !@examples/*" : ""}`,
 			{
 				...restOptions,
@@ -220,23 +168,17 @@ export const turbo = async (
 
 export const logCheckableFiles = (files: string[]) => {
 	if (files.length === 0) {
-		helpers.message("The whole project will be checked.", {
-			label: false,
-			lineBreak: { end: true, start: false },
-		});
+		logger.info("The whole project will be checked.");
 
 		return;
 	}
 
-	helpers.message(files.join("\n   "), {
-		label: "Following files will be checked:",
-		lineBreak: { end: true, start: false },
-	});
+	logger.info(`Following files will be checked:\n   ${files.join("\n   ")}`);
 };
 
 export const changeset = async (command: string) => {
 	try {
-		return await helpers.exec(command, {
+		return await exec(command, {
 			hasLiveOutput: true,
 		});
 	} catch (error) {

@@ -1,10 +1,10 @@
 import { join } from "node:path";
-import { helpers } from "termost";
+import { exec } from "termost";
 import { assert, createError, require } from "../../helpers";
 import type { PackageJson } from "../../types";
 
 export const checkDependency = async () => {
-	const stdout = await helpers.exec("pnpm recursive ls --json");
+	const stdout = await exec("pnpm recursive ls --json");
 	const checkDependencyVersionMismatch = createPackagesVersionMismatchChecker();
 	const parsedCommandOutput = JSON.parse(stdout) as { name?: string; path: string }[];
 

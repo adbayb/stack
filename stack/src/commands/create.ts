@@ -1,12 +1,11 @@
 import { existsSync } from "node:fs";
 import { cp, mkdir, readFile, readdir, rename, rm, symlink, writeFile } from "node:fs/promises";
 import { basename, join, resolve } from "node:path";
-import { helpers } from "termost";
-import { VERSION } from "../constants";
+import { exec } from "termost";
 import {
-	botMessage,
 	createError,
 	getPnpmVersion,
+	logger,
 	request,
 	resolveFromPackageDirectory,
 	resolveFromWorkingDirectory,
@@ -45,15 +44,6 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.command<CommandContext>({
 			name: "create",
 			description: "Scaffold a new project",
-		})
-		.task({
-			handler() {
-				botMessage({
-					title: `I'm Stack v${VERSION} 👋`,
-					description: "I can guarantee you a project creation in under 1 minute 🚀",
-					type: "information",
-				});
-			},
 		})
 		.task({
 			label: label("Check pre-requisites"),
@@ -212,8 +202,8 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.task({
 			label: label("Initialize `git`"),
 			async handler({ data: { projectUrl } }) {
-				await helpers.exec("git init");
-				await helpers.exec(`git remote add origin ${projectUrl}`);
+				await exec("git init");
+				await exec(`git remote add origin ${projectUrl}`);
 			},
 		})
 		.task({
@@ -229,19 +219,19 @@ export const createCreateCommand: CommandFactory = (program) => {
 				const globalDevelopmentDependencies = ["@adbayb/stack"];
 
 				try {
-					await helpers.exec(
+					await exec(
 						`pnpm add ${globalDevelopmentDependencies.join(
 							" ",
 						)} --save-dev --ignore-workspace-root-check`,
 					);
 
-					await helpers.exec(
+					await exec(
 						`pnpm add ${localDevelopmentDependencies.join(
 							" ",
 						)} --save-dev --filter ${projectName}`,
 					);
 
-					await helpers.exec("pnpm install");
+					await exec("pnpm install");
 				} catch (error) {
 					throw createError(
 						"pnpm",
@@ -253,23 +243,21 @@ export const createCreateCommand: CommandFactory = (program) => {
 		.task({
 			label: label("Run `stack install`"),
 			async handler() {
-				await helpers.exec("stack install");
+				await exec("stack install");
 			},
 		})
 		.task({
 			label: label("Commit"),
 			async handler() {
-				await helpers.exec("git add -A");
-				await helpers.exec('git commit -m "chore: initial commit"');
+				await exec("git add -A");
+				await exec('git commit -m "chore: initial commit"');
 			},
 		})
 		.task({
 			handler({ data: { projectName } }) {
-				botMessage({
-					title: "The project was successfully created",
-					description: `Run \`cd ./${projectName}\` and Enjoy 🚀`,
-					type: "success",
-				});
+				logger.success(
+					`The project was successfully created.\nRun \`cd ./${projectName}\` and Enjoy 🚀.`,
+				);
 			},
 		});
 };

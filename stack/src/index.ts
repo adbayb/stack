@@ -10,7 +10,7 @@ import { createStartCommand } from "./commands/start";
 import { createTestCommand } from "./commands/test";
 import { createWatchCommand } from "./commands/watch";
 import { VERSION } from "./constants";
-import { botMessage } from "./helpers";
+import { logger } from "./helpers";
 import type { CommandFactory } from "./types";
 
 const createProgram = (...commandFactories: CommandFactory[]) => {
@@ -18,11 +18,7 @@ const createProgram = (...commandFactories: CommandFactory[]) => {
 		name: "stack",
 		description: "Toolbox to easily scaffold and maintain a project",
 		onException() {
-			botMessage({
-				title: "Oops, an error occurred",
-				description: "Keep calm and carry on with some coffee ☕️",
-				type: "error",
-			});
+			logger.error("Oops, an error occurred.\nKeep calm and carry on with some coffee ☕️.");
 		},
 		version: VERSION,
 	});

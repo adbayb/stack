@@ -1,5 +1,4 @@
-import { helpers } from "termost";
-import { changeset } from "../helpers";
+import { changeset, logger } from "../helpers";
 import type { CommandFactory } from "../types";
 
 type CommandContext = {
@@ -43,28 +42,28 @@ export const createReleaseCommand: CommandFactory = (program) => {
 		})
 		.task({
 			async handler() {
-				helpers.message("Adding a changelog\n");
+				logger.info("Adding a changelog");
 				await changeset("changeset");
 			},
 			skip: ifNotEqualTo("changelog"),
 		})
 		.task({
 			async handler() {
-				helpers.message("Adding an empty changelog\n");
+				logger.info("Adding an empty changelog");
 				await changeset("changeset --empty");
 			},
 			skip: ifNotEqualTo("emptyChangelog"),
 		})
 		.task({
 			async handler() {
-				helpers.message("Bumping version(s)\n");
+				logger.info("Bumping version(s)");
 				await changeset("changeset version");
 			},
 			skip: ifNotEqualTo("bump"),
 		})
 		.task({
 			async handler() {
-				helpers.message("Publishing snapshot version(s) to the registry\n");
+				logger.info("Publishing snapshot version(s) to the registry");
 				await changeset("changeset version --snapshot next");
 				await changeset("changeset publish --tag next --no-git-tag");
 			},
@@ -72,7 +71,7 @@ export const createReleaseCommand: CommandFactory = (program) => {
 		})
 		.task({
 			async handler() {
-				helpers.message("Publishing stable version(s) to the registry\n");
+				logger.info("Publishing stable version(s) to the registry");
 				await changeset("stack build && changeset publish");
 			},
 			skip: ifNotEqualTo("publish"),

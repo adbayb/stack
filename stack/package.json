@@ -68,12 +68,12 @@
 		"oxfmt": "^0.64.0",
 		"oxlint": "^1.79.0",
 		"oxlint-tsgolint": "^7.0.2001",
-		"termost": "^1.9.2",
+		"termost": "^2.0.0",
 		"turbo": "^2.10.11",
 		"typescript": "^6.0.3"
 	},
 	"devDependencies": {
 		"@types/node": "24.13.3",
-		"quickbundle": "3.1.1"
+		"quickbundle": "3.2.0"
 	}
 }
