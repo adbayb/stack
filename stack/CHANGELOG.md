@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 3.2.1
+
+### Patch Changes
+
+- [`0a4961e`](https://github.com/adbayb/stack/commit/0a4961ee31e902eacba9eaed47cb70070cedc863) Thanks [@adbayb](https://github.com/adbayb)! - Fix snapshot release with no changelog.
+
 ## 3.2.0
 
 ### Minor Changes
