@@ -64,12 +64,12 @@
 		"@commitlint/config-conventional": "^21.2.2",
 		"@e18e/eslint-plugin": "^0.8.0",
 		"@stylistic/eslint-plugin": "^5.10.0",
-		"eslint-plugin-perfectionist": "^5.10.1",
-		"oxfmt": "^0.64.0",
-		"oxlint": "^1.79.0",
+		"eslint-plugin-perfectionist": "^5.11.0",
+		"oxfmt": "^0.66.0",
+		"oxlint": "^1.81.0",
 		"oxlint-tsgolint": "^7.0.2001",
 		"termost": "^2.0.0",
-		"turbo": "^2.10.11",
+		"turbo": "^2.10.12",
 		"typescript": "^6.0.3"
 	},
 	"devDependencies": {
