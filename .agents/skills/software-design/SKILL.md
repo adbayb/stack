@@ -26,7 +26,7 @@ Acronyms are expanded once here — body content uses them bare. Every reference
 
 ## Workflow
 
-Follow these steps in order. Skip a step only with an explicit reason.
+Follow these steps in order. Skip a step only with an explicit reason. When unsure about an approach, ask before proceeding on an assumption that might be wrong.
 
 ### 1. Clarify the slice
 
@@ -90,7 +90,7 @@ Load `references/patterns.md` before introducing any named pattern.
 
 - Pure domain logic separated from I/O: unit-testable without mocks of databases, clocks, or network.
 - Inject seams: clock, ID generator, repository port, HTTP client — so tests substitute fakes, not mocks of everything.
-- Follow clean-code basics from `references/clean-code-cohesion.md`: intention-revealing names with consistent verb prefixes (`get`/`find`/`list`/`exists` for queries, `create`/`update`/`remove` for commands, no `fetch`/`retrieve`/`save`/`process` synonyms), small functions doing one thing, guard clauses over nesting, no dead/commented-out code, no magic numbers.
+- Follow clean-code basics from `references/clean-code-cohesion.md`: intention-revealing names with consistent verb prefixes (`get`/`getAll` (identity, no throw) / `find`/`findAll` (search, optional/filtered) / `exists` for queries, `create`/`update`/`remove` for commands, no `fetch`/`retrieve`/`load`/`read`/`list`/`query`/`delete`/`clear`/`save`/`process` synonyms), small functions doing one thing, guard clauses over nesting, no dead/commented-out code, no magic numbers.
 - Check smells before finishing: run through `references/smells-antipatterns.md` (Long Method, Large Class, Primitive Obsession, Long Parameter List, Data Clumps, Switch Statements, Feature Envy, Message Chains, Shotgun Surgery, Speculative Generality, Dead Code). If any match, refactor now.
 
 ## Output contract

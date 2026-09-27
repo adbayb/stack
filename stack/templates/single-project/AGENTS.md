@@ -1,14 +1,26 @@
 # AGENTS.md
 
-This repo is the `stack` toolchain itself (`@adbayb/stack` CLI + `@adbayb/create` initializer) and it dogfoods `stack` commands. All workflow scripts delegate to the local `stack` binary.
+This repo is `{{projectName}}` — {{projectDescription}}.
+Scaffolded with `@adbayb/stack`. All workflow scripts delegate to the `stack` binary.
+
+> Extend `Project overview`, `Code style guidelines`, and `Security considerations` as packages are added and project-specific rules emerge.
+
+## Project overview
+
+- `{{projectName}}` — {{projectDescription}}.
+- Repository: `{{projectUrl}}` (`{{repoId}}`).
+- `{{projectName}}/`: the publishable package (`src/index.ts` entry, `src/*.test.ts` colocated tests via `vitest`, `package.json` `exports` point to `dist/**`, built with `quickbundle`).
+- `examples/*/`: private playground apps consuming `{{projectName}}` via `workspace:` (excluded from build/check orchestration).
+- `tools/*/`: private local tooling packages.
+- Root configs (`oxlint.config.ts`, `oxfmt.config.ts`, `tsconfig.json`, `turbo.json`) just re-export `@adbayb/stack` shared presets — extend, don't replace.
+- pnpm workspace members: `{{projectName}}`, `examples/*`, `tools/*` (`pnpm-workspace.yaml`, `saveExact: true`).
 
 ## Bootstrap
 
 Follow this order:
 
-- Requires Node `^24` and pnpm `^11` (`devEngines` in root `package.json`).
-- `stack/bin/index.js` imports from `stack/dist/`, so build before using the CLI:
-  `pnpm --filter stack build && stack install` (this is what root `pnpm install` script does — run `pnpm install --frozen-lockfile` first for deps).
+- Requires Node `{{nodeVersion}}` and pnpm `{{pnpmVersion}}` (`devEngines` in root `package.json`).
+- After `stack create`: `pnpm install --frozen-lockfile`, then `stack install`.
 - `stack install` writes `.git/hooks/pre-commit` (`stack fix <changed-files> && git add -A`) and `commit-msg` (`stack check --filter commit`). Re-run it if hooks are missing.
 
 ## Commands
@@ -25,22 +37,14 @@ Root scripts (`package.json`) are thin wrappers around `stack`, which wraps turb
 
 Focused verification: `stack check --filter <code|formatting|dependency|commit> [files...]` and `stack fix [files...]`. CI order (`.github/workflows/workflow.yml`) is `install --frozen-lockfile` → `build` → `check` → `test`.
 
-### Testing
+### Testing instructions
 
 - Run `pnpm check` and `pnpm test` before finishing; fix failures until green.
 - Add or update tests for the code you change, even if nobody asked.
 
-## Structure
-
-- `stack/src/commands/`: one file per CLI command (`build|check|clean|create|fix|install|release|start|test|watch`); shared exec/logging in `stack/src/helpers.ts` (`turbo()`, `oxlint()`, `oxfmt()`, `changeset()`).
-- `stack/configs/{oxlint,oxfmt,typescript}/`: shared presets published as `@adbayb/stack/<name>`; root `oxlint.config.ts`, `oxfmt.config.ts`, `tsconfig.json` just re-export them.
-- `stack/templates/{single-project,multi-projects}/`: scaffolding templates with `{{projectName}}` placeholders. Excluded from lint via `ignorePatterns: ["**/templates/**"]` — do not "fix" template placeholders.
-- `stack/create/`: `@adbayb/create` (`npm init @adbayb`) thin wrapper depending on `workspace:^` `@adbayb/stack`.
-- pnpm workspace members: only `stack` and `stack/create`; `saveExact: true` — pin versions, no `^` in new deps.
-
 ## Code style guidelines
 
-Formatting is enforced by the shared presets under `stack/configs/` (re-exported by root `oxlint.config.ts`/`oxfmt.config.ts`) — comply via `stack fix`, never hand-format.
+Formatting is enforced by the shared `@adbayb/stack` presets (re-exported by root `oxlint.config.ts`/`oxfmt.config.ts`) — comply via `stack fix`, never hand-format.
 For new code, use the `software-design` skill when available (install via `npx skills add adbayb/stack --skill software-design -g` if missing); otherwise follow these defaults:
 
 - Minimal API surface (YAGNI — You Aren't Gonna Need It): expose only what requirements need now; small explicit functions, narrow interfaces.
@@ -50,20 +54,11 @@ For new code, use the `software-design` skill when available (install via `npx s
 - POLA (Principle of Least Astonishment): names and behavior as expected; fail fast at boundaries, no surprise side effects.
 - Testable: pure domain logic separated from I/O, dependencies injected.
 - Avoid comments: prefer self-explanatory code; comment only the why — complex logic, non-obvious workflows, or deliberately preserved ambiguous patterns. No narration of readable code, no commented-out code.
-- Skip explicit return/output types when TypeScript can infer them; annotate only when a stricter type than inferred is wanted (e.g. an enum instead of `string`).
-- Pick one verb per contract, use everywhere (POLA), never add synonym for something already named.
-    - Queries: `get`/`getAll` (identity, no throw), `find`/`findAll` (search, optional/filtered), `exists`/`count`.
-    - Commands: `create`/`update`/`remove` for lifecycle; intention verbs for domain behavior (`refundOrder`, not `setStatus`).
-    - Banned → use: `fetch`/`retrieve`/`load`/`read` → `get`/`getAll`, `query`(verb) → `find`/`findAll`/`exists`, `delete`/`clear` → `remove`, `add`/`insert`/`save` → `create`/`update`, `set` → intention verb (DTOs/builders exempt), `process`/`handle`/`manage`/`do` → specific intention verb, `data`/`info`/`util` → domain noun.
-    - Booleans: `is*`/`has*`/`can*`. Handlers: `on<Event>`.
-    - Functions verb-first (`findAllOverdueOrders`), classes/types nouns (`OrderRefunder`), no stutter (`orders.get(id)` not `orderRepo.getOrder`).
-    - Editing a file: match verbs already used in that slice, don't add a second synonym.
-- When unsure about an approach, ask before proceeding on an assumption that might be wrong.
 
 ## Security considerations
 
 - Never commit secrets (tokens, credentials) — use environment variables and keep `.env*` git-ignored.
-- Keep dependencies pinned (`saveExact: true`); `stack check` verifies them — review automated dependency updates (Renovate) before merging.
+- Keep dependencies pinned (`saveExact: true` — no `^` in new deps except `workspace:` ranges); `stack check` verifies them — review automated dependency updates (Renovate) before merging.
 
 ## PR instructions
 

@@ -18,9 +18,10 @@ Based on https://gist.github.com/cedrickchee/55ecfbaac643bf0c24da6874bf4feb08, c
 
 ## Clean-code rules
 
-- Names reveal intent: `refundOverdueOrders(clock, repo)` beats `process(data, 1)`. No abbreviations, no `tmp`/`data2`, no misleading names (`list` that is actually a map).
+- Names reveal intent: `refundOverdueOrders(clock, repo)` beats `process(data, 1)`. No abbreviations, no `tmp`/`data2`, no misleading names (`getAll` that is actually a map).
 - Functions are small, single-level, single-purpose. Guard clauses first; max one or two nesting levels. Extract Method on sight of 20+ line functions.
 - No side effects in queries; no output args; no magic numbers/strings — Replace Magic Number with Symbolic Constant.
+- Skip explicit return/output types when TypeScript can infer them; annotate only when a stricter type than inferred is wanted (e.g. an enum instead of `string`).
 - Comments explain why, never what. Delete commented-out code and obvious narration. Code should read without them.
 - Error handling is explicit: typed errors at boundaries, no swallowed exceptions, no error-code returns mixed with values.
 - Formatting is automated and non-negotiable; diffs stay focused.
@@ -29,12 +30,12 @@ Based on https://gist.github.com/cedrickchee/55ecfbaac643bf0c24da6874bf4feb08, c
 
 Pick one verb per contract and use it everywhere. Same verb must always mean the same thing (POLA); synonyms force readers to guess whether `fetch` differs from `get`.
 
-- **Queries (no side effects):** `get` (one item by identity, throws if absent), `find` (one item, returns `null` if absent), `list` (collection with filters/pagination), `exists` / `count` (boolean / number).
+- **Queries (no side effects):** `get` (one item by identity), `getAll` (collection, with optional filters/pagination), `find` / `findAll` (search, optional/filtered — absent → `undefined` / empty collection), `exists` / `count` (boolean / number).
 - **Commands (side effects):** `create`, `update`, `remove` for plain lifecycle; rich domain behavior uses intention verbs (`refundOrder`, `activateAccount`) instead of `setStatus` / `updateFlag`.
-- **Banned synonyms (use the alternative instead):** `fetch` → `get` (throws if absent) / `find` (null if absent), `retrieve` → `get` / `find`, `load` → `get` (single) / `list` (collection), `read` → `get` / `list`, `query` (as verb) → `find` / `list` / `exists`, `delete` → `remove`, `add` / `insert` → `create`, `save` → `create` / `update` (adapter-internal upsert only, never in the domain), `set` → an intention verb (`refundOrder`, not `setStatus`; plain `set` only for dumb holders/builders/DTOs), `process` / `handle` / `manage` / `do` → the specific intention verb describing what it actually does, `data` / `info` / `util` → a domain noun (`Order`, `RefundPolicy`).
+- **Banned synonyms (use the alternative instead):** `fetch` / `retrieve` / `load` / `read` → `get` (single) / `getAll` (collection), `query` (as verb) → `find` / `findAll` / `exists`, `list` → `findAll`, `delete` / `clear` → `remove`, `add` / `insert` / `save` → `create` / `update` (`save` adapter-internal upsert only, never in the domain), `set` → an intention verb (`refundOrder`, not `setStatus`; plain `set` only for dumb holders/builders/DTOs), `process` / `handle` / `manage` / `do` → the specific intention verb describing what it actually does, `data` / `info` / `util` → a domain noun (`Order`, `RefundPolicy`).
 - **Booleans:** `is*`, `has*`, `can*` (`isOverdue`, `hasAccess`, `canRefund`).
 - **Events/handlers:** `on<Event>` (`onOrderPlaced`).
-- **Shape:** functions are verb-first (`listOverdueOrders`), classes/types are nouns (`OrderRefunder`), no stutter (`orderRepo.getOrder` → `orders.get(id)` or `getOrderById` — pick once per codebase and stay consistent).
+- **Shape:** functions are verb-first (`findAllOverdueOrders`), classes/types are nouns (`OrderRefunder`), no stutter (`orderRepo.getOrder` → `orders.get(id)` or `getOrderById` — pick once per codebase and stay consistent).
 - **Consistency rule:** when touching a file, align new names with the verbs already used in that slice; never introduce a second synonym for an existing contract.
 
 ## Cohesion (things that change together live together)
