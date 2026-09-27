@@ -1,14 +1,23 @@
 # AGENTS.md
 
-This repo is the `stack` toolchain itself (`@adbayb/stack` CLI + `@adbayb/create` initializer) and it dogfoods `stack` commands. All workflow scripts delegate to the local `stack` binary.
+This repo is `{{projectName}}` — {{projectDescription}}.
+Scaffolded with `@adbayb/stack`. All workflow scripts delegate to the `stack` binary.
+
+> Extend `Structure` and `Conventions` as packages are added and project-specific rules emerge.
+
+## Project
+
+- `{{projectName}}` — {{projectDescription}}.
+- Repository: `{{projectUrl}}` (`{{repoId}}`).
+- Public package: `{{projectName}}` (`./{{projectName}}/src/index.ts` is the entry point, built to `dist/**` with `quickbundle`).
+- Playground: `examples/*` (private, excluded from `build`/`check` orchestration).
 
 ## Bootstrap
 
 Follow this order:
 
-- Requires Node `^24` and pnpm `^11` (`devEngines` in root `package.json`).
-- `stack/bin/index.js` imports from `stack/dist/`, so build before using the CLI:
-  `pnpm --filter stack build && stack install` (this is what root `pnpm install` script does — run `pnpm install --frozen-lockfile` first for deps).
+- Requires Node `{{nodeVersion}}` and pnpm `{{pnpmVersion}}` (`devEngines` in root `package.json`).
+- After `stack create`: `pnpm install --frozen-lockfile`, then `stack install`.
 - `stack install` writes `.git/hooks/pre-commit` (`stack fix <changed-files> && git add -A`) and `commit-msg` (`stack check --filter commit`). Re-run it if hooks are missing.
 
 ## Commands
@@ -26,15 +35,15 @@ Focused verification: `stack check --filter <code|formatting|dependency|commit> 
 
 ## Structure
 
-- `stack/src/commands/`: one file per CLI command (`build|check|clean|create|fix|install|release|start|test|watch`); shared exec/logging in `stack/src/helpers.ts` (`turbo()`, `oxlint()`, `oxfmt()`, `changeset()`).
-- `stack/configs/{oxlint,oxfmt,typescript}/`: shared presets published as `@adbayb/stack/<name>`; root `oxlint.config.ts`, `oxfmt.config.ts`, `tsconfig.json` just re-export them.
-- `stack/templates/{single-project,multi-projects}/`: scaffolding templates with `{{projectName}}` placeholders. Excluded from lint via `ignorePatterns: ["**/templates/**"]` — do not "fix" template placeholders.
-- `stack/create/`: `@adbayb/create` (`npm init @adbayb`) thin wrapper depending on `workspace:^` `@adbayb/stack`.
-- pnpm workspace members: only `stack` and `stack/create`; `saveExact: true` — pin versions, no `^` in new deps.
+- `{{projectName}}/`: the publishable package (`src/index.ts` entry, `src/*.test.ts` colocated tests via `vitest`, `package.json` `exports` point to `dist/**`).
+- `examples/*/`: private playground apps consuming `{{projectName}}` via `workspace:` (excluded from build/check orchestration).
+- `tools/*/`: private local tooling packages.
+- Root configs (`oxlint.config.ts`, `oxfmt.config.ts`, `tsconfig.json`, `turbo.json`) just re-export `@adbayb/stack` shared presets — extend, don't replace.
+- pnpm workspace members: `{{projectName}}`, `examples/*`, `tools/*` (`pnpm-workspace.yaml`, `saveExact: true`).
 
 ## Code style
 
-Formatting is enforced by the shared presets under `stack/configs/` (re-exported by root `oxlint.config.ts`/`oxfmt.config.ts`) — comply via `stack fix`, never hand-format.
+Formatting is enforced by the shared `@adbayb/stack` presets (re-exported by root `oxlint.config.ts`/`oxfmt.config.ts`) — comply via `stack fix`, never hand-format.
 For new code, use the `software-design` skill when available (install via `npx skills add adbayb/stack --skill software-design -g` if missing); otherwise follow these defaults:
 
 - Minimal API surface (YAGNI — You Aren't Gonna Need It): expose only what requirements need now; small explicit functions, narrow interfaces.
@@ -50,4 +59,5 @@ For new code, use the `software-design` skill when available (install via `npx s
 - No direct `oxlint`/`oxfmt`/`turbo`/`tsc` calls — go through `stack check|fix|test` so shared presets and turbo orchestration apply.
 - Conventional Commits enforced (commitlint + `commit-msg` hook); `stack check` without `--filter commit` also triggers a build.
 - `stack clean` is git-aware: untracked-but-ignored files are removed, `node_modules` is kept. Don't hand-delete `dist/` per package; use it.
+- `saveExact: true` — pin versions, no `^` in new deps (except `workspace:` ranges).
 - Never commit secrets (tokens, credentials) — use environment variables and keep `.env*` git-ignored.
