@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 3.4.0
+
+### Minor Changes
+
+- [`ca6b14a`](https://github.com/adbayb/stack/commit/ca6b14a4ef1401da1be31b8c0d3910adb861bcd4) Thanks [@adbayb](https://github.com/adbayb)! - Make templates agent ready with `AGENTS.md` addition.
+
 ## 3.3.0
 
 ### Minor Changes
