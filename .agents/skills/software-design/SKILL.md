@@ -1,6 +1,6 @@
 ---
 name: software-design
-description: Design and write readable, maintainable, testable clean code. Use whenever creating new code, APIs, classes, modules, features, or choosing project structure — even if the user never says architecture, SOLID, design patterns, hexagonal, vertical slice, or clean code. Enforces SOLID, minimal API surface with YAGNI, KISS DRY Law of Demeter POLA, high cohesion low coupling, justified patterns only, hexagonal/clean inside vertical slices.
+description: Design and write readable, maintainable, testable clean code. Use whenever creating new code, APIs, classes, modules, features, or choosing project structure — even if the user never says architecture, SOLID, design patterns, hexagonal, vertical slice, or clean code. Enforces SOLID, minimal API surface with YAGNI, KISS DRY Law of Demeter POLA, high cohesion low coupling, justified patterns only, an inner style inside vertical slices.
 ---
 
 # Software Design
@@ -31,9 +31,9 @@ Follow these steps in order. Skip a step only with an explicit reason. When unsu
 ### 1. Clarify the slice
 
 - Identify the single business capability being built. One slice = one use case, end to end.
-- Organize by feature (vertical slice), not by technical layer. Prefer `features/checkout/` over `controllers/`, `services/`, `models/` sprawl.
-- Inside each slice, choose the inner style and state it in one sentence:
-    - Business logic heavy → hexagonal or clean architecture (ports/adapters, domain isolated from I/O).
+- Organize by feature (vertical slice), not by technical layer — one folder per feature under `src/`; folder rules and naming per `references/architecture-styles.md`.
+- Choose one inner style per module (per application when there are no modules) and state it in one sentence:
+    - Swappable adapters/testability → hexagonal; enterprise rules shared across apps/modules → clean architecture, per `references/architecture-styles.md` (inner layers isolated from I/O).
     - UI-driven → MVVM or equivalent, with view-models free of I/O side effects.
     - Simple CRUD/script → keep it flat; do not invent hexagons you do not need (YAGNI, Gall's Law: simple system first).
 - If the repo already has a convention, follow it. Do not introduce a second architecture style without migrating.
@@ -90,7 +90,8 @@ Load `references/patterns.md` before introducing any named pattern.
 
 - Pure domain logic separated from I/O: unit-testable without mocks of databases, clocks, or network.
 - Inject seams: clock, ID generator, repository port, HTTP client — so tests substitute fakes, not mocks of everything.
-- Follow clean-code basics from `references/clean-code-cohesion.md`: intention-revealing names with consistent verb prefixes (`get`/`getAll` (identity, no throw) / `find`/`findAll` (search, optional/filtered) / `exists` for queries, `create`/`update`/`remove` for commands, no `fetch`/`retrieve`/`load`/`read`/`list`/`query`/`delete`/`clear`/`save`/`process` synonyms), small functions doing one thing, guard clauses over nesting, no dead/commented-out code, no magic numbers.
+- Colocate tests with source (`*.test.ts` next to implementation); fakes live beside the ports they implement.
+- Follow clean-code basics from `references/clean-code-cohesion.md`: intention-revealing names with consistent verb prefixes (`get` (one by identity, no throw) / `getAll` (collection, with optional filters/pagination, no throw) / `find`/`findAll` (search, optional/filtered — absent → `undefined`/empty) / `exists` for queries, `create`/`update`/`remove` for commands, no `fetch`/`retrieve`/`load`/`read`/`list`/`query`/`delete`/`clear`/`save`/`process` synonyms), small functions doing one thing, guard clauses over nesting, no dead/commented-out code, no magic numbers.
 - Check smells before finishing: run through `references/smells-antipatterns.md` (Long Method, Large Class, Primitive Obsession, Long Parameter List, Data Clumps, Switch Statements, Feature Envy, Message Chains, Shotgun Surgery, Speculative Generality, Dead Code). If any match, refactor now.
 
 ## Output contract
@@ -105,7 +106,9 @@ For any non-trivial change, end with a short design note (5–15 lines):
 
 Do not dump theory. Cite the principle only when it changed a decision.
 
-## External sources (appendix)
+## External sources (appendix, informative only)
+
+Normative rules are above; on conflict this skill wins. Do not add patterns or APIs from external sources without a current requirement (YAGNI).
 
 When a rule is missing or ambiguous above, consult these sources and apply the most relevant guidance that impacts code design and quality:
 
@@ -114,6 +117,6 @@ When a rule is missing or ambiguous above, consult these sources and apply the m
 - Code smells — https://refactoring.guru/refactoring/smells — and anti-patterns such as leaky abstractions — https://awesome-architecture.com/collections/software-architecture/anti-patterns
 - Minimal API surface / blast radius: every API design MUST aim for a minimal API surface without sacrificing product requirements; it SHOULD NOT include unnecessary resources, relations, actions, or data; it SHOULD NOT add functionality until deemed necessary (YAGNI principle).
 - Architecture principles — https://awesome-architecture.com/collections/software-architecture/principles and https://lawsofsoftwareengineering.com/ — this skill already enforces KISS, YAGNI, Boy Scout Rule, DRY, Law of Demeter, Principle of Least Astonishment, ...; pick up any missing principle from these collections that impacts code design and quality.
-- Hexagonal / clean architecture inside vertical slices — favor hexagonal or clean architecture for business-oriented projects and vertical slice design whenever possible; a project can be sliced vertically with hexagonal, clean, or classical MVVM chosen inside each slice.
+- Hexagonal / clean architecture inside vertical slices — favor hexagonal or clean architecture for business-heavy slices; match the inner style to the situation per `references/architecture-styles.md` (MVVM for UI-heavy, flat for scripts/glue). Reference implementation (clean): https://github.com/adbayb/clean-architecture.
 - Clean code — https://gist.github.com/cedrickchee/55ecfbaac643bf0c24da6874bf4feb08
 - Cohesion and coupling — https://awesome-architecture.com/topics/software-architecture-principles-cohesion and https://awesome-architecture.com/topics/software-architecture-principles-coupling — increase cohesion, minimize coupling.

@@ -23,7 +23,8 @@ Based on https://gist.github.com/cedrickchee/55ecfbaac643bf0c24da6874bf4feb08, c
 - No side effects in queries; no output args; no magic numbers/strings — Replace Magic Number with Symbolic Constant.
 - Skip explicit return/output types when TypeScript can infer them; annotate only when a stricter type than inferred is wanted (e.g. an enum instead of `string`).
 - Comments explain why, never what. Delete commented-out code and obvious narration. Code should read without them.
-- Error handling is explicit: typed errors at boundaries, no swallowed exceptions, no error-code returns mixed with values.
+- Error handling is explicit: typed errors at boundaries — throw for exceptional paths, `undefined`/empty for expected absence (queries never throw) — no swallowed exceptions, no error-code returns mixed with values; adapters/hosts map errors to responses and logs.
+- Silent domain: no logging or metrics in entities or use cases — observability lives in adapters/hosts (middleware/decorators); the domain signals via typed errors and return values only.
 - Formatting is automated and non-negotiable; diffs stay focused.
 
 ## Naming convention — one verb, one meaning
@@ -32,7 +33,7 @@ Pick one verb per contract and use it everywhere. Same verb must always mean the
 
 - **Queries (no side effects):** `get` (one item by identity), `getAll` (collection, with optional filters/pagination), `find` / `findAll` (search, optional/filtered — absent → `undefined` / empty collection), `exists` / `count` (boolean / number).
 - **Commands (side effects):** `create`, `update`, `remove` for plain lifecycle; rich domain behavior uses intention verbs (`refundOrder`, `activateAccount`) instead of `setStatus` / `updateFlag`.
-- **Banned synonyms (use the alternative instead):** `fetch` / `retrieve` / `load` / `read` → `get` (single) / `getAll` (collection), `query` (as verb) → `find` / `findAll` / `exists`, `list` → `findAll`, `delete` / `clear` → `remove`, `add` / `insert` / `save` → `create` / `update` (`save` adapter-internal upsert only, never in the domain), `set` → an intention verb (`refundOrder`, not `setStatus`; plain `set` only for dumb holders/builders/DTOs), `process` / `handle` / `manage` / `do` → the specific intention verb describing what it actually does, `data` / `info` / `util` → a domain noun (`Order`, `RefundPolicy`).
+- **Banned synonyms (use the alternative instead):** `fetch` / `retrieve` / `load` / `read` → `get` (single) / `getAll` (collection), `query` (as verb) → `find` / `findAll` / `exists`, `list` → `findAll`, `delete` / `clear` → `remove`, `add` / `insert` / `save` → `create` / `update`, `set` → an intention verb (`refundOrder`, not `setStatus`; plain `set` only for dumb holders/builders/DTOs), `process` / `handle` / `manage` / `do` → the specific intention verb describing what it actually does, `data` / `info` / `util` → a domain noun (`Order`, `RefundPolicy`).
 - **Booleans:** `is*`, `has*`, `can*` (`isOverdue`, `hasAccess`, `canRefund`).
 - **Events/handlers:** `on<Event>` (`onOrderPlaced`).
 - **Shape:** functions are verb-first (`findAllOverdueOrders`), classes/types are nouns (`OrderRefunder`), no stutter (`orderRepo.getOrder` → `orders.get(id)` or `getOrderById` — pick once per codebase and stay consistent).
@@ -41,12 +42,12 @@ Pick one verb per contract and use it everywhere. Same verb must always mean the
 ## Cohesion (things that change together live together)
 
 - Functional cohesion per module: all elements serve the single stated purpose.
-- Co-locate: handler + domain + tests + mapping for one use case in one folder.
+- Co-locate: handler + hexagon/domain + tests + mapping for one use case in one folder.
 - Shared code earns its place: used by 3+ slices with one owner, versioned, and free of slice-specific branches.
 
 ## Coupling (minimize)
 
-- Prefer, in order: message/event → explicit interface param → injected port → direct import of shared kernel. Never: global mutable state, deep relative imports, cross-slice table joins in code.
+- Prefer, in order: message/event → explicit interface param → injected port → direct import of shared kernel. Never: global mutable state, deep relative imports across slices/modules, cross-slice table joins in code.
 - Tell-Don't-Ask: pass intent (`refund(orderId)`), do not pull entrails (`order.getCustomer().getWallet().debit()`).
 - Stable dependencies only: depend in the direction of stability; volatile details hide behind ports.
 - Measure informally: "If I change X, how many files must change?" One is ideal; more than three signals Shotgun Surgery or Inappropriate Intimacy.

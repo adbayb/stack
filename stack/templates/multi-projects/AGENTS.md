@@ -48,7 +48,7 @@ Focused verification: `stack check --filter <code|formatting|dependency|commit> 
 ## Code style guidelines
 
 Formatting is enforced by the shared `@adbayb/stack` presets (re-exported by root `oxlint.config.ts`/`oxfmt.config.ts`) — comply via `stack fix`, never hand-format.
-For new code, use the `software-design` skill when available (install via `npx skills add adbayb/stack --skill software-design -g` if missing); otherwise follow these defaults:
+For new code, use the `software-design` skill when available (install via `npx skills add adbayb/stack --skill software-design -g` if missing); otherwise follow these defaults. On conflict the skill wins; this list stays compressed by design:
 
 - Minimal API surface (YAGNI — You Aren't Gonna Need It): expose only what requirements need now; small explicit functions, narrow interfaces.
 - One purpose per unit (SRP — Single Responsibility Principle); composition over inheritance.
@@ -57,11 +57,20 @@ For new code, use the `software-design` skill when available (install via `npx s
 - POLA (Principle of Least Astonishment): names and behavior as expected; fail fast at boundaries, no surprise side effects.
 - Testable: pure domain logic separated from I/O, dependencies injected.
 - Avoid comments: prefer self-explanatory code; comment only the why — complex logic, non-obvious workflows, or deliberately preserved ambiguous patterns. No narration of readable code, no commented-out code.
+- Skip explicit return/output types when TypeScript can infer them; annotate only when a stricter type than inferred is wanted (e.g. an enum instead of `string`).
+- Pick one verb per contract, use everywhere (POLA), never add synonym for something already named.
+    - Queries: `get` (one by identity, no throw) / `getAll` (collection, with optional filters/pagination, no throw), `find`/`findAll` (search, optional/filtered — absent → `undefined`/empty), `exists`/`count`.
+    - Commands: `create`/`update`/`remove` for lifecycle; intention verbs for domain behavior (`refundOrder`, not `setStatus`).
+    - Banned → use: `fetch`/`retrieve`/`load`/`read` → `get`/`getAll`, `query`(verb) → `find`/`findAll`/`exists`, `list` → `findAll`, `delete`/`clear` → `remove`, `add`/`insert`/`save` → `create`/`update`, `set` → intention verb (DTOs/builders exempt), `process`/`handle`/`manage`/`do` → specific intention verb, `data`/`info`/`util` → domain noun.
+    - Booleans: `is*`/`has*`/`can*`. Handlers: `on<Event>`.
+    - Functions verb-first (`findAllOverdueOrders`), classes/types nouns (`OrderRefunder`), no stutter (`orders.get(id)` not `orderRepo.getOrder`).
+    - Editing a file: match verbs already used in that slice, don't add a second synonym.
+- When unsure about an approach, ask before proceeding on an assumption that might be wrong.
 
 ## Security considerations
 
 - Never commit secrets (tokens, credentials) — use environment variables and keep `.env*` git-ignored.
-- Keep dependencies pinned (`saveExact: true`); `stack check` verifies them — review automated dependency updates (Renovate) before merging.
+- Pin devDependencies exact (`saveExact: true`, or `workspace:*` for local packages); prefix `dependencies`/`peerDependencies` with a caret (or `workspace:^` for local dependencies — peers stay explicit); `stack check` verifies them — review automated dependency updates (Renovate) before merging.
 
 ## PR instructions
 
