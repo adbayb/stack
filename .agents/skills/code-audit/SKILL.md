@@ -9,7 +9,7 @@ Audit existing code against the `software-design` practices, then fix it with mi
 
 ## Acronym glossary
 
-Acronyms are expanded once here — body content uses them bare. Same acronyms as `software-design`: SOLID = Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion. GRASP = General Responsibility Assignment Software Patterns. SRP/OCP/LSP/ISP/DIP = the Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion Principles. YAGNI = You Aren't Gonna Need It. KISS = Keep It Simple, Stupid. DRY = Don't Repeat Yourself. POLA = Principle of Least Astonishment. CQS = Command Query Separation. MVVM = Model-View-ViewModel. I/O = Input/Output. API = Application Programming Interface.
+Acronyms are expanded once here — body content uses them bare. SOLID = Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion. GRASP = General Responsibility Assignment Software Patterns. SRP/OCP/LSP/ISP/DIP = the Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion Principles. YAGNI = You Aren't Gonna Need It. KISS = Keep It Simple, Stupid. DRY = Don't Repeat Yourself. POLA = Principle of Least Astonishment. CQS = Command Query Separation. MVVM = Model-View-ViewModel. I/O = Input/Output. API = Application Programming Interface. IoC = Inversion of Control. DTO = Data Transfer Object. ORM = Object-Relational Mapper. SDK = Software Development Kit.
 
 ## Workflow
 
@@ -24,7 +24,7 @@ Acronyms are expanded once here — body content uses them bare. Same acronyms a
 Read `references/checklist.md` and scan in this order:
 
 1. **Blast radius & API surface** — public exports, params, flags, leaked infra types.
-2. **Structure** — slicing violations, layering direction (adapters → ports → domain?), cross-slice imports.
+2. **Structure** — slicing violations, layering direction (inward only), cross-slice imports.
 3. **SOLID/GRASP** — responsibility splits, fat interfaces, inheritance abuse, missing seams.
 4. **Smells & anti-patterns** — bloaters, couplers, dispensables, change preventers, leaky abstractions.
 5. **Clean code & coupling** — names, function size, Demeter chains, cohesion, testability (can domain run without I/O?).
@@ -37,7 +37,7 @@ Record each finding with: location (`path:line`), principle violated, why it mat
 
 ### 3. Report before fixing
 
-Always present this table first and wait for non-trivial scope decisions only if destructive:
+Always present this table first; proceed with fixes but stop for approval before anything destructive:
 
 ```markdown
 ## Audit findings
@@ -52,7 +52,15 @@ Then: total counts by severity, and the 3 highest-leverage fixes. Do not list ev
 
 - Fix Blockers first, then Majors that touch the current task. Leave unrelated Minors unless Boy Scout-cheap, and keep them in separate commits/changes.
 - Preserve behavior: extract without changing semantics; add/adjust tests to lock behavior before restructuring (characterization tests if none exist).
-- Fix order inside one file: delete dead code → narrow API (remove unused params/flags, introduce param objects) → break Demeter chains (inject) → extract responsibilities (SRP) → replace switches with Strategy → insert ports/adapters at I/O edges → rename for intent.
+- Fix order inside one file:
+    1. Delete dead code.
+    2. Narrow API (remove unused params/flags, introduce param objects).
+    3. Break Demeter chains (inject).
+    4. Extract responsibilities (SRP).
+    5. Replace switches with Strategy.
+    6. Insert ports/adapters at I/O edges.
+    7. Rename for intent.
+    8. Reduce comments to strictly necessary (why-only, ambiguous code).
 - Keep public signatures stable where possible; when a signature must shrink, update all callers in the same change and note the blast radius.
 - One responsibility per change. Do not mix a behavior change with a refactor.
 

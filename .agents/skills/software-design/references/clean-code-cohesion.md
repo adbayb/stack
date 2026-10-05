@@ -23,7 +23,8 @@ Based on https://gist.github.com/cedrickchee/55ecfbaac643bf0c24da6874bf4feb08, c
 - No side effects in queries; no output args; no magic numbers/strings — Replace Magic Number with Symbolic Constant.
 - Skip explicit return/output types when TypeScript can infer them; annotate only when a stricter type than inferred is wanted (e.g. an enum instead of `string`).
 - Comments explain why, never what. Delete commented-out code and obvious narration. Code should read without them.
-- Error handling is explicit: typed errors at boundaries, no swallowed exceptions, no error-code returns mixed with values.
+- Error handling is explicit: typed errors at boundaries — throw for exceptional paths, `undefined`/empty for expected absence (queries never throw) — no swallowed exceptions, no error-code returns mixed with values; adapters/hosts map errors to responses and logs.
+- Silent domain: no logging or metrics in entities or use cases — observability lives in adapters/hosts (middleware/decorators); the domain signals via typed errors and return values only.
 - Formatting is automated and non-negotiable; diffs stay focused.
 
 ## Naming convention — one verb, one meaning
@@ -46,7 +47,7 @@ Pick one verb per contract and use it everywhere. Same verb must always mean the
 
 ## Coupling (minimize)
 
-- Prefer, in order: message/event → explicit interface param → injected port → direct import of shared kernel. Never: global mutable state, deep relative imports, cross-slice table joins in code.
+- Prefer, in order: message/event → explicit interface param → injected port → direct import of shared kernel. Never: global mutable state, deep relative imports across slices/modules, cross-slice table joins in code.
 - Tell-Don't-Ask: pass intent (`refund(orderId)`), do not pull entrails (`order.getCustomer().getWallet().debit()`).
 - Stable dependencies only: depend in the direction of stability; volatile details hide behind ports.
 - Measure informally: "If I change X, how many files must change?" One is ideal; more than three signals Shotgun Surgery or Inappropriate Intimacy.

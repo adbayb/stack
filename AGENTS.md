@@ -32,16 +32,18 @@ Focused verification: `stack check --filter <code|formatting|dependency|commit> 
 
 ## Structure
 
+Inner style: flat-modular CLI glue — one folder per command, shared exec in helpers; no ports ceremony (YAGNI).
+
 - `stack/src/commands/`: one file per CLI command (`build|check|clean|create|fix|install|release|start|test|watch`); shared exec/logging in `stack/src/helpers.ts` (`turbo()`, `oxlint()`, `oxfmt()`, `changeset()`).
 - `stack/configs/{oxlint,oxfmt,typescript}/`: shared presets published as `@adbayb/stack/<name>`; root `oxlint.config.ts`, `oxfmt.config.ts`, `tsconfig.json` just re-export them.
 - `stack/templates/{single-project,multi-projects}/`: scaffolding templates with `{{projectName}}` placeholders. Excluded from lint via `ignorePatterns: ["**/templates/**"]` — do not "fix" template placeholders.
 - `stack/create/`: `@adbayb/create` (`npm init @adbayb`) thin wrapper depending on `workspace:^` `@adbayb/stack`.
-- pnpm workspace members: only `stack` and `stack/create`; `saveExact: true` — pin versions, no `^` in new deps.
+- pnpm workspace members: only `stack` and `stack/create`; `saveExact: true` — pins new devDependencies exact.
 
 ## Code style guidelines
 
 Formatting is enforced by the shared presets under `stack/configs/` (re-exported by root `oxlint.config.ts`/`oxfmt.config.ts`) — comply via `stack fix`, never hand-format.
-For new code, use the `software-design` skill when available (install via `npx skills add adbayb/stack --skill software-design -g` if missing); otherwise follow these defaults:
+For new code, use the `software-design` skill when available (install via `npx skills add adbayb/stack --skill software-design -g` if missing); otherwise follow these defaults. On conflict the skill wins; this list stays compressed by design:
 
 - Minimal API surface (YAGNI — You Aren't Gonna Need It): expose only what requirements need now; small explicit functions, narrow interfaces.
 - One purpose per unit (SRP — Single Responsibility Principle); composition over inheritance.
@@ -52,9 +54,9 @@ For new code, use the `software-design` skill when available (install via `npx s
 - Avoid comments: prefer self-explanatory code; comment only the why — complex logic, non-obvious workflows, or deliberately preserved ambiguous patterns. No narration of readable code, no commented-out code.
 - Skip explicit return/output types when TypeScript can infer them; annotate only when a stricter type than inferred is wanted (e.g. an enum instead of `string`).
 - Pick one verb per contract, use everywhere (POLA), never add synonym for something already named.
-    - Queries: `get`/`getAll` (identity, no throw), `find`/`findAll` (search, optional/filtered), `exists`/`count`.
+    - Queries: `get` (one by identity, no throw) / `getAll` (collection, with optional filters/pagination, no throw), `find`/`findAll` (search, optional/filtered — absent → `undefined`/empty), `exists`/`count`.
     - Commands: `create`/`update`/`remove` for lifecycle; intention verbs for domain behavior (`refundOrder`, not `setStatus`).
-    - Banned → use: `fetch`/`retrieve`/`load`/`read` → `get`/`getAll`, `query`(verb) → `find`/`findAll`/`exists`, `delete`/`clear` → `remove`, `add`/`insert`/`save` → `create`/`update`, `set` → intention verb (DTOs/builders exempt), `process`/`handle`/`manage`/`do` → specific intention verb, `data`/`info`/`util` → domain noun.
+    - Banned → use: `fetch`/`retrieve`/`load`/`read` → `get`/`getAll`, `query`(verb) → `find`/`findAll`/`exists`, `list` → `findAll`, `delete`/`clear` → `remove`, `add`/`insert`/`save` → `create`/`update`, `set` → intention verb (DTOs/builders exempt), `process`/`handle`/`manage`/`do` → specific intention verb, `data`/`info`/`util` → domain noun.
     - Booleans: `is*`/`has*`/`can*`. Handlers: `on<Event>`.
     - Functions verb-first (`findAllOverdueOrders`), classes/types nouns (`OrderRefunder`), no stutter (`orders.get(id)` not `orderRepo.getOrder`).
     - Editing a file: match verbs already used in that slice, don't add a second synonym.
@@ -63,7 +65,7 @@ For new code, use the `software-design` skill when available (install via `npx s
 ## Security considerations
 
 - Never commit secrets (tokens, credentials) — use environment variables and keep `.env*` git-ignored.
-- Keep dependencies pinned (`saveExact: true`); `stack check` verifies them — review automated dependency updates (Renovate) before merging.
+- Pin devDependencies exact (`saveExact: true`, or `workspace:*` for local packages); prefix `dependencies`/`peerDependencies` with a caret (or `workspace:^` for local dependencies — peers stay explicit); `stack check` verifies them — review automated dependency updates (Renovate) before merging.
 
 ## PR instructions
 

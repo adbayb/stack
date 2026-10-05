@@ -1,6 +1,6 @@
 # Audit Checklist
 
-Use top-down. Check each box or record a finding with severity. Acronyms are expanded once in the `code-audit` SKILL.md glossary.
+Use top-down. Check each box or record a finding with severity. Acronyms are expanded once in the `code-audit` SKILL.md glossary. Rule versions follow `software-design` — on conflict the skill wins; update this file instead of forking the rule.
 
 ## A. Minimal API surface / blast radius
 
@@ -13,11 +13,16 @@ Use top-down. Check each box or record a finding with severity. Acronyms are exp
 
 ## B. Structure (vertical slice + clean inside)
 
-- [ ] Code lives with its capability (`features/<cap>/`), not in global `services/`/`utils/` sprawl.
+Apply ports/barrel/presenter rows only where the inner style requires them — flat scripts and MVVM slices are exempt from ports ceremony (YAGNI, Gall's Law). When exempt, note the inner style and skip without a finding.
+
+- [ ] Code lives with its capability (`src/<feature>/`), not in global `services/`/`utils/` sprawl.
 - [ ] Dependency direction is inward: domain ← ports ← adapters; domain imports nothing infrastructural.
 - [ ] No cross-slice deep imports; inter-slice traffic via explicit contract or event.
 - [ ] Shared code is genuinely shared (3+ users, single owner) — otherwise co-located.
-- [ ] Inner style is consistent per slice (hexagonal/clean/MVVM/flat) and documented in one line.
+- [ ] Module boundaries respected: workspace packages, imports via package names only, no cross-module deep imports.
+- [ ] Imports via barrel entry points (`index.ts`) for hexagonal/clean modules; flat/MVVM slices may import directly; boundaries encoded in linter/`exports`, not convention alone.
+- [ ] Inner style is consistent per module (per application when there are no modules) and documented in one line.
+- [ ] Controllers and presenters separated for clean modules (presenters push through the application layer, controllers never format output); flat/hexagonal/MVVM slices exempt.
 
 ## C. SOLID / GRASP
 
@@ -38,11 +43,12 @@ Use top-down. Check each box or record a finding with severity. Acronyms are exp
 
 ## E. Clean code, cohesion, testability
 
-- [ ] Names reveal intent; no `data/tmp/manager/process`. Verb prefixes consistent: `get` (throws if absent) / `find` (null if absent) / `list` / `exists` for queries, `create` / `update` / `remove` for commands; no `fetch`/`retrieve`/`save`/`delete` synonyms.
+- [ ] Names reveal intent; no `data/tmp/manager/process`. Verb prefixes consistent: `get` (one by identity, no throw) / `getAll` (collection, with optional filters/pagination, no throw) / `find`/`findAll` (search, optional/filtered — absent → `undefined`/empty) / `exists` for queries, `create` / `update` / `remove` for commands; no `fetch`/`retrieve`/`load`/`read`/`list`/`query`/`delete`/`clear`/`save`/`process` synonyms.
 - [ ] Functions small, single-purpose, guard-claused; nesting ≤2.
 - [ ] High cohesion: change X → ≤3 files touched. Low coupling: no globals, no hidden I/O.
 - [ ] Law of Demeter holds; Tell-Don't-Ask; no surprise side effects (POLA).
-- [ ] Domain unit-testable with fakes (clock/repo/mailer injected); pyramid respected (many unit, few integration).
+- [ ] Domain unit-testable with fakes (clock/repo/mailer injected); tests colocated (`*.test.ts`); pyramid respected (many unit, few integration).
+- [ ] Errors typed at boundaries and mapped once at adapters/hosts; queries never throw, expected absence is `undefined`/empty.
 - [ ] Boy Scout applied: touched code left cleaner, unrelated reform kept separate.
 
 ## Severity guide
