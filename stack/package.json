@@ -73,7 +73,7 @@
 		"typescript": "^6.0.3"
 	},
 	"devDependencies": {
-		"@types/node": "24.13.3",
+		"@types/node": "24.19.0",
 		"quickbundle": "3.2.0"
 	}
 }
