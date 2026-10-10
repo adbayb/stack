@@ -4,6 +4,6 @@
 		"outDir": "bin",
 		"types": ["node"]
 	},
-	"include": ["config", "src", "templates", "package.json"],
-	"exclude": ["node_modules", "dist", "templates"]
+	"include": ["configs", "src", "package.json"],
+	"exclude": ["node_modules", "dist"]
 }

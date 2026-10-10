@@ -70,7 +70,7 @@
 		"oxlint-tsgolint": "^7.0.2003",
 		"termost": "^2.0.0",
 		"turbo": "^2.11.7",
-		"typescript": "^6.0.3"
+		"typescript": "^7.0.2"
 	},
 	"devDependencies": {
 		"@types/node": "24.19.2",
