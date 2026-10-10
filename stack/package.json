@@ -58,22 +58,22 @@
 		"watch": "quickbundle watch"
 	},
 	"dependencies": {
-		"@changesets/changelog-github": "^1.0.0",
-		"@changesets/cli": "^3.0.1",
-		"@commitlint/cli": "^21.2.2",
-		"@commitlint/config-conventional": "^21.2.2",
-		"@e18e/eslint-plugin": "^0.8.0",
+		"@changesets/changelog-github": "^1.0.1",
+		"@changesets/cli": "^3.0.3",
+		"@commitlint/cli": "^21.2.3",
+		"@commitlint/config-conventional": "^21.2.3",
+		"@e18e/eslint-plugin": "^0.8.1",
 		"@stylistic/eslint-plugin": "^5.10.0",
-		"eslint-plugin-perfectionist": "^5.10.1",
-		"oxfmt": "^0.64.0",
-		"oxlint": "^1.79.0",
-		"oxlint-tsgolint": "^7.0.2001",
+		"eslint-plugin-perfectionist": "^5.12.1",
+		"oxfmt": "^0.72.0",
+		"oxlint": "^1.87.0",
+		"oxlint-tsgolint": "^7.0.2003",
 		"termost": "^2.0.0",
-		"turbo": "^2.10.11",
+		"turbo": "^2.11.7",
 		"typescript": "^6.0.3"
 	},
 	"devDependencies": {
-		"@types/node": "24.13.3",
-		"quickbundle": "3.2.0"
+		"@types/node": "24.19.2",
+		"quickbundle": "3.2.1"
 	}
 }

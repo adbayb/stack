@@ -9,6 +9,7 @@ minimumReleaseAgeExclude:
     - "@adbayb/*"
     - "quickbundle"
     - "termost"
+    - "@types/node@24.19.2"
 publicHoistPattern:
     - "*changesets*"
     - "*commitlint*"
