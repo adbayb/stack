@@ -1,5 +1,17 @@
 # @adbayb/stack
 
+## 3.4.0
+
+### Minor Changes
+
+- [`ca6b14a`](https://github.com/adbayb/stack/commit/ca6b14a4ef1401da1be31b8c0d3910adb861bcd4) Thanks [@adbayb](https://github.com/adbayb)! - Make templates agent ready with `AGENTS.md` addition.
+
+- [`e47e9f8`](https://github.com/adbayb/stack/commit/e47e9f89755006b3f94ad991286205cac65ba062) Thanks [@adbayb](https://github.com/adbayb)! - Migrate to TypeScript v7.
+
+### Patch Changes
+
+- [`aa40819`](https://github.com/adbayb/stack/commit/aa408194c825a6010cb1f5e25c9af58f037339fa) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies including oxfmt, oxlint, e18e, and perfectionist.
+
 ## 3.3.0
 
 ### Minor Changes
