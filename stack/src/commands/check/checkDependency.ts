@@ -3,10 +3,11 @@ import { exec } from "termost";
 import { assert, createError, require } from "../../helpers";
 import type { PackageJson } from "../../types";
 
+/** Check monorepo dependency guidelines (version uniqueness, ranges, protocols). */
 export const checkDependency = async () => {
 	const stdout = await exec("pnpm recursive ls --json");
 	const checkDependencyVersionMismatch = createPackagesVersionMismatchChecker();
-	const parsedCommandOutput = JSON.parse(stdout) as { name?: string; path: string }[];
+	const parsedCommandOutput = parseJsonOutput(stdout);
 
 	const packages = parsedCommandOutput.map((pkg) => {
 		const packagePath = join(pkg.path, "package.json");
@@ -34,6 +35,28 @@ export const checkDependency = async () => {
 		// Check version range accordingly to our dependency guidelines (ie. dev dependencies must be pinned and dependencies must have caret)
 		checkDependencyVersionRange(pkg);
 	}
+};
+
+const parseJsonOutput = (stdout: string) => {
+	let parsed: unknown;
+
+	try {
+		parsed = JSON.parse(stdout);
+	} catch {
+		throw createError(
+			"stack check",
+			"Cannot parse the `pnpm recursive ls --json` output as JSON.",
+		);
+	}
+
+	assert(Array.isArray(parsed), () => {
+		return createError(
+			"stack check",
+			"Expected the `pnpm recursive ls --json` output to be a JSON array.",
+		);
+	});
+
+	return parsed as { name?: string; path: string }[];
 };
 
 const STARTING_WITH_DIGIT_REGEXP = /^\d/u;

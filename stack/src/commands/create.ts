@@ -3,6 +3,7 @@ import { cp, mkdir, readFile, readdir, rename, rm, symlink, writeFile } from "no
 import { basename, join, resolve } from "node:path";
 import { exec } from "termost";
 import {
+	assert,
 	createError,
 	getPnpmVersion,
 	logger,
@@ -10,6 +11,7 @@ import {
 	resolveFromPackageDirectory,
 	resolveFromWorkingDirectory,
 	setPackageManager,
+	toShellArgument,
 } from "../helpers";
 import type { CommandFactory } from "../types";
 
@@ -39,6 +41,11 @@ type Template = "multi-projects" | "single-project";
 const REPOSITORY_REGEXP =
 	/^(?:git@.*:|https?:\/\/.*\/)(?<repoOwner>[^/]+)\/(?<repoName>[^/]+)\.git$/u;
 
+/**
+ * Scaffold a new project from a template.
+ *
+ * @param program - The termost program to register the command onto.
+ */
 export const createCreateCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
@@ -91,7 +98,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 				if (!repoOwner || !repoName) {
 					throw createError(
 						"git",
-						"The owner and repository name can not be extracted. Please make sure to follow either `/^git@.*:(?<repoOwner>.*)/(?<repoName>.*).git$/` or `/^https?://.*/(?<repoOwner>.*)/(?<repoName>.*).git$/` pattern.",
+						"The owner and repository name cannot be extracted. Please make sure to follow either `/^git@.*:(?<repoOwner>.*)/(?<repoName>.*).git$/` or `/^https?://.*/(?<repoOwner>.*)/(?<repoName>.*).git$/` pattern.",
 					);
 				}
 
@@ -110,6 +117,13 @@ export const createCreateCommand: CommandFactory = (program) => {
 				}
 
 				const projectName = slugify(inputName);
+
+				assert(projectName, () => {
+					return createError(
+						"stack create",
+						"The project name must contain at least one letter or digit.",
+					);
+				});
 
 				return {
 					licenseYear: new Date().getFullYear().toString(),
@@ -203,7 +217,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 			label: label("Initialize `git`"),
 			async handler({ data: { projectUrl } }) {
 				await exec("git init");
-				await exec(`git remote add origin ${projectUrl}`);
+				await exec(`git remote add origin ${toShellArgument(projectUrl)}`);
 			},
 		})
 		.task({
@@ -297,7 +311,7 @@ type TemplateMetadata = {
 	templatePath: string;
 };
 
-export const createTemplateEngine = async (
+const createTemplateEngine = async (
 	workingPath: string,
 	{ projectName, templateModel, templateName, templatePath }: TemplateMetadata,
 ): Promise<TemplateEngine> => {
@@ -437,5 +451,14 @@ const hasTemplateVariable = (input: string) => {
 };
 
 const toMajorCaretVersion = (semanticVersion: string) => {
-	return `^${Number(semanticVersion.split(".")[0])}.0.0`;
+	const major = Number(semanticVersion.split(".")[0]);
+
+	assert(Number.isInteger(major) && major > 0, () => {
+		return createError(
+			"stack create",
+			`Cannot resolve a major version from "${semanticVersion}".`,
+		);
+	});
+
+	return `^${major}.0.0`;
 };

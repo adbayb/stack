@@ -1,10 +1,10 @@
-# Design Patterns — use sparingly
+# Design Patterns: use sparingly
 
 Source catalog: https://refactoring.guru/design-patterns. Patterns are tools, not goals. Speculative pattern use is the Speculative Generality smell. Acronyms are expanded once in the `software-design` SKILL.md glossary.
 
 ## Selection rule
 
-Cite the concrete pain before naming a pattern: "three checkout variants with switching logic" → Strategy; "complex object with 8 optional fields" → Builder. If there is no pain yet, write the plain code (YAGNI).
+Cite the concrete pain before naming a pattern: "three checkout variants with switching logic" → Strategy; "complex object with 8 optional fields" → Builder. If there is no pain yet, write the plain code (YAGNI). Apply patterns only when they solve a present need: YAGNI/KISS/rule of three still win; no speculative layers or patterns in small modules. Don't name a pattern in code unless it helps readers.
 
 ## Creational
 
@@ -15,7 +15,7 @@ Cite the concrete pain before naming a pattern: "three checkout variants with sw
 
 ## Structural
 
-- **Adapter:** translate an external SDK/DB driver into a domain-owned port. All infrastructure translation lives here — nothing leaks past it.
+- **Adapter:** translate an external SDK/DB driver into a domain-owned port. All infrastructure translation lives here: nothing leaks past it.
 - **Facade:** simplify a noisy subsystem behind one intention-revealing entry per slice.
 - **Decorator / Middleware / Proxy:** add orthogonal behavior (logging, retry, cache, auth) without editing core logic.
 - **Bridge / Composite / Flyweight:** only for genuine structural variation (renderers, trees, shared heavy objects). Do not reach for these in business CRUD.

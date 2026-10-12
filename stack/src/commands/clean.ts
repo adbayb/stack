@@ -8,6 +8,11 @@ type CommandContext = {
 	files: string[];
 };
 
+/**
+ * Remove generated and cached files from the project.
+ *
+ * @param program - The termost program to register the command onto.
+ */
 export const createCleanCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
@@ -79,9 +84,16 @@ const retrieveIgnoredFiles = async () => {
 			});
 		})
 		.map((cleanOutput) => {
-			return cleanOutput.split(" ").at(-1) ?? "";
+			/*
+			 * `git clean -fdXn` prints `Would remove <path>`; strip the prefix instead of
+			 * splitting on spaces so paths containing spaces resolve correctly.
+			 */
+			return cleanOutput.startsWith(REMOVABLE_FILE_PREFIX)
+				? cleanOutput.slice(REMOVABLE_FILE_PREFIX.length)
+				: "";
 		})
 		.filter(Boolean);
 };
 
+const REMOVABLE_FILE_PREFIX = "Would remove ";
 const PRESERVE_FILES = ["node_modules"];

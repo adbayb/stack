@@ -3,6 +3,11 @@ import type { CommandFactory } from "../../types";
 import { fixCode } from "./fixCode";
 import { fixFormatting } from "./fixFormatting";
 
+/**
+ * Fix auto-fixable issues.
+ *
+ * @param program - The termost program to register the command onto.
+ */
 export const createFixCommand: CommandFactory = (program) => {
 	program
 		.command({

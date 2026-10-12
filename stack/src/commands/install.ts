@@ -1,7 +1,13 @@
+import { existsSync } from "node:fs";
 import { chmod, writeFile } from "node:fs/promises";
-import { getStackCommand, resolveFromWorkingDirectory } from "../helpers";
+import { assert, createError, getStackCommand, resolveFromWorkingDirectory } from "../helpers";
 import type { CommandFactory } from "../types";
 
+/**
+ * Install git hooks for the project.
+ *
+ * @param program - The termost program to register the command onto.
+ */
 export const createInstallCommand: CommandFactory = (program) => {
 	program
 		.command({
@@ -12,12 +18,17 @@ export const createInstallCommand: CommandFactory = (program) => {
 			label: label("Install `git.pre-commit` hook"),
 			async handler() {
 				const lineBreakMatcher = String.raw`\n|\r\n`;
+				/*
+				 * Collect every changed file in a single `stack fix` run. Skip the run
+				 * when the working tree is clean so an empty status does not fall back
+				 * to a whole-project fix.
+				 */
+				const changedFiles = `$(node -e 'console.log(require("child_process").execSync("git status --porcelain", {encoding: "utf8"}).split(/${lineBreakMatcher}/).filter(Boolean).map(item => item.split(" ").at(-1)).join(" "))')`;
 
-				const stackCommand = getStackCommand(
-					`fix $(node -e 'console.log(require("child_process").execSync("git status --porcelain", {encoding: "utf8"}).split(/${lineBreakMatcher}/).filter(Boolean).map(item => item.split(" ").at(-1)).join(" "))')`,
+				await installGitHook(
+					"pre-commit",
+					`files=${changedFiles}; if [ -n "$files" ]; then ${getStackCommand("fix $files")}; fi && git add -A`,
 				);
-
-				await installGitHook("pre-commit", `${stackCommand} && git add -A`);
 			},
 		})
 		.task({
@@ -33,6 +44,10 @@ const label = (message: string) => {
 };
 
 const installGitHook = async (hook: "commit-msg" | "pre-commit", content: string) => {
+	assert(existsSync(resolveFromWorkingDirectory(".git")), () => {
+		return createError("stack install", "No `.git` directory found. Run `git init` first.");
+	});
+
 	const filename = resolveFromWorkingDirectory(`.git/hooks/${hook}`);
 
 	await writeFile(filename, content);

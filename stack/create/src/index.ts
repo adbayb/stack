@@ -12,6 +12,8 @@ try {
 		hasLiveOutput: true,
 	});
 } catch (error) {
+	process.exitCode = 1;
+
 	logger.error(
 		`An error occurred while executing the npm initializer \`@adbayb/create\` (error: ${String(error)})`,
 	);

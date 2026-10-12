@@ -1,4 +1,4 @@
-# Smells & Anti-Patterns — reject list
+# Smells & Anti-Patterns: reject list
 
 Catalog: https://refactoring.guru/refactoring/smells. If code matches any row, refactor before shipping. Acronyms are expanded once in the `software-design` SKILL.md glossary.
 
@@ -25,7 +25,7 @@ Catalog: https://refactoring.guru/refactoring/smells. If code matches any row, r
 
 ## Dispensables (delete on sight)
 
-- Comments stating the obvious, Duplicate Code, Dead Code, Lazy Class (does too little), Data Class (fields without behavior — add behavior or collapse), Speculative Generality ("for future use").
+- Comments stating the obvious, Duplicate Code, Dead Code, Lazy Class (does too little), Data Class (fields without behavior: add behavior or collapse), Speculative Generality ("for future use").
 
 ## Couplers
 
@@ -39,7 +39,7 @@ Catalog: https://refactoring.guru/refactoring/smells. If code matches any row, r
 
 - **Leaky Abstraction:** DB/HTTP/SDK types crossing the domain boundary. Fix with port + mapper.
 - **God Object / Blob:** central class knowing everything → slice vertically, extract use cases.
-- **Spaghetti / Lava Flow:** dead/experimental paths left in — delete, do not comment.
+- **Spaghetti / Lava Flow:** dead/experimental paths left in: delete, do not comment.
 - **Golden Hammer:** same pattern (e.g., Singleton, event bus, inheritance) forced everywhere.
 - **Vendor Lock-in by accident:** domain importing framework decorators/ORM base classes.
 - **Premature distribution:** microservices/shared libs before a working modular monolith.

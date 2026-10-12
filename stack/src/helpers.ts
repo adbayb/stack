@@ -6,6 +6,12 @@ import type { Filenames } from "./types";
 export const logger = createLogger();
 export const require = createRequire(import.meta.url);
 
+/**
+ * Throw the created error when the condition is falsy.
+ *
+ * @param expectedCondition - The condition to verify.
+ * @param createError - Builds the error thrown when falsy.
+ */
 export const assert: (
 	expectedCondition: unknown,
 	createError: () => Error,
@@ -41,6 +47,13 @@ export const resolveFromPackageDirectory = (...path: string[]) => {
 	return resolve(import.meta.dirname, "../", ...path);
 };
 
+/**
+ * Prefix an error message with the failing binary name.
+ *
+ * @param bin - The failing binary name shown in the message.
+ * @param error - The cause to wrap or reword.
+ * @returns The original error with context, or a new error.
+ */
 export const createError = (bin: string, error: Error | string) => {
 	const errorMessage = `\`${bin}\` command failed.\n${String(error)}`;
 
@@ -53,20 +66,11 @@ export const createError = (bin: string, error: Error | string) => {
 	return new Error(errorMessage);
 };
 
-export const getRepositoryUrl = async () => {
-	try {
-		// This step is used as well to persist the repository url value:
-		return await exec("git config --get remote.origin.url");
-	} catch (error) {
-		throw createError(
-			"git",
-			`The project must be a \`git\` repository with an origin already setup. Have you tried to run \`git init && git remote add origin git@github.com:OWNER/REPOSITORY.git && git add -A && git commit -m "chore: initial commit" && git push -u origin main\`?\n${String(
-				error,
-			)}`,
-		);
-	}
-};
-
+/**
+ * Resolve the installed pnpm version or throw an actionable error.
+ *
+ * @returns The `pnpm -v` output.
+ */
 export const getPnpmVersion = async () => {
 	try {
 		return await exec("pnpm -v");
@@ -78,10 +82,17 @@ export const getPnpmVersion = async () => {
 	}
 };
 
+/**
+ * Prefix a command with the `pnpm stack` runner.
+ *
+ * @param command - The stack subcommand with its arguments.
+ * @returns The runnable command string.
+ */
 export const getStackCommand = (command: string) => {
 	return `pnpm stack ${command}`;
 };
 
+/** Enable corepack for the project. */
 export const setPackageManager = async () => {
 	/**
 	 * Corepack is downloaded remotely to get always up-to-date npm registry fingerprints since
@@ -92,6 +103,7 @@ export const setPackageManager = async () => {
 	await exec("pnx corepack enable");
 };
 
+/** Minimal fetch wrapper that throws an actionable error on non-2xx responses. */
 export const request = {
 	async get<ResponseType extends "json" | "text">(url: string, responseType: ResponseType) {
 		const response = await fetch(url);
@@ -112,6 +124,23 @@ export const request = {
 	},
 };
 
+/**
+ * Quote a value as a single shell argument. An embedded single quote is expressed by closing,
+ * adding an escaped quote, and reopening.
+ *
+ * @param value - The raw value to quote.
+ * @returns The single-quoted shell argument.
+ */
+export const toShellArgument = (value: string) => {
+	return `'${value.replaceAll("'", "'\"'\"'")}'`;
+};
+
+/**
+ * Create an oxlint check/fix runner.
+ *
+ * @param options - Set `isFixMode` to rewrite files instead of checking.
+ * @returns A runner executing oxlint over optional filenames.
+ */
 export const oxlint = (options: { isFixMode: boolean }) => {
 	return async (files: Filenames = []) => {
 		const args = [...files, "--disable-nested-config", "--no-error-on-unmatched-pattern"];
@@ -121,13 +150,25 @@ export const oxlint = (options: { isFixMode: boolean }) => {
 		}
 
 		try {
-			return await exec(`oxlint ${args.join(" ")}`);
+			return await exec(
+				`oxlint ${args
+					.map((arg) => {
+						return toShellArgument(arg);
+					})
+					.join(" ")}`,
+			);
 		} catch (error) {
 			throw createError("oxlint", error instanceof Error ? error : new Error(String(error)));
 		}
 	};
 };
 
+/**
+ * Create an oxfmt check/fix runner.
+ *
+ * @param options - Set `isFixMode` to rewrite files instead of checking.
+ * @returns A runner executing oxfmt over optional filenames.
+ */
 export const oxfmt = (options: { isFixMode: boolean }) => {
 	return async (files: Filenames = []) => {
 		const args = [
@@ -138,13 +179,26 @@ export const oxfmt = (options: { isFixMode: boolean }) => {
 		];
 
 		try {
-			return await exec(`oxfmt ${args.join(" ")}`);
+			return await exec(
+				`oxfmt ${args
+					.map((arg) => {
+						return toShellArgument(arg);
+					})
+					.join(" ")}`,
+			);
 		} catch (error) {
 			throw createError("oxfmt", error instanceof Error ? error : new Error(String(error)));
 		}
 	};
 };
 
+/**
+ * Run a turbo pipeline task.
+ *
+ * @param command - The pipeline task to run.
+ * @param options - Exec options plus example exclusion.
+ * @returns The turbo output.
+ */
 export const turbo = async (
 	command: "build" | "start" | "test" | "watch",
 	options: Parameters<typeof exec>[1] & {
@@ -166,6 +220,11 @@ export const turbo = async (
 	}
 };
 
+/**
+ * Log which files a check/fix run will cover.
+ *
+ * @param files - The filenames to log, or nothing for whole-project runs.
+ */
 export const logCheckableFiles = (files: string[]) => {
 	if (files.length === 0) {
 		logger.info("The whole project will be checked.");
@@ -176,6 +235,12 @@ export const logCheckableFiles = (files: string[]) => {
 	logger.info(`Following files will be checked:\n   ${files.join("\n   ")}`);
 };
 
+/**
+ * Run a changeset command with live output.
+ *
+ * @param command - The changeset CLI invocation.
+ * @returns The command output.
+ */
 export const changeset = async (command: string) => {
 	try {
 		return await exec(command, {

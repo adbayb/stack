@@ -13,6 +13,11 @@ type CommandContext = {
 
 type Filter = (typeof ONLY_VALUES)[number];
 
+/**
+ * Check code health (static analysis).
+ *
+ * @param program - The termost program to register the command onto.
+ */
 export const createCheckCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
@@ -31,7 +36,7 @@ export const createCheckCommand: CommandFactory = (program) => {
 			handler(_, argv) {
 				logCheckableFiles(argv.operands);
 			},
-			skip: ifFilterDefinedAndNotEqualTo("code"),
+			skip: ifFilterDefinedAndNotEqualTo("code", "formatting"),
 		})
 		.task({
 			label: label("Prepare the project"),
@@ -86,8 +91,8 @@ const label = (message: string) => {
 	return `${message} 🧐`;
 };
 
-const ifFilterDefinedAndNotEqualTo = (filter: Filter) => {
+const ifFilterDefinedAndNotEqualTo = (...filters: Filter[]) => {
 	return (context: CommandContext) => {
-		return context.filter !== undefined && context.filter !== filter;
+		return context.filter !== undefined && !filters.includes(context.filter);
 	};
 };

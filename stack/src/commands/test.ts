@@ -5,7 +5,7 @@ export const createTestCommand: CommandFactory = (program) => {
 	program
 		.command({
 			name: "test",
-			description: "Test the code execution",
+			description: "Run the test suite",
 		})
 		.task({
 			async handler() {

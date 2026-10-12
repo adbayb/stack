@@ -4,11 +4,11 @@ Apply when defining classes, modules, interfaces, or dependency graphs. Acronyms
 
 ## SOLID
 
-- **S — Single Responsibility.** One actor, one reason to change. Split when a class mixes policy (rules), coordination (orchestration), and I/O. Symptom of violation: Divergent Change (one class edited for unrelated reasons).
-- **O — Open/Closed.** Open for extension, closed for modification. Add new behavior via new types/strategies/handlers, not by editing a switch in stable code. Symptom: Shotgun Surgery on every new variant.
-- **L — Liskov Substitution.** Any subtype must be usable through the parent contract without surprises. Do not weaken preconditions or strengthen postconditions; do not throw `NotImplemented` from an inherited method (Refused Bequest). Prefer composition if the is-a is fake.
-- **I — Interface Segregation.** No fat interfaces. Split `Repository` into `Reader`/`Writer` if callers need only one side; split callbacks so clients implement only what they use. Violation smell: unused dependencies injected "just in case".
-- **D — Dependency Inversion.** Domain depends on ports (interfaces it owns); adapters (DB, HTTP, FS, clock) implement them. Wire at the composition root. Never `import { db } from "./infra"` inside domain code; never leak `Request`, `ResultSet`, or SDK types across the boundary.
+- **S: Single Responsibility.** One actor, one reason to change. Split when a class mixes policy (rules), coordination (orchestration), and I/O. Symptom of violation: Divergent Change (one class edited for unrelated reasons).
+- **O: Open/Closed.** Open for extension, closed for modification. Add new behavior via new types/strategies/handlers, not by editing a switch in stable code. Symptom: Shotgun Surgery on every new variant.
+- **L: Liskov Substitution.** Any subtype must be usable through the parent contract without surprises. Do not weaken preconditions or strengthen postconditions; do not throw `NotImplemented` from an inherited method (Refused Bequest). Prefer composition if the is-a is fake.
+- **I: Interface Segregation.** No fat interfaces. Split `Repository` into `Reader`/`Writer` if callers need only one side; split callbacks so clients implement only what they use. Violation smell: unused dependencies injected "just in case".
+- **D: Dependency Inversion.** Domain depends on ports (interfaces it owns); adapters (DB, HTTP, FS, clock) implement them. Wire at the composition root. Never `import { db } from "./infra"` inside domain code; never leak `Request`, `ResultSet`, or SDK types across the boundary.
 
 ## GRASP (responsibility assignment)
 

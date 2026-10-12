@@ -46,6 +46,7 @@
 		"termost": "^2.0.0"
 	},
 	"devDependencies": {
+		"@types/node": "24.19.2",
 		"quickbundle": "3.2.1"
 	}
 }
