@@ -47,6 +47,6 @@
 	},
 	"devDependencies": {
 		"@types/node": "24.19.2",
-		"quickbundle": "3.2.1"
+		"quickbundle": "3.2.2"
 	}
 }
