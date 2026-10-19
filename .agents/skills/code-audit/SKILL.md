@@ -1,6 +1,11 @@
 ---
 name: code-audit
-description: Audit and fix existing code for architecture and quality violations. Use whenever reviewing, auditing, refactoring, cleaning tech debt, fixing code smells, SOLID violations, bloated APIs, tight coupling, or checking hexagonal clean vertical-slice compliance, even if the user just says review this, is this clean, or fix this code. Produces a severity-ranked report then applies minimal, behavior-preserving fixes.
+description: "Audit and fix existing code for architecture and quality violations. Use whenever reviewing, auditing, refactoring, cleaning tech debt, fixing code smells, SOLID violations, bloated APIs, tight coupling, or checking hexagonal clean vertical-slice compliance, even if the user just says review this, is this clean, or fix this code. Produces a severity-ranked report, then applies minimal fixes with behavior changes and refactors kept separate."
+license: MIT
+metadata:
+    author: adbayb
+    repository: adbayb/stack
+    version: "1.0.0"
 ---
 
 # Code Audit
@@ -9,7 +14,20 @@ Audit existing code against the `software-design` practices, then fix it with mi
 
 ## Acronym glossary
 
-Acronyms are expanded once here: body content uses them bare. SOLID = Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion. GRASP = General Responsibility Assignment Software Patterns. SRP/OCP/LSP/ISP/DIP = the Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion Principles. YAGNI = You Aren't Gonna Need It. KISS = Keep It Simple, Stupid. DRY = Don't Repeat Yourself. POLA = Principle of Least Astonishment. CQS = Command Query Separation. MVVM = Model-View-ViewModel. I/O = Input/Output. API = Application Programming Interface. IoC = Inversion of Control. DTO = Data Transfer Object. ORM = Object-Relational Mapper. SDK = Software Development Kit.
+Acronyms are expanded once here: body content uses them bare. Restated inline (instead of pointing at `software-design`) so this skill stays usable when that skill is not installed; update both glossaries together when one changes.
+
+- **SOLID**: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion.
+- **GRASP**: General Responsibility Assignment Software Patterns.
+- **SRP / OCP / LSP / ISP / DIP**: the Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion Principles.
+- **YAGNI**: You Aren't Gonna Need It.
+- **KISS**: Keep It Simple, Stupid.
+- **DRY**: Don't Repeat Yourself.
+- **POLA**: Principle of Least Astonishment.
+- **CQS**: Command Query Separation.
+- **FIRST**: Fast, Independent, Repeatable, Self-validating, Timely.
+- **MVVM**: Model-View-ViewModel.
+- **I/O**: Input/Output. **API**: Application Programming Interface. **IoC**: Inversion of Control.
+- **DTO**: Data Transfer Object. **ORM**: Object-Relational Mapper. **SDK**: Software Development Kit.
 
 ## Workflow
 
@@ -31,36 +49,34 @@ Read `references/checklist.md` and scan in this order:
 6. **Coupling, errors and testability**: Demeter chains, cohesion, error mapping, testability (can domain run without I/O?).
 7. **Security**: untrusted input validated at the boundary, no shell-injection surface, no secrets in code/logs/errors, scoped file writes, least privilege.
 
-Record each finding with: location (`path:line`), principle violated, why it matters, severity:
-
-- **Blocker:** wrong behavior risk, leaked abstraction, untestable core, security/data-loss adjacent.
-- **Major:** SOLID/API/coupling violation that raises change cost measurably.
-- **Minor:** naming, duplication of boilerplate, style: batch under Boy Scout Rule.
+Record each finding with: location (`path:line`), principle violated, why it matters, severity. Use the Blocker/Major/Minor guide in `references/checklist.md` so severity stays single-sourced.
 
 ### 3. Report before fixing
 
-Always present this table first; proceed with fixes but stop for approval before anything destructive:
+Always present this table first. If the request is audit-only, stop after the report. If the user asked for fixes, proceed; ask for approval before anything destructive: deleting files, changing public signatures, schema or data migrations, dependency changes, or edits outside the audited slice.
 
 ```markdown
 ## Audit findings
 
-| #   | Location | Severity | Principle/Smell | Impact | Fix direction |
-| --- | -------- | -------- | --------------- | ------ | ------------- |
+| #   | Location                  | Severity | Principle/Smell | Impact                                      | Fix direction                               |
+| --- | ------------------------- | -------- | --------------- | ------------------------------------------- | ------------------------------------------- |
+| 1   | `src/refund/refund.ts:42` | Major    | SRP             | Validation and payment retry share one unit | Extract validation from the refund use case |
 ```
 
-Then: total counts by severity, and the 3 highest-leverage fixes. Do not list every lint nit as equal to a leaky domain.
+Then: total counts by severity, and the 3 highest-leverage fixes. If there are no findings, say so and stop; do not invent work. Do not list every lint nit as equal to a leaky domain.
 
 ### 4. Fix with minimal blast radius
 
 - Fix Blockers first, then Majors that touch the current task. Leave unrelated Minors unless Boy Scout-cheap, and keep them in separate commits/changes.
-- Preserve behavior: extract without changing semantics; add/adjust tests to lock behavior before restructuring (characterization tests if none exist).
+- **Behavior fixes are a separate lane.** When a finding is a wrong-behavior Blocker, reproduce it with a failing regression test and fix the behavior in a behavior-only change. Do not fold it into a refactor. Then run the refactor pass with behavior preserved.
+- Preserve behavior during refactors: extract without changing semantics; add/adjust tests to lock behavior before restructuring (characterization tests if none exist).
 - Fix order inside one file:
     1. Delete dead code.
     2. Narrow API (remove unused params/flags, introduce param objects).
     3. Break Demeter chains (inject).
     4. Extract responsibilities (SRP).
-    5. Replace switches with Strategy.
-    6. Insert ports/adapters at I/O edges (hexagonal/clean modules only; flat slices exempt).
+    5. Replace repeated type switches with Strategy only when the switch is a present violation.
+    6. Insert ports/adapters at I/O edges only when they remove a present violation (hexagonal/clean modules only; flat slices exempt).
     7. Rename for intent.
     8. Reduce comments to strictly necessary (why-only: complex logic, non-obvious workflows, preserved ambiguity).
 - Keep public signatures stable where possible; when a signature must shrink, update all callers in the same change and note the blast radius.
@@ -75,5 +91,7 @@ Then: total counts by severity, and the 3 highest-leverage fixes. Do not list ev
 ## Rules
 
 - Explain the why in one line per fix (principle → consequence), not theory dumps.
-- Never add functionality, frameworks, or patterns while auditing. Removing speculative code is a fix; adding "flexibility" is not.
+- Never add functionality, frameworks, or speculative patterns while auditing. Removing speculative code is a fix; adding "flexibility" is not. The listed refactors (Strategy, ports/adapters) are allowed only when they remove a present violation.
+- Never run package installs, dependency upgrades, or releases while auditing: dependency changes are a report finding, not a fix. Keep linter and formatter runs scoped to the audited files.
+- Apply fixes only inside the audited slice; park out-of-scope findings in the report instead of fixing them.
 - If a fix would expand the API surface or cross slice boundaries, propose it and stop: do not unilaterally widen contracts.

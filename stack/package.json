@@ -55,6 +55,7 @@
 		"prepublishOnly": "pnpm build",
 		"prestart": "pnpm build",
 		"start": "./bin/index.js",
+		"test": "vitest run",
 		"watch": "quickbundle watch"
 	},
 	"dependencies": {
@@ -74,6 +75,7 @@
 	},
 	"devDependencies": {
 		"@types/node": "24.19.2",
-		"quickbundle": "3.2.2"
+		"quickbundle": "3.2.2",
+		"vitest": "5.0.5"
 	}
 }

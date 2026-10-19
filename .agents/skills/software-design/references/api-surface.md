@@ -14,13 +14,13 @@ If (1) has no answer, do not add it. Speculative Generality and Second-System Ef
 
 ## Design rules
 
-- **One purpose per unit.** Endpoints, functions, and classes do one thing. Split commands from queries (CQS): `createOrder()` returns an id or throws; `getOrder()` has no side effects.
-- **Few, explicit parameters.** More than 3–4 params → Introduce Parameter Object, or the function does too much. No boolean traps: `send(email, true)` → `sendWelcome(email)` / `sendReset(email)`.
+- **One purpose per unit.** Endpoints, functions, and classes do one thing. Split commands from queries (CQS): `createOrder(input): Result<OrderId>` mutates and returns a Result; `getOrder(id)` has no side effects. This is the documented pragmatic exception: a command may return the created identity or a Result, while queries never mutate.
+- **Few, explicit parameters.** More than 3-4 params → Introduce Parameter Object, or the function does too much. No boolean traps: `send(email, true)` → `sendWelcome(email)` / `sendReset(email)`.
 - **Narrow interfaces.** Prefer `create(order: Order)` over `create(data: any)`. Return domain types, not driver rows. Never expose pagination cursors, SQL fragments, or SDK errors.
 - **Validate at the edge.** Parse/validate once at HTTP/CLI/queue boundary into a typed command; domain assumes valid input. Fail fast with actionable errors.
 - **Hide what can change.** Keep ordering, retries, batching, and storage choices internal. Expose facts and intents, not mechanisms.
 - **No leakage.** Infrastructure types (ORM entities, `Request`/`Response`, SDK DTOs) stop at the adapter. Map to domain at the port.
-- **Place symbols at the lowest sufficient scope.** Keep a symbol local to the module/package that consumes it; promote it to the lowest-level shared scope all its consumers already depend on only when a second existing consumer needs it. Planned consumers and same-package tests don't count; consumers of a published API do. Before exporting across a boundary, check who imports it; prefer sharing contracts over implementations; never export a counterpart (e.g. a reader for a writer) ahead of its first consumer. Exception: a contract both sides of a boundary must agree on may be shared right away: if tooling prevents sharing it, duplicate it and guard it with a test.
+- **Place symbols at the lowest sufficient scope.** Keep a symbol local to the module/package that consumes it; promote it to the lowest-level shared scope all its consumers already depend on only when a second existing consumer needs it. Extract a shared module, package, or shared kernel only at the Rule of Three (third real consumer). Planned consumers and same-package tests don't count; consumers of a published API do. Before exporting across a boundary, check who imports it; prefer sharing contracts over implementations; never export a counterpart (e.g. a reader for a writer) ahead of its first consumer. Exception: a contract both sides of a boundary must agree on may be shared right away: if tooling prevents sharing it, duplicate it and guard it with a test.
 - **Transactions at the use-case boundary.** One transaction per use-case execution, owned by the application layer (unit-of-work port or host-provided); entities never manage connections or transactions, gateways participate but never initiate.
 
 ## REST / RPC / library checklist

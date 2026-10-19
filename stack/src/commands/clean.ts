@@ -1,7 +1,8 @@
 import { existsSync, readdirSync } from "node:fs";
 import { rm } from "node:fs/promises";
+import { isAbsolute, relative, sep } from "node:path";
 import { exec } from "termost";
-import { logger, resolveFromWorkingDirectory } from "../helpers";
+import { assert, createError, logger, resolveFromWorkingDirectory } from "../helpers";
 import type { CommandFactory } from "../types";
 
 type CommandContext = {
@@ -62,7 +63,23 @@ const label = (message: string) => {
 const cleanFiles = async (files: string[]) => {
 	await Promise.all(
 		files.map(async (file) => {
-			await rm(file, { force: true, recursive: true });
+			const absolutePath = resolveFromWorkingDirectory(file);
+			const pathFromWorkingDirectory = relative(process.cwd(), absolutePath);
+
+			assert(
+				pathFromWorkingDirectory !== "" &&
+					pathFromWorkingDirectory !== ".." &&
+					!pathFromWorkingDirectory.startsWith(`..${sep}`) &&
+					!isAbsolute(pathFromWorkingDirectory),
+				() => {
+					return createError(
+						"stack clean",
+						`Refusing to remove a path outside the working directory: ${file}`,
+					);
+				},
+			);
+
+			await rm(absolutePath, { force: true, recursive: true });
 		}),
 	);
 };
@@ -78,11 +95,6 @@ const retrieveIgnoredFiles = async () => {
 
 	return rawFiles
 		.split(LINEBREAK_REGEXP)
-		.filter((cleanOutput) => {
-			return PRESERVE_FILES.every((excludedFile) => {
-				return !cleanOutput.includes(excludedFile);
-			});
-		})
 		.map((cleanOutput) => {
 			/*
 			 * `git clean -fdXn` prints `Would remove <path>`; strip the prefix instead of
@@ -92,8 +104,29 @@ const retrieveIgnoredFiles = async () => {
 				? cleanOutput.slice(REMOVABLE_FILE_PREFIX.length)
 				: "";
 		})
-		.filter(Boolean);
+		.filter(Boolean)
+		.filter((file) => {
+			return !isPreservedPath(file);
+		});
+};
+
+/**
+ * Check whether `stack clean` must preserve a path.
+ *
+ * Preserve installed dependencies and local environment files, which may contain secrets and must
+ * never be removed by a generated-file cleanup.
+ *
+ * @param path - The repository-relative path to inspect.
+ * @returns `true` when the path or one of its segments is preserved.
+ */
+export const isPreservedPath = (path: string) => {
+	return path.split(PATH_SEGMENT_SEPARATOR).some((segment) => {
+		return PRESERVED_SEGMENTS.some((pattern) => {
+			return pattern.test(segment);
+		});
+	});
 };
 
 const REMOVABLE_FILE_PREFIX = "Would remove ";
-const PRESERVE_FILES = ["node_modules"];
+const PATH_SEGMENT_SEPARATOR = /[\\/]/u;
+const PRESERVED_SEGMENTS = [/^node_modules$/u, /^\.env(?:\.|$)/u];

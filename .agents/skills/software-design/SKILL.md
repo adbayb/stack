@@ -1,6 +1,11 @@
 ---
 name: software-design
-description: Design and write readable, maintainable, testable clean code. Use whenever creating new code, APIs, classes, modules, features, or choosing project structure: even if the user never says architecture, SOLID, design patterns, hexagonal, vertical slice, or clean code. Enforces SOLID, minimal API surface with YAGNI, KISS DRY Law of Demeter POLA, high cohesion low coupling, justified patterns only, an inner style inside vertical slices.
+description: "Design and write readable, maintainable, testable clean code. Use whenever creating new code, APIs, classes, modules, features, or choosing project structure: even if the user never says architecture, SOLID, design patterns, hexagonal, vertical slice, or clean code. Enforces SOLID, minimal API surface with YAGNI, KISS DRY Law of Demeter POLA, high cohesion low coupling, justified patterns only, an inner style inside vertical slices."
+license: MIT
+metadata:
+    author: adbayb
+    repository: adbayb/stack
+    version: "1.0.0"
 ---
 
 # Software Design
@@ -19,6 +24,9 @@ Acronyms are expanded once here: body content uses them bare. Every reference fi
 - **DRY**: Don't Repeat Yourself.
 - **POLA**: Principle of Least Astonishment.
 - **CQS**: Command Query Separation. **CQRS**: Command Query Responsibility Segregation.
+- **FIRST**: Fast, Independent, Repeatable, Self-validating, Timely.
+- **REST**: Representational State Transfer. **RPC**: Remote Procedure Call. **MVC**: Model-View-Controller. **FS**: file system. **BOM**: byte-order mark.
+- **DI**: Dependency Injection. **ID**: identifier. **OO**: object-oriented. **SQL**: Structured Query Language. **UI**: user interface. **JSON**: JavaScript Object Notation. **ASCII**: American Standard Code for Information Interchange.
 - **MVVM**: Model-View-ViewModel. **MVP**: Model-View-Presenter.
 - **CRUD**: Create, Read, Update, Delete.
 - **API**: Application Programming Interface. **I/O**: Input/Output. **DB**: database. **DTO**: Data Transfer Object. **ORM**: Object-Relational Mapper. **SDK**: Software Development Kit. **HTTP**: Hypertext Transfer Protocol. **CLI**: Command-Line Interface.
@@ -26,7 +34,7 @@ Acronyms are expanded once here: body content uses them bare. Every reference fi
 
 ## Workflow
 
-Follow these steps in order. Skip a step only with an explicit reason. When the approach is ambiguous and a wrong guess is costly to undo, ask before proceeding; otherwise pick the sensible default and state it. Single source: reference files are normative. Workflow steps point to them and never restate their rules. When a rule changes, edit the reference first, then trim any workflow recap.
+Follow these steps in order. Skip a step only with an explicit reason. When the approach is ambiguous and a wrong guess is costly to undo, ask before proceeding; otherwise pick the sensible default and state it. Single source: reference files are normative. Workflow steps summarize them and must never fork their rules. When a rule changes, edit the reference first, then trim any workflow recap.
 
 ### 1. Clarify the slice
 
@@ -46,7 +54,7 @@ Every public function, class, endpoint, or interface is a liability (Hyrum's Law
 
 - Start from product requirements. Expose only what is required now: no speculative resources, relations, flags, or "future-proof" hooks (YAGNI, Second-System Effect).
 - Prefer small, explicit surfaces: few parameters, one purpose per function, narrow interfaces.
-- Apply Command Query Separation: a method either changes state or returns data, not both.
+- Apply Command Query Separation: a method either changes state or returns data, not both. Pragmatic exception: a command may return the created identity or a Result; queries stay side-effect free.
 - Fail fast at boundaries: validate inputs once at the edge, then trust internally.
 - Hide internals: depend on abstractions (ports/interfaces), inject dependencies, never leak infrastructure types (DB clients, HTTP objects) into the domain: leaky abstractions are an anti-pattern.
 - Place symbols at the lowest sufficient scope (see `references/api-surface.md`).
@@ -92,15 +100,13 @@ Load `references/patterns.md` before introducing any named pattern.
 - Pure domain logic separated from I/O: unit-testable without mocks of databases, clocks, or network.
 - Inject seams: clock, ID generator, repository port, HTTP client: so tests substitute fakes, not mocks of everything.
 - Colocate tests with source (`*.test.ts` next to implementation); fakes live beside the ports they implement.
-- Test behavior through the public interface, not implementation details (internal calls, private structure, call order unless it is the contract). A refactor that keeps behavior must not break tests. Every test must earn its place: never write tests to raise line count or coverage. Consolidate overlapping cases (e.g. `test.each`); remove redundant, obsolete, or implementation-coupled tests in files you edit.
-- One behavior per test (one concept, not necessarily one assert); name tests by scenario and expectation. Keep tests FIRST: fast, independent (any order, no shared mutable setup), repeatable in any environment, self-validating (pass/fail, no manual log reading). Cover boundaries and failure paths, not just the happy path.
-- Keep the public-facing interface at the top: exports before implementation details in source files, describe/test cases before helpers in test files.
-- Follow clean-code basics from `references/clean-code-cohesion.md` (consistent verb prefixes, small single-purpose functions, guard clauses, no dead/commented-out code, no magic numbers).
-- Check smells before finishing: run through `references/smells-antipatterns.md` (Long Method, Large Class, Primitive Obsession, Long Parameter List, Data Clumps, Switch Statements, Feature Envy, Message Chains, Shotgun Surgery, Speculative Generality, Dead Code). If any match, refactor now.
+- Test behavior through the public interface and keep the suite lean: every rule detail (naming, consolidation, one behavior per test, FIRST) per `references/clean-code-cohesion.md` (naming convention and clean-code rules).
+- Keep the public-facing interface at the top of files: exports before implementation, describes/tests before helpers (also in `references/clean-code-cohesion.md`).
+- Before finishing, run through `references/smells-antipatterns.md` and refactor every match.
 
 ## Output contract
 
-For any non-trivial change, end with a short design note (5–15 lines):
+For any non-trivial change, end with a short design note (5-15 lines):
 
 - Slice: what capability, where it lives.
 - API surface: what is newly public and why nothing more was added.
@@ -110,17 +116,27 @@ For any non-trivial change, end with a short design note (5–15 lines):
 
 Do not dump theory. Cite the principle only when it changed a decision.
 
+## Example
+
+Request: "Add a refund endpoint."
+
+- Slice: `src/refund/` owns the use case end to end.
+- API surface: `refundOrder(input: RefundOrderInput): Result<Refund>`; no extra flags, routes, or speculative fields.
+- Inner style: flat modular with one injected payment port; no layers or patterns yet.
+- Principles applied: SRP at the use-case boundary; none of the optional patterns.
+- Testability: inject the payment port and clock; test approval, rejection, and missing-order paths with fakes.
+
 ## External sources (appendix, informative only)
 
 Normative rules are above; on conflict this skill wins. Do not add patterns or APIs from external sources without a current requirement (YAGNI).
 
 When a rule is missing or ambiguous above, consult these sources and apply the most relevant guidance that impacts code design and quality:
 
-- SOLID principles: https://awesome-architecture.com/topics/software-architecture-principles-solid
-- Design Patterns: https://refactoring.guru/design-patterns
-- Code smells: https://refactoring.guru/refactoring/smells: and anti-patterns such as leaky abstractions: https://awesome-architecture.com/collections/software-architecture/anti-patterns
-- Minimal API surface / blast radius: every API design MUST aim for a minimal API surface without sacrificing product requirements; it SHOULD NOT include unnecessary resources, relations, actions, or data; it SHOULD NOT add functionality until deemed necessary (YAGNI principle).
+- SOLID principles: https://awesome-architecture.com/topics/software-architecture-principles-solid.
+- Design Patterns: https://refactoring.guru/design-patterns.
+- Code smells: https://refactoring.guru/refactoring/smells: and anti-patterns such as leaky abstractions: https://awesome-architecture.com/collections/software-architecture/anti-patterns.
+- Minimal API surface / blast radius: every API design must aim for a minimal API surface without sacrificing product requirements; it should not include unnecessary resources, relations, actions, or data; it should not add functionality until deemed necessary (YAGNI principle).
 - Architecture principles: https://awesome-architecture.com/collections/software-architecture/principles and https://lawsofsoftwareengineering.com/: this skill already enforces KISS, YAGNI, Boy Scout Rule, DRY, Law of Demeter, Principle of Least Astonishment, ...; pick up any missing principle from these collections that impacts code design and quality.
 - Hexagonal / clean architecture inside vertical slices: favor hexagonal or clean architecture for business-heavy slices; match the inner style to the situation per `references/architecture-styles.md` (MVVM for UI-heavy, flat for scripts/glue). Reference implementation (clean): https://github.com/adbayb/clean-architecture.
-- Clean code: https://gist.github.com/cedrickchee/55ecfbaac643bf0c24da6874bf4feb08
+- Clean code: https://gist.github.com/cedrickchee/55ecfbaac643bf0c24da6874bf4feb08.
 - Cohesion and coupling: https://awesome-architecture.com/topics/software-architecture-principles-cohesion and https://awesome-architecture.com/topics/software-architecture-principles-coupling: increase cohesion, minimize coupling.

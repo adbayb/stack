@@ -5,9 +5,9 @@ Use top-down. Check each box or record a finding with severity. Acronyms are exp
 ## A. Minimal API surface / blast radius
 
 - [ ] Each public function/class/endpoint serves one current requirement (YAGNI: no "future" params, flags, resources).
-- [ ] Symbols live at the lowest sufficient scope (promoted only for a second existing consumer); contracts preferred over implementations; importers checked before exporting across a boundary; no counterpart ahead of its first consumer.
-- [ ] ≤3–4 parameters; no boolean traps; complex input uses a Parameter Object.
-- [ ] Commands mutate or queries return: not both (CQS).
+- [ ] Symbols live at the lowest sufficient scope (promoted only for a second existing consumer); shared modules require 3+ users; contracts preferred over implementations; importers checked before exporting across a boundary; no counterpart ahead of its first consumer.
+- [ ] ≤3-4 parameters; no boolean traps; complex input uses a Parameter Object.
+- [ ] Commands mutate or queries return: not both (CQS); returning the created identity/Result from a command is the documented exception.
 - [ ] Fail-fast at the boundary: inputs parsed once into typed commands; domain assumes valid input.
 - [ ] No infrastructure types in public signatures (ORM entities, `Request`/`Response`, SDK DTOs).
 - [ ] Removal cost known: changing this signature touches ≤1 slice.
@@ -44,7 +44,7 @@ Apply ports/barrel/presenter rows only where the inner style requires them: flat
 
 ## E. Clean code
 
-- [ ] Names reveal intent; no `data/tmp/manager/process`. Verb prefixes consistent: `get` (lookup by identity, never throw) / `find` (search by criteria/filter) / `exists` for queries; collections as plural nouns, no `All` infix; `getOrThrow` for throwing lookups; `create` / `update` / `remove` for commands; no `fetch`/`retrieve`/`load`/`read`/`list`/`query`/`delete`/`clear`/`save`/`process` synonyms. Third-party/platform APIs keep their own names. New/edited code only: no renames of existing exported symbols just for this.
+- [ ] Names reveal intent; no `data/tmp/manager/process`. Verb prefixes and banned synonyms follow the canonical one-verb mapping in the `software-design` reference `clean-code-cohesion.md`; new/edited code only: no renames of existing exported symbols just for this. Third-party/platform APIs keep their own names.
 - [ ] Added/edited text is neutral: no em-dashes (`—`, U+2014), decorative en-dash/double-hyphen (use `-`), or invisible unicode (U+00A0/U+200B-U+200D/stray U+FEFF); curly quotes and ellipsis glyph (`…`) in prose only, never in code/comments/samples; no decorative non-ASCII punctuation.
 - [ ] Functions small, single-purpose, guard-claused; nesting ≤2.
 - [ ] Complex expressions use explanatory variables; boolean conditions encapsulated and positive (`isEnabled`, no double negatives).
@@ -52,7 +52,7 @@ Apply ports/barrel/presenter rows only where the inner style requires them: flat
 - [ ] No hidden temporal coupling or ambient-order reliance; logical dependencies explicit (import/param/injection).
 - [ ] No arbitrary literals: defaults/limits/timeouts are named constants with a reason, at module top or composition root.
 - [ ] No type-checker silencing (`as any`, `@ts-ignore`, `!`) without narrow scope + why-comment; absence is `undefined`, never `null`.
-- [ ] Names fit their scope; no encodings or `Manager`/`Helper`/`Util` holders.
+- [ ] Names fit their scope; no encodings or `Manager`/`Helper`/`Util` grab-bag classes or functions. File names may describe shared infrastructure; give domain responsibilities their own names.
 - [ ] Generic utilities use `input`/`...inputs`/`output`; domain names everywhere else (no `data`/`arg`/`x`).
 - [ ] Bespoke boundary contracts named `<FunctionName>Input`/`Output`; domain types reused directly, never aliased per function.
 - [ ] Public interface first: exports before implementation in source files, describes/tests before helpers in test files, one-line TSDoc contract docs on public APIs; file reads top-down.
@@ -75,6 +75,6 @@ Apply ports/barrel/presenter rows only where the inner style requires them: flat
 
 ## Severity guide
 
-- Blocker: leaks I/O into domain, untestable business rule, data-loss/security adjacent, broken layering.
+- Blocker: leaks I/O or infrastructure types into the domain, wrong behavior risk, untestable business rule, data-loss/security adjacent, broken layering.
 - Major: fat API, SRP/OCP/ISP/DIP violation, cross-slice coupling, repeated switch, untestable seam.
 - Minor: naming, nesting, boilerplate duplication, comment/style: fix when touching the lines anyway.

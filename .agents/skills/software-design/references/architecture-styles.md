@@ -6,7 +6,7 @@ The architecture within a module stays consistent across its slices. By its stan
 
 ## Vertical slice (default)
 
-- Structure by capability: one folder per feature under `src/` (e.g. `src/refund/`), named with a noun, owning its handler, domain/hexagon, adapters, tests: no `features/` container; the extra level adds nothing. (In a clean module, features take the use-case verb form instead: see Clean Architecture essentials.)
+- Structure by capability: one folder per feature under `src/` (e.g. `src/refund/`), named with a noun, owning its handler, domain/hexagon, adapters, tests: no `features/` container; the extra level adds nothing. In a clean module, features take the use-case verb form instead: see Clean Architecture essentials.
 - Cross-slice communication only via explicit contracts or domain events. No deep imports (`../../other-slice/internals`).
 - Each folder exposes its public surface through `index.ts`; import via the barrel, never deep into another folder's internals.
 - Shared kernel holds only truly shared code and stays tiny; everything else is duplicated deliberately until the Rule of Three proves shared.
@@ -45,7 +45,7 @@ Follows the reference implementation at https://github.com/adbayb/clean-architec
 - Layers, inward only: `entities/` (enterprise business rules) → `useCases/` (application business rules) → `adapters/` (interface adapters: gateways, presenters) → `frameworks/` (views, data sources, DB clients). Outer layers know the inner ones, never the reverse.
 - Shared Kernel (`modules/shared/`) is a shared module holding shareable entities coupled to gateways: not a dumping ground.
 - Shared entities live as siblings of features directly under `src/`, never in a `shared/` folder and never imported feature-to-feature. A shared entity is a full vertical unit, not just a domain class: it embeds all its layers including gateway implementations (`Product/` carries `entities/` + `adapters/` + `frameworks/`, only `useCases/` missing since entities have no use case). Features take the use-case verb form (`GetProducts`), shared entities the noun form (`Product`). Depend on a shared entity only through its ports.
-- Promote sharing stepwise: tolerate duplication → extract to a sibling shared entity at the Rule of Three → promote to the cross-module Shared Kernel only when another module needs it.
+- Promote sharing stepwise: tolerate duplication → extract to a sibling shared entity at the Rule of Three → promote to the cross-module Shared Kernel only when additional modules need it.
 - `hosts/` is the outermost layer: one main component per driver (web UI, CLI, back-end server) instantiating the inner layers (composition root) and serving as system entry point. It is not depicted in the classic Clean Architecture diagram.
 - Never bypass: a web controller must not call a database repository directly: every call crosses a use case (port), otherwise the layers are decoration.
 - Presenters: prefer push-based: the controller hands output to the presenter through the application layer; the use case never returns view-shaped data for the controller to format. Never mix controller and presenter in one class, so new output formats (web, CLI, JSON) plug in later.
