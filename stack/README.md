@@ -39,7 +39,7 @@ pnpm create @adbayb
 stack install
 # Clean the project
 stack clean
-# Check code health (static analysis including linters, types, and commit message)
+# Check code health (static analysis including linters and types)
 stack check
 # Fix auto-fixable issues
 stack fix
@@ -66,6 +66,22 @@ stack release
 - [@adbayb/stack/oxlint](https://github.com/adbayb/stack/blob/main/stack/configs/oxlint/) to align logical and stylistic rules across projects.
 - [@adbayb/stack/oxfmt](https://github.com/adbayb/stack/blob/main/stack/configs/oxfmt/) to align code formatting conventions across projects.
 - [@adbayb/stack/typescript](https://github.com/adbayb/stack/blob/main/stack/configs/typescript/) to align type checking and processing across projects.
+
+### Agent skills
+
+The repository ships two [Agent Skills](https://agentskills.io/specification) for coding agents:
+
+- [software-design](https://github.com/adbayb/stack/blob/main/.agents/skills/software-design/): design and write clean, testable code; the single source of the design rules and glossary.
+- [code-audit](https://github.com/adbayb/stack/blob/main/.agents/skills/code-audit/): audit code, pull requests, or engineering instructions against the `software-design` rules (requires `software-design`).
+
+Install them from the repository with:
+
+```bash
+pnpm dlx skills add adbayb/stack --skill software-design -g
+pnpm dlx skills add adbayb/stack --skill code-audit -g
+```
+
+Use `pnpm dlx` rather than `npx`: the repo's `devEngines` gate accepts pnpm only.
 
 ### Used technologies
 

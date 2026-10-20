@@ -1,10 +1,10 @@
 # Design Patterns: use sparingly
 
-Source catalog: https://refactoring.guru/design-patterns. Patterns are tools, not goals. Speculative pattern use is the Speculative Generality smell. Acronyms are expanded once in the `software-design` SKILL.md glossary.
+Source catalog: https://refactoring.guru/design-patterns. Patterns are tools, not goals.
 
 ## Selection rule
 
-Cite the concrete pain before naming a pattern: "three checkout variants with switching logic" → Strategy; "complex object with 8 optional fields" → Builder. If there is no pain yet, write the plain code (YAGNI). Apply patterns only when they solve a present need: YAGNI/KISS/rule of three still win; no speculative layers or patterns in small modules. Don't name a pattern in code unless it helps readers.
+Cite a present, concrete pain before naming a pattern: "the same checkout-variant switch repeated in pricing, tax, and shipping" -> Strategy; "complex object with 8 optional fields" -> Builder. Without that pain, write the plain code: YAGNI/KISS/the Rule of Three win, and speculative layers or patterns are the Speculative Generality smell. Don't name a pattern in code unless it helps readers.
 
 ## Creational
 
@@ -22,7 +22,7 @@ Cite the concrete pain before naming a pattern: "three checkout variants with sw
 
 ## Behavioral
 
-- **Strategy:** replace switch-statements / if-chains over a type code with interchangeable policies. Pairs with Open/Closed.
+- **Strategy:** replace a type-code switch or if-chain repeated across units with interchangeable policies; a local exhaustive switch stays (Open/Closed in `solid-grasp.md`).
 - **Command:** encapsulate a use case as an object (queue, undo, audit log).
 - **Observer / Pub-Sub:** notify other slices of domain events without direct coupling. Keep events immutable facts about the past.
 - **State / Template Method:** lifecycle with well-defined transitions; otherwise prefer explicit functions + guard clauses.

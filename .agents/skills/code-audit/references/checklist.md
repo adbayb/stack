@@ -1,80 +1,82 @@
-# Audit Checklist
+# Audit Checklist: evidence and deltas
 
-Use top-down. Check each box or record a finding with severity. Acronyms are expanded once in the `code-audit` SKILL.md glossary. Rule versions follow `software-design`: on conflict the skill wins; update this file instead of forking the rule.
+Per-dimension evidence prompts and audit deltas, then severity, confidence, and scoring. Each `Rules:` line names the owning `software-design` reference.
 
-## A. Minimal API surface / blast radius
+## A. API surface / blast radius
 
-- [ ] Each public function/class/endpoint serves one current requirement (YAGNI: no "future" params, flags, resources).
-- [ ] Symbols live at the lowest sufficient scope (promoted only for a second existing consumer); shared modules require 3+ users; contracts preferred over implementations; importers checked before exporting across a boundary; no counterpart ahead of its first consumer.
-- [ ] ≤3-4 parameters; no boolean traps; complex input uses a Parameter Object.
-- [ ] Commands mutate or queries return: not both (CQS); returning the created identity/Result from a command is the documented exception.
-- [ ] Fail-fast at the boundary: inputs parsed once into typed commands; domain assumes valid input.
-- [ ] No infrastructure types in public signatures (ORM entities, `Request`/`Response`, SDK DTOs).
-- [ ] Removal cost known: changing this signature touches ≤1 slice.
+Rules: `software-design` reference `api-surface.md`.
 
-## B. Structure (vertical slice + inner style)
+- Evidence: requirement/consumers per export; parameters/flags/leaked infrastructure/query mutations; invariant ownership and invalid state combinations; atomicity, concurrent updates, value precision, and source/wire/storage compatibility; callers and slices touched.
+- Deltas: trace each finding to a current consumer or contract; distinguish an internal signature change from an incompatible published contract. Apply reference exceptions; generated code/test doubles exempt.
 
-Apply ports/barrel/presenter rows only where the inner style requires them: flat scripts and MVVM slices are exempt from ports ceremony (YAGNI, Gall's Law). When exempt, note the inner style and skip without a finding.
+## B. Structure
 
-- [ ] Code lives with its capability (`src/<feature>/`), not in global `services/`/`utils/` sprawl.
-- [ ] Dependency direction is inward: domain ← ports ← adapters; domain imports nothing infrastructural.
-- [ ] No cross-slice deep imports; inter-slice traffic via explicit contract or event.
-- [ ] Shared code is genuinely shared (3+ users, single owner): otherwise co-located.
-- [ ] Module boundaries respected: workspace packages, imports via package names only, no cross-module deep imports.
-- [ ] Imports via barrel entry points (`index.ts`) for hexagonal/clean modules; flat/MVVM slices may import directly; boundaries encoded in linter/`exports`, not convention alone.
-- [ ] Inner style is consistent per module (per application when there are no modules) and documented in one line.
-- [ ] Controllers and presenters separated for clean modules (presenters push through the application layer, controllers never format output); flat/hexagonal/MVVM slices exempt.
+Rules: `software-design` reference `architecture-styles.md`.
+
+- Evidence: inner style and dependency direction; cross-slice/module imports; composition-root wiring; boundary enforcement (linter, package names, or convention).
+- Deltas: establish the chosen style before reporting layer bypasses; direct repository calls are valid in flat transaction scripts. Check whether tooling can enforce a claimed boundary; do not invent layers to satisfy the checklist.
 
 ## C. SOLID / GRASP
 
-- [ ] One reason to change per unit (SRP). No Divergent Change.
-- [ ] New variants added without editing stable files (OCP): no recurring Shotgun Surgery.
-- [ ] Subtypes honor parent contracts; no no-op/throw overrides (LSP, no Refused Bequest).
-- [ ] Interfaces are narrow; no unused injected methods (ISP).
-- [ ] Domain depends on owned ports; concretes injected at composition root (DIP + IoC).
-- [ ] Behavior sits with its data (Information Expert); composition preferred over inheritance.
+Rules: `software-design` reference `solid-grasp.md`.
 
-## D. Smells & anti-patterns
+- Evidence: responsibility boundaries/change reasons; extension without stable-file edits; LSP overrides; interface width/unused dependencies; dependency direction/composition root.
+- Deltas: report an observed change reason, substitution failure, unused dependency, or test obstacle, not a missing pattern. Inheritance and local exhaustive switches alone are not findings.
 
-- [ ] No Long Method / Large Class / Primitive Obsession / Long Parameter List / Data Clumps.
-- [ ] No Switch-on-type-code repeated across files (→ Strategy/Polymorphism).
-- [ ] No Feature Envy / Inappropriate Intimacy / Message Chains (`a.b().c()`) / Middle Man.
-- [ ] No dead, commented-out, speculative, or duplicated-rule code (Dispensables).
-- [ ] No leaky abstraction, God Object, framework-decorated domain, or premature distribution.
+## D. Smells / anti-patterns
+
+Rules: `software-design` reference `smells-antipatterns.md`.
+
+- Evidence: bloaters, couplers, dispensables, change preventers, architecture anti-patterns in touched code; recurring type-code switches; dead/commented/speculative/duplicated-rule code.
+- Deltas: group by root cause and establish harm; legitimate data contracts and deliberate duplication are not automatic findings. Separate touched-code remedies from larger cleanups.
 
 ## E. Clean code
 
-- [ ] Names reveal intent; no `data/tmp/manager/process`. Verb prefixes and banned synonyms follow the canonical one-verb mapping in the `software-design` reference `clean-code-cohesion.md`; new/edited code only: no renames of existing exported symbols just for this. Third-party/platform APIs keep their own names.
-- [ ] Added/edited text is neutral: no em-dashes (`—`, U+2014), decorative en-dash/double-hyphen (use `-`), or invisible unicode (U+00A0/U+200B-U+200D/stray U+FEFF); curly quotes and ellipsis glyph (`…`) in prose only, never in code/comments/samples; no decorative non-ASCII punctuation.
-- [ ] Functions small, single-purpose, guard-claused; nesting ≤2.
-- [ ] Complex expressions use explanatory variables; boolean conditions encapsulated and positive (`isEnabled`, no double negatives).
-- [ ] Every name earns its place: single-use consts add meaning, bind an await, narrow a type, or centralize a literal; pass-through aliases inlined.
-- [ ] No hidden temporal coupling or ambient-order reliance; logical dependencies explicit (import/param/injection).
-- [ ] No arbitrary literals: defaults/limits/timeouts are named constants with a reason, at module top or composition root.
-- [ ] No type-checker silencing (`as any`, `@ts-ignore`, `!`) without narrow scope + why-comment; absence is `undefined`, never `null`.
-- [ ] Names fit their scope; no encodings or `Manager`/`Helper`/`Util` grab-bag classes or functions. File names may describe shared infrastructure; give domain responsibilities their own names.
-- [ ] Generic utilities use `input`/`...inputs`/`output`; domain names everywhere else (no `data`/`arg`/`x`).
-- [ ] Bespoke boundary contracts named `<FunctionName>Input`/`Output`; domain types reused directly, never aliased per function.
-- [ ] Public interface first: exports before implementation in source files, describes/tests before helpers in test files, one-line TSDoc contract docs on public APIs; file reads top-down.
-- [ ] Boy Scout applied: touched code left cleaner via small safe behavior-preserving improvements (no exported renames), unrelated/larger reform kept separate.
+Rules: `software-design` reference `clean-code.md`.
 
-## F. Coupling, errors, testability
+- Evidence: naming/verb mapping/banned synonyms; function size/nesting/guards/explanatory variables/named constants; comments/dead code; neutral text/type-checker silencing/absence/public interface/TSDoc; instruction ownership, triggers, loading paths, links, prerequisites, blocked paths, size budgets, and standalone mirrors.
+- Deltas: scope naming/style to new or edited code, neutral-text checks to introduced text. For instruction artifacts, trace conflicts to a concrete agent decision and exercise relevant counterexamples: flat I/O script, data-only DTO, closed union switch, failed lookup versus absence, and unavailable prerequisites.
 
-- [ ] High cohesion: change X → ≤3 files touched. Low coupling: no globals, no hidden I/O, no cycles; dependencies narrow, intentional, toward stable lower-level code.
-- [ ] Law of Demeter holds; Tell-Don't-Ask; no surprise side effects (POLA).
-- [ ] Domain unit-testable with fakes (clock/repo/mailer injected); tests colocated (`*.test.ts`); pyramid respected (many unit, few integration). Tests assert behavior via the public interface, not implementation details; every test earns its place (no coverage-fillers); overlapping cases consolidated (`test.each`); redundant/obsolete/implementation-coupled tests removed in touched files.
-- [ ] One behavior per test, named by scenario/expectation; tests FIRST (fast, independent, repeatable, self-validating); boundaries and failure paths covered.
-- [ ] New/edited code prefers success and failure as Result objects (`@open-vanilla/result`), no throwing for normal control flow; foreign exceptions caught at the boundary and mapped to failed Results; queries never throw (`getOrThrow` reserved for throw-based interop), expected absence is `undefined`/empty; hosts map failed Results to responses and logs. Existing throw-based code left alone.
+## F. Tests / cohesion / coupling / errors
+
+Rules: `software-design` reference `cohesion-coupling.md`, `software-design` reference `testing-refactoring.md`, and `software-design` reference `clean-code.md`.
+
+- Evidence: change impact/coupling (cycles, globals, hidden I/O, Demeter, surprise side effects, new third-party dependencies); deterministic tests, adapter contracts, and changed boundary/failure coverage; error convention/boundary mapping/query purity/absence; resource ownership, cancellation, retry/idempotency safety, and bounded workload.
+- Deltas: demonstrate the test obstacle or missing changed-behavior case; untouched coverage gaps are not findings. Trace success, rejection, timeout/cancellation, duplicate/concurrent execution, and partial-failure paths when relevant; check final state, effect count, cleanup, and reported errors.
 
 ## G. Security
 
-- [ ] Untrusted input (CLI args, env, files, network) validated once at the boundary; fail fast with actionable errors.
-- [ ] No shell-injection surface: untrusted input never interpolated into shell commands: parameterized exec helpers only.
-- [ ] No secrets in code, logs, or error messages; file writes scoped to the narrowest path set; destructive ops fail closed on ambiguous scope.
-- [ ] Least privilege for tokens/permissions; dependencies pinned and reviewed (no surprise upgrades).
+Rules: `software-design` reference `security.md` plus repo security rules.
 
-## Severity guide
+- Evidence: boundary validation and resource/tenant authorization; untrusted input reaching shell/query syntax, paths, or network destinations; secrets and sensitive data in storage/logs/errors; token/permission scope; dependency pinning/upgrades.
+- Deltas: establish input trust and path reachability; redact secret evidence. Dependency changes remain report-only under the audit workflow.
 
-- Blocker: leaks I/O or infrastructure types into the domain, wrong behavior risk, untestable business rule, data-loss/security adjacent, broken layering.
-- Major: fat API, SRP/OCP/ISP/DIP violation, cross-slice coupling, repeated switch, untestable seam.
-- Minor: naming, nesting, boilerplate duplication, comment/style: fix when touching the lines anyway.
+## Severity
+
+Assign by demonstrated impact, after applying the owning reference's style and scope exceptions. A smell or principle name alone does not determine severity. Record the affected caller, execution path, or agent decision; label uncertain impact as a hypothesis to investigate.
+
+- Blocker: a concrete path to data loss/corruption, an irreversible duplicate effect, exposed secrets, a reachable security breach, an unusable core flow, or an unapproved incompatible published contract. Architectural discomfort or a minor wrong result alone is insufficient.
+- Major: reproducible incorrect behavior below the Blocker threshold, or evidenced maintainability/verification harm such as cross-slice change propagation, a violated chosen dependency boundary, an untestable changed business rule, or missing changed-behavior boundary/failure coverage.
+- Minor: local clarity, naming, documentation, or duplicated ownership without demonstrated behavioral impact.
+- Prose artifacts (`AGENTS.md`, skills, references): use the same thresholds. A conflict that directs an unjustified rewrite is Major unless its demonstrated consequence meets the Blocker threshold. Guarded standalone mirrors are not duplicate ownership.
+
+## Evidence and confidence
+
+- Verified: a reproduction, failing test, or direct source proof establishes the consequence.
+- Supported: a concrete caller/input and traced path establish the consequence, but it was not executed. State that limit.
+- Unverified: a suspicion without a complete path. Report it as an investigation gap, not a confirmed finding or scoring deduction.
+- Separate confidence from severity. Deduplicate findings by root cause; record both the expected contract and the observed contradiction. Do not claim repository-wide absence from a scoped search.
+
+## Scoring
+
+Instructions use the rubric below. For code, agree on scope-appropriate criteria first and label the score a qualitative judgment. Score each criterion 0 (absent or conflicting), 1 (partial), or 2 (complete in the audited scope); tie deductions to confirmed findings and keep criteria unchanged for before/after scores. The instruction rubric sums to 10.
+
+| Criterion       | Evidence for 2 points                                                                           |
+| --------------- | ----------------------------------------------------------------------------------------------- |
+| Consistency     | No unresolved conflicts across canonical rules and their consumers.                             |
+| Ownership       | One owner per rule; consumers link to it, and justified standalone copies have drift guards.    |
+| Actionability   | Clear triggers, prerequisites, scope, evidence requirements, and failure/blocked paths.         |
+| Proportionality | Rules honor style exceptions and present needs; counterexamples do not force speculative work.  |
+| Verification    | Relevant reference/metadata/mirror checks and scenario checks pass; state any remaining limits. |
+
+An unresolved confirmed finding prevents full marks in its affected criterion. Unverified relevant areas make the score provisional; 10/10 means no identified gap within the stated scope, not universal perfection or proof from lint alone.

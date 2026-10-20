@@ -1,54 +1,70 @@
 import { strict as assert } from "node:assert";
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
 import { describe, test } from "vitest";
 
 const MIRROR_INSTRUCTION =
-	'Root AGENTS.md and both stack/templates AGENTS.md files must stay in sync ("update all three files together"). Fix the mirrored wording, or extend SANCTIONED_TEMPLATE_DELTAS only for wordings templates deliberately keep generic.';
+	"Root AGENTS.md owns shared instructions. Edit the root section first, then update both standalone stack/templates AGENTS.md copies.";
+
+const MAX_AGENTS_LINES = 70;
+const MAX_AGENTS_WORDS = 575;
 
 const MIRRORED_TEMPLATE_FILES = [
 	"stack/templates/single-project/AGENTS.md",
 	"stack/templates/multi-projects/AGENTS.md",
 ];
 
-const CODE_STYLE_SECTION_START = "## Code style guidelines";
-const COMMANDS_SECTION_START = "## Commands";
+const MIRRORED_SECTIONS = [
+	"## Instruction precedence",
+	"## Commands",
+	"## Code style guidelines",
+	"## Security considerations",
+	"## PR instructions",
+] as const;
 
-type SanctionedTemplateDelta = readonly [templateWording: string, rootWording: string];
+const PROJECT_OVERVIEW_DIRECTORY =
+	/`((?:applications|libraries|examples|tools|\{\{projectName\}\})\/[^`\n]*)`/gu;
 
-/**
- * Template-only rewordings that keep repo-internal paths out of scaffolded projects. Any other
- * difference between the root section and a mirrored one fails this test.
- */
-const SANCTIONED_TEMPLATE_DELTAS: SanctionedTemplateDelta[] = [
-	["the shared `@adbayb/stack` presets", "the shared presets under `stack/configs/`"],
-	["use parameterized exec helpers", "use the shared exec helpers in `stack/src/helpers.ts`"],
-	[
-		"the `software-design` skill (SKILL.md plus references)",
-		"the `software-design` skill (`.agents/skills/software-design/`: SKILL.md plus references)",
-	],
-];
+describe("templates", () => {
+	test("aGENTS.md files stay within the context budget", () => {
+		for (const file of ["AGENTS.md", ...MIRRORED_TEMPLATE_FILES]) {
+			const content = readFileSync(resolveFromRepositoryRoot(file), "utf8");
+			const lines = content.trimEnd().split("\n").length;
+			const words = content.trim().split(/\s+/u).length;
 
-describe("templates mirror", () => {
-	test("root and template AGENTS.md code style, security, and PR sections stay in sync", () => {
-		const rootSection = getSection(
-			resolveFromRepositoryRoot("AGENTS.md"),
-			CODE_STYLE_SECTION_START,
-			false,
-		);
-
-		for (const templateFile of MIRRORED_TEMPLATE_FILES) {
-			const templateSection = getSection(
-				resolveFromRepositoryRoot(templateFile),
-				CODE_STYLE_SECTION_START,
-				false,
+			assert.ok(
+				lines <= MAX_AGENTS_LINES,
+				`${file}: ${lines} lines exceeds the ${MAX_AGENTS_LINES}-line AGENTS.md budget. Remove detail or move it to a skill reference.`,
 			);
 
-			assert.equal(
-				getCanonicalSection(templateSection),
-				rootSection,
-				`${templateFile} drifted: ${MIRROR_INSTRUCTION}`,
+			assert.ok(
+				words <= MAX_AGENTS_WORDS,
+				`${file}: ${words} words exceeds the ${MAX_AGENTS_WORDS}-word AGENTS.md budget. Keep only repo-specific deltas.`,
 			);
+		}
+	});
+
+	test("root and template AGENTS.md mirrored sections stay in sync", () => {
+		for (const sectionStart of MIRRORED_SECTIONS) {
+			const rootSection = getSection(
+				resolveFromRepositoryRoot("AGENTS.md"),
+				sectionStart,
+				true,
+			);
+
+			for (const templateFile of MIRRORED_TEMPLATE_FILES) {
+				const templateSection = getSection(
+					resolveFromRepositoryRoot(templateFile),
+					sectionStart,
+					true,
+				);
+
+				assert.equal(
+					templateSection,
+					rootSection,
+					`${templateFile} drifted in "${sectionStart}": ${MIRROR_INSTRUCTION}`,
+				);
+			}
 		}
 	});
 
@@ -80,40 +96,86 @@ describe("templates mirror", () => {
 		}
 	});
 
-	test("root and template AGENTS.md command and testing sections stay in sync", () => {
+	test("root and template bootstrap document the actual install commands", () => {
+		const files = ["AGENTS.md", ...MIRRORED_TEMPLATE_FILES];
+
+		for (const file of files) {
+			const section = getSection(resolveFromRepositoryRoot(file), "## Bootstrap", true);
+
+			assert.match(section, /`devEngines`/u, `${file} must point at \`devEngines\`.`);
+
+			assert.match(
+				section,
+				/`pnpm install --frozen-lockfile`/u,
+				`${file} must document the frozen-lockfile bootstrap.`,
+			);
+
+			assert.match(section, /`stack install`/u, `${file} must document hook installation.`);
+		}
+
 		const rootSection = getSection(
 			resolveFromRepositoryRoot("AGENTS.md"),
-			COMMANDS_SECTION_START,
+			"## Bootstrap",
 			true,
 		);
 
-		for (const templateFile of MIRRORED_TEMPLATE_FILES) {
-			const templateSection = getSection(
-				resolveFromRepositoryRoot(templateFile),
-				COMMANDS_SECTION_START,
+		assert.match(
+			rootSection,
+			/`pnpm --filter stack build && stack install`/u,
+			"AGENTS.md must document the root lifecycle install command.",
+		);
+	});
+
+	test("template project overview references existing template directories", () => {
+		for (const file of MIRRORED_TEMPLATE_FILES) {
+			const section = getSection(
+				resolveFromRepositoryRoot(file),
+				"## Project overview",
 				true,
 			);
 
-			assert.equal(
-				getCanonicalSection(templateSection),
-				rootSection,
-				`${templateFile} drifted: ${MIRROR_INSTRUCTION}`,
+			for (const match of section.matchAll(PROJECT_OVERVIEW_DIRECTORY)) {
+				const [, projectPath = ""] = match;
+				const [topLevelDirectory = ""] = projectPath.split("/");
+				const templateDirectory = dirname(file);
+
+				const targetDirectory = resolveFromRepositoryRoot(
+					templateDirectory,
+					topLevelDirectory,
+				);
+
+				assert.ok(
+					existsSync(targetDirectory),
+					`${file} references missing template directory \`${topLevelDirectory}\`.`,
+				);
+			}
+		}
+	});
+
+	test("workflow and README labels match the default stack check scope", () => {
+		const files = [
+			".github/workflows/workflow.yml",
+			"stack/templates/single-project/.github/workflows/workflow.yml",
+			"stack/templates/multi-projects/.github/workflows/workflow.yml",
+			"stack/README.md",
+		];
+
+		for (const file of files) {
+			const content = readFileSync(resolveFromRepositoryRoot(file), "utf8");
+
+			assert.ok(
+				content.includes("static analysis including linters and types"),
+				`${file} must describe the default \`stack check\` scope without commit-message checks.`,
+			);
+
+			assert.doesNotMatch(
+				content,
+				/including linters, types, and commit message/u,
+				`${file} must not claim that the default \`stack check\` runs commit-message checks.`,
 			);
 		}
 	});
 });
-
-/**
- * Reword a template section to the canonical root wording.
- *
- * @param templateSection - The template section text.
- * @returns The canonical root section text.
- */
-const getCanonicalSection = (templateSection: string) => {
-	return SANCTIONED_TEMPLATE_DELTAS.reduce((section, [templateWording, rootWording]) => {
-		return section.replaceAll(templateWording, rootWording);
-	}, templateSection);
-};
 
 /**
  * Resolve a repository-root-relative path to an absolute one.

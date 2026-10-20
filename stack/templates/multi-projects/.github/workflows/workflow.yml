@@ -19,7 +19,7 @@ jobs:
               run: pnpm install --frozen-lockfile
             - name: Build
               run: pnpm build
-            - name: Check (static analysis including linters, types, and commit message)
+            - name: Check (static analysis including linters and types)
               run: pnpm check
             - name: Test
               run: pnpm test
