@@ -39,7 +39,7 @@ Flat-modular CLI glue: one folder per command, shared exec in helpers, no ports 
 - `stack/configs/{oxlint,oxfmt,typescript}/`: shared `@adbayb/stack` presets; root configs re-export/extend them.
 - `stack/templates/{single-project,multi-projects}/`: standalone scaffolds, excluded from lint. Root `AGENTS.md` owns shared instruction sections; update both copies, guarded by `stack/src/templates.test.ts`.
 - `stack/create/`: `@adbayb/create` wrapper (`workspace:^`); workspace members: `stack`, `stack/create`.
-- `.agents/skills/{software-design,code-audit}/`: Agent Skills (design rules; audit procedure requiring `software-design`), guarded by `stack/src/skills.test.ts`. Bump `metadata.version` semver on contract changes (patch: wording; minor: added rule/reference; major: removed/renamed rule, workflow, or prerequisite) and raise `code-audit`'s `metadata.requires` with a `software-design` major.
+- `.agents/skills/{software-design,software-audit,skill-design,skill-audit}/`: Agent Skills in `<domain>-design` (rule owner) and `<domain>-audit` (requires it) pairs, guarded by `stack/src/skills.test.ts`. Write skills and agent instructions with `skill-design` and audit them with `skill-audit`; audit code with `software-audit`, and run both audits on mixed changes. Bump `metadata.version` semver on contract changes (patch: wording; minor: added rule/reference; major: removed/renamed rule, workflow, or prerequisite).
 
 ## Code style guidelines
 

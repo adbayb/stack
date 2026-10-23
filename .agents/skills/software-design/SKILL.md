@@ -1,6 +1,6 @@
 ---
 name: software-design
-description: "Design and write readable, maintainable, testable clean code. Use whenever creating or changing code, APIs, classes, modules, features, or project structure, even when the user never mentions architecture, SOLID, design patterns, hexagonal, vertical slice, or clean code. Enforces minimal API surface, SOLID/GRASP, cohesion/coupling, justified patterns, and canonical rule ownership."
+description: "Design and write readable, maintainable, testable clean code. Use whenever creating or changing code, APIs, classes, modules, features, or project structure, even when the user never mentions architecture, SOLID, design patterns, hexagonal, vertical slice, or clean code. Enforces minimal API surface, SOLID/GRASP, cohesion/coupling, justified patterns, and one owner per piece of knowledge."
 license: MIT
 metadata:
     author: adbayb
@@ -10,7 +10,7 @@ metadata:
 
 # Software Design
 
-Apply to every non-trivial code change, not only when the user asks for architecture. Non-trivial means a behavior, API, structure, dependency, security, or rule change; mechanical edits, formatting, and config-only changes without behavior impact are exempt. Repo rules override this skill; references win over this file on rule conflicts.
+Apply to every non-trivial code change, not only when the user asks for architecture. Non-trivial means a behavior, API, structure, dependency, security, or business-rule change; mechanical edits, formatting, and config-only changes without behavior impact are exempt. Repo rules override this skill; references win over this file on rule conflicts.
 
 ## Acronym glossary
 
@@ -38,6 +38,7 @@ Follow in order; skip only with a reason. Ask when a wrong guess is costly; othe
 ### 2. Design the public surface
 
 - Load `references/api-surface.md` before adding or changing a public API, domain invariant, value representation, persistence contract, or transaction boundary.
+- Load the naming convention in `references/clean-code.md` before naming new functions, types, or modules, public or internal.
 
 ### 3. Assign responsibilities
 
@@ -58,7 +59,7 @@ Follow in order; skip only with a reason. Ask when a wrong guess is costly; othe
 - Scan `references/smells-antipatterns.md` against touched code.
 - Run relevant tests and record verification.
 
-## Output contract
+## Output
 
 For a non-trivial implementation, close with a short design note covering the relevant items below; omit unchanged or inapplicable items.
 
@@ -76,9 +77,9 @@ Request: "Add a refund endpoint."
 
 - Slice: `src/refund/` owns the use case end to end.
 - API surface: `refundOrder(input: RefundOrderInput): Result<Refund>`; no speculative flags or routes.
-- Inner style: flat modular with one injected payment seam; no named patterns yet.
-- Principles: SRP at the use-case boundary; no optional patterns.
-- Testability: inject the payment port and clock; test approval, rejection, and missing-order paths with fakes.
+- Inner style: flat modular; the use case depends on an injected payment port.
+- Principles/patterns: SRP at the use-case boundary; no named pattern needed.
+- Testability and verification: fakes replace the payment port and clock; approval, rejection, and missing-order tests and type checks pass.
 
 ## Missing rule?
 

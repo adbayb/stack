@@ -34,8 +34,8 @@ Rules: `software-design` reference `smells-antipatterns.md`.
 
 Rules: `software-design` reference `clean-code.md`.
 
-- Evidence: naming/verb mapping/banned synonyms; function size/nesting/guards/explanatory variables/named constants; comments/dead code; neutral text/type-checker silencing/absence/public interface/TSDoc; instruction ownership, triggers, loading paths, links, prerequisites, blocked paths, size budgets, and standalone mirrors.
-- Deltas: scope naming/style to new or edited code, neutral-text checks to introduced text. For instruction artifacts, trace conflicts to a concrete agent decision and exercise relevant counterexamples: flat I/O script, data-only DTO, closed union switch, failed lookup versus absence, and unavailable prerequisites.
+- Evidence: naming/verb mapping/banned synonyms; function size/nesting/guards/explanatory variables/named constants; comments/dead code; neutral text/type-checker silencing/absence/public interface/TSDoc.
+- Deltas: scope naming/style to new or edited code, neutral-text checks to introduced text.
 
 ## F. Tests / cohesion / coupling / errors
 
@@ -49,16 +49,15 @@ Rules: `software-design` reference `cohesion-coupling.md`, `software-design` ref
 Rules: `software-design` reference `security.md` plus repo security rules.
 
 - Evidence: boundary validation and resource/tenant authorization; untrusted input reaching shell/query syntax, paths, or network destinations; secrets and sensitive data in storage/logs/errors; token/permission scope; dependency pinning/upgrades.
-- Deltas: establish input trust and path reachability; redact secret evidence. Dependency changes remain report-only under the audit workflow.
+- Deltas: establish input trust and path reachability; redact secret evidence.
 
 ## Severity
 
-Assign by demonstrated impact, after applying the owning reference's style and scope exceptions. A smell or principle name alone does not determine severity. Record the affected caller, execution path, or agent decision; label uncertain impact as a hypothesis to investigate.
+Assign by demonstrated impact, after applying the owning reference's style and scope exceptions. A smell or principle name alone does not determine severity. Record the affected caller or execution path; label uncertain impact as a hypothesis to investigate.
 
 - Blocker: a concrete path to data loss/corruption, an irreversible duplicate effect, exposed secrets, a reachable security breach, an unusable core flow, or an unapproved incompatible published contract. Architectural discomfort or a minor wrong result alone is insufficient.
 - Major: reproducible incorrect behavior below the Blocker threshold, or evidenced maintainability/verification harm such as cross-slice change propagation, a violated chosen dependency boundary, an untestable changed business rule, or missing changed-behavior boundary/failure coverage.
 - Minor: local clarity, naming, documentation, or duplicated ownership without demonstrated behavioral impact.
-- Prose artifacts (`AGENTS.md`, skills, references): use the same thresholds. A conflict that directs an unjustified rewrite is Major unless its demonstrated consequence meets the Blocker threshold. Guarded standalone mirrors are not duplicate ownership.
 
 ## Evidence and confidence
 
@@ -69,14 +68,6 @@ Assign by demonstrated impact, after applying the owning reference's style and s
 
 ## Scoring
 
-Instructions use the rubric below. For code, agree on scope-appropriate criteria first and label the score a qualitative judgment. Score each criterion 0 (absent or conflicting), 1 (partial), or 2 (complete in the audited scope); tie deductions to confirmed findings and keep criteria unchanged for before/after scores. The instruction rubric sums to 10.
+Use the in-scope A-G dimensions as criteria unless the user names others, and label the score a qualitative judgment. Score each criterion 0 (absent or conflicting), 1 (partial), or 2 (complete in the audited scope); the total is out of twice the criterion count. Tie deductions to confirmed findings and keep criteria unchanged for before/after scores.
 
-| Criterion       | Evidence for 2 points                                                                           |
-| --------------- | ----------------------------------------------------------------------------------------------- |
-| Consistency     | No unresolved conflicts across canonical rules and their consumers.                             |
-| Ownership       | One owner per rule; consumers link to it, and justified standalone copies have drift guards.    |
-| Actionability   | Clear triggers, prerequisites, scope, evidence requirements, and failure/blocked paths.         |
-| Proportionality | Rules honor style exceptions and present needs; counterexamples do not force speculative work.  |
-| Verification    | Relevant reference/metadata/mirror checks and scenario checks pass; state any remaining limits. |
-
-An unresolved confirmed finding prevents full marks in its affected criterion. Unverified relevant areas make the score provisional; 10/10 means no identified gap within the stated scope, not universal perfection or proof from lint alone.
+An unresolved confirmed finding prevents full marks in its affected criterion. Unverified relevant areas make the score provisional; a full score means no identified gap within the stated scope, not universal perfection or proof from lint alone.

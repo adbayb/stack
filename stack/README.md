@@ -69,16 +69,20 @@ stack release
 
 ### Agent skills
 
-The repository ships two [Agent Skills](https://agentskills.io/specification) for coding agents:
+The repository ships four [Agent Skills](https://agentskills.io/specification) for coding agents:
 
 - [software-design](https://github.com/adbayb/stack/blob/main/.agents/skills/software-design/): design and write clean, testable code; the single source of the design rules and glossary.
-- [code-audit](https://github.com/adbayb/stack/blob/main/.agents/skills/code-audit/): audit code, pull requests, or engineering instructions against the `software-design` rules (requires `software-design`).
+- [software-audit](https://github.com/adbayb/stack/blob/main/.agents/skills/software-audit/): audit code or pull requests against the `software-design` rules (requires `software-design`).
+- [skill-design](https://github.com/adbayb/stack/blob/main/.agents/skills/skill-design/): design and write skills with one shared anatomy, plus agent instructions such as `AGENTS.md`; the single source of the writing rules.
+- [skill-audit](https://github.com/adbayb/stack/blob/main/.agents/skills/skill-audit/): audit and score skills and agent instructions such as `AGENTS.md` against the `skill-design` rules (requires `skill-design`).
 
 Install them from the repository with:
 
 ```bash
 pnpm dlx skills add adbayb/stack --skill software-design -g
-pnpm dlx skills add adbayb/stack --skill code-audit -g
+pnpm dlx skills add adbayb/stack --skill software-audit -g
+pnpm dlx skills add adbayb/stack --skill skill-design -g
+pnpm dlx skills add adbayb/stack --skill skill-audit -g
 ```
 
 Use `pnpm dlx` rather than `npx`: the repo's `devEngines` gate accepts pnpm only.
