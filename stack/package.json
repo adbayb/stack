@@ -26,6 +26,7 @@
 		"bin",
 		"configs",
 		"dist",
+		"skills",
 		"templates"
 	],
 	"type": "module",
