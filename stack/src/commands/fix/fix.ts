@@ -1,7 +1,7 @@
 import { logCheckableFiles, turbo } from "../../helpers";
 import type { CommandFactory } from "../../types";
-import { fixCode } from "./fixCode";
-import { fixFormatting } from "./fixFormatting";
+import { fixCode } from "./fix-code";
+import { fixFormatting } from "./fix-formatting";
 
 /**
  * Fix auto-fixable issues.

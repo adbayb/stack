@@ -298,7 +298,7 @@ const config = defineConfig({
 		"typescript/explicit-module-boundary-types": "off",
 		"typescript/no-unsafe-type-assertion": "off",
 		"typescript/non-nullable-type-assertion-style": "off",
-		"unicorn/filename-case": "off",
+		"unicorn/filename-case": ["error", { case: "kebabCase" }],
 		"unicorn/import-style": "off",
 		"unicorn/no-array-for-each": "off",
 		"unicorn/no-array-reduce": "off",

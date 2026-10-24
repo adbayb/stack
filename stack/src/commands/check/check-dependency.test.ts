@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { exec } from "termost";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { checkDependency } from "./checkDependency";
+import { checkDependency } from "./check-dependency";
 
 vi.mock(import("termost"), async (importOriginal) => {
 	const original = await importOriginal();

@@ -7,7 +7,7 @@ A slice is one business feature cut vertically through the layers, owning its ha
 - Structure by capability: one folder per feature under `src/` (e.g. `src/refund/`), named with a noun, owning its handler, domain/hexagon, adapters, and tests. No `features/` container; the extra level adds nothing.
   In a clean module, features take the use-case verb form instead: see Clean Architecture essentials.
 - Cross-slice communication only via explicit contracts or domain events. No deep imports (`../../other-slice/internals`).
-- Hexagonal/clean modules expose each folder's public surface through `index.ts`; import via the barrel, never deep into another folder's internals. Flat/MVVM slices may import directly within the slice, but never deep-import another slice's internals.
+- Hexagonal/clean modules expose each folder's public surface through `index.ts`; any file serving as a barrel, including a package entrypoint, contains only re-export declarations, including type-only re-exports, with no imports, local declarations, or executable implementation. Keep startup and wiring in runtime entrypoints or composition roots, not in barrels. Import via the barrel, never deep into another folder's internals. Flat/MVVM slices may import directly within the slice, but never deep-import another slice's internals.
 - Shared kernel holds only truly shared code and stays tiny; everything else is duplicated deliberately until the sharing threshold (`cohesion-coupling.md`) proves shared.
 
 ## Inside a slice

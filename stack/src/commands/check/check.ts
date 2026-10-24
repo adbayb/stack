@@ -1,9 +1,9 @@
 import { logCheckableFiles, turbo } from "../../helpers";
 import type { CommandFactory } from "../../types";
-import { checkCode } from "./checkCode";
-import { checkCommit } from "./checkCommit";
-import { checkDependency } from "./checkDependency";
-import { checkFormatting } from "./checkFormatting";
+import { checkCode } from "./check-code";
+import { checkCommit } from "./check-commit";
+import { checkDependency } from "./check-dependency";
+import { checkFormatting } from "./check-formatting";
 
 const ONLY_VALUES = ["commit", "code", "dependency", "formatting"] as const;
 
