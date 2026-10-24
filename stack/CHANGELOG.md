@@ -1,5 +1,24 @@
 # @adbayb/stack
 
+## 3.5.0
+
+### Minor Changes
+
+- [`2111ed5`](https://github.com/adbayb/stack/commit/2111ed51450b52809763b58df7df5a1fcd84e348) Thanks [@adbayb](https://github.com/adbayb)! - Enforce kebab-case filenames in the shared Oxlint preset. Consumers must rename nonconforming files and update imports, or override `unicorn/filename-case` for framework-required names.
+
+- [`51792f1`](https://github.com/adbayb/stack/commit/51792f1ac066abf599c68dd7abe1b444682481e9) Thanks [@adbayb](https://github.com/adbayb)! - Ship all four agent skills and their references in the package's `skills/` directory for installation with pnpm 12.11.0 or later. Keep repository-local discovery through a `.agents/skills` symlink and document approval and installation.
+
+- [`7678709`](https://github.com/adbayb/stack/commit/767870984e2eacb02eac925e1766a7730c0a1df7) Thanks [@adbayb](https://github.com/adbayb)! - Add `skill-design` and `skill-audit`, rename `code-audit` to `software-audit`, and consolidate skill rules, `AGENTS.md` guidance, documentation, and validation. Replace existing `code-audit` installs with `software-audit`.
+
+### Patch Changes
+
+- [`55a57c2`](https://github.com/adbayb/stack/commit/55a57c20c6915ddf45ac83b726189b7dbd854b14) Thanks [@adbayb](https://github.com/adbayb)! - Update `oxc` and `eslint-plugin-perfectionist` dependencies.
+
+- [`e030480`](https://github.com/adbayb/stack/commit/e030480393994c8ea794d30210e087f0855934e6) Thanks [@adbayb](https://github.com/adbayb)! - Fixes on `clean` and `install` commands including:
+
+    - Preserve `.env*` and refuse out-of-root paths in `stack clean`; document exactly what cleanup removes.
+    - Build pre-commit hooks with argument arrays instead of interpolating file names into a shell command.
+
 ## 3.4.0
 
 ### Minor Changes
