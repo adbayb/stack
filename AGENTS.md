@@ -28,6 +28,7 @@ Focused: `pnpm check --filter <code|formatting> [files...]` (files only apply to
 
 ### Testing
 
+- Use Vitest with its `expect` assertions and `vi` mocking APIs.
 - Run `pnpm check` and `pnpm test` before finishing; fix regressions, report pre-existing failures.
 - Test design and baseline handling: `software-design` reference `testing-refactoring.md`.
 

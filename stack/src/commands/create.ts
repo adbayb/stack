@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 import { cp, mkdir, readFile, readdir, rename, rm, symlink, writeFile } from "node:fs/promises";
-import { basename, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import { exec } from "termost";
 import {
 	assert,
@@ -366,7 +366,16 @@ const createTemplateEngine = async (
 				);
 
 			for (const entry of sortedDirectoryEntries) {
-				const newPath = setTemplateVariables(entry, templateModel);
+				const newPath = join(
+					dirname(entry.path),
+					setTemplateVariables(
+						{
+							...entry,
+							content: basename(entry.content),
+						},
+						templateModel,
+					),
+				);
 
 				await rename(entry.path, newPath);
 			}
