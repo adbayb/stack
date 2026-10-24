@@ -2,4 +2,4 @@
 "@adbayb/stack": patch
 ---
 
-Update oxc dependencies.
+Update `oxc` and `eslint-plugin-perfectionist` dependencies.

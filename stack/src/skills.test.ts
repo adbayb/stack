@@ -1,7 +1,6 @@
-import { strict as assert } from "node:assert";
 import { existsSync, lstatSync, readFileSync, readdirSync, realpathSync } from "node:fs";
 import { basename, dirname, relative, resolve } from "node:path";
-import { describe, test } from "vitest";
+import { describe, expect, test } from "vitest";
 
 const SKILLS_DIRECTORY = resolve(import.meta.dirname, "../skills");
 
@@ -76,8 +75,8 @@ describe("skills", () => {
 	test("repository skills link to the package's canonical skills directory", () => {
 		const repositorySkills = resolve(import.meta.dirname, "../../.agents/skills");
 
-		assert.ok(lstatSync(repositorySkills).isSymbolicLink());
-		assert.equal(realpathSync(repositorySkills), SKILLS_DIRECTORY);
+		expect(lstatSync(repositorySkills).isSymbolicLink()).toBe(true);
+		expect(realpathSync(repositorySkills)).toBe(SKILLS_DIRECTORY);
 	});
 
 	test("the SKILL.md frontmatter satisfies Agent Skills field constraints", () => {
@@ -88,45 +87,40 @@ describe("skills", () => {
 			const description = getFrontmatterField(frontmatter, "description");
 			const version = getMetadataField(frontmatter, "version");
 
-			assert.equal(
+			expect(
 				name,
-				skillName,
 				`${path}: frontmatter \`name\` must equal its folder name (${skillName}).`,
-			);
+			).toBe(skillName);
 
-			assert.match(
+			expect(
 				description,
-				/Use (?:when|whenever)/u,
 				`${path}: frontmatter \`description\` must include an explicit "Use when" or "Use whenever" trigger.`,
-			);
+			).toMatch(/Use (?:when|whenever)/u);
 
-			assert.match(
+			expect(
 				name,
-				SKILL_NAME,
 				`${path}: frontmatter \`name\` must use lowercase letters, numbers, and single hyphens.`,
-			);
+			).toMatch(SKILL_NAME);
 
-			assert.ok(
-				name.length <= MAX_SKILL_NAME_LENGTH,
+			expect(
+				name.length,
 				`${path}: frontmatter \`name\` must be at most ${MAX_SKILL_NAME_LENGTH} characters.`,
-			);
+			).toBeLessThanOrEqual(MAX_SKILL_NAME_LENGTH);
 
-			assert.ok(
-				description.length <= MAX_DESCRIPTION_LENGTH,
+			expect(
+				description.length,
 				`${path}: frontmatter \`description\` must be at most ${MAX_DESCRIPTION_LENGTH} characters.`,
-			);
+			).toBeLessThanOrEqual(MAX_DESCRIPTION_LENGTH);
 
-			assert.match(
+			expect(
 				frontmatter,
-				QUOTED_DESCRIPTION,
 				`${path}: frontmatter \`description\` must be a double-quoted YAML scalar so colons stay safe.`,
-			);
+			).toMatch(QUOTED_DESCRIPTION);
 
-			assert.match(
+			expect(
 				version,
-				SEMANTIC_VERSION,
 				`${path}: frontmatter \`metadata.version\` must be a semantic version.`,
-			);
+			).toMatch(SEMANTIC_VERSION);
 		}
 	});
 
@@ -136,9 +130,8 @@ describe("skills", () => {
 			const skill = readFileSync(skillPath, "utf8");
 
 			for (const reference of getReferenceFiles(directory)) {
-				assert.ok(
-					skill.includes(`references/${reference}`),
-					`${skillPath} must link to \`references/${reference}\`.`,
+				expect(skill, `${skillPath} must link to \`references/${reference}\`.`).toContain(
+					`references/${reference}`,
 				);
 			}
 		}
@@ -149,10 +142,10 @@ describe("skills", () => {
 			for (const reference of new Set(content.match(SKILL_REFERENCE))) {
 				const referencePath = resolve(dirname(path), reference);
 
-				assert.ok(
+				expect(
 					existsSync(referencePath),
 					`${path} points to missing reference \`${reference}\`.`,
-				);
+				).toBe(true);
 			}
 
 			const localContent = content.replaceAll(CROSS_SKILL_REFERENCE, "");
@@ -161,20 +154,20 @@ describe("skills", () => {
 				const [, reference = ""] = match;
 				const referencePath = resolve(dirname(path), reference);
 
-				assert.ok(
+				expect(
 					existsSync(referencePath),
 					`${path} points to missing shorthand reference \`${reference}\`.`,
-				);
+				).toBe(true);
 			}
 
 			for (const match of content.matchAll(CROSS_SKILL_REFERENCE)) {
 				const [, skill = "", reference = ""] = match;
 				const referencePath = resolve(SKILLS_DIRECTORY, skill, "references", reference);
 
-				assert.ok(
+				expect(
 					existsSync(referencePath),
 					`${path} points to missing cross-skill reference \`${skill}/${reference}\`.`,
-				);
+				).toBe(true);
 			}
 		}
 	});
@@ -194,11 +187,10 @@ describe("skills", () => {
 			});
 
 			for (const skill of undeclaredSkills) {
-				assert.doesNotMatch(
+				expect(
 					content,
-					new RegExp(`(?<![a-z0-9-])${skill}(?![a-z0-9-])`, "u"),
 					`${path} names \`${skill}\` without declaring it as a prerequisite. State the boundary by artifact so each skill installs and runs alone.`,
-				);
+				).not.toMatch(new RegExp(`(?<![a-z0-9-])${skill}(?![a-z0-9-])`, "u"));
 			}
 		}
 	});
@@ -208,53 +200,50 @@ describe("skills", () => {
 			const { body, frontmatter, sections, steps } = getSkillAnatomy(path);
 			const title = getSkillTitle(basename(dirname(path)));
 
-			assert.match(
+			expect(
 				body,
-				new RegExp(`^\\s*# ${title}\\n\\n[^#\\s]`, "u"),
 				`${path}: start the body with "# ${title}" and an intro paragraph.`,
-			);
+			).toMatch(new RegExp(`^\\s*# ${title}\\n\\n[^#\\s]`, "u"));
 
-			assert.ok(
-				getFrontmatterField(frontmatter, "license") !== "",
+			expect(
+				getFrontmatterField(frontmatter, "license"),
 				`${path}: set the frontmatter \`license\`.`,
-			);
+			).not.toBe("");
 
 			for (const field of ["author", "repository"]) {
-				assert.ok(
-					getMetadataField(frontmatter, field) !== "",
+				expect(
+					getMetadataField(frontmatter, field),
 					`${path}: set the frontmatter \`metadata.${field}\`.`,
-				);
+				).not.toBe("");
 			}
 
-			assert.deepEqual(
+			expect(
 				sections,
+				`${path}: use only the anatomy sections, in this order: ${SKILL_SECTIONS.join(", ")}.`,
+			).toStrictEqual(
 				SKILL_SECTIONS.filter((section) => {
 					return sections.includes(section);
 				}),
-				`${path}: use only the anatomy sections, in this order: ${SKILL_SECTIONS.join(", ")}.`,
 			);
 
 			for (const section of REQUIRED_SKILL_SECTIONS) {
-				assert.ok(
-					sections.includes(section),
-					`${path}: add the \`## ${section}\` section.`,
-				);
+				expect(sections, `${path}: add the \`## ${section}\` section.`).toContain(section);
 			}
 
-			assert.equal(
+			expect(
 				sections.includes("Prerequisite"),
-				getMetadataField(frontmatter, "requires") !== "",
 				`${path}: add \`## Prerequisite\` exactly when \`metadata.requires\` is set.`,
-			);
+			).toBe(getMetadataField(frontmatter, "requires") !== "");
 
-			assert.ok(steps.length > 0, `${path}: write workflow steps as \`### 1. <Step>\`.`);
+			expect(
+				steps.length,
+				`${path}: write workflow steps as \`### 1. <Step>\`.`,
+			).toBeGreaterThan(0);
 
-			assert.deepEqual(
-				steps,
+			expect(steps, `${path}: number workflow steps from 1 without gaps.`).toStrictEqual(
 				steps.map((_, index) => {
 					return index + 1;
 				}),
-				`${path}: number workflow steps from 1 without gaps.`,
 			);
 		}
 	});
@@ -263,52 +252,46 @@ describe("skills", () => {
 		for (const dependent of getDependentSkills()) {
 			const { description, body, path, prerequisite, requiredVersion, requires } = dependent;
 
-			assert.match(
-				requires,
+			expect(requires, `${path}: \`metadata.requires\` must read "<skill> >=X.Y.Z".`).toMatch(
 				PREREQUISITE,
-				`${path}: \`metadata.requires\` must read "<skill> >=X.Y.Z".`,
 			);
 
-			assert.ok(
+			expect(
 				existsSync(resolve(SKILLS_DIRECTORY, prerequisite, "SKILL.md")),
 				`${path}: \`metadata.requires\` must name a skill in this repo.`,
-			);
+			).toBe(true);
 
 			const prerequisiteVersion = getMetadataField(
 				getFrontmatter(getSkillContent(prerequisite)),
 				"version",
 			);
 
-			assert.ok(
+			expect(
 				description.endsWith(`Requires the \`${prerequisite}\` skill.`),
 				`${path}: end the description with "Requires the \`${prerequisite}\` skill."`,
+			).toBe(true);
+
+			expect(body, `${path}: document the \`${prerequisite}\` install command.`).toContain(
+				`pnpm dlx skills add adbayb/stack --skill ${prerequisite} -g`,
 			);
 
-			assert.ok(
-				body.includes(`pnpm dlx skills add adbayb/stack --skill ${prerequisite} -g`),
-				`${path}: document the \`${prerequisite}\` install command.`,
-			);
+			expect(body, `${path}: stop when the prerequisite is missing.`).toMatch(/stop before/u);
 
-			assert.match(body, /stop before/u, `${path}: stop when the prerequisite is missing.`);
-
-			assert.match(
-				body,
+			expect(body, `${path}: install only with explicit approval.`).toMatch(
 				/explicit approval/u,
-				`${path}: install only with explicit approval.`,
 			);
 
-			assert.match(body, /metadata\.requires/u, `${path}: point at \`metadata.requires\`.`);
+			expect(body, `${path}: point at \`metadata.requires\`.`).toMatch(/metadata\.requires/u);
 
-			assert.ok(
+			expect(
 				isVersionAtLeast(prerequisiteVersion, requiredVersion),
 				`${path} requires ${prerequisite} ${requiredVersion}, but the repo ships ${prerequisiteVersion}.`,
-			);
+			).toBe(true);
 
-			assert.equal(
+			expect(
 				requiredVersion.split(".")[0],
-				prerequisiteVersion.split(".")[0],
 				`Raise the ${path} prerequisite after a ${prerequisite} major change.`,
-			);
+			).toBe(prerequisiteVersion.split(".")[0]);
 		}
 	});
 
@@ -318,39 +301,34 @@ describe("skills", () => {
 			const checklist = getChecklistContent(name);
 			const corpus = `${skill}\n${checklist}`;
 
-			assert.deepEqual(
+			expect(
 				getRequiredSkills(name),
-				[owner],
 				`${name} must require \`${owner}\`, the owner of the rules it audits.`,
-			);
+			).toStrictEqual([owner]);
 
-			assert.ok(
-				!skill.includes("## Acronym glossary"),
-				`${name} must not duplicate the ${owner} glossary.`,
+			expect(skill, `${name} must not duplicate the ${owner} glossary.`).not.toContain(
+				"## Acronym glossary",
 			);
 
 			for (const reference of getAuditReferences(owner)) {
-				assert.ok(
-					corpus.includes(`\`${owner}\` reference \`${reference}\``),
+				expect(
+					corpus,
 					`${name} must map \`${owner}\` reference \`${reference}\` from SKILL.md or checklist.md.`,
-				);
+				).toContain(`\`${owner}\` reference \`${reference}\``);
 			}
 
 			const sections = checklist.split(/^## /mu).filter((section) => {
 				return /^[A-Z]\./u.test(section);
 			});
 
-			assert.equal(
-				sections.length,
-				dimensions,
-				`${name} checklist must define ${dimensions} dimensions.`,
-			);
+			expect(sections).toHaveLength(dimensions);
 
 			for (const section of sections) {
-				assert.match(
+				expect(
 					section,
-					new RegExp(`^Rules: \`${owner}\` reference \`[A-Za-z0-9-]+\\.md\``, "mu"),
 					`${name} checklist dimension ${section.slice(0, 1)} must point at a ${owner} reference.`,
+				).toMatch(
+					new RegExp(`^Rules: \`${owner}\` reference \`[A-Za-z0-9-]+\\.md\``, "mu"),
 				);
 			}
 		}
@@ -362,16 +340,16 @@ describe("skills", () => {
 		for (const directory of getSkillDirectories()) {
 			const skill = basename(directory);
 
-			assert.ok(
-				readme.includes(`--skill ${skill}`),
+			expect(
+				readme,
 				`stack/README.md must document the \`${skill}\` install command.`,
-			);
+			).toContain(`--skill ${skill}`);
 
 			for (const prerequisite of getRequiredSkills(skill)) {
-				assert.ok(
-					readme.includes(`requires \`${prerequisite}\``),
+				expect(
+					readme,
 					`stack/README.md must document the ${skill} prerequisite.`,
-				);
+				).toContain(`requires \`${prerequisite}\``);
 			}
 		}
 	});
@@ -389,11 +367,10 @@ describe("skills", () => {
 			});
 		});
 
-		assert.equal(
-			violations.length,
-			0,
+		expect(
+			violations,
 			`Banned glyphs found in skill markdown:\n   ${violations.join("\n   ")}\n${LINT_INSTRUCTION}`,
-		);
+		).toHaveLength(0);
 	});
 
 	test("every acronym used bare in a skill is defined in its own or a prerequisite glossary", () => {
@@ -409,10 +386,10 @@ describe("skills", () => {
 
 			for (const candidate of getBareAcronyms(prose)) {
 				for (const token of candidate.split("/")) {
-					assert.ok(
+					expect(
 						allowedTokens.has(token),
 						`${skill}: acronym \`${token}\` is used bare but missing from its glossary or a prerequisite glossary.`,
-					);
+					).toBe(true);
 				}
 			}
 		}
@@ -426,10 +403,10 @@ describe("skills", () => {
 			const seen = new Set<string>();
 
 			for (const [token, expansion] of getGlossaryEntries(body)) {
-				assert.ok(
-					!seen.has(token),
+				expect(
+					seen.has(token),
 					`${relative(SKILLS_DIRECTORY, path)}: acronym \`${token}\` is defined twice.`,
-				);
+				).toBe(false);
 
 				seen.add(token);
 				definitions.push([token, expansion]);
@@ -443,31 +420,29 @@ describe("skills", () => {
 				return expansion;
 			});
 
-			assert.equal(
+			expect(
 				new Set(expansions).size,
-				1,
 				`acronym \`${token}\` has conflicting glossary expansions: ${expansions.join(" / ")}`,
-			);
+			).toBe(1);
 		}
 	});
 
 	test("skill bodies and references stay within the progressive-disclosure budget", () => {
 		for (const path of getSkillPaths()) {
-			assert.ok(
-				readFileSync(path, "utf8").replace(FRONTMATTER, "").split("\n").length <=
-					MAX_MARKDOWN_LINES,
+			expect(
+				readFileSync(path, "utf8").replace(FRONTMATTER, "").split("\n").length,
 				`${path}: exceeds the ${MAX_MARKDOWN_LINES}-line load budget. Split detail by concern.`,
-			);
+			).toBeLessThanOrEqual(MAX_MARKDOWN_LINES);
 		}
 
 		for (const directory of getSkillDirectories()) {
 			for (const reference of getReferenceFiles(directory)) {
 				const path = resolve(directory, "references", reference);
 
-				assert.ok(
-					readFileSync(path, "utf8").split("\n").length <= MAX_MARKDOWN_LINES,
+				expect(
+					readFileSync(path, "utf8").split("\n").length,
 					`${path}: exceeds the ${MAX_MARKDOWN_LINES}-line load budget. Split detail by concern.`,
-				);
+				).toBeLessThanOrEqual(MAX_MARKDOWN_LINES);
 			}
 		}
 	});
@@ -638,7 +613,9 @@ const getGlossaryEntries = (body: string): GlossaryEntry[] => {
 const getFrontmatter = (content: string) => {
 	const frontmatter = FRONTMATTER.exec(content)?.[1];
 
-	assert.ok(frontmatter, "SKILL.md must start with `---` frontmatter delimiters.");
+	if (!frontmatter) {
+		throw new Error("SKILL.md must start with `---` frontmatter delimiters.");
+	}
 
 	return frontmatter;
 };
