@@ -5,7 +5,8 @@ license: MIT
 metadata:
     author: adbayb
     repository: adbayb/stack
-    requires: "software-design >=1.0.0"
+    requires:
+        - "software-design >=1.0.0"
     version: "1.0.0"
 ---
 
@@ -23,7 +24,7 @@ pnpm dlx skills add adbayb/stack --skill software-design -g
 
 Do not install it without explicit approval. After approval, run the command, load the skill, confirm the installed `software-design` frontmatter `metadata.version` satisfies `metadata.requires`, and resume. Do not continue with a partial audit.
 
-`metadata.requires` is a lower bound: if a reference mapped here is missing from the installed `software-design`, stop and report the incompatibility.
+`metadata.requires` is a lower bound: if a reference mapped here is missing from the installed `software-design`, stop and report the incompatibility. When prerequisites block the audit, include **Score: not assessed (prerequisite blocked)**; do not invent a numerical score.
 
 ## Workflow
 
@@ -43,6 +44,8 @@ Read `references/checklist.md` for the A-G dimension map, evidence, exemptions, 
 Scan A-G in order for a full audit; for a PR, cover dimensions touched by the change and direct dependents. Mark inapplicable dimensions with a reason.
 
 Trace the changed contract through direct callers, alternate entry points, adapters, exports/configuration, and instruction/template consumers that can affect it. Inspect actual implementations, not only matching names.
+
+For test-gap findings, follow the evidence threshold in `references/checklist.md` dimension F; a diff that omits test files alone does not establish missing coverage.
 
 Record each finding as an `Output` table row, grading severity and confidence with `references/checklist.md`. If no rule matches, report a gap and propose a rule for its canonical owner instead of inventing one.
 
@@ -78,14 +81,14 @@ Present the `Output` section's report first. For a PR review, default to the rep
 ```markdown
 ## Audit findings
 
-| #   | Location                  | Severity | Issue                                                                             | Solution                      |
-| --- | ------------------------- | -------- | --------------------------------------------------------------------------------- | ----------------------------- |
-| 1   | `src/refund/refund.ts:42` | Major    | SRP: unrelated callers change validation and retry, coupling their change reasons | Separate the responsibilities |
+| #   | Location                  | Severity | Criterion(s)     | Issue                                                                             | Solution                      |
+| --- | ------------------------- | -------- | ---------------- | --------------------------------------------------------------------------------- | ----------------------------- |
+| 1   | `src/refund/refund.ts:42` | Major    | C. SOLID / GRASP | SRP: unrelated callers change validation and retry, coupling their change reasons | Separate the responsibilities |
 ```
 
-Write each Issue as one sentence: the violated rule or smell, then the evidence and its consequence; cite the rule instead of pasting its prose or theory. Keep each Solution to a fix direction.
+For each finding, name the in-scope scoring dimension or dimensions it affects, using the checklist's letter and title. Write each Issue as one sentence: the violated rule or smell, then the evidence and its consequence; cite the rule instead of pasting its prose or theory. Keep each Solution to a fix direction.
 
-Then total counts by severity, reviewed/skipped dimensions, unaudited out-of-scope files, verification limits (Supported rows and Unverified gaps), a requested score per `references/checklist.md`, and up to 3 highest-leverage fixes. No findings: say so, include a requested score, and skip fixes; do not invent work. When fixing, close with what was fixed and each fix's blast radius, what was left and why, and verification results.
+Then total counts by severity, reviewed/skipped dimensions, unaudited out-of-scope files, verification limits (Supported rows and Unverified gaps), and up to 3 highest-leverage fixes. Always include the in-scope criterion scores per `references/checklist.md` and end the report with **Total score: ?/10**, even when scoring was not requested or there are no findings; mark incomplete verification provisional. Before reporting, recalculate the total from the listed criterion scores using the checklist formula and confirm the numerator, denominator, and displayed score agree. No findings: say so and skip fixes; do not invent work. When fixing, close with what was fixed and each fix's blast radius, what was left and why, and verification results, then end with the updated score.
 
 ## Example
 
@@ -94,3 +97,5 @@ Request: "Audit `src/refund/` and fix what matters."
 - Report: 1 Major (SRP at `src/refund/refund.ts:42`), 1 Minor (a new `fetchRefund` helper uses a banned verb); G skipped, no new input boundary.
 - Fixes: retry policy extracted (blast radius: one module and its test); helper renamed to `getRefund`.
 - Verification: unit tests, lint, and type checks pass; the re-scan finds no new violations.
+- Criteria after fixes: A-F each 2/2; G inapplicable, excluded from the denominator.
+- **Total score: 10/10** (qualitative judgment within the audited scope).

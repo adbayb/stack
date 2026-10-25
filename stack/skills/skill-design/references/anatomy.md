@@ -26,7 +26,9 @@ license: <license>
 metadata:
     author: <owner>
     repository: <owner>/<repository>
-    requires: "<prerequisite> >=<major>.<minor>.<patch>"
+    requires:
+        - "<prerequisite> >=<major>.<minor>.<patch>"
+        - "<unversioned-prerequisite>"
     version: "<major>.<minor>.<patch>"
 ---
 ```
@@ -35,7 +37,7 @@ metadata:
 - `description`: at most 1024 characters in a double-quoted scalar, so colons stay valid; write it per `writing.md`. Drop the "Requires" sentence when there is no prerequisite.
 - `license`, `metadata.author`, and `metadata.repository`: always set, so installed copies stay attributable.
 - `metadata.version`: a semantic version, bumped on contract changes per the repository's versioning rule.
-- `metadata.requires`: only for a hard prerequisite skill; the lowest version, within the prerequisite's current major, that provides every rule and reference the skill relies on, so stale installs fail the gate.
+- `metadata.requires`: optional nonempty array of hard prerequisite skill names, each optionally followed by `>=<major>.<minor>.<patch>`. Use the lowest version within the prerequisite's current major that provides every required rule and reference when it publishes version metadata; otherwise omit the bound. Declare all prerequisites in this array regardless of install source.
 - Leave `compatibility` and `allowed-tools` unset unless a real environment or tool constraint exists.
 
 ## Body sections
@@ -54,11 +56,11 @@ Use these level-two headings in this order and no others; omit optional ones tha
 
 State, in order:
 
-1. The prerequisite, and that `metadata.requires` declares its minimum version; mention reuse of its glossary when it has one.
-2. The stop rule: when the prerequisite is missing or older than required, stop before doing the work and ask the user to install or update it.
-3. The install command in a fenced block, using the repository's documented installer.
-4. No install without explicit approval; after approval, install, load the skill, confirm its `metadata.version` satisfies the bound, and resume. Never continue with partial work.
-5. A mapped reference missing from the installed prerequisite is an incompatibility to report, not to work around.
+1. Name each prerequisite in `metadata.requires` and explain that version bounds apply where declared; mention glossary reuse when relevant.
+2. If a prerequisite is missing or too old for its declared bound, stop before doing the work and ask the user to install or update it.
+3. Show each prerequisite's install command in a fenced block, using its verified source and the repository's documented installer.
+4. Never install without explicit approval; after approval, install or load the prerequisite, verify its declared version when applicable, and resume. Never continue with partial work.
+5. A mapped reference missing from an installed prerequisite is an incompatibility to report, not to work around.
 
 ## Budgets
 

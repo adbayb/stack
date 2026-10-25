@@ -72,9 +72,9 @@ stack release
 `@adbayb/stack` ships four [Agent Skills](https://agentskills.io/specification) for coding agents:
 
 - [software-design](https://github.com/adbayb/stack/blob/main/stack/skills/software-design/): design and write clean, testable code; the single source of the design rules and glossary.
-- [software-audit](https://github.com/adbayb/stack/blob/main/stack/skills/software-audit/): audit code or pull requests against the `software-design` rules (requires `software-design`).
+- [software-audit](https://github.com/adbayb/stack/blob/main/stack/skills/software-audit/): audit code or pull requests against the `software-design` rules (depends on `software-design`).
 - [skill-design](https://github.com/adbayb/stack/blob/main/stack/skills/skill-design/): design and write skills with one shared anatomy, plus agent instructions such as `AGENTS.md`; the single source of the writing rules.
-- [skill-audit](https://github.com/adbayb/stack/blob/main/stack/skills/skill-audit/): audit and score skills and agent instructions such as `AGENTS.md` against the `skill-design` rules (requires `skill-design`).
+- [skill-audit](https://github.com/adbayb/stack/blob/main/stack/skills/skill-audit/): audit and score skills and agent instructions such as `AGENTS.md` against the `skill-design` rules (depends on `skill-design` and Anthropic `skill-creator` for skill evaluation).
 
 With [pnpm 12.11.0 or later](https://pnpm.io/agent-skills), install the package as a direct dependency and approve its skills:
 

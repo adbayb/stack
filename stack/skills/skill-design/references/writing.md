@@ -15,7 +15,7 @@ What to write and where it lives. `anatomy.md` owns the file shape; `evaluation.
 - The name and description are all an agent sees before choosing a skill. State the capability, then "Use when" or "Use whenever" with the tasks, artifacts, and phrasings that should load it, including requests that never name the skill.
 - Lean toward triggering: agents tend to skip skills, so name adjacent requests that still need it. Target substantive work; agents answer trivial one-step requests without any skill.
 - Put all when-to-use information in the description; the body is read only after loading. State out-of-scope artifacts in the body intro.
-- End with "Requires the `<prerequisite>` skill." when a prerequisite exists.
+- End with "Requires the `<prerequisite>` skill." for one prerequisite, or list all declared prerequisites in the same sentence when there are several.
 
 ## Body
 

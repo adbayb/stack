@@ -12,6 +12,10 @@ metadata:
 
 Design and write skills with one shared anatomy, and all agent instructions, including files such as `AGENTS.md`, with one set of writing rules. This skill owns how instructions are shaped, worded, placed, and checked, including which work moves to a skill's `scripts/` and how `SKILL.md` calls it; domain rules stay with the skills that own them. Application code, including the code inside `scripts/`, is out of scope. Repo rules override this skill; references win over this file on rule conflicts.
 
+## Acronym glossary
+
+- **HTML**: HyperText Markup Language.
+
 ## Workflow
 
 Follow in order; skip a step only with a stated reason. For an instruction file that is not a skill, such as `AGENTS.md`, run steps 2 and 5, plus steps 1 and 4 when the change alters which skill a request loads. When updating a skill, keep its name and folder. Ask when a wrong guess is costly; otherwise choose the sensible default and state it.
@@ -20,11 +24,12 @@ Follow in order; skip a step only with a stated reason. For an instruction file 
 
 - Extract what the conversation already shows (steps, corrections, inputs, outputs) before asking; when updating, capture only what the change affects.
 - Settle what the skill enables, which requests should and should not load it, its output, and its prerequisites.
-- Collect 2 or 3 realistic requests it must handle and 1 near miss it must ignore.
+- For changes to behavior, triggers, or workflow, collect 2 or 3 realistic requests it must handle and 1 near miss it must ignore. For wording-only or narrowly scoped updates, capture only the scenarios affected; do not invent unrelated cases.
 
 ### 2. Place every rule
 
 - Load `references/writing.md`; give each new or changed rule one canonical owner before drafting.
+- When drafting a consumer instruction file, apply the ownership guidance there so existing canonical rules remain authoritative.
 - Extend an existing skill when the request fits its trigger and workflow; create a skill only for a distinct trigger or workflow.
 
 ### 3. Write to the anatomy
@@ -46,6 +51,7 @@ Follow in order; skip a step only with a stated reason. For an instruction file 
 
 Close with a short skill note; omit unchanged items.
 
+- Include the note for draft-only work too; identify proposed files and state when verification was not run.
 - Skill: name, trigger summary, and why it is new or an extension.
 - Ownership: rules added, moved, or linked, each with its canonical owner.
 - Files: skill files and consumers touched.

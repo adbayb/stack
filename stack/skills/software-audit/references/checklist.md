@@ -42,7 +42,7 @@ Rules: `software-design` reference `clean-code.md`.
 Rules: `software-design` reference `cohesion-coupling.md`, `software-design` reference `testing-refactoring.md`, and `software-design` reference `clean-code.md`.
 
 - Evidence: change impact/coupling (cycles, globals, hidden I/O, Demeter, surprise side effects, new third-party dependencies); deterministic tests, adapter contracts, and changed boundary/failure coverage; error convention/boundary mapping/query purity/absence; resource ownership, cancellation, retry/idempotency safety, and bounded workload.
-- Deltas: demonstrate the test obstacle or missing changed-behavior case; untouched coverage gaps are not findings. Trace success, rejection, timeout/cancellation, duplicate/concurrent execution, and partial-failure paths when relevant; check final state, effect count, cleanup, and reported errors.
+- Deltas: a diff that omits test files alone does not establish a coverage gap. Before reporting one, identify a behavior contract changed by the reviewed diff; an audit-only finding about existing behavior does not make that contract changed. If no changed contract is in scope, do not report or deduct for absent coverage. For a changed contract, inspect the relevant suite to confirm its boundary or failure behavior is untested; if that evidence is unavailable, record an investigation gap rather than a finding or score deduction. Trace success, rejection, timeout/cancellation, duplicate/concurrent execution, and partial-failure paths when relevant; check final state, effect count, cleanup, and reported errors.
 
 ## G. Security
 
@@ -68,6 +68,8 @@ Assign by demonstrated impact, after applying the owning reference's style and s
 
 ## Scoring
 
-Use the in-scope A-G dimensions as criteria unless the user names others, and label the score a qualitative judgment. Score each criterion 0 (absent or conflicting), 1 (partial), or 2 (complete in the audited scope); the total is out of twice the criterion count. Tie deductions to confirmed findings and keep criteria unchanged for before/after scores.
+Always score every audit report, including no-findings reports and requests that do not ask for scoring. Use the in-scope A-G dimensions as criteria unless the user names others, and label the score a qualitative judgment. Score each criterion 0 (absent or conflicting), 1 (partial), or 2 (complete in the audited scope); the total is out of twice the criterion count. Tie deductions to confirmed findings and keep criteria unchanged for before/after scores. Exclude inapplicable dimensions from the denominator; if nothing can be assessed, report **Score: not assessed** with the blocker instead of inventing a numerical score.
 
 An unresolved confirmed finding prevents full marks in its affected criterion. Unverified relevant areas make the score provisional; a full score means no identified gap within the stated scope, not universal perfection or proof from lint alone.
+
+End the scoring report with **Total score: ?/10**, replacing `?` with the criterion total divided by the maximum possible total and multiplied by 10; mark it provisional when applicable.

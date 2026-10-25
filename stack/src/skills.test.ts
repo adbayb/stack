@@ -20,7 +20,7 @@ const MAX_DESCRIPTION_LENGTH = 1024;
 const MAX_SKILL_NAME_LENGTH = 64;
 const MAX_MARKDOWN_LINES = 100;
 const NON_AUDIT_SKILL_REFERENCES = new Set(["sources.md"]);
-const PREREQUISITE = /^([a-z0-9]+(?:-[a-z0-9]+)*) >=(\d+\.\d+\.\d+)$/u;
+const PREREQUISITE = /^([a-z0-9]+(?:-[a-z0-9]+)*)(?: >=(\d+\.\d+\.\d+))?$/u;
 const LEVEL_TWO_HEADING = /^## (.+)$/gmu;
 const WORKFLOW_SECTION = /(?:^|\n)## Workflow\n([\s\S]*?)(?=\n## |$)/u;
 const WORKFLOW_STEP = /^### (\d+)\. \S/gmu;
@@ -233,7 +233,7 @@ describe("skills", () => {
 			expect(
 				sections.includes("Prerequisite"),
 				`${path}: add \`## Prerequisite\` exactly when \`metadata.requires\` is set.`,
-			).toBe(getMetadataField(frontmatter, "requires") !== "");
+			).toBe(hasPrerequisites(frontmatter));
 
 			expect(
 				steps.length,
@@ -248,31 +248,35 @@ describe("skills", () => {
 		}
 	});
 
-	test("every dependent skill gates its prerequisite version and install", () => {
+	test("every dependent skill gates its prerequisites and documents their installers", () => {
 		for (const dependent of getDependentSkills()) {
-			const { description, body, path, prerequisite, requiredVersion, requires } = dependent;
-
-			expect(requires, `${path}: \`metadata.requires\` must read "<skill> >=X.Y.Z".`).toMatch(
-				PREREQUISITE,
-			);
-
-			expect(
-				existsSync(resolve(SKILLS_DIRECTORY, prerequisite, "SKILL.md")),
-				`${path}: \`metadata.requires\` must name a skill in this repo.`,
-			).toBe(true);
-
-			const prerequisiteVersion = getMetadataField(
-				getFrontmatter(getSkillContent(prerequisite)),
-				"version",
-			);
+			const {
+				description,
+				body,
+				path,
+				prerequisite,
+				prerequisites,
+				requiredVersion,
+				requires,
+			} = dependent;
 
 			expect(
-				description.endsWith(`Requires the \`${prerequisite}\` skill.`),
-				`${path}: end the description with "Requires the \`${prerequisite}\` skill."`,
+				requires,
+				`${path}: each prerequisite must read "<skill>" or "<skill> >=X.Y.Z".`,
+			).toMatch(PREREQUISITE);
+
+			const requiresSentence = getPrerequisiteSentence(prerequisites);
+
+			expect(
+				description.endsWith(requiresSentence),
+				`${path}: end with "${requiresSentence}"`,
 			).toBe(true);
 
-			expect(body, `${path}: document the \`${prerequisite}\` install command.`).toContain(
-				`pnpm dlx skills add adbayb/stack --skill ${prerequisite} -g`,
+			expect(body, `${path}: document the \`${prerequisite}\` install command.`).toMatch(
+				new RegExp(
+					`pnpm dlx skills add [a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+ --skill ${prerequisite} -g`,
+					"u",
+				),
 			);
 
 			expect(body, `${path}: stop when the prerequisite is missing.`).toMatch(/stop before/u);
@@ -283,15 +287,26 @@ describe("skills", () => {
 
 			expect(body, `${path}: point at \`metadata.requires\`.`).toMatch(/metadata\.requires/u);
 
-			expect(
-				isVersionAtLeast(prerequisiteVersion, requiredVersion),
-				`${path} requires ${prerequisite} ${requiredVersion}, but the repo ships ${prerequisiteVersion}.`,
-			).toBe(true);
+			for (const minimumVersion of [requiredVersion].filter(Boolean)) {
+				const prerequisiteVersion = getMetadataField(
+					getFrontmatter(getSkillContent(prerequisite)),
+					"version",
+				);
 
-			expect(
-				requiredVersion.split(".")[0],
-				`Raise the ${path} prerequisite after a ${prerequisite} major change.`,
-			).toBe(prerequisiteVersion.split(".")[0]);
+				expect(body, `${path}: use the shipped prerequisite's installer.`).toContain(
+					`pnpm dlx skills add adbayb/stack --skill ${prerequisite} -g`,
+				);
+
+				expect(
+					isVersionAtLeast(prerequisiteVersion, minimumVersion),
+					`${path} requires ${prerequisite} ${minimumVersion}, but the repo ships ${prerequisiteVersion}.`,
+				).toBe(true);
+
+				expect(
+					minimumVersion.split(".")[0],
+					`Raise the ${path} prerequisite after a ${prerequisite} major change.`,
+				).toBe(prerequisiteVersion.split(".")[0]);
+			}
 		}
 	});
 
@@ -304,7 +319,7 @@ describe("skills", () => {
 			expect(
 				getRequiredSkills(name),
 				`${name} must require \`${owner}\`, the owner of the rules it audits.`,
-			).toStrictEqual([owner]);
+			).toContain(owner);
 
 			expect(skill, `${name} must not duplicate the ${owner} glossary.`).not.toContain(
 				"## Acronym glossary",
@@ -340,16 +355,19 @@ describe("skills", () => {
 		for (const directory of getSkillDirectories()) {
 			const skill = basename(directory);
 
+			const entry = readme.split("\n").find((line) => {
+				return line.startsWith(`- [${skill}]`);
+			});
+
 			expect(
 				readme,
 				`stack/README.md must document the \`${skill}\` install command.`,
 			).toContain(`--skill ${skill}`);
 
 			for (const prerequisite of getRequiredSkills(skill)) {
-				expect(
-					readme,
-					`stack/README.md must document the ${skill} prerequisite.`,
-				).toContain(`requires \`${prerequisite}\``);
+				expect(entry, `stack/README.md must document the ${skill} prerequisite.`).toMatch(
+					new RegExp(`(?:requires|depends on) [^\\n]*\`${prerequisite}\``, "u"),
+				);
 			}
 		}
 	});
@@ -514,11 +532,13 @@ const getSkillAnatomy = (path: string) => {
 };
 
 const getDependentSkills = () => {
-	return getSkillPaths()
-		.map((path) => {
-			const content = readFileSync(path, "utf8");
-			const frontmatter = getFrontmatter(content);
-			const requires = getMetadataField(frontmatter, "requires");
+	return getSkillPaths().flatMap((path) => {
+		const content = readFileSync(path, "utf8");
+		const frontmatter = getFrontmatter(content);
+		const requirements = getRequirements(frontmatter);
+		const prerequisites = getRequiredSkills(basename(dirname(path)));
+
+		return requirements.map((requires) => {
 			const [, prerequisite = "", requiredVersion = ""] = PREREQUISITE.exec(requires) ?? [];
 
 			return {
@@ -526,13 +546,12 @@ const getDependentSkills = () => {
 				body: content.replace(FRONTMATTER, ""),
 				path,
 				prerequisite,
+				prerequisites,
 				requiredVersion,
 				requires,
 			};
-		})
-		.filter(({ requires }) => {
-			return requires !== "";
 		});
+	});
 };
 
 const getSkillContent = (skill: string) => {
@@ -631,10 +650,47 @@ const getMetadataField = (frontmatter: string, field: string) => {
 };
 
 const getRequiredSkills = (skill: string) => {
-	const requires = getMetadataField(getFrontmatter(getSkillContent(skill)), "requires");
-	const prerequisite = PREREQUISITE.exec(requires)?.[1];
+	return getRequirements(getFrontmatter(getSkillContent(skill))).map((requires) => {
+		const prerequisite = PREREQUISITE.exec(requires)?.[1];
 
-	return prerequisite ? [prerequisite] : [];
+		if (!prerequisite) {
+			throw new Error(`${skill}: invalid prerequisite "${requires}".`);
+		}
+
+		return prerequisite;
+	});
+};
+
+const getRequirements = (frontmatter: string) => {
+	if (!/^[ \t]{4}requires:/mu.test(frontmatter)) {
+		return [];
+	}
+
+	const list = /^[ \t]{4}requires:\n((?:[ \t]{8}-[ \t]+[^\n]+\n?)+)/mu.exec(frontmatter)?.[1];
+
+	if (!list) {
+		throw new Error("metadata.requires must be a nonempty array of prerequisite strings.");
+	}
+
+	return Array.from(list.matchAll(/^[ \t]{8}-[ \t]+(.+)$/gmu), ([, item = ""]) => {
+		return unquote(item.trim());
+	});
+};
+
+const hasPrerequisites = (frontmatter: string) => {
+	return getRequirements(frontmatter).length > 0;
+};
+
+const getPrerequisiteSentence = (prerequisites: string[]) => {
+	const names = prerequisites.map((name) => {
+		return `\`${name}\``;
+	});
+
+	if (names.length === 1) {
+		return `Requires the ${names[0]} skill.`;
+	}
+
+	return `Requires the ${names.slice(0, -1).join(", ")} and ${names.at(-1)} skills.`;
 };
 
 const getAllowedTokens = (
