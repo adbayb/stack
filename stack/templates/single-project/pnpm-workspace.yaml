@@ -2,8 +2,6 @@ packages:
     - "examples/*"
     - "tools/*"
     - "{{projectName}}"
-allowBuilds:
-    esbuild: true
 saveExact: true
 verifyDepsBeforeRun: "warn"
 update:
@@ -18,3 +16,11 @@ publicHoistPattern:
     - "*turbo*"
     - "*typescript*"
     - "*types*"
+permissions:
+    "@adbayb/stack":
+        skills: true
+    esbuild:
+        build: true
+skills:
+    dirs:
+        - .agents/skills
