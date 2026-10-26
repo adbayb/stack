@@ -32,7 +32,7 @@ Never install or upgrade dependencies or run releases while auditing, except ins
 
 ### 1. Scope
 
-- Confirm target (files, slice, repo, or PR diff) and non-goals. Do not boil the ocean.
+- Confirm target (files, slice, repo, or PR diff) and non-goals. Keep the scope bounded, but audit everything inside it exhaustively: for a broad target, split it into slices and cover each in turn instead of sampling.
 - For a PR review, audit changed files and direct dependents; report unrelated findings separately.
 - Note the inner style and slice boundaries from the codebase; state assumptions when missing.
 - Run existing tests and the relevant linters/formatters first to establish a baseline; red baselines follow `software-design` reference `testing-refactoring.md`. If project dependencies are missing, stop and ask.
@@ -40,6 +40,8 @@ Never install or upgrade dependencies or run releases while auditing, except ins
 ### 2. Detect
 
 Read `references/checklist.md` for the A-G dimension map, evidence, exemptions, and severity. Load only the mapped references in scope, apply their rules first, then the audit deltas.
+
+**Exhaustive depth.** A shallow pass is a failed audit. Read every in-scope file in full, then run each dimension's evidence prompts against each file or module instead of skimming for obvious smells. For every Evidence bullet in `references/checklist.md`, record a finding, an explicit "checked, clean" with the evidence examined, or an inapplicability reason. Report every distinct root cause that meets the rules, including Minors and Unverified investigation gaps (kept out of scoring), rather than only the top few. Before the report, run a second sweep over each dimension for missed items: unused exports, duplicated knowledge, error paths, untested changed contracts, cycles, naming drift, and dependency/config gaps. Do not pad: every row still needs evidence and a rule, and exemptions still apply.
 
 Scan A-G in order for a full audit; for a PR, cover dimensions touched by the change and direct dependents. Mark inapplicable dimensions with a reason.
 
@@ -88,7 +90,7 @@ Present the `Output` section's report first. For a PR review, default to the rep
 
 For each finding, name the in-scope scoring dimension or dimensions it affects, using the checklist's letter and title. Write each Issue as one sentence: the violated rule or smell, then the evidence and its consequence; cite the rule instead of pasting its prose or theory. Keep each Solution to a fix direction.
 
-Then total counts by severity, reviewed/skipped dimensions, unaudited out-of-scope files, verification limits (Supported rows and Unverified gaps), and up to 3 highest-leverage fixes. Always include the in-scope criterion scores per `references/checklist.md` and end the report with **Total score: ?/10**, even when scoring was not requested or there are no findings; mark incomplete verification provisional. Before reporting, recalculate the total from the listed criterion scores using the checklist formula and confirm the numerator, denominator, and displayed score agree. No findings: say so and skip fixes; do not invent work. When fixing, close with what was fixed and each fix's blast radius, what was left and why, and verification results, then end with the updated score.
+Then total counts by severity, a per-dimension coverage line (findings count or checked-clean evidence), reviewed/skipped dimensions, unaudited out-of-scope files, verification limits (Supported rows and Unverified gaps), and a recommended fix order that highlights the highest-leverage fixes without limiting the findings table. Always include the in-scope criterion scores per `references/checklist.md` and end the report with **Total score: ?/10**, even when scoring was not requested or there are no findings; mark incomplete verification provisional. Before reporting, recalculate the total from the listed criterion scores using the checklist formula and confirm the numerator, denominator, and displayed score agree. No findings: say so and skip fixes; do not invent work. When fixing, close with what was fixed and each fix's blast radius, what was left and why, and verification results, then end with the updated score.
 
 ## Example
 

@@ -34,13 +34,15 @@ Never run installs, publishes, or releases while auditing, except installing or 
 
 ### 1. Scope
 
-- Confirm the target (skills, `AGENTS.md` files, other agent instruction files, or a diff touching them) and non-goals.
+- Confirm the target (skills, `AGENTS.md` files, other agent instruction files, or a diff touching them) and non-goals; keep the scope bounded but audit everything inside it exhaustively, slice by slice for a broad target.
 - Map the instruction graph: always-loaded files, skill descriptions, `SKILL.md` routes, references, prerequisites, and standalone copies with their guards.
 - Run the repository's instruction checks (skill and template tests) to establish a baseline; record checks that cannot run.
 
 ### 2. Detect
 
 Read `references/checklist.md` for the dimension map, evidence, severity, and scoring. Load only the mapped `skill-design` references in scope, apply their rules first, then the audit deltas.
+
+**Exhaustive depth.** A shallow pass is a failed audit. Read every in-scope file in full and run each dimension's evidence prompts against each file. For every Evidence bullet in `references/checklist.md`, record a finding, a "checked, clean" note with the evidence examined, or an inapplicability reason. Report every distinct root cause, including Minors and Unverified gaps (kept out of scoring), then sweep each dimension once more for missed items before reporting. Do not pad: each row needs evidence and an owning rule.
 
 Trace each rule to its owner and every consumer: skills, `AGENTS.md` files, templates, docs, and tests. Walk the checklist counterexamples through the text.
 
@@ -83,7 +85,7 @@ Present the `Output` section's report before editing. If the request is audit-on
 
 For each finding, name the scoring criterion or criteria it affects. Write each Issue as one sentence: the owning `skill-design` rule, then the contradicting text and the agent decision it changes; cite the rule instead of pasting its prose. Keep each Solution to a fix direction.
 
-Then totals by severity, reviewed and skipped dimensions, unaudited out-of-scope files, verification limits (Supported rows and Unverified gaps), evaluation evidence location and results with the HTML report link or path (or an incomplete status and blocker), and up to 3 highest-leverage fixes. Always include the five criterion scores and **Total score: ?/10** using `references/checklist.md`, even when scoring was not requested or there are no findings; mark incomplete verification provisional. No findings: say so and skip fixes; do not invent work. When fixing, close with what changed per owner, what was left and why, verification results, and the updated score.
+Then totals by severity, a per-dimension coverage line (findings or checked-clean evidence), reviewed and skipped dimensions, unaudited out-of-scope files, verification limits (Supported rows and Unverified gaps), evaluation evidence location and results with the HTML report link or path (or an incomplete status and blocker), and a recommended fix order that highlights the highest-leverage fixes without limiting the findings table. Always include the five criterion scores and **Total score: ?/10** using `references/checklist.md`, even when scoring was not requested or there are no findings; mark incomplete verification provisional. No findings: say so and skip fixes; do not invent work. When fixing, close with what changed per owner, what was left and why, verification results, and the updated score.
 
 ## Example
 
@@ -93,4 +95,4 @@ Request: "Audit and score our skills."
 - Criteria: Consistency 1/2, Ownership 1/2, Actionability 2/2, Proportionality 2/2, Verification 2/2.
 - **Total score: 8/10** (provisional because trigger checks did not run).
 - Evaluation: representative runs passed; prompts, assertions, outputs, and grades saved in the session workspace; trigger accuracy remains unverified.
-- Top fix: delete the restated rule and link the owning reference.
+- Fix order: first delete the restated rule and link the owning reference.
