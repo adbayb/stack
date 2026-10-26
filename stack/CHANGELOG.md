@@ -1,5 +1,17 @@
 # @adbayb/stack
 
+## 3.5.1
+
+### Patch Changes
+
+- [`9a5b1a1`](https://github.com/adbayb/stack/commit/9a5b1a1d85a0467c4eb50dc6ca8ffa546824ce6e) Thanks [@adbayb](https://github.com/adbayb)! - Improve skill audit evaluation and reporting:
+
+    - Require Anthropic's `skill-creator` alongside `skill-design` for `skill-audit`, document both installers, and stop without partial findings when prerequisites are unavailable.
+    - Evaluate skill behavior during audits and require authorization before applying fixes.
+    - Represent skill prerequisites as a `metadata.requires` array with optional version bounds.
+    - Require evidence of missing changed-behavior coverage before `software-audit` reports a test gap.
+    - End both audit scoring reports with a total score out of 10, marking provisional scores when applicable.
+
 ## 3.5.0
 
 ### Minor Changes
