@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 3.5.2
+
+### Patch Changes
+
+- [`699dcad`](https://github.com/adbayb/stack/commit/699dcade4ddab702f79e12a38bfdbeb5d30ea74b) Thanks [@adbayb](https://github.com/adbayb)! - Configure pnpm skills in templates.
+
 ## 3.5.1
 
 ### Patch Changes
