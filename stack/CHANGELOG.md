@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 3.5.3
+
+### Patch Changes
+
+- [`a98eef8`](https://github.com/adbayb/stack/commit/a98eef8c2fdbb63b1f613016c2f393a21ebd2ec7) Thanks [@adbayb](https://github.com/adbayb)! - Make `software-audit` and `skill-audit` exhaustive: require full in-scope coverage, expand their checklists to every owning design rule, and drop the 3-fix cap in reports.
+
 ## 3.5.2
 
 ### Patch Changes
