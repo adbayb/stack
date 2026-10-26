@@ -1,5 +1,12 @@
 # @adbayb/create
 
+## 3.5.2
+
+### Patch Changes
+
+- Updated dependencies [[`699dcad`](https://github.com/adbayb/stack/commit/699dcade4ddab702f79e12a38bfdbeb5d30ea74b)]:
+    - @adbayb/stack@3.5.2
+
 ## 3.5.1
 
 ### Patch Changes
