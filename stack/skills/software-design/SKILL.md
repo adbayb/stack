@@ -5,7 +5,7 @@ license: MIT
 metadata:
     author: adbayb
     repository: adbayb/stack
-    version: "1.0.0"
+    version: "1.1.0"
 ---
 
 # Software Design
