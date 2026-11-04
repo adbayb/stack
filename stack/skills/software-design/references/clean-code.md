@@ -16,6 +16,7 @@
 
 - Names reveal intent: `refundOverdueOrders(clock, repo)` beats `process(data, 1)`. No abbreviations, no `tmp`/`data2`, no misleading names (`getAll` that is actually a map).
 - Functions are small, single-level, single-purpose. Prefer guard clauses and shallow nesting; deeper nesting is a signal to check for mixed responsibilities or hard-to-follow control flow. For new or substantially edited functions approaching 20 lines, check whether extraction improves cohesion and readability; line count alone is not a reason to add indirection. Leave unrelated existing functions for a scoped refactor.
+- Use `async`/`await` to sequence asynchronous work; generators instead provide lazy iteration. Use a generator when incremental production is needed and it makes the flow clearer than a direct loop or platform stream, not just to express ordinary async control flow.
 - Use `api-surface.md` for command/query separation. No output args. Name literals that encode domain policy or recur with the same meaning; leave self-explanatory structural literals inline.
 - Match the surrounding annotation style: skip annotations that only repeat an inferred type, but keep explicit types where the file or exported contract already uses them; annotate when a stricter type than inferred is wanted (e.g. an enum instead of `string`).
 - Order files top-down: public-facing interface and high-level policy before implementation details; describe/test cases before helpers in test files. Do not call a `const` helper at module load before it is defined.
