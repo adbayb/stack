@@ -25,7 +25,7 @@ const PROJECT_OVERVIEW_DIRECTORY =
 	/`((?:applications|libraries|examples|tools|\{\{projectName\}\})\/[^`\n]*)`/gu;
 
 describe("templates", () => {
-	test("agent instructions stay within the context budget", () => {
+	test("should keep agent instructions within the context budget", () => {
 		for (const file of ["AGENTS.md", ...MIRRORED_TEMPLATE_FILES]) {
 			const content = readFileSync(resolveFromRepositoryRoot(file), "utf8");
 			const lines = content.trimEnd().split("\n").length;
@@ -43,7 +43,7 @@ describe("templates", () => {
 		}
 	});
 
-	test("root and template AGENTS.md mirrored sections stay in sync", () => {
+	test("should keep root and template AGENTS.md mirrored sections in sync", () => {
 		for (const sectionStart of MIRRORED_SECTIONS) {
 			const rootSection = getSection(resolveFromRepositoryRoot("AGENTS.md"), sectionStart);
 
@@ -66,7 +66,7 @@ describe("templates", () => {
 		...MIRRORED_TEMPLATE_FILES.map((file) => {
 			return [file, "`pnpm install` and `stack install`"];
 		}),
-	])("%s documents bootstrap and hook recovery", (file, setupCommand) => {
+	])("should document bootstrap and hook recovery in %s", (file, setupCommand) => {
 		const section = getSection(resolveFromRepositoryRoot(file), "## Bootstrap");
 
 		expect(section, `${file} must point at \`devEngines\`.`).toMatch(/`devEngines`/u);
@@ -84,7 +84,7 @@ describe("templates", () => {
 		);
 	});
 
-	test("template project overview references existing template directories", () => {
+	test("should reference existing template directories in the template project overview", () => {
 		for (const file of MIRRORED_TEMPLATE_FILES) {
 			const section = getSection(resolveFromRepositoryRoot(file), "## Project overview");
 

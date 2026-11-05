@@ -14,7 +14,7 @@ describe(createFixCommand, () => {
 		vi.mocked(exec).mockReset().mockResolvedValue("");
 	});
 
-	test("builds before formatting and linting the selected files", async () => {
+	test("should build before formatting and linting the selected files", async () => {
 		await createCommandHarness(createFixCommand)({}, ["src/my file.ts"]);
 
 		expect(vi.mocked(exec).mock.calls).toStrictEqual([
@@ -28,7 +28,7 @@ describe(createFixCommand, () => {
 		]);
 	});
 
-	test("fixes the whole project when no filenames are supplied", async () => {
+	test("should fix the whole project when no filenames are supplied", async () => {
 		await createCommandHarness(createFixCommand)();
 
 		expect(
@@ -42,7 +42,7 @@ describe(createFixCommand, () => {
 		]);
 	});
 
-	test("stops before linting if formatting fails", async () => {
+	test("should stop before linting if formatting fails", async () => {
 		vi.mocked(exec)
 			.mockResolvedValueOnce("")
 			.mockRejectedValueOnce(new Error("format failure"));
@@ -54,7 +54,7 @@ describe(createFixCommand, () => {
 		expect(exec).toHaveBeenCalledTimes(2);
 	});
 
-	test("does not modify files if the build fails", async () => {
+	test("should not modify files if the build fails", async () => {
 		vi.mocked(exec).mockRejectedValueOnce(new Error("build failure"));
 
 		await expect(createCommandHarness(createFixCommand)()).rejects.toThrow(
@@ -66,7 +66,7 @@ describe(createFixCommand, () => {
 		});
 	});
 
-	test("reports a lint failure after formatting completes", async () => {
+	test("should report a lint failure after formatting completes", async () => {
 		vi.mocked(exec)
 			.mockResolvedValueOnce("")
 			.mockResolvedValueOnce("")

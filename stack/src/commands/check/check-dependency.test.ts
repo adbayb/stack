@@ -32,7 +32,7 @@ describe(checkDependency, () => {
 		await rm(workingDirectory, { force: true, recursive: true });
 	});
 
-	test("accepts dependency protocols, ranges, and permitted exclusions", async () => {
+	test("should accept dependency protocols, ranges, and permitted exclusions", async () => {
 		await mockPackages({
 			name: "app",
 			dependencies: {
@@ -55,7 +55,7 @@ describe(checkDependency, () => {
 		await expect(checkDependency()).resolves.toBeUndefined();
 	});
 
-	test("rejects a ranged development dependency", async () => {
+	test("should reject a ranged development dependency", async () => {
 		await mockPackages({
 			name: "app",
 			devDependencies: { eslint: "^9.0.0" },
@@ -66,7 +66,7 @@ describe(checkDependency, () => {
 		);
 	});
 
-	test("rejects a production dependency without a caret range", async () => {
+	test("should reject a production dependency without a caret range", async () => {
 		await mockPackages({
 			name: "app",
 			dependencies: { runtime: "1.2.3" },
@@ -77,7 +77,7 @@ describe(checkDependency, () => {
 		);
 	});
 
-	test("rejects a peer dependency without an explicit caret range", async () => {
+	test("should reject a peer dependency without an explicit caret range", async () => {
 		await mockPackages({
 			name: "app",
 			peerDependencies: { react: "workspace:^" },
@@ -88,7 +88,7 @@ describe(checkDependency, () => {
 		);
 	});
 
-	test("rejects mismatched versions of a dependency across packages", async () => {
+	test("should reject mismatched versions of a dependency across packages", async () => {
 		await mockPackages(
 			{ name: "app", dependencies: { runtime: "^1.0.0" } },
 			{ name: "library", dependencies: { runtime: "^2.0.0" } },
@@ -97,7 +97,7 @@ describe(checkDependency, () => {
 		await expect(checkDependency()).rejects.toThrow("Mismatched versions");
 	});
 
-	test("rejects mismatched development dependency versions across packages", async () => {
+	test("should reject mismatched development dependency versions across packages", async () => {
 		await mockPackages(
 			{ name: "app", devDependencies: { vitest: "3.0.0" } },
 			{ name: "library", devDependencies: { vitest: "4.0.0" } },
@@ -106,7 +106,7 @@ describe(checkDependency, () => {
 		await expect(checkDependency()).rejects.toThrow("Mismatched versions");
 	});
 
-	test("permits different versions between development and production dependencies", async () => {
+	test("should permit different versions between development and production dependencies", async () => {
 		await mockPackages(
 			{ name: "app", devDependencies: { runtime: "1.0.0" } },
 			{ name: "library", dependencies: { runtime: "^2.0.0" } },
@@ -116,7 +116,7 @@ describe(checkDependency, () => {
 	});
 
 	test.each(["dependencies", "devDependencies", "peerDependencies"] as const)(
-		"rejects a missing version in %s",
+		"should reject a missing version in %s",
 		async (dependencyType) => {
 			await mockPackages({ name: "app", [dependencyType]: { runtime: "" } });
 
@@ -126,7 +126,7 @@ describe(checkDependency, () => {
 		},
 	);
 
-	test("requires package names before checking their manifests", async () => {
+	test("should require package names before checking their manifests", async () => {
 		vi.mocked(exec).mockResolvedValue(
 			JSON.stringify([{ path: join(workingDirectory, "unnamed") }]),
 		);
@@ -134,15 +134,18 @@ describe(checkDependency, () => {
 		await expect(checkDependency()).rejects.toThrow("must have a name field");
 	});
 
-	test.each(["{}", "null"])("rejects non-array package-manager output %s", async (output) => {
-		vi.mocked(exec).mockResolvedValue(output);
+	test.each(["{}", "null"])(
+		"should reject non-array package-manager output %s",
+		async (output) => {
+			vi.mocked(exec).mockResolvedValue(output);
 
-		await expect(checkDependency()).rejects.toThrow(
-			"Expected the `pnpm recursive ls --json` output to be a JSON array.",
-		);
-	});
+			await expect(checkDependency()).rejects.toThrow(
+				"Expected the `pnpm recursive ls --json` output to be a JSON array.",
+			);
+		},
+	);
 
-	test("reports invalid package-manager output", async () => {
+	test("should report invalid package-manager output", async () => {
 		vi.mocked(exec).mockResolvedValue("not json");
 
 		await expect(checkDependency()).rejects.toThrow(

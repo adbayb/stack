@@ -14,7 +14,7 @@ describe(createCheckCommand, () => {
 		vi.mocked(exec).mockReset().mockResolvedValue("");
 	});
 
-	test("checks dependencies, formatting, and code by default, but not commits", async () => {
+	test("should check dependencies, formatting, and code by default, but not commits", async () => {
 		vi.mocked(exec).mockResolvedValueOnce("").mockResolvedValueOnce("[]");
 		await createCommandHarness(createCheckCommand)();
 
@@ -39,16 +39,19 @@ describe(createCheckCommand, () => {
 			"formatting",
 			"oxfmt 'src/my file.ts' '--disable-nested-config' '--no-error-on-unmatched-pattern' '--check'",
 		],
-	])("the %s filter forwards filenames and excludes other checks", async (filter, command) => {
-		await createCommandHarness(createCheckCommand)({ filter }, ["src/my file.ts"]);
+	])(
+		"should forward filenames and exclude other checks with the %s filter",
+		async (filter, command) => {
+			await createCommandHarness(createCheckCommand)({ filter }, ["src/my file.ts"]);
 
-		expect(vi.mocked(exec).mock.calls).toStrictEqual([
-			["turbo run build --filter !@examples/*", { hasLiveOutput: false }],
-			[command],
-		]);
-	});
+			expect(vi.mocked(exec).mock.calls).toStrictEqual([
+				["turbo run build --filter !@examples/*", { hasLiveOutput: false }],
+				[command],
+			]);
+		},
+	);
 
-	test("the dependency filter excludes formatting and code checks", async () => {
+	test("should exclude formatting and code checks with the dependency filter", async () => {
 		vi.mocked(exec).mockResolvedValueOnce("").mockResolvedValueOnce("[]");
 		await createCommandHarness(createCheckCommand)({ filter: "dependency" });
 
@@ -58,7 +61,7 @@ describe(createCheckCommand, () => {
 		]);
 	});
 
-	test("the commit filter skips the build and all project checks", async () => {
+	test("should skip the build and all project checks with the commit filter", async () => {
 		await createCommandHarness(createCheckCommand)({ filter: "commit" });
 
 		expect(exec).toHaveBeenCalledExactlyOnceWith(
@@ -66,7 +69,7 @@ describe(createCheckCommand, () => {
 		);
 	});
 
-	test("stops before checking files if preparation fails", async () => {
+	test("should stop before checking files if preparation fails", async () => {
 		vi.mocked(exec).mockRejectedValueOnce(new Error("build failure"));
 		await expect(createCommandHarness(createCheckCommand)()).rejects.toThrow("build failure");
 
@@ -79,14 +82,17 @@ describe(createCheckCommand, () => {
 		["code", "oxlint", [""]],
 		["formatting", "oxfmt", [""]],
 		["commit", "commitlint", []],
-	] as const)("reports the failing binary for %s checks", async (filter, binary, outputs) => {
-		vi.mocked(exec).mockRejectedValue(new Error("compliance failure"));
-		mockSuccessfulCommands(outputs);
+	] as const)(
+		"should report the failing binary for %s checks",
+		async (filter, binary, outputs) => {
+			vi.mocked(exec).mockRejectedValue(new Error("compliance failure"));
+			mockSuccessfulCommands(outputs);
 
-		await expect(createCommandHarness(createCheckCommand)({ filter })).rejects.toThrow(
-			`\`${binary}\` command failed.\nError: compliance failure`,
-		);
-	});
+			await expect(createCommandHarness(createCheckCommand)({ filter })).rejects.toThrow(
+				`\`${binary}\` command failed.\nError: compliance failure`,
+			);
+		},
+	);
 });
 
 const mockSuccessfulCommands = (outputs: readonly string[]) => {

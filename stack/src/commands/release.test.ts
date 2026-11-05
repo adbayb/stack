@@ -23,7 +23,7 @@ describe(createReleaseCommand, () => {
 			["changeset version --snapshot next", "changeset publish --tag next --no-git-tag"],
 		],
 		["publish", ["stack build && changeset publish"]],
-	])("the %s flag executes only its release action", async (flag, commands) => {
+	])("should execute only the release action selected by the %s flag", async (flag, commands) => {
 		await createCommandHarness(createReleaseCommand)({ [flag]: true });
 
 		expect(vi.mocked(exec).mock.calls).toStrictEqual(
@@ -33,12 +33,12 @@ describe(createReleaseCommand, () => {
 		);
 	});
 
-	test("does not release anything when no flag is supplied", async () => {
+	test("should not release anything when no flag is supplied", async () => {
 		await createCommandHarness(createReleaseCommand)();
 		expect(exec).not.toHaveBeenCalled();
 	});
 
-	test("does not publish a snapshot when versioning fails", async () => {
+	test("should not publish a snapshot when versioning fails", async () => {
 		vi.mocked(exec).mockRejectedValueOnce(new Error("version failure"));
 
 		await expect(
@@ -50,7 +50,7 @@ describe(createReleaseCommand, () => {
 		});
 	});
 
-	test("runs multiple selected release actions in their declared order", async () => {
+	test("should run multiple selected release actions in their declared order", async () => {
 		await createCommandHarness(createReleaseCommand)({ bump: true, changelog: true });
 
 		expect(vi.mocked(exec).mock.calls).toStrictEqual([
@@ -59,7 +59,7 @@ describe(createReleaseCommand, () => {
 		]);
 	});
 
-	test("reports a failed snapshot publication after versioning succeeds", async () => {
+	test("should report a failed snapshot publication after versioning succeeds", async () => {
 		vi.mocked(exec)
 			.mockResolvedValueOnce("")
 			.mockRejectedValueOnce(new Error("publish failure"));

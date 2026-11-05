@@ -72,14 +72,14 @@ const AUDIT_SKILLS = [
 type FrontmatterField = "description" | "license" | "name";
 
 describe("skills", () => {
-	test("repository skills link to the package's canonical skills directory", () => {
+	test("should link repository skills to the package's canonical skills directory", () => {
 		const repositorySkills = resolve(import.meta.dirname, "../../.agents/skills");
 
 		expect(lstatSync(repositorySkills).isSymbolicLink()).toBe(true);
 		expect(realpathSync(repositorySkills)).toBe(SKILLS_DIRECTORY);
 	});
 
-	test("the SKILL.md frontmatter satisfies Agent Skills field constraints", () => {
+	test("should satisfy Agent Skills field constraints in the SKILL.md frontmatter", () => {
 		for (const path of getSkillPaths()) {
 			const frontmatter = getFrontmatter(readFileSync(path, "utf8"));
 			const skillName = basename(dirname(path));
@@ -124,7 +124,7 @@ describe("skills", () => {
 		}
 	});
 
-	test("every skill reference exists and is linked from its SKILL.md", () => {
+	test("should link existing skill references from their SKILL.md", () => {
 		for (const directory of getSkillDirectories()) {
 			const skillPath = resolve(directory, "SKILL.md");
 			const skill = readFileSync(skillPath, "utf8");
@@ -172,7 +172,7 @@ describe("skills", () => {
 		}
 	});
 
-	test("every skill mentions only itself and its declared prerequisites", () => {
+	test("should mention only the skill itself and its declared prerequisites", () => {
 		const skills = getSkillDirectories().map((directory) => {
 			return basename(directory);
 		});
@@ -195,7 +195,7 @@ describe("skills", () => {
 		}
 	});
 
-	test("every SKILL.md follows the shared skill-design anatomy", () => {
+	test("should follow the shared skill-design anatomy in every SKILL.md", () => {
 		for (const path of getSkillPaths()) {
 			const { body, frontmatter, sections, steps } = getSkillAnatomy(path);
 			const title = getSkillTitle(basename(dirname(path)));
@@ -248,7 +248,7 @@ describe("skills", () => {
 		}
 	});
 
-	test("every dependent skill gates its prerequisites and documents their installers", () => {
+	test("should gate prerequisites and document their installers in every dependent skill", () => {
 		for (const dependent of getDependentSkills()) {
 			const {
 				description,
@@ -310,7 +310,7 @@ describe("skills", () => {
 		}
 	});
 
-	test("audit checklists map the rules of their declared owner", () => {
+	test("should map audit checklists to the rules of their declared owner", () => {
 		for (const { name, dimensions, owner } of AUDIT_SKILLS) {
 			const skill = getSkillContent(name);
 			const checklist = getChecklistContent(name);
@@ -349,7 +349,7 @@ describe("skills", () => {
 		}
 	});
 
-	test("the package README documents every installable skill and its prerequisite", () => {
+	test("should document every installable skill and its prerequisite in the package README", () => {
 		const readme = readFileSync(resolve(SKILLS_DIRECTORY, "../README.md"), "utf8");
 
 		for (const directory of getSkillDirectories()) {
@@ -372,7 +372,7 @@ describe("skills", () => {
 		}
 	});
 
-	test("skill markdown stays free of banned glyphs outside inline code spans", () => {
+	test("should keep skill markdown free of banned glyphs outside inline code spans", () => {
 		const violations = getMarkdownPaths().flatMap((path) => {
 			const prose = readFileSync(path, "utf8").replaceAll(INLINE_CODE_SPAN, "");
 
@@ -391,7 +391,7 @@ describe("skills", () => {
 		).toHaveLength(0);
 	});
 
-	test("every acronym used bare in a skill is defined in its own or a prerequisite glossary", () => {
+	test("should define every acronym used bare in a skill in its own or a prerequisite glossary", () => {
 		const corpora = getSkillCorpora();
 		const glossaries = new Map<string, Map<string, string>>();
 
@@ -413,7 +413,7 @@ describe("skills", () => {
 		}
 	});
 
-	test("glossary definitions are unique within a skill and consistent across skills", () => {
+	test("should keep glossary definitions unique within a skill and consistent across skills", () => {
 		const definitions: GlossaryEntry[] = [];
 
 		for (const path of getSkillPaths()) {
@@ -445,7 +445,7 @@ describe("skills", () => {
 		}
 	});
 
-	test("skill bodies and references stay within the progressive-disclosure budget", () => {
+	test("should keep skill bodies and references within the progressive-disclosure budget", () => {
 		for (const path of getSkillPaths()) {
 			expect(
 				readFileSync(path, "utf8").replace(FRONTMATTER, "").split("\n").length,

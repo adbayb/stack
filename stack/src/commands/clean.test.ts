@@ -38,7 +38,7 @@ describe(createCleanCommand, () => {
 		await rm(workingDirectory, { force: true, recursive: true });
 	});
 
-	test("preserves installed dependencies and local environment files", () => {
+	test("should preserve installed dependencies and local environment files", () => {
 		for (const path of [
 			"node_modules",
 			"node_modules/package",
@@ -50,13 +50,13 @@ describe(createCleanCommand, () => {
 		}
 	});
 
-	test("removes generated files without preserving lookalikes", () => {
+	test("should remove generated files without preserving lookalikes", () => {
 		for (const path of ["dist", "src/app.ts", "my.env", ".envrc"]) {
 			expect(isPreservedPath(path), `${path} must remain removable`).toBe(false);
 		}
 	});
 
-	test("removes ignored paths with spaces and leaves preserved paths untouched", async () => {
+	test("should remove ignored paths with spaces and leave preserved paths untouched", async () => {
 		await mkdir("node_modules/.cache", { recursive: true });
 		await writeFile("generated assets.txt", "generated");
 		await writeFile("node_modules/keep.txt", "dependency");
@@ -83,7 +83,7 @@ describe(createCleanCommand, () => {
 		expect(existsSync(".env.local")).toBe(true);
 	});
 
-	test("refuses to remove a path outside the working directory", async () => {
+	test("should refuse to remove a path outside the working directory", async () => {
 		await writeFile(outsideFile, "keep");
 
 		const { tasks } = captureTasks(createCleanCommand);
@@ -95,7 +95,7 @@ describe(createCleanCommand, () => {
 		expect(existsSync(outsideFile)).toBe(true);
 	});
 
-	test("leaves an already clean project and its empty cache untouched", async () => {
+	test("should leave an already clean project and its empty cache untouched", async () => {
 		await mkdir("node_modules/.cache", { recursive: true });
 		vi.mocked(exec).mockResolvedValue("");
 
@@ -106,7 +106,7 @@ describe(createCleanCommand, () => {
 		expect(existsSync("node_modules/.cache")).toBe(true);
 	});
 
-	test("refuses to remove the working directory itself", async () => {
+	test("should refuse to remove the working directory itself", async () => {
 		vi.mocked(exec).mockResolvedValue("Would remove .");
 
 		await expect(createCommandHarness(createCleanCommand)()).rejects.toThrow(
@@ -116,7 +116,7 @@ describe(createCleanCommand, () => {
 		expect(existsSync(process.cwd())).toBe(true);
 	});
 
-	test("does not remove cached assets if retrieving ignored paths fails", async () => {
+	test("should not remove cached assets if retrieving ignored paths fails", async () => {
 		await mkdir("node_modules/.cache", { recursive: true });
 		await writeFile("node_modules/.cache/keep.txt", "keep");
 		vi.mocked(exec).mockRejectedValue(new Error("Git unavailable"));

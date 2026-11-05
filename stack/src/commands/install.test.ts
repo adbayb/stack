@@ -21,7 +21,7 @@ describe(createInstallCommand, () => {
 		vi.restoreAllMocks();
 	});
 
-	test("installs executable pre-commit and commit-msg hooks", async () => {
+	test("should install executable pre-commit and commit-msg hooks", async () => {
 		await mkdir(".git/hooks", { recursive: true });
 		await createCommandHarness(createInstallCommand)();
 
@@ -36,7 +36,7 @@ describe(createInstallCommand, () => {
 		expect(commitMessage.mode & 0o777).toBe(0o755);
 	});
 
-	test("requires a Git repository before writing hooks", async () => {
+	test("should require a Git repository before writing hooks", async () => {
 		await expect(createCommandHarness(createInstallCommand)()).rejects.toThrow(
 			"No `.git` directory found. Run `git init` first.",
 		);
@@ -59,7 +59,7 @@ describe(createInstallCommand, () => {
 				["git", "add", "-A"],
 			],
 		],
-	])("the pre-commit hook handles %s safely", async (_, files, expectedCalls) => {
+	])("should handle %s safely in the pre-commit hook", async (_, files, expectedCalls) => {
 		await mkdir(".git/hooks", { recursive: true });
 		await createCommandHarness(createInstallCommand)();
 
@@ -79,7 +79,7 @@ describe(createInstallCommand, () => {
 		).toStrictEqual(expectedCalls);
 	});
 
-	test("the pre-commit hook does not restage changes when fixing fails", async () => {
+	test("should not restage changes in the pre-commit hook when fixing fails", async () => {
 		await mkdir(".git/hooks", { recursive: true });
 		await createCommandHarness(createInstallCommand)();
 

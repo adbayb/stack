@@ -30,7 +30,7 @@ describe(createCreateCommand, () => {
 	});
 
 	test.each(["single-project", "multi-projects"])(
-		"scaffolds the shipped %s template and completes setup in order",
+		"should scaffold the shipped %s template and complete setup in order",
 		async (inputTemplate) => {
 			stubVersionRequests();
 
@@ -63,7 +63,7 @@ describe(createCreateCommand, () => {
 		},
 	);
 
-	test("stops before prompting or fetching when pnpm is unavailable", async () => {
+	test("should stop before prompting or fetching when pnpm is unavailable", async () => {
 		const fetchMock = vi.fn();
 
 		vi.stubGlobal("fetch", fetchMock);
@@ -77,7 +77,7 @@ describe(createCreateCommand, () => {
 		expect(exec).toHaveBeenCalledExactlyOnceWith("pnpm -v");
 	});
 
-	test("does not install hooks or commit after dependency installation fails", async () => {
+	test("should not install hooks or commit after dependency installation fails", async () => {
 		stubVersionRequests();
 
 		vi.mocked(exec)
@@ -106,7 +106,7 @@ describe(createCreateCommand, () => {
 		["not-a-version", { version: "10.5.0" }, "Cannot resolve a major version"],
 		["v24.1.0", {}, "The pnpm version cannot be resolved remotely"],
 	])(
-		"rejects unusable remotely resolved versions %s",
+		"should reject unusable remotely resolved versions %s",
 		async (nodeVersion, pnpmManifest, message) => {
 			vi.stubGlobal(
 				"fetch",
@@ -130,7 +130,7 @@ describe(createCreateCommand, () => {
 		},
 	);
 
-	test("reports a failed version request without starting project setup", async () => {
+	test("should report a failed version request without starting project setup", async () => {
 		vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("", { status: 503 })));
 
 		await expect(
@@ -145,7 +145,7 @@ describe(createCreateCommand, () => {
 		expect(exec).toHaveBeenCalledExactlyOnceWith("pnpm -v");
 	});
 
-	test("does not overwrite an existing project when replacement is declined", async () => {
+	test("should not overwrite an existing project when replacement is declined", async () => {
 		stubVersionRequests();
 		await mkdir("sample-app");
 		await writeFile("sample-app/existing.txt", "keep");
@@ -167,33 +167,36 @@ describe(createCreateCommand, () => {
 	test.each([
 		["ssh", "git@github.com:example/project.git", "example/project"],
 		["https", "https://github.com/example/project.git", "example/project"],
-	])("normalizes project input and extracts a %s repository", async (_, inputUrl, repoId) => {
-		stubVersionRequests();
+	])(
+		"should normalize project input and extract a %s repository",
+		async (_, inputUrl, repoId) => {
+			stubVersionRequests();
 
-		const { tasks } = captureCommand();
+			const { tasks } = captureCommand();
 
-		const data = await getHandler(tasks, 1)(
-			{
-				inputDescription: "a useful tool",
-				inputName: "My Cool Project",
-				inputTemplate: "single-project",
-				inputUrl,
-			},
-			commandArguments,
-		);
+			const data = await getHandler(tasks, 1)(
+				{
+					inputDescription: "a useful tool",
+					inputName: "My Cool Project",
+					inputTemplate: "single-project",
+					inputUrl,
+				},
+				commandArguments,
+			);
 
-		expect(data).toMatchObject({
-			nodeVersion: "^24.0.0",
-			pnpmVersion: "^10.0.0",
-			projectDescription: "A useful tool",
-			projectName: "my-cool-project",
-			projectUrl: inputUrl,
-			repoId,
-			workingPath: resolve(process.cwd(), "my-cool-project"),
-		});
-	});
+			expect(data).toMatchObject({
+				nodeVersion: "^24.0.0",
+				pnpmVersion: "^10.0.0",
+				projectDescription: "A useful tool",
+				projectName: "my-cool-project",
+				projectUrl: inputUrl,
+				repoId,
+				workingPath: resolve(process.cwd(), "my-cool-project"),
+			});
+		},
+	);
 
-	test("rejects a remote URL without an owner and repository", async () => {
+	test("should reject a remote URL without an owner and repository", async () => {
 		const fetchMock = vi.fn();
 
 		vi.stubGlobal("fetch", fetchMock);
@@ -218,7 +221,7 @@ describe(createCreateCommand, () => {
 	test.each([
 		["", "The project name is not optional"],
 		["!!!", "The project name must contain at least one letter or digit"],
-	])("rejects an unusable project name %j", async (inputName, message) => {
+	])("should reject an unusable project name %j", async (inputName, message) => {
 		stubVersionRequests();
 
 		const { tasks } = captureCommand();
@@ -240,7 +243,7 @@ describe(createCreateCommand, () => {
 		["single-project", "{{projectName}}", "sample-app"],
 		["multi-projects", "libraries/{{projectName}}", join("libraries", "sample-app")],
 	] as const)(
-		"renames template paths and creates the %s README symlink",
+		"should rename template paths and create the %s README symlink",
 		async (templateName, projectPath, generatedProjectPath) => {
 			const templatePath = join(workingDirectory, "template");
 			const templateProjectPath = join(templatePath, projectPath);

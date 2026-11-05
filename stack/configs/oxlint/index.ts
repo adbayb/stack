@@ -65,7 +65,7 @@ const config = defineConfig({
 				"vitest/require-test-timeout": "off",
 				"vitest/valid-title": [
 					"error",
-					{ allowArguments: true, mustMatch: { test: ["^should "] } },
+					{ allowArguments: true, mustMatch: { test: "^should " } },
 				],
 			},
 		},
