@@ -1,5 +1,19 @@
 # @adbayb/stack
 
+## 3.6.0
+
+### Minor Changes
+
+- [#198](https://github.com/adbayb/stack/pull/198) [`40ee21e`](https://github.com/adbayb/stack/commit/40ee21e973fd865511ce4a0e3038bebe3c595ade) Thanks [@adbayb](https://github.com/adbayb)! - Add a parameter-order rule to the `software-design` skill: required inputs come first and a single options object of optional settings comes last, so a newly required input becomes positional instead of being appended after options. `software-audit` now checks it.
+
+- [#200](https://github.com/adbayb/stack/pull/200) [`130a4fc`](https://github.com/adbayb/stack/commit/130a4fce9a0ffe2f07d0c5be66355c129ab7a7df) Thanks [@adbayb](https://github.com/adbayb)! - Clarify when to use async/await versus generators in the `software-design` clean-code guidance.
+
+### Patch Changes
+
+- [#201](https://github.com/adbayb/stack/pull/201) [`235a220`](https://github.com/adbayb/stack/commit/235a22050e1ba78e3fb496d7528e69226bea4e0e) Thanks [@adbayb](https://github.com/adbayb)! - Guide API documentation toward caller-facing purpose and results, preserving contract details and including implementation details only when they clarify observable behavior.
+
+- [`ca27ad0`](https://github.com/adbayb/stack/commit/ca27ad0b681cb7cfa0712f708eb3911c9eb79c05) Thanks [@adbayb](https://github.com/adbayb)! - Fix the Oxlint `vitest/valid-title` configuration to enforce the `should ` prefix for test titles.
+
 ## 3.5.3
 
 ### Patch Changes
