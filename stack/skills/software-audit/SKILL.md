@@ -6,8 +6,8 @@ metadata:
     author: adbayb
     repository: adbayb/stack
     requires:
-        - "software-design >=1.1.0"
-    version: "1.1.0"
+        - "software-design >=1.2.0"
+    version: "1.2.0"
 ---
 
 # Software Audit
