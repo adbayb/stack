@@ -14,7 +14,7 @@
 
 ## Code rules
 
-- Prefer modern ECMAScript syntax when it improves clarity or maintainability and is supported by the project's runtime and browser targets and toolchain. Check declared targets rather than assuming compatibility; when targets are undeclared, follow existing compatibility conventions. Do not choose syntax only to shorten code, introduce unnecessary transpilation or polyfills, or assume newer syntax is faster; measure when performance matters.
+- Prefer modern, idiomatic syntax when it improves clarity or reduces code, and only when supported by the project's declared runtime/browser targets and toolchain. Preserve readability and behavior; don't assume newer syntax is faster, and avoid syntax that requires costly or incompatible transpilation/polyfills.
 - Names reveal intent: `refundOverdueOrders(clock, repo)` beats `process(data, 1)`. No abbreviations, no `tmp`/`data2`, no misleading names (`getAll` that is actually a map).
 - Functions are small, single-level, single-purpose. Prefer guard clauses and shallow nesting; deeper nesting is a signal to check for mixed responsibilities or hard-to-follow control flow. For new or substantially edited functions approaching 20 lines, check whether extraction improves cohesion and readability; line count alone is not a reason to add indirection. Leave unrelated existing functions for a scoped refactor.
 - Use `async`/`await` to sequence asynchronous work; generators instead provide lazy iteration. Use a generator when incremental production is needed and it makes the flow clearer than a direct loop or platform stream, not just to express ordinary async control flow.

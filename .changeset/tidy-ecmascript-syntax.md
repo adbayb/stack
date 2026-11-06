@@ -2,4 +2,4 @@
 "@adbayb/stack": minor
 ---
 
-Clarify modern ECMAScript compatibility and top-down source/test file ordering in the `software-design` skill.
+Prefer modern, idiomatic ECMAScript syntax when it improves clarity or reduces code, while preserving compatibility and readability. Clarify top-down source/test file ordering.
