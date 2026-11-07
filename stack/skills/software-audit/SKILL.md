@@ -83,9 +83,9 @@ Present the `Output` section's report first. For a PR review, default to the rep
 ```markdown
 ## Audit findings
 
-| #   | Location                  | Severity | Criterion(s)     | Issue                                                                             | Solution                      |
-| --- | ------------------------- | -------- | ---------------- | --------------------------------------------------------------------------------- | ----------------------------- |
-| 1   | `src/refund/refund.ts:42` | Major    | C. SOLID / GRASP | SRP: unrelated callers change validation and retry, coupling their change reasons | Separate the responsibilities |
+| #   | Location                      | Severity | Criterion(s)     | Issue                                                                             | Solution                      |
+| --- | ----------------------------- | -------- | ---------------- | --------------------------------------------------------------------------------- | ----------------------------- |
+| 1   | `src/refund/<source-file>:42` | Major    | C. SOLID / GRASP | SRP: unrelated callers change validation and retry, coupling their change reasons | Separate the responsibilities |
 ```
 
 For each finding, name the in-scope scoring dimension or dimensions it affects, using the checklist's letter and title. Write each Issue as one sentence: the violated rule or smell, then the evidence and its consequence; cite the rule instead of pasting its prose or theory. Keep each Solution to a fix direction.
@@ -96,7 +96,7 @@ Then total counts by severity, a per-dimension coverage line (findings count or 
 
 Request: "Audit `src/refund/` and fix what matters."
 
-- Report: 1 Major (SRP at `src/refund/refund.ts:42`), 1 Minor (a new `fetchRefund` helper uses a banned verb); G skipped, no new input boundary.
+- Report: 1 Major (SRP at `src/refund/<source-file>:42`), 1 Minor (a new `fetchRefund` helper uses a banned verb); G skipped, no new input boundary.
 - Fixes: retry policy extracted (blast radius: one module and its test); helper renamed to `getRefund`.
 - Verification: unit tests, lint, and type checks pass; the re-scan finds no new violations.
 - Criteria after fixes: A-F each 2/2; G inapplicable, excluded from the denominator.

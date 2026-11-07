@@ -32,7 +32,7 @@ Follow in order; skip only with a reason. Ask when a wrong guess is costly; othe
 
 ### 1. Shape the slice
 
-- Load `references/architecture-styles.md`; decide the slice boundary and inner style before writing code.
+- Load `references/language-conventions.md` and `references/architecture-styles.md`; decide the target language's module, test, naming, and documentation conventions, then choose the slice boundary and inner style before writing code.
 - State the choice in one sentence.
 
 ### 2. Design the public surface
