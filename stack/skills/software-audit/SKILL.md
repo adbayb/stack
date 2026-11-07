@@ -41,7 +41,7 @@ Never install or upgrade dependencies or run releases while auditing, except ins
 
 Read `references/checklist.md` for the A-G dimension map, evidence, exemptions, and severity. Load only the mapped references in scope, apply their rules first, then the audit deltas.
 
-**Exhaustive depth.** A shallow pass is a failed audit. Read every in-scope file in full, then run each dimension's evidence prompts against each file or module instead of skimming for obvious smells. For every Evidence bullet in `references/checklist.md`, record a finding, an explicit "checked, clean" with the evidence examined, or an inapplicability reason. Report every distinct root cause that meets the rules, including Minors and Unverified investigation gaps (kept out of scoring), rather than only the top few. Before the report, run a second sweep over each dimension for missed items: unused exports, duplicated knowledge, error paths, untested changed contracts, cycles, naming drift, and dependency/config gaps. Do not pad: every row still needs evidence and a rule, and exemptions still apply.
+**Exhaustive depth.** A shallow pass is a failed audit. Read every in-scope file in full, then run each dimension's evidence prompts against each file or module instead of skimming for obvious smells. For every Evidence bullet in `references/checklist.md`, record a finding, an explicit "checked, clean" with the evidence examined, or an inapplicability reason. Report every distinct root cause that meets the rules, including Minors and unresolved investigation questions that are not confirmed findings or scoring deductions, rather than only the top few. Before the report, run a second sweep over each dimension for missed items: unused exports, duplicated knowledge, error paths, untested changed contracts, cycles, naming drift, and dependency/config gaps. Do not pad: every row still needs evidence and a rule, and exemptions still apply.
 
 Scan A-G in order for a full audit; for a PR, cover dimensions touched by the change and direct dependents. Mark inapplicable dimensions with a reason.
 
@@ -49,7 +49,7 @@ Trace the changed contract through direct callers, alternate entry points, adapt
 
 For test-gap findings, follow the evidence threshold in `references/checklist.md` dimension F; a diff that omits test files alone does not establish missing coverage.
 
-Record each finding as an `Output` table row, grading severity and confidence with `references/checklist.md`. If no rule matches, report a gap and propose a rule for its canonical owner instead of inventing one.
+Record each finding as an `Output` table row, grading severity and citing the supporting observations per `references/checklist.md`. State what was reproduced, traced without execution, or left unconfirmed in plain prose. If no rule matches, report a gap and propose a rule for its canonical owner instead of inventing one.
 
 ### 3. Report before fixing
 
@@ -75,7 +75,7 @@ Present the `Output` section's report first. For a PR review, default to the rep
 
 - Re-run affected tests plus linters/type checks; state what ran and the result.
 - Re-scan touched code against the mapped references and `references/checklist.md`; no new violations.
-- Recheck direct consumers and the original reproductions. Mark blocked checks as unverified; never claim a clean audit from a partial scan or a test that never ran.
+- Recheck direct consumers and the original reproductions. State blocked checks and their impact; never claim a clean audit from a partial scan or a test that never ran.
 - Recommend another audit slice only for a concrete remaining concern.
 
 ## Output
@@ -83,20 +83,20 @@ Present the `Output` section's report first. For a PR review, default to the rep
 ```markdown
 ## Audit findings
 
-| #   | Location                  | Severity | Criterion(s)     | Issue                                                                             | Solution                      |
-| --- | ------------------------- | -------- | ---------------- | --------------------------------------------------------------------------------- | ----------------------------- |
-| 1   | `src/refund/refund.ts:42` | Major    | C. SOLID / GRASP | SRP: unrelated callers change validation and retry, coupling their change reasons | Separate the responsibilities |
+| #   | Location                      | Severity | Criterion(s)     | Issue                                                                             | Solution                       |
+| --- | ----------------------------- | -------- | ---------------- | --------------------------------------------------------------------------------- | ------------------------------ |
+| 1   | `src/refund/<source-file>:42` | Major    | C. SOLID / GRASP | SRP: unrelated callers change validation and retry, coupling their change reasons | Separate the responsibilities. |
 ```
 
 For each finding, name the in-scope scoring dimension or dimensions it affects, using the checklist's letter and title. Write each Issue as one sentence: the violated rule or smell, then the evidence and its consequence; cite the rule instead of pasting its prose or theory. Keep each Solution to a fix direction.
 
-Then total counts by severity, a per-dimension coverage line (findings count or checked-clean evidence), reviewed/skipped dimensions, unaudited out-of-scope files, verification limits (Supported rows and Unverified gaps), and a recommended fix order that highlights the highest-leverage fixes without limiting the findings table. Always include the in-scope criterion scores per `references/checklist.md` and end the report with **Total score: ?/10**, even when scoring was not requested or there are no findings; mark incomplete verification provisional. Before reporting, recalculate the total from the listed criterion scores using the checklist formula and confirm the numerator, denominator, and displayed score agree. No findings: say so and skip fixes; do not invent work. When fixing, close with what was fixed and each fix's blast radius, what was left and why, and verification results, then end with the updated score.
+Then total counts by severity, a per-dimension coverage line (findings count or checked-clean evidence), reviewed/skipped dimensions, unaudited out-of-scope files, verification limits (what was reproduced, traced without execution, or left unresolved), and a recommended fix order that highlights the highest-leverage fixes without limiting the findings table. Keep evidence and verification limits in prose; do not add categorical verification labels or table columns. Always include the in-scope criterion scores per `references/checklist.md` and end the report with **Total score: ?/10**, even when scoring was not requested or there are no findings; mark incomplete verification provisional. Before reporting, recalculate the total from the listed criterion scores using the checklist formula and confirm the numerator, denominator, and displayed score agree. No findings: say so and skip fixes; do not invent work. When fixing, close with what was fixed and each fix's blast radius, what was left and why, and verification results, then end with the updated score.
 
 ## Example
 
 Request: "Audit `src/refund/` and fix what matters."
 
-- Report: 1 Major (SRP at `src/refund/refund.ts:42`), 1 Minor (a new `fetchRefund` helper uses a banned verb); G skipped, no new input boundary.
+- Report: 1 Major (SRP at `src/refund/<source-file>:42`), 1 Minor (a new `fetchRefund` helper uses a banned verb); G skipped, no new input boundary.
 - Fixes: retry policy extracted (blast radius: one module and its test); helper renamed to `getRefund`.
 - Verification: unit tests, lint, and type checks pass; the re-scan finds no new violations.
 - Criteria after fixes: A-F each 2/2; G inapplicable, excluded from the denominator.

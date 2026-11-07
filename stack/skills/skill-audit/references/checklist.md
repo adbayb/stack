@@ -1,6 +1,6 @@
 # Audit Checklist: evidence and deltas
 
-Per-dimension evidence prompts and audit deltas, then severity, confidence, and scoring. Each `Rules:` line names the owning `skill-design` reference.
+Per-dimension evidence prompts and audit deltas, then severity, evidence, and scoring. Each `Rules:` line names the owning `skill-design` reference.
 
 Depth: each dimension is exhaustive within scope. Walk every Evidence item against every in-scope file; clear an item without a finding explicitly, with the evidence examined.
 
@@ -43,7 +43,7 @@ Rules: `skill-design` reference `writing.md`.
 
 Rules: `skill-design` reference `evaluation.md`.
 
-- Evidence: reference targets, prerequisites, and documented commands exist and match repository evidence; evaluation sets stored outside the shipped skill folder and iteration stopped once results match `Output`; consumers of a changed contract updated (dependent skills, `AGENTS.md`, install docs, guards, version metadata); captured intent (what the skill enables, requests that should and should not load it, output, prerequisites); scenario sets (2-3 requests per branch, near misses, blocked paths) with walks and fixes of the instructions rather than the scenarios; comparative or baseline runs where behavior changed, with assertions written before results and transcripts read; guards cover anatomy, links, budgets, and mirrors. For skill targets, check the execution evidence and HTML report completion gate in `SKILL.md` workflow steps 3 and 6, including audit-only requests; verify the generated artifact includes every executed evaluation and its grades and the final response links to it, rather than checking instruction text alone. Distinguish executed evaluations from scenario walks and mark unavailable or unrun checks unverified.
+- Evidence: reference targets, prerequisites, and documented commands exist and match repository evidence; evaluation sets stored outside the shipped skill folder and iteration stopped once results match `Output`; consumers of a changed contract updated (dependent skills, `AGENTS.md`, install docs, guards, version metadata); captured intent (what the skill enables, requests that should and should not load it, output, prerequisites); scenario sets (2-3 requests per branch, near misses, blocked paths) with walks and fixes of the instructions rather than the scenarios; comparative or baseline runs where behavior changed, with assertions written before results and transcripts read; guards cover anatomy, links, budgets, and mirrors. For skill targets, check the execution evidence and HTML report completion gate in `SKILL.md` workflow steps 3 and 6, including audit-only requests; verify the generated artifact includes every executed evaluation and its grades and the final response links to it, rather than checking instruction text alone. Distinguish executed evaluations from scenario walks; describe unavailable or unrun checks plainly.
 - Deltas: demand a guard only where drift is costly or already occurred, not for every sentence. Do not demand comparative runs for a wording-only change.
 
 ## Severity
@@ -54,12 +54,10 @@ Assign by demonstrated impact on agent decisions, after applying the owning rule
 - Major: a conflict or misroute below the Blocker threshold that directs wrong or unjustified work: conflicting owners, a trigger that misses core requests or captures near misses, a step routing to a missing or wrong reference, or a drifted standalone copy.
 - Minor: local clarity, wording, budget pressure, or duplicated text without a demonstrated decision change.
 
-## Evidence and confidence
+## Evidence
 
-- Verified: a failing check, a wrong decision reproduced in a scenario walk or run, or direct text proof of a conflict or duplicate.
-- Supported: a concrete request and traced loading path establish the wrong decision, but nothing ran. State that limit.
-- Unverified: a suspicion without a complete path. Report it as an investigation gap, not a confirmed finding or scoring deduction.
-- Separate confidence from severity. Deduplicate findings by root cause; record both the owning rule and the contradicting text. Do not claim repository-wide absence from a scoped search.
+- Cite the concrete instruction, scenario, check, or other observation supporting each finding. State whether the decision was reproduced or traced without execution, and describe missing verification plainly; do not add categorical verification labels or table columns.
+- Treat suspicions without a complete path as investigation questions, not confirmed findings or score deductions. Deduplicate findings by root cause; record both the owning rule and the contradicting text. Do not claim repository-wide absence from a scoped search.
 
 ## Scoring
 
@@ -73,6 +71,6 @@ For every audit report, including no-findings reports and requests that do not a
 | Proportionality | Rules honor style exceptions and present needs; counterexamples do not force speculative work.                                                        |
 | Verification    | Relevant reference/metadata/mirror checks and scenario or comparative evaluations pass; state any remaining limits and confirm fixes were authorized. |
 
-An unresolved confirmed finding prevents full marks in its affected criterion. Unverified relevant areas make the score provisional; 10/10 means no identified gap within the stated scope, not universal perfection or proof from lint alone.
+An unresolved confirmed finding prevents full marks in its affected criterion. Materially incomplete verification in relevant areas makes the score provisional; 10/10 means no identified gap within the stated scope, not universal perfection or proof from lint alone.
 
 End the scoring report with **Total score: ?/10**, replacing `?` with the sum of the five criterion scores; mark it provisional when applicable.

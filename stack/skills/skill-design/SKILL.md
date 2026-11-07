@@ -55,7 +55,7 @@ Close with a short skill note; omit unchanged items.
 - Skill: name, trigger summary, and why it is new or an extension.
 - Ownership: rules added, moved, or linked, each with its canonical owner.
 - Files: skill files and consumers touched.
-- Verification: scenario walk results and checks that ran; list anything unverified.
+- Verification: report only scenario walks and checks actually performed, with their results; state plainly which checks were not run.
 
 Do not repeat the change summary or paste rule text.
 

@@ -42,11 +42,11 @@ Never run installs, publishes, or releases while auditing, except installing or 
 
 Read `references/checklist.md` for the dimension map, evidence, severity, and scoring. Load only the mapped `skill-design` references in scope, apply their rules first, then the audit deltas.
 
-**Exhaustive depth.** A shallow pass is a failed audit. Read every in-scope file in full and run each dimension's evidence prompts against each file. For every Evidence bullet in `references/checklist.md`, record a finding, a "checked, clean" note with the evidence examined, or an inapplicability reason. Report every distinct root cause, including Minors and Unverified gaps (kept out of scoring), then sweep each dimension once more for missed items before reporting. Do not pad: each row needs evidence and an owning rule.
+**Exhaustive depth.** A shallow pass is a failed audit. Read every in-scope file in full and run each dimension's evidence prompts against each file. For every Evidence bullet in `references/checklist.md`, record a finding, a "checked, clean" note with the evidence examined, or an inapplicability reason. Report every distinct root cause, including Minors and unresolved investigation questions that are not confirmed findings or score deductions, then sweep each dimension once more for missed items before reporting. Do not pad: each row needs evidence and an owning rule.
 
 Trace each rule to its owner and every consumer: skills, `AGENTS.md` files, templates, docs, and tests. Walk the checklist counterexamples through the text.
 
-Record each finding as an `Output` table row, grading severity and confidence with `references/checklist.md`. If no rule matches, report a gap and propose a rule for its canonical owner instead of inventing one.
+Record each finding as an `Output` table row, grading severity with `references/checklist.md`. If no rule matches, report a gap and propose a rule for its canonical owner instead of inventing one.
 
 ### 3. Evaluate skill behavior
 
@@ -70,7 +70,7 @@ Present the `Output` section's report before editing. If the request is audit-on
 ### 6. Verify
 
 - Re-run the baseline checks, then the checks that `skill-design` reference `evaluation.md` requires for the fixes.
-- Re-scan touched files against `references/checklist.md`; no new violations. Mark blocked checks as unverified; never claim a clean audit from a partial scan.
+- Re-scan touched files against `references/checklist.md`; no new violations. Describe blocked or unrun checks plainly; never claim a clean audit from a partial scan.
 - Before declaring a skill audit complete, confirm step 3 has saved execution evidence and an HTML report containing every executed evaluation and its grades; open the report when possible and include its link or path in the final response. Missing evidence, failed generation, or missing evaluations/grades means an incomplete audit, even when there are no findings or edits. If opening fails, provide the HTML link or path and state the limitation.
 
 ## Output
@@ -78,21 +78,23 @@ Present the `Output` section's report before editing. If the request is audit-on
 ```markdown
 ## Audit findings
 
-| #   | Location       | Severity | Criterion(s) | Issue                                                                     | Solution                      |
-| --- | -------------- | -------- | ------------ | ------------------------------------------------------------------------- | ----------------------------- |
-| 1   | `AGENTS.md:42` | Major    | Ownership    | One owner: two files state conflicting bump rules, so agents apply either | Keep one owner and link to it |
+| #   | Location       | Severity | Criterion(s) | Issue                                                                                                                                           | Solution                       |
+| --- | -------------- | -------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| 1   | `AGENTS.md:42` | Major    | Ownership    | The `skill-design` reference `writing.md` ownership rule is violated by conflicting version guidance, so agents may apply different bump rules. | Keep one owner and link to it. |
 ```
 
 For each finding, name the scoring criterion or criteria it affects. Write each Issue as one sentence: the owning `skill-design` rule, then the contradicting text and the agent decision it changes; cite the rule instead of pasting its prose. Keep each Solution to a fix direction.
 
-Then totals by severity, a per-dimension coverage line (findings or checked-clean evidence), reviewed and skipped dimensions, unaudited out-of-scope files, verification limits (Supported rows and Unverified gaps), evaluation evidence location and results with the HTML report link or path (or an incomplete status and blocker), and a recommended fix order that highlights the highest-leverage fixes without limiting the findings table. Always include the five criterion scores and **Total score: ?/10** using `references/checklist.md`, even when scoring was not requested or there are no findings; mark incomplete verification provisional. No findings: say so and skip fixes; do not invent work. When fixing, close with what changed per owner, what was left and why, verification results, and the updated score.
+Then include severity totals; a coverage ledger with one disposition for every in-scope Evidence bullet (finding IDs, checked-clean evidence examined, or reason inapplicable); reviewed/skipped dimensions; out-of-scope files; verification limits; evaluation results and HTML report path; and a recommended fix order. Keep evidence and verification limits in prose; do not add categorical verification labels or table columns. List unresolved investigation questions separately from findings and exclude them from scoring. Always include the five criterion scores and **Total score: ?/10** using `references/checklist.md`, even when scoring was not requested or there are no findings; mark incomplete verification provisional. No findings: say so and skip fixes. When fixing, close with what changed per owner, what was left and why, verification results, and the updated score.
 
 ## Example
 
-Request: "Audit and score our skills."
+Request: "Audit the trigger change in `skills/refund/SKILL.md`." Response starts with `## Audit findings`.
 
-- Findings: 1 Major (a dependent skill restates a rule its prerequisite owns, and the copies conflict), 1 Minor (a reference is not linked from `SKILL.md`).
-- Criteria: Consistency 1/2, Ownership 1/2, Actionability 2/2, Proportionality 2/2, Verification 2/2.
-- **Total score: 8/10** (provisional because trigger checks did not run).
-- Evaluation: representative runs passed; prompts, assertions, outputs, and grades saved in the session workspace; trigger accuracy remains unverified.
-- Fix order: first delete the restated rule and link the owning reference.
+| #   | Location                   | Severity | Criterion(s)  | Issue                                                                                                                                                            | Solution                  |
+| --- | -------------------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| 1   | `skills/refund/SKILL.md:3` | Minor    | `B. Triggers` | The `skill-design` reference `writing.md` trigger rule is unmet because the description omits a common request phrasing, so that request may not load the skill. | Add the missing phrasing. |
+
+- Totals: 1 Minor, 0 Major, 0 Blocker. Coverage ledger: `B` Evidence -> finding 1 (common phrasing); checked near misses and prerequisite wording. `F` Evidence -> checked clean (mapped paths/commands, scenario walk, 20 trigger queries with held-out results, grades/report). Reviewed `B`/`F`; skipped `A`/`C`/`D`/`E`; no other in-scope files. No incomplete checks or investigation gaps.
+- Evaluation: prompts, assertions, outputs, and grades at `session/eval`; HTML report: `session/eval.html`.
+- Criteria: Consistency 2/2, Ownership 2/2, Actionability 1/2, Proportionality 2/2, Verification 2/2. **Total score: 9/10.** Fix order: add the phrasing. Audit-only; no fix applied.
