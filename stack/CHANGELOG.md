@@ -1,5 +1,20 @@
 # @adbayb/stack
 
+## 3.7.0
+
+### Minor Changes
+
+- [`7792041`](https://github.com/adbayb/stack/commit/7792041342b5c947e995f7e47d73fc2826411df9) Thanks [@adbayb](https://github.com/adbayb)! - Remove confidence grading and categorical evidence-status fields from audit reports; describe verification limits in prose and bump both audit skill contracts.
+  Require skill-design verification notes to report only checks actually performed.
+
+- [`7792041`](https://github.com/adbayb/stack/commit/7792041342b5c947e995f7e47d73fc2826411df9) Thanks [@adbayb](https://github.com/adbayb)! - Make software design and audit guidance language-agnostic, retaining TypeScript/JavaScript specifics only for those projects and honoring each language's naming conventions.
+
+- [#202](https://github.com/adbayb/stack/pull/202) [`f444a4a`](https://github.com/adbayb/stack/commit/f444a4a53d5885fc2a378c826fae38d786bd5cb5) Thanks [@adbayb](https://github.com/adbayb)! - Update the `software-design` skill to prefer modern, idiomatic ECMAScript syntax when it improves clarity or reduces code while preserving compatibility and readability, and clarify top-down source/test file ordering.
+
+### Patch Changes
+
+- [`53f80f7`](https://github.com/adbayb/stack/commit/53f80f7b86fc63430c5cba7a9dde829bb3f33ce2) Thanks [@adbayb](https://github.com/adbayb)! - Update dependencies including oxlint, oxfmt.
+
 ## 3.6.0
 
 ### Minor Changes
