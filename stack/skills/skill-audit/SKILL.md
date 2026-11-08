@@ -6,9 +6,9 @@ metadata:
     author: adbayb
     repository: adbayb/stack
     requires:
-        - "skill-design >=1.0.0"
+        - "skill-design >=1.1.0"
         - "skill-creator"
-    version: "1.0.0"
+    version: "1.1.0"
 ---
 
 # Skill Audit
