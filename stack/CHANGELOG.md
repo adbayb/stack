@@ -1,5 +1,15 @@
 # @adbayb/stack
 
+## 3.8.0
+
+### Minor Changes
+
+- [`b87bc2d`](https://github.com/adbayb/stack/commit/b87bc2d4ca6c0eeadfce218a83fe6b8660c6eb43) Thanks [@adbayb](https://github.com/adbayb)! - Add documentation design and audit skills.
+
+### Patch Changes
+
+- [`bbe19c8`](https://github.com/adbayb/stack/commit/bbe19c8867df18b604cd3609c237d14a3be826ab) Thanks [@adbayb](https://github.com/adbayb)! - Update oxc dependencies.
+
 ## 3.7.0
 
 ### Minor Changes
