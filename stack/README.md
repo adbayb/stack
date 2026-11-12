@@ -69,10 +69,12 @@ stack release
 
 ### Agent skills
 
-`@adbayb/stack` ships four [Agent Skills](https://agentskills.io/specification) for coding agents:
+`@adbayb/stack` ships six [Agent Skills](https://agentskills.io/specification) for coding agents:
 
 - [software-design](https://github.com/adbayb/stack/blob/main/stack/skills/software-design/): design and write clean, testable code; the single source of the design rules and glossary.
 - [software-audit](https://github.com/adbayb/stack/blob/main/stack/skills/software-audit/): audit code or pull requests against the `software-design` rules (depends on `software-design`).
+- [document-design](https://github.com/adbayb/stack/blob/main/stack/skills/document-design/): create project documentation from the embedded README template; requires the [`makespec`](https://github.com/adbayb/makespec) skill for ADR, RFC, and PDR work.
+- [document-audit](https://github.com/adbayb/stack/blob/main/stack/skills/document-audit/): audit project documentation, including ADR, RFC, and PDR records (requires `document-design` and [`makespec`](https://github.com/adbayb/makespec)).
 - [skill-design](https://github.com/adbayb/stack/blob/main/stack/skills/skill-design/): design and write skills with one shared anatomy, plus agent instructions such as `AGENTS.md`; the single source of the writing rules.
 - [skill-audit](https://github.com/adbayb/stack/blob/main/stack/skills/skill-audit/): audit and score skills and agent instructions such as `AGENTS.md` against the `skill-design` rules (depends on `skill-design` and Anthropic `skill-creator` for skill evaluation).
 
@@ -83,7 +85,7 @@ pnpm add -D @adbayb/stack
 pnpm approve
 ```
 
-If the package is already installed, run `pnpm approve`. Select `@adbayb/stack` to approve all four skills; pnpm records the approval in `pnpm-workspace.yaml`. pnpm links skills into existing agent skill directories by default. To choose a directory explicitly, configure:
+If the package is already installed, run `pnpm approve`. Select `@adbayb/stack` to approve all six skills; pnpm records the approval in `pnpm-workspace.yaml`. pnpm links skills into existing agent skill directories by default. To choose a directory explicitly, configure:
 
 ```yaml
 skills:
@@ -98,6 +100,8 @@ For older pnpm versions or global installation, install from the repository with
 ```bash
 pnpm dlx skills add adbayb/stack --skill software-design -g
 pnpm dlx skills add adbayb/stack --skill software-audit -g
+pnpm dlx skills add adbayb/stack --skill document-design -g
+pnpm dlx skills add adbayb/stack --skill document-audit -g
 pnpm dlx skills add adbayb/stack --skill skill-design -g
 pnpm dlx skills add adbayb/stack --skill skill-audit -g
 ```

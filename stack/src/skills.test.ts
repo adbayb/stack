@@ -67,7 +67,12 @@ const REQUIRED_SKILL_SECTIONS = ["Workflow", "Output", "Example"] as const;
 const AUDIT_SKILLS = [
 	{ name: "software-audit", dimensions: 7, owner: "software-design" },
 	{ name: "skill-audit", dimensions: 6, owner: "skill-design" },
+	{ name: "document-audit", dimensions: 6, owner: "document-design" },
 ] as const;
+
+const EXTERNAL_SKILLS = new Map<string, { repository: string; version: string }>([
+	["makespec", { repository: "adbayb/makespec", version: "1.0.2" }],
+]);
 
 type FrontmatterField = "description" | "license" | "name";
 
@@ -288,13 +293,11 @@ describe("skills", () => {
 			expect(body, `${path}: point at \`metadata.requires\`.`).toMatch(/metadata\.requires/u);
 
 			for (const minimumVersion of [requiredVersion].filter(Boolean)) {
-				const prerequisiteVersion = getMetadataField(
-					getFrontmatter(getSkillContent(prerequisite)),
-					"version",
-				);
+				const { repository, version: prerequisiteVersion } =
+					getPrerequisiteMetadata(prerequisite);
 
 				expect(body, `${path}: use the shipped prerequisite's installer.`).toContain(
-					`pnpm dlx skills add adbayb/stack --skill ${prerequisite} -g`,
+					`pnpm dlx skills add ${repository} --skill ${prerequisite} -g`,
 				);
 
 				expect(
@@ -369,6 +372,36 @@ describe("skills", () => {
 					new RegExp(`(?:requires|depends on) [^\\n]*\`${prerequisite}\``, "u"),
 				);
 			}
+		}
+	});
+
+	test("should bundle the README template used by document-design", () => {
+		const template = readFileSync(
+			resolve(SKILLS_DIRECTORY, "document-design/assets/README.template.md"),
+			"utf8",
+		);
+
+		const readmeGuide = readFileSync(
+			resolve(SKILLS_DIRECTORY, "document-design/references/readme-template.md"),
+			"utf8",
+		);
+
+		expect(readmeGuide).toContain("../assets/README.template.md");
+		expect(template).toContain("{{projectName}}");
+
+		for (const section of [
+			"Features",
+			"Usage",
+			"Ecosystem",
+			"Architecture",
+			"Contribution",
+			"License",
+		]) {
+			expect(template).toContain(section);
+		}
+
+		for (const emoji of ["📦", "✨", "🚀", "🌍", "🏗️", "✍️", "📖"]) {
+			expect(template).toContain(emoji);
 		}
 	});
 
@@ -556,6 +589,25 @@ const getDependentSkills = () => {
 
 const getSkillContent = (skill: string) => {
 	return readFileSync(resolve(SKILLS_DIRECTORY, skill, "SKILL.md"), "utf8");
+};
+
+const getPrerequisiteMetadata = (skill: string) => {
+	const skillPath = resolve(SKILLS_DIRECTORY, skill, "SKILL.md");
+
+	if (existsSync(skillPath)) {
+		return {
+			repository: "adbayb/stack",
+			version: getMetadataField(getFrontmatter(readFileSync(skillPath, "utf8")), "version"),
+		};
+	}
+
+	const externalSkill = EXTERNAL_SKILLS.get(skill);
+
+	if (!externalSkill) {
+		throw new Error(`No metadata is registered for external prerequisite "${skill}".`);
+	}
+
+	return externalSkill;
 };
 
 const getChecklistContent = (skill: string) => {
