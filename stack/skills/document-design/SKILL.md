@@ -6,7 +6,7 @@ metadata:
     author: adbayb
     repository: adbayb/stack
     requires:
-        - "makespec >=1.0.2"
+        - "makespec >=1.0.3"
     version: "1.0.0"
 ---
 
