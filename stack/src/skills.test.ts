@@ -71,7 +71,7 @@ const AUDIT_SKILLS = [
 ] as const;
 
 const EXTERNAL_SKILLS = new Map<string, { repository: string; version: string }>([
-	["makespec", { repository: "adbayb/makespec", version: "1.0.3" }],
+	["makespec", { repository: "adbayb/makespec", version: "1.1.2" }],
 ]);
 
 type FrontmatterField = "description" | "license" | "name";
