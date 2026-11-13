@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 3.8.1
+
+### Patch Changes
+
+- [`6a44ab9`](https://github.com/adbayb/stack/commit/6a44ab9ab56187c59e263358c3cbcdd75bf72b1b) Thanks [@adbayb](https://github.com/adbayb)! - Update makespec skill and turbo dependencies.
+
 ## 3.8.0
 
 ### Minor Changes
