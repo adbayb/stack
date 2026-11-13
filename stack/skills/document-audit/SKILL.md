@@ -7,8 +7,8 @@ metadata:
     repository: adbayb/stack
     requires:
         - "document-design >=1.0.0"
-        - "makespec >=1.0.3"
-    version: "1.0.0"
+        - "makespec >=1.1.2"
+    version: "1.0.1"
 ---
 
 # Document Audit
