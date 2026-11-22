@@ -127,8 +127,8 @@ export const createCreateCommand: CommandFactory = (program) => {
 
 				return {
 					licenseYear: new Date().getFullYear().toString(),
-					nodeVersion: toMajorCaretVersion(nodeVersion.replace("v", "")),
-					pnpmVersion: toMajorCaretVersion(pnpmVersion),
+					nodeVersion: nodeVersion.replace("v", ""),
+					pnpmVersion,
 					projectDescription: toCapitalLetter(inputDescription),
 					projectName,
 					projectUrl: inputUrl,
@@ -457,17 +457,4 @@ const hasTemplateVariable = (input: string) => {
 	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test MDN documentation}.
 	 */
 	return input.search(TEMPLATE_VARIABLE_MATCHER) >= 0;
-};
-
-const toMajorCaretVersion = (semanticVersion: string) => {
-	const major = Number(semanticVersion.split(".")[0]);
-
-	assert(Number.isInteger(major) && major > 0, () => {
-		return createError(
-			"stack create",
-			`Cannot resolve a major version from "${semanticVersion}".`,
-		);
-	});
-
-	return `^${major}.0.0`;
 };

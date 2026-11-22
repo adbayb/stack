@@ -102,33 +102,27 @@ describe(createCreateCommand, () => {
 		expect(exec).toHaveBeenCalledTimes(5);
 	});
 
-	test.each([
-		["not-a-version", { version: "10.5.0" }, "Cannot resolve a major version"],
-		["v24.1.0", {}, "The pnpm version cannot be resolved remotely"],
-	])(
-		"should reject unusable remotely resolved versions %s",
-		async (nodeVersion, pnpmManifest, message) => {
-			vi.stubGlobal(
-				"fetch",
-				vi
-					.fn()
-					.mockResolvedValueOnce(new Response(nodeVersion))
-					.mockResolvedValueOnce(Response.json(pnpmManifest)),
-			);
+	test("should reject when the pnpm version cannot be resolved", async () => {
+		vi.stubGlobal(
+			"fetch",
+			vi
+				.fn()
+				.mockResolvedValueOnce(new Response("v24.1.7"))
+				.mockResolvedValueOnce(Response.json({})),
+		);
 
-			await expect(
-				createCommandHarness(createCreateCommand)({
-					canRemoveExistingDirectoryInput: false,
-					inputDescription: "A project",
-					inputName: "Sample app",
-					inputTemplate: "single-project",
-					inputUrl: "git@github.com:example/project.git",
-				}),
-			).rejects.toThrow(message);
+		await expect(
+			createCommandHarness(createCreateCommand)({
+				canRemoveExistingDirectoryInput: false,
+				inputDescription: "A project",
+				inputName: "Sample app",
+				inputTemplate: "single-project",
+				inputUrl: "git@github.com:example/project.git",
+			}),
+		).rejects.toThrow("The pnpm version cannot be resolved remotely");
 
-			expect(exec).toHaveBeenCalledExactlyOnceWith("pnpm -v");
-		},
-	);
+		expect(exec).toHaveBeenCalledExactlyOnceWith("pnpm -v");
+	});
 
 	test("should report a failed version request without starting project setup", async () => {
 		vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("", { status: 503 })));
@@ -185,8 +179,8 @@ describe(createCreateCommand, () => {
 			);
 
 			expect(data).toMatchObject({
-				nodeVersion: "^24.0.0",
-				pnpmVersion: "^10.0.0",
+				nodeVersion: "24.1.7",
+				pnpmVersion: "10.5.3",
 				projectDescription: "A useful tool",
 				projectName: "my-cool-project",
 				projectUrl: inputUrl,
@@ -265,8 +259,8 @@ describe(createCreateCommand, () => {
 					canRemoveExistingDirectoryInput: false,
 					data: {
 						licenseYear: "2026",
-						nodeVersion: "^24.0.0",
-						pnpmVersion: "^10.0.0",
+						nodeVersion: "24.1.7",
+						pnpmVersion: "10.5.3",
 						projectDescription: "Sample project",
 						projectName: "sample-app",
 						projectUrl: "git@github.com:example/project.git",
@@ -369,7 +363,7 @@ const stubVersionRequests = () => {
 		"fetch",
 		vi
 			.fn()
-			.mockResolvedValueOnce(new Response("v24.1.0"))
-			.mockResolvedValueOnce(Response.json({ version: "10.5.0" })),
+			.mockResolvedValueOnce(new Response("v24.1.7"))
+			.mockResolvedValueOnce(Response.json({ version: "10.5.3" })),
 	);
 };
