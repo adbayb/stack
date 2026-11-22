@@ -281,6 +281,7 @@ const config = defineConfig({
 		"react/jsx-no-literals": "off",
 		"react/jsx-props-no-spreading": "off",
 		"react/no-multi-comp": "off",
+		"react/only-export-components": "off",
 		"react/prefer-function-component": [
 			"error",
 			{ allowErrorBoundary: true, allowJsxUtilityClass: true },
