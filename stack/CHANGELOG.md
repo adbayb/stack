@@ -1,5 +1,11 @@
 # @adbayb/stack
 
+## 3.8.2
+
+### Patch Changes
+
+- [`01c0c37`](https://github.com/adbayb/stack/commit/01c0c3767539ab4ce294adba477f1dc8d903d8bf) Thanks [@adbayb](https://github.com/adbayb)! - Disable react/only-export-components oxlint rule.
+
 ## 3.8.1
 
 ### Patch Changes
