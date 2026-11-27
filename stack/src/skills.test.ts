@@ -77,12 +77,15 @@ const EXTERNAL_SKILLS = new Map<string, { repository: string; version: string }>
 type FrontmatterField = "description" | "license" | "name";
 
 describe("skills", () => {
-	test("should link repository skills to the package's canonical skills directory", () => {
-		const repositorySkills = resolve(import.meta.dirname, "../../.agents/skills");
+	test.each([".agents/skills", ".claude/skills"])(
+		"should link repository %s to the package's canonical skills directory",
+		(directory) => {
+			const repositorySkills = resolve(import.meta.dirname, "../..", directory);
 
-		expect(lstatSync(repositorySkills).isSymbolicLink()).toBe(true);
-		expect(realpathSync(repositorySkills)).toBe(SKILLS_DIRECTORY);
-	});
+			expect(lstatSync(repositorySkills).isSymbolicLink()).toBe(true);
+			expect(realpathSync(repositorySkills)).toBe(SKILLS_DIRECTORY);
+		},
+	);
 
 	test("should satisfy Agent Skills field constraints in the SKILL.md frontmatter", () => {
 		for (const path of getSkillPaths()) {
