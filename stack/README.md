@@ -151,7 +151,7 @@ flowchart TD
 
 ### Template update workflow
 
-Projects stay in sync with their template through a 3-way merge. `stack update` bumps `@adbayb/stack` to its latest version (if not already installed, for example by Renovate), takes the template of the previous version as the merge base (the installed one before the bump, otherwise the one used on the remote default branch), then merges the new version's template into each project file with `git merge-file`:
+Projects stay in sync with their template through a 3-way merge. `stack update` bumps `@adbayb/stack` to its latest version (if not already installed), takes the template of the previous version as the merge base (the installed one before the bump, otherwise the one used on the remote default branch), then merges the new version's template into each project file with `git merge-file`:
 
 - Template changes apply, local edits stay, and overlapping edits get conflict markers to resolve.
 - New template files are added; files removed locally stay removed; files dropped by the template are removed only without local edits.
