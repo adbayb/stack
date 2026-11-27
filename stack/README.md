@@ -85,13 +85,16 @@ pnpm add -D @adbayb/stack
 pnpm approve
 ```
 
-If the package is already installed, run `pnpm approve`. Select `@adbayb/stack` to approve all six skills; pnpm records the approval in `pnpm-workspace.yaml`. pnpm links skills into existing agent skill directories by default. To choose a directory explicitly, configure:
+If the package is already installed, run `pnpm approve`. Select `@adbayb/stack` to approve all six skills; pnpm records the approval in `pnpm-workspace.yaml`. pnpm links skills into existing agent skill directories by default. To choose directories explicitly, configure:
 
 ```yaml
 skills:
     dirs:
-        - .agents/skills
+        - .agents/skills # Codex and other agents following the shared convention
+        - .claude/skills # Claude Code, which only reads this directory
 ```
+
+Projects scaffolded with `stack create` ship this configuration.
 
 Links use names such as `pnpm-@adbayb+stack-software-design`. Global installs and `pnpm dlx` do not link skills.
 
