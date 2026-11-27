@@ -14,6 +14,7 @@
 		"release:snapshot": "stack release --snapshot",
 		"release:version": "stack release --bump",
 		"start": "stack start",
+		"sync": "stack sync",
 		"test": "stack test",
 		"watch": "stack watch"
 	},

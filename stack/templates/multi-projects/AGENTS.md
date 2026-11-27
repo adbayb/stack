@@ -30,14 +30,15 @@ Scaffolded with `@adbayb/stack`; workflow scripts delegate to the `stack` binary
 Root scripts are thin wrappers; use them, not raw tools.
 
 - `pnpm build` -> `stack build`: cached turbo build to `dist/**` via quickbundle.
-- `pnpm check` -> `stack check`: build + dependency/format/code checks; commit checks are separate (`--filter commit` or hook).
+- `pnpm check` -> `stack check`: build + dependency/template/format/code checks; commit checks are separate (`--filter commit` or hook).
 - `pnpm fix` -> `stack fix`: cached build, then oxlint + oxfmt autofix.
 - `pnpm test` -> `stack test`: turbo tests, build first.
 - `pnpm start` / `pnpm watch`: turbo start/watch runs (package-defined).
+- `pnpm sync` -> `stack sync`: after upgrading `@adbayb/stack`, 3-way merges its template changes; resolve conflict markers, keep intentional local edits.
 - `pnpm clean` -> `stack clean`: removes git-ignored files and `node_modules/.cache`; keeps installed dependencies/`.env*`; never hand-delete `dist/`.
 - `pnpm release:changelog` adds a changeset; `release:{version,snapshot,publish}` run only in `.github/workflows/continuous_delivery.yml`.
 
-Focused: `pnpm check --filter <code|formatting> [files...]` (files only apply to these filters), `pnpm check --filter <dependency|commit>`, `pnpm fix [files...]`, `pnpm --filter <package> test`. CI: install -> build -> check -> test.
+Focused: `pnpm check --filter <code|formatting> [files...]` (files only apply to these filters), `pnpm check --filter <dependency|template|commit>`, `pnpm fix [files...]`, `pnpm --filter <package> test`. CI: install -> build -> check -> test.
 
 ### Testing
 

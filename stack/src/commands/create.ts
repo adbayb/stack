@@ -13,6 +13,8 @@ import {
 	setPackageManager,
 	toShellArgument,
 } from "../helpers";
+import { REPOSITORY_REGEXP, hasTemplateVariable, renderTemplate } from "../template";
+import type { Template } from "../template";
 import type { CommandFactory } from "../types";
 
 type CommandContext = {
@@ -35,11 +37,6 @@ type CommandContext = {
 	inputUrl: string;
 	templateEngine: TemplateEngine;
 };
-
-type Template = "multi-projects" | "single-project";
-
-const REPOSITORY_REGEXP =
-	/^(?:git@.*:|https?:\/\/.*\/)(?<repoOwner>[^/]+)\/(?<repoName>[^/]+)\.git$/u;
 
 /**
  * Scaffold a new project from a template.
@@ -344,7 +341,7 @@ const createTemplateEngine = async (
 						return type === "content";
 					})
 					.map(async (entry) => {
-						await writeFile(entry.path, setTemplateVariables(entry, templateModel));
+						await writeFile(entry.path, renderTemplate(entry.content, templateModel));
 					}),
 			);
 		},
@@ -368,13 +365,7 @@ const createTemplateEngine = async (
 			for (const entry of sortedDirectoryEntries) {
 				const newPath = join(
 					dirname(entry.path),
-					setTemplateVariables(
-						{
-							...entry,
-							content: basename(entry.content),
-						},
-						templateModel,
-					),
+					renderTemplate(basename(entry.content), templateModel),
 				);
 
 				await rename(entry.path, newPath);
@@ -438,23 +429,4 @@ const getTemplateEntries = async (path: string) => {
 	);
 
 	return templateEntries.flat();
-};
-
-const setTemplateVariables = (entry: TemplateEntry, model: TemplateMetadata["templateModel"]) => {
-	return entry.content.replaceAll(TEMPLATE_VARIABLE_MATCHER, (match, dataModelKey: string) => {
-		return model[dataModelKey] ?? match;
-	});
-};
-
-const TEMPLATE_VARIABLE_MATCHER = /\{\{(.*?)\}\}/giu;
-
-const hasTemplateVariable = (input: string) => {
-	/**
-	 * TemplateVariableMatcher.test() is not used since the `RegExp` is stateful when the global is
-	 * used leading to some unstable results (relying on latest `lastIndex` set (lastIndex specifies
-	 * the index at which to start the next match)). String.search is stateless.
-	 *
-	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test MDN documentation}.
-	 */
-	return input.search(TEMPLATE_VARIABLE_MATCHER) >= 0;
 };

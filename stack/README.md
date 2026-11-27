@@ -43,6 +43,8 @@ stack clean
 stack check
 # Fix auto-fixable issues
 stack fix
+# Merge template changes after upgrading @adbayb/stack
+stack sync
 # Start the project in production mode
 stack start
 # Build the project in production mode
@@ -146,6 +148,16 @@ flowchart TD
     style S fill:#daf2d7,stroke:#90cf8e
     classDef strokeWidth stroke-width:3px
 ```
+
+### Template sync workflow
+
+Projects stay in sync with their template through a 3-way merge. After an `@adbayb/stack` upgrade, `stack sync` takes the template of the version used on the remote default branch as the merge base, then merges the installed version's template into each project file with `git merge-file`:
+
+- Template changes apply, local edits stay, and overlapping edits get conflict markers to resolve.
+- New template files are added; files removed locally stay removed; files dropped by the template are removed only without local edits.
+- The base template is downloaded with `npm pack`; pass `--from <version>` to choose the base version, for example for the first sync of a project created before `stack sync` existed.
+
+`stack check` (or `stack check --filter template`) runs the same merge without writing and fails while template changes are pending, so an upgrade cannot land unsynced. It only fetches the remote default branch tip and skips when its `@adbayb/stack` version matches the installed one.
 
 <br>
 

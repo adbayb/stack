@@ -7,6 +7,7 @@ import { createFixCommand } from "./commands/fix";
 import { createInstallCommand } from "./commands/install";
 import { createReleaseCommand } from "./commands/release";
 import { createStartCommand } from "./commands/start";
+import { createSyncCommand } from "./commands/sync";
 import { createTestCommand } from "./commands/test";
 import { createWatchCommand } from "./commands/watch";
 import { VERSION } from "./constants";
@@ -31,6 +32,7 @@ const createProgram = (...commandFactories: CommandFactory[]) => {
 createProgram(
 	createCreateCommand,
 	createInstallCommand,
+	createSyncCommand,
 	createCleanCommand,
 	createCheckCommand,
 	createFixCommand,
