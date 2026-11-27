@@ -66,23 +66,48 @@ export const hasTemplateVariable = (input: string) => {
 };
 
 /**
+ * Bump `@adbayb/stack` to its latest published version.
+ *
+ * @returns The version installed before the bump, or `undefined` when already up to date or when
+ *   the project is not pinned to a published version.
+ */
+export const bumpStack = async () => {
+	if (!isExactVersion(getStackVersion(await readPackageJson()))) {
+		return undefined;
+	}
+
+	const latestVersion = await exec("pnpm view @adbayb/stack version");
+
+	if (latestVersion === VERSION) {
+		return undefined;
+	}
+
+	await exec(
+		`pnpm add ${toShellArgument(`@adbayb/stack@${latestVersion}`)} --save-dev --ignore-workspace-root-check`,
+		{ hasLiveOutput: true },
+	);
+
+	return VERSION;
+};
+
+/**
  * Bring the template changes released since the default branch's `@adbayb/stack` version into the
  * working directory with a 3-way merge: template changes apply, local edits stay, and overlapping
  * edits get conflict markers.
  *
- * @param options - The sync options.
+ * @param options - The update options.
  * @param options.fromVersion - The base version, read from the remote default branch by default.
  * @param options.isDryRun - Compute the changes without writing them.
  * @returns The pending (or applied) changes; empty when the project is up to date.
  */
-export const syncTemplate = async (options: {
+export const updateTemplate = async (options: {
 	fromVersion?: string | undefined;
 	isDryRun: boolean;
 }) => {
 	const { fromVersion, isDryRun } = options;
-	const packageJson = await readFile(resolveFromWorkingDirectory("package.json"), "utf8");
+	const packageJson = await readPackageJson();
 
-	// Projects not pinned to a published version (such as this repository) have nothing to sync.
+	// Projects not pinned to a published version (such as this repository) have nothing to update.
 	if (!isExactVersion(getStackVersion(packageJson))) {
 		return [];
 	}
@@ -97,7 +122,7 @@ export const syncTemplate = async (options: {
 		? "multi-projects"
 		: "single-project";
 
-	const temporaryDirectory = await mkdtemp(join(tmpdir(), "stack-sync-"));
+	const temporaryDirectory = await mkdtemp(join(tmpdir(), "stack-update-"));
 
 	try {
 		const changes = await getTemplateChanges(
@@ -119,8 +144,8 @@ export const syncTemplate = async (options: {
 /**
  * Compute the changes moving the working directory from the base template to the next one.
  *
- * @param basePath - The template the project was last synced with.
- * @param nextPath - The template to sync with.
+ * @param basePath - The template the project was last updated with.
+ * @param nextPath - The template to update with.
  * @param model - The variable values to render both templates with.
  * @returns The files whose content would change.
  */
@@ -292,6 +317,10 @@ const getStackVersion = (packageJson: string) => {
 
 const isExactVersion = (version: string | undefined): version is string => {
 	return version !== undefined && EXACT_VERSION_REGEXP.test(version);
+};
+
+const readPackageJson = async () => {
+	return readFile(resolveFromWorkingDirectory("package.json"), "utf8");
 };
 
 const readOptionalFile = async (path: string) => {

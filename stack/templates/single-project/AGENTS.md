@@ -34,7 +34,7 @@ Root scripts are thin wrappers; use them, not raw tools.
 - `pnpm fix` -> `stack fix`: cached build, then oxlint + oxfmt autofix.
 - `pnpm test` -> `stack test`: turbo tests, build first.
 - `pnpm start` / `pnpm watch`: turbo start/watch runs (package-defined).
-- `pnpm sync` -> `stack sync`: after upgrading `@adbayb/stack`, 3-way merges its template changes; resolve conflict markers, keep intentional local edits.
+- `pnpm stack update`: bumps `@adbayb/stack` to latest, then 3-way merges its template changes; resolve conflict markers, keep intentional local edits.
 - `pnpm clean` -> `stack clean`: removes git-ignored files and `node_modules/.cache`; keeps installed dependencies/`.env*`; never hand-delete `dist/`.
 - `pnpm release:changelog` adds a changeset; `release:{version,snapshot,publish}` run only in `.github/workflows/continuous_delivery.yml`.
 

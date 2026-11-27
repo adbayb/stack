@@ -5,7 +5,7 @@ import { dirname, join } from "node:path";
 import { exec } from "termost";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { VERSION } from "./constants";
-import { getTemplateChanges, syncTemplate } from "./template";
+import { bumpStack, getTemplateChanges, updateTemplate } from "./template";
 
 vi.mock(import("termost"), async (importOriginal) => {
 	const original = await importOriginal();
@@ -119,10 +119,30 @@ describe("template", () => {
 		});
 	});
 
-	describe(syncTemplate, () => {
+	describe(bumpStack, () => {
+		test("should not bump when the latest version is already installed", async () => {
+			await writeProjectPackage(VERSION);
+			vi.mocked(exec).mockResolvedValueOnce(VERSION);
+			await expect(bumpStack()).resolves.toBeUndefined();
+			expect(exec).toHaveBeenCalledExactlyOnceWith("pnpm view @adbayb/stack version");
+		});
+
+		test("should bump to the latest version and return the previous one", async () => {
+			await writeProjectPackage(VERSION);
+			vi.mocked(exec).mockResolvedValueOnce("99.0.0");
+			await expect(bumpStack()).resolves.toBe(VERSION);
+
+			expect(exec).toHaveBeenLastCalledWith(
+				"pnpm add '@adbayb/stack@99.0.0' --save-dev --ignore-workspace-root-check",
+				{ hasLiveOutput: true },
+			);
+		});
+	});
+
+	describe(updateTemplate, () => {
 		test("should skip without network access when the stack version is not pinned", async () => {
 			await writeProjectPackage("workspace:*");
-			await expect(syncTemplate({ isDryRun: true })).resolves.toStrictEqual([]);
+			await expect(updateTemplate({ isDryRun: true })).resolves.toStrictEqual([]);
 			expect(exec).not.toHaveBeenCalled();
 		});
 
@@ -136,7 +156,7 @@ describe("template", () => {
 					JSON.stringify({ devDependencies: { "@adbayb/stack": VERSION } }),
 				);
 
-			await expect(syncTemplate({ isDryRun: true })).resolves.toStrictEqual([]);
+			await expect(updateTemplate({ isDryRun: true })).resolves.toStrictEqual([]);
 			expect(exec).toHaveBeenCalledWith("git fetch --no-tags --depth=1 origin HEAD");
 		});
 	});
