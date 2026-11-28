@@ -4,8 +4,9 @@ import { checkCode } from "./check-code";
 import { checkCommit } from "./check-commit";
 import { checkDependency } from "./check-dependency";
 import { checkFormatting } from "./check-formatting";
+import { checkTemplate } from "./check-template";
 
-const ONLY_VALUES = ["commit", "code", "dependency", "formatting"] as const;
+const ONLY_VALUES = ["commit", "code", "dependency", "formatting", "template"] as const;
 
 type CommandContext = {
 	filter: Filter | undefined;
@@ -47,8 +48,8 @@ export const createCheckCommand: CommandFactory = (program) => {
 				});
 			},
 			skip({ filter }) {
-				// No need to build if only commit is checked
-				return filter === "commit";
+				// No need to build if only commit or template is checked
+				return filter === "commit" || filter === "template";
 			},
 		})
 		.task({
@@ -57,6 +58,13 @@ export const createCheckCommand: CommandFactory = (program) => {
 				await checkDependency();
 			},
 			skip: ifFilterDefinedAndNotEqualTo("dependency"),
+		})
+		.task({
+			label: label("Check template compliance"),
+			async handler() {
+				await checkTemplate();
+			},
+			skip: ifFilterDefinedAndNotEqualTo("template"),
 		})
 		.task({
 			label: label("Check formatting compliance"),

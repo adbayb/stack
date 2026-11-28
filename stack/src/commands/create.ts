@@ -13,33 +13,19 @@ import {
 	setPackageManager,
 	toShellArgument,
 } from "../helpers";
+import { getRepositoryId, hasTemplateVariable, renderTemplate, toProjectPath } from "../template";
+import type { Template, TemplateModel } from "../template";
 import type { CommandFactory } from "../types";
 
 type CommandContext = {
 	canRemoveExistingDirectoryInput: boolean;
-	data: Record<
-		| "licenseYear"
-		| "nodeVersion"
-		| "pnpmVersion"
-		| "projectDescription"
-		| "projectName"
-		| "projectUrl"
-		| "repoId"
-		| "templatePath"
-		| "workingPath",
-		string
-	>;
+	data: Record<"templatePath" | "workingPath", string> & TemplateModel;
 	inputDescription: string;
 	inputName: string;
 	inputTemplate: Template;
 	inputUrl: string;
 	templateEngine: TemplateEngine;
 };
-
-type Template = "multi-projects" | "single-project";
-
-const REPOSITORY_REGEXP =
-	/^(?:git@.*:|https?:\/\/.*\/)(?<repoOwner>[^/]+)\/(?<repoName>[^/]+)\.git$/u;
 
 /**
  * Scaffold a new project from a template.
@@ -93,12 +79,12 @@ export const createCreateCommand: CommandFactory = (program) => {
 					);
 				}
 
-				const { repoName, repoOwner } = REPOSITORY_REGEXP.exec(inputUrl)?.groups ?? {};
+				const repoId = getRepositoryId(inputUrl);
 
-				if (!repoOwner || !repoName) {
+				if (!repoId) {
 					throw createError(
 						"git",
-						"The owner and repository name cannot be extracted. Please make sure to follow either `/^git@.*:(?<repoOwner>.*)/(?<repoName>.*).git$/` or `/^https?://.*/(?<repoOwner>.*)/(?<repoName>.*).git$/` pattern.",
+						"The owner and repository name cannot be extracted. Please provide a git remote URL such as `git@github.com:owner/name.git` or `https://github.com/owner/name.git`.",
 					);
 				}
 
@@ -132,7 +118,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 					projectDescription: toCapitalLetter(inputDescription),
 					projectName,
 					projectUrl: inputUrl,
-					repoId: `${repoOwner}/${repoName}`,
+					repoId,
 					templatePath: resolveFromPackageDirectory("templates", inputTemplate),
 					workingPath: resolveFromWorkingDirectory(projectName),
 				};
@@ -306,7 +292,7 @@ type TemplateEntry = {
 
 type TemplateMetadata = {
 	projectName: string;
-	templateModel: Record<string, string>;
+	templateModel: TemplateModel;
 	templateName: string;
 	templatePath: string;
 };
@@ -325,11 +311,14 @@ const createTemplateEngine = async (
 		recursive: true,
 	});
 
-	// Rename back `.gitignore` if available (since NPM prevents its inclusion during publication: https://docs.npmjs.com/cli/v10/using-npm/developers#keeping-files-out-of-your-package)
-	const gitignoreFile = join(workingPath, ".gitignore.tmpl");
+	// Rename back published files (since NPM prevents some inclusions such as `.gitignore` during publication: https://docs.npmjs.com/cli/v10/using-npm/developers#keeping-files-out-of-your-package)
+	for (const entry of await readdir(workingPath, { recursive: true, withFileTypes: true })) {
+		const path = join(entry.parentPath, entry.name);
+		const projectPath = toProjectPath(path);
 
-	if (existsSync(gitignoreFile)) {
-		await rename(gitignoreFile, join(workingPath, ".gitignore"));
+		if (entry.isFile() && projectPath !== path) {
+			await rename(path, projectPath);
+		}
 	}
 
 	const templateEntries = await getTemplateEntries(workingPath);
@@ -344,7 +333,7 @@ const createTemplateEngine = async (
 						return type === "content";
 					})
 					.map(async (entry) => {
-						await writeFile(entry.path, setTemplateVariables(entry, templateModel));
+						await writeFile(entry.path, renderTemplate(entry.content, templateModel));
 					}),
 			);
 		},
@@ -368,13 +357,7 @@ const createTemplateEngine = async (
 			for (const entry of sortedDirectoryEntries) {
 				const newPath = join(
 					dirname(entry.path),
-					setTemplateVariables(
-						{
-							...entry,
-							content: basename(entry.content),
-						},
-						templateModel,
-					),
+					renderTemplate(basename(entry.content), templateModel),
 				);
 
 				await rename(entry.path, newPath);
@@ -438,23 +421,4 @@ const getTemplateEntries = async (path: string) => {
 	);
 
 	return templateEntries.flat();
-};
-
-const setTemplateVariables = (entry: TemplateEntry, model: TemplateMetadata["templateModel"]) => {
-	return entry.content.replaceAll(TEMPLATE_VARIABLE_MATCHER, (match, dataModelKey: string) => {
-		return model[dataModelKey] ?? match;
-	});
-};
-
-const TEMPLATE_VARIABLE_MATCHER = /\{\{(.*?)\}\}/giu;
-
-const hasTemplateVariable = (input: string) => {
-	/**
-	 * TemplateVariableMatcher.test() is not used since the `RegExp` is stateful when the global is
-	 * used leading to some unstable results (relying on latest `lastIndex` set (lastIndex specifies
-	 * the index at which to start the next match)). String.search is stateless.
-	 *
-	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test MDN documentation}.
-	 */
-	return input.search(TEMPLATE_VARIABLE_MATCHER) >= 0;
 };

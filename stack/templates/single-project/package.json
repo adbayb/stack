@@ -9,6 +9,7 @@
 		"clean": "stack clean",
 		"fix": "stack fix",
 		"install": "stack install",
+		"migrate": "stack migrate",
 		"release:changelog": "stack release --changelog",
 		"release:publish": "stack release --publish",
 		"release:snapshot": "stack release --snapshot",

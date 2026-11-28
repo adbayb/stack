@@ -161,6 +161,7 @@ describe(createCreateCommand, () => {
 	test.each([
 		["ssh", "git@github.com:example/project.git", "example/project"],
 		["https", "https://github.com/example/project.git", "example/project"],
+		["https without suffix", "https://github.com/example/project", "example/project"],
 	])(
 		"should normalize project input and extract a %s repository",
 		async (_, inputUrl, repoId) => {
@@ -203,7 +204,7 @@ describe(createCreateCommand, () => {
 					inputDescription: "A project",
 					inputName: "Project",
 					inputTemplate: "single-project",
-					inputUrl: "https://github.com/example/project",
+					inputUrl: "https://github.com/project",
 				},
 				commandArguments,
 			),
