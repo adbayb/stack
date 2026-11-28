@@ -5,7 +5,7 @@ import { dirname, join } from "node:path";
 import { exec } from "termost";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { VERSION } from "./constants";
-import { bumpStack, getTemplateChanges, updateTemplate } from "./template";
+import { bumpStack, getTemplateChanges, migrateTemplate } from "./template";
 
 vi.mock(import("termost"), async (importOriginal) => {
 	const original = await importOriginal();
@@ -139,10 +139,10 @@ describe("template", () => {
 		});
 	});
 
-	describe(updateTemplate, () => {
+	describe(migrateTemplate, () => {
 		test("should skip without network access when the stack version is not pinned", async () => {
 			await writeProjectPackage("workspace:*");
-			await expect(updateTemplate({ isDryRun: true })).resolves.toStrictEqual([]);
+			await expect(migrateTemplate({ isDryRun: true })).resolves.toStrictEqual([]);
 			expect(exec).not.toHaveBeenCalled();
 		});
 
@@ -156,7 +156,7 @@ describe("template", () => {
 					JSON.stringify({ devDependencies: { "@adbayb/stack": VERSION } }),
 				);
 
-			await expect(updateTemplate({ isDryRun: true })).resolves.toStrictEqual([]);
+			await expect(migrateTemplate({ isDryRun: true })).resolves.toStrictEqual([]);
 			expect(exec).toHaveBeenCalledWith("git fetch --no-tags --depth=1 origin HEAD");
 		});
 	});

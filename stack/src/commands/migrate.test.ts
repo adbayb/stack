@@ -4,8 +4,8 @@ import { join } from "node:path";
 import { exec } from "termost";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { VERSION } from "../constants";
+import { createMigrateCommand } from "./migrate";
 import { createCommandHarness } from "./test-helpers";
-import { createUpdateCommand } from "./update";
 
 vi.mock(import("termost"), async (importOriginal) => {
 	const original = await importOriginal();
@@ -16,9 +16,9 @@ vi.mock(import("termost"), async (importOriginal) => {
 const originalWorkingDirectory = process.cwd();
 let workingDirectory: string;
 
-describe(createUpdateCommand, () => {
+describe(createMigrateCommand, () => {
 	beforeEach(async () => {
-		workingDirectory = await mkdtemp(join(tmpdir(), "stack-update-"));
+		workingDirectory = await mkdtemp(join(tmpdir(), "stack-migrate-"));
 		process.chdir(workingDirectory);
 
 		await writeFile(
@@ -36,7 +36,7 @@ describe(createUpdateCommand, () => {
 
 	test("should hand the merge over to the bumped version from the previous one", async () => {
 		vi.mocked(exec).mockResolvedValueOnce("99.0.0");
-		await createCommandHarness(createUpdateCommand)();
+		await createCommandHarness(createMigrateCommand)();
 
 		expect(
 			vi.mocked(exec).mock.calls.map(([command]) => {
@@ -45,7 +45,7 @@ describe(createUpdateCommand, () => {
 		).toStrictEqual([
 			"pnpm view @adbayb/stack version",
 			"pnpm add '@adbayb/stack@99.0.0' --save-dev --ignore-workspace-root-check",
-			`pnpm stack update --from '${VERSION}'`,
+			`pnpm stack migrate --from '${VERSION}'`,
 		]);
 	});
 });

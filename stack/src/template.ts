@@ -95,19 +95,19 @@ export const bumpStack = async () => {
  * working directory with a 3-way merge: template changes apply, local edits stay, and overlapping
  * edits get conflict markers.
  *
- * @param options - The update options.
+ * @param options - The migration options.
  * @param options.fromVersion - The base version, read from the remote default branch by default.
  * @param options.isDryRun - Compute the changes without writing them.
  * @returns The pending (or applied) changes; empty when the project is up to date.
  */
-export const updateTemplate = async (options: {
+export const migrateTemplate = async (options: {
 	fromVersion?: string | undefined;
 	isDryRun: boolean;
 }) => {
 	const { fromVersion, isDryRun } = options;
 	const packageJson = await readPackageJson();
 
-	// Projects not pinned to a published version (such as this repository) have nothing to update.
+	// Projects not pinned to a published version (such as this repository) have nothing to migrate.
 	if (!isExactVersion(getStackVersion(packageJson))) {
 		return [];
 	}
@@ -122,7 +122,7 @@ export const updateTemplate = async (options: {
 		? "multi-projects"
 		: "single-project";
 
-	const temporaryDirectory = await mkdtemp(join(tmpdir(), "stack-update-"));
+	const temporaryDirectory = await mkdtemp(join(tmpdir(), "stack-migrate-"));
 
 	try {
 		const changes = await getTemplateChanges(
@@ -144,8 +144,8 @@ export const updateTemplate = async (options: {
 /**
  * Compute the changes moving the working directory from the base template to the next one.
  *
- * @param basePath - The template the project was last updated with.
- * @param nextPath - The template to update with.
+ * @param basePath - The template the project was last migrated with.
+ * @param nextPath - The template to migrate to.
  * @param model - The variable values to render both templates with.
  * @returns The files whose content would change.
  */

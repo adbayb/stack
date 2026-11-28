@@ -5,10 +5,10 @@ import { createCleanCommand } from "./commands/clean";
 import { createCreateCommand } from "./commands/create";
 import { createFixCommand } from "./commands/fix";
 import { createInstallCommand } from "./commands/install";
+import { createMigrateCommand } from "./commands/migrate";
 import { createReleaseCommand } from "./commands/release";
 import { createStartCommand } from "./commands/start";
 import { createTestCommand } from "./commands/test";
-import { createUpdateCommand } from "./commands/update";
 import { createWatchCommand } from "./commands/watch";
 import { VERSION } from "./constants";
 import { logger } from "./helpers";
@@ -32,7 +32,7 @@ const createProgram = (...commandFactories: CommandFactory[]) => {
 createProgram(
 	createCreateCommand,
 	createInstallCommand,
-	createUpdateCommand,
+	createMigrateCommand,
 	createCleanCommand,
 	createCheckCommand,
 	createFixCommand,

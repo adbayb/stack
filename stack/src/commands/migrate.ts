@@ -1,6 +1,6 @@
 import { exec } from "termost";
 import { getStackCommand, logger, toShellArgument } from "../helpers";
-import { bumpStack, updateTemplate } from "../template";
+import { bumpStack, migrateTemplate } from "../template";
 import type { TemplateChange } from "../template";
 import type { CommandFactory } from "../types";
 
@@ -15,17 +15,17 @@ type CommandContext = {
  *
  * @param program - The termost program to register the command onto.
  */
-export const createUpdateCommand: CommandFactory = (program) => {
+export const createMigrateCommand: CommandFactory = (program) => {
 	program
 		.command<CommandContext>({
-			name: "update",
+			name: "migrate",
 			description: "Bump `@adbayb/stack` to latest and merge its template changes",
 		})
 		.option({
 			key: "from",
 			name: "from",
 			description:
-				"The `@adbayb/stack` version the project was last updated with (default: the version before the bump, otherwise the remote default branch version)",
+				"The `@adbayb/stack` version the project was last migrated with (default: the version before the bump, otherwise the remote default branch version)",
 			defaultValue: undefined,
 		})
 		.task({
@@ -40,7 +40,7 @@ export const createUpdateCommand: CommandFactory = (program) => {
 			async handler({ from, previousVersion = "" }) {
 				// The running binary still holds the previous template: hand over to the bumped one.
 				await exec(
-					getStackCommand(`update --from ${toShellArgument(from ?? previousVersion)}`),
+					getStackCommand(`migrate --from ${toShellArgument(from ?? previousVersion)}`),
 					{ hasLiveOutput: true },
 				);
 			},
@@ -52,7 +52,7 @@ export const createUpdateCommand: CommandFactory = (program) => {
 			key: "changes",
 			label: label("Merge template changes"),
 			async handler({ from }) {
-				return updateTemplate({ fromVersion: from, isDryRun: false });
+				return migrateTemplate({ fromVersion: from, isDryRun: false });
 			},
 			skip({ previousVersion }) {
 				return previousVersion !== undefined;
