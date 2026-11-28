@@ -1,26 +1,26 @@
 ---
-name: document-audit
-description: "Audit, review, and score project documentation, including README files, guides, and ADR, RFC, or PDR records, for accuracy, completeness, usability, and consistency. Use when users ask to review, assess, audit, or fix docs, including those records, even without naming Makespec. Requires the `document-design` and `makespec` skills."
+name: audit-document
+description: "Audit, review, and score project documentation, including README files, guides, and ADR, RFC, or PDR records, for accuracy, completeness, usability, and consistency. Use when users ask to review, assess, audit, or fix docs, including those records, even without naming Makespec. Requires the `design-document` and `makespec` skills."
 license: MIT
 metadata:
     author: adbayb
     repository: adbayb/stack
     requires:
-        - "document-design >=1.0.0"
+        - "design-document >=1.0.0"
         - "makespec >=1.1.2"
-    version: "1.0.1"
+    version: "1.0.0"
 ---
 
-# Document Audit
+# Audit Document
 
-Audit project documentation against its purpose and the rules owned by `document-design`. Application code is out of scope; in mixed changes, assess only the documentation and claims relevant to it. `document-design` owns documentation rules, `makespec` owns record structure and lifecycle, and this skill owns audit evidence, severity, scoring, and fix policy. Repository rules override both prerequisites, which take precedence in their respective domains.
+Audit project documentation against its purpose and the rules owned by `design-document`. Application code is out of scope; in mixed changes, assess only the documentation and claims relevant to it. `design-document` owns documentation rules, `makespec` owns record structure and lifecycle, and this skill owns audit evidence, severity, scoring, and fix policy. Repository rules override both prerequisites, which take precedence in their respective domains.
 
 ## Prerequisite
 
-`document-design` and `makespec` are required at the versions declared by `metadata.requires`. The `makespec` binary must also be available on `PATH`. If any prerequisite is unavailable or incompatible, stop before auditing and ask the user to install or update it:
+`design-document` and `makespec` are required at the versions declared by `metadata.requires`. The `makespec` binary must also be available on `PATH`. If any prerequisite is unavailable or incompatible, stop before auditing and ask the user to install or update it:
 
 ```bash
-pnpm dlx skills add adbayb/stack --skill document-design -g
+pnpm dlx skills add adbayb/stack --skill design-document -g
 pnpm dlx skills add adbayb/makespec --skill makespec -g
 ```
 
@@ -44,7 +44,7 @@ Never edit documents during an audit-only request. Do not change decisions, spec
 ### 2. Detect
 
 - Read `references/checklist.md` for the audit dimensions, evidence threshold, severity, and scoring.
-- Load `document-design` reference `writing.md` for evidence and usability, and `document-design` reference `readme-template.md` for README structure. Apply only relevant references.
+- Load `design-document` reference `writing.md` for evidence and usability, and `design-document` reference `readme-template.md` for README structure. Apply only relevant references.
 - Whenever the request mentions or covers an ADR, RFC, `PDR`, or other Makespec record, use the `makespec` skill for record structure and lifecycle validation, even if the user does not name Makespec. Report its results separately from documentation findings.
 - Trace material claims, links, examples, and commands to their sources. For every in-scope checklist item, record a finding, checked-clean evidence, or an inapplicability reason. Treat unsupported suspicion as an investigation question, not a confirmed finding.
 

@@ -51,7 +51,7 @@ const BANNED_GLYPHS: BannedGlyph[] = [
 	["stray byte-order mark (U+FEFF)", "\uFEFF"],
 ];
 
-/** Level-two SKILL.md sections, in the order `skill-design` reference `anatomy.md` defines. */
+/** Level-two SKILL.md sections, in the order `design-skill` reference `anatomy.md` defines. */
 const SKILL_SECTIONS = [
 	"Prerequisite",
 	"Acronym glossary",
@@ -65,9 +65,9 @@ const REQUIRED_SKILL_SECTIONS = ["Workflow", "Output", "Example"] as const;
 
 /** Audit skills, the rule-owning skill each one requires, and their checklist dimension count. */
 const AUDIT_SKILLS = [
-	{ name: "software-audit", dimensions: 7, owner: "software-design" },
-	{ name: "skill-audit", dimensions: 6, owner: "skill-design" },
-	{ name: "document-audit", dimensions: 6, owner: "document-design" },
+	{ name: "audit-software", dimensions: 7, owner: "design-software" },
+	{ name: "audit-skill", dimensions: 6, owner: "design-skill" },
+	{ name: "audit-document", dimensions: 6, owner: "design-document" },
 ] as const;
 
 const EXTERNAL_SKILLS = new Map<string, { repository: string; version: string }>([
@@ -203,7 +203,7 @@ describe("skills", () => {
 		}
 	});
 
-	test("should follow the shared skill-design anatomy in every SKILL.md", () => {
+	test("should follow the shared design-skill anatomy in every SKILL.md", () => {
 		for (const path of getSkillPaths()) {
 			const { body, frontmatter, sections, steps } = getSkillAnatomy(path);
 			const title = getSkillTitle(basename(dirname(path)));
@@ -378,14 +378,14 @@ describe("skills", () => {
 		}
 	});
 
-	test("should bundle the README template used by document-design", () => {
+	test("should bundle the README template used by design-document", () => {
 		const template = readFileSync(
-			resolve(SKILLS_DIRECTORY, "document-design/assets/README.template.md"),
+			resolve(SKILLS_DIRECTORY, "design-document/assets/README.template.md"),
 			"utf8",
 		);
 
 		const readmeGuide = readFileSync(
-			resolve(SKILLS_DIRECTORY, "document-design/references/readme-template.md"),
+			resolve(SKILLS_DIRECTORY, "design-document/references/readme-template.md"),
 			"utf8",
 		);
 

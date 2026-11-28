@@ -1,41 +1,41 @@
 ---
-name: software-audit
-description: "Audit and fix existing code for architecture and quality violations, including pull request and diff reviews. Use when asked for a code audit or to review, audit, or assess a slice, module, repo, or pull request for design quality: tech debt, code smells, SOLID violations, bloated APIs, tight coupling, or hexagonal/clean/vertical-slice compliance. Reports findings first, then applies minimal fixes when requested, keeping behavior changes and refactors separate. Requires the `software-design` skill."
+name: audit-software
+description: "Audit and fix existing code for architecture and quality violations, including pull request and diff reviews. Use when asked for a code audit or to review, audit, or assess a slice, module, repo, or pull request for design quality: tech debt, code smells, SOLID violations, bloated APIs, tight coupling, or hexagonal/clean/vertical-slice compliance. Reports findings first, then applies minimal fixes when requested, keeping behavior changes and refactors separate. Requires the `design-software` skill."
 license: MIT
 metadata:
     author: adbayb
     repository: adbayb/stack
     requires:
-        - "software-design >=1.3.0"
-    version: "1.2.1"
+        - "design-software >=1.0.0"
+    version: "1.0.0"
 ---
 
-# Software Audit
+# Audit Software
 
-Audit existing code against `software-design`, report findings first, then fix with minimal blast radius. Agent instructions are out of scope: in mixed changes, check instruction files only as consumers of a changed code contract. The prerequisite owns design rules and glossary; this skill owns audit procedure, evidence, severity, scoring, and fix policy. Repo rules override both, and the prerequisite wins over this skill on rule conflicts. For audits, the findings report (and, when fixing, the closing summary) replaces the `software-design` design note.
+Audit existing code against `design-software`, report findings first, then fix with minimal blast radius. Agent instructions are out of scope: in mixed changes, check instruction files only as consumers of a changed code contract. The prerequisite owns design rules and glossary; this skill owns audit procedure, evidence, severity, scoring, and fix policy. Repo rules override both, and the prerequisite wins over this skill on rule conflicts. For audits, the findings report (and, when fixing, the closing summary) replaces the `design-software` design note.
 
 ## Prerequisite
 
-`software-design` is required at the version declared by this skill's `metadata.requires`. Acronyms are expanded once in the `software-design` glossary; this skill uses them bare. If it is not installed, or older than required, stop before auditing and ask the user to install or update it:
+`design-software` is required at the version declared by this skill's `metadata.requires`. Acronyms are expanded once in the `design-software` glossary; this skill uses them bare. If it is not installed, or older than required, stop before auditing and ask the user to install or update it:
 
 ```bash
-pnpm dlx skills add adbayb/stack --skill software-design -g
+pnpm dlx skills add adbayb/stack --skill design-software -g
 ```
 
-Do not install it without explicit approval. After approval, run the command, load the skill, confirm the installed `software-design` frontmatter `metadata.version` satisfies `metadata.requires`, and resume. Do not continue with a partial audit.
+Do not install it without explicit approval. After approval, run the command, load the skill, confirm the installed `design-software` frontmatter `metadata.version` satisfies `metadata.requires`, and resume. Do not continue with a partial audit.
 
-`metadata.requires` is a lower bound: if a reference mapped here is missing from the installed `software-design`, stop and report the incompatibility. When prerequisites block the audit, include **Score: not assessed (prerequisite blocked)**; do not invent a numerical score.
+`metadata.requires` is a lower bound: if a reference mapped here is missing from the installed `design-software`, stop and report the incompatibility. When prerequisites block the audit, include **Score: not assessed (prerequisite blocked)**; do not invent a numerical score.
 
 ## Workflow
 
-Never install or upgrade dependencies or run releases while auditing, except installing or updating the approved `software-design` prerequisite; dependency changes are findings, not fixes. After the baseline, scope linter and formatter runs to audited files.
+Never install or upgrade dependencies or run releases while auditing, except installing or updating the approved `design-software` prerequisite; dependency changes are findings, not fixes. After the baseline, scope linter and formatter runs to audited files.
 
 ### 1. Scope
 
 - Confirm target (files, slice, repo, or PR diff) and non-goals. Keep the scope bounded, but audit everything inside it exhaustively: for a broad target, split it into slices and cover each in turn instead of sampling.
 - For a PR review, audit changed files and direct dependents; report unrelated findings separately.
 - Note the inner style and slice boundaries from the codebase; state assumptions when missing.
-- Run existing tests and the relevant linters/formatters first to establish a baseline; red baselines follow `software-design` reference `testing-refactoring.md`. If project dependencies are missing, stop and ask.
+- Run existing tests and the relevant linters/formatters first to establish a baseline; red baselines follow `design-software` reference `testing-refactoring.md`. If project dependencies are missing, stop and ask.
 
 ### 2. Detect
 
@@ -59,17 +59,17 @@ Present the `Output` section's report first. For a PR review, default to the rep
 
 - Fix only present violations inside the audited slice: no new functionality, frameworks, or speculative patterns; removing speculative code is in scope, adding "flexibility" is not. If a fix would widen the API surface or cross a slice boundary, propose it and stop.
 - Fix Blockers first, then Majors. Fix Boy Scout-cheap Minors in the touched code as a separate change; do not create a commit unless asked. Park unrelated Minors and out-of-slice findings in the report.
-- **Behavior fixes are a separate lane.** For any severity, follow the behavior-fix sequence in `software-design` reference `testing-refactoring.md`; every fix keeps its test-integrity rules.
+- **Behavior fixes are a separate lane.** For any severity, follow the behavior-fix sequence in `design-software` reference `testing-refactoring.md`; every fix keeps its test-integrity rules.
 - Fix order inside one file:
     1. Delete dead code.
-    2. Narrow API using `software-design` reference `api-surface.md`.
-    3. Reduce coupling using `software-design` reference `cohesion-coupling.md`.
+    2. Narrow API using `design-software` reference `api-surface.md`.
+    3. Reduce coupling using `design-software` reference `cohesion-coupling.md`.
     4. Extract responsibilities (SRP).
     5. Replace repeated type switches with Strategy only for a present violation.
     6. Insert ports/adapters at I/O edges only for a present violation (hexagonal/clean modules; flat slices exempt).
     7. Rename for intent.
-    8. Clean naming/comments using `software-design` reference `clean-code.md`.
-- One responsibility per change. Use the mapped `software-design` reference for mechanics, and load `software-design` reference `patterns.md` before introducing a named pattern; the fix order is audit policy, not a new design rule.
+    8. Clean naming/comments using `design-software` reference `clean-code.md`.
+- One responsibility per change. Use the mapped `design-software` reference for mechanics, and load `design-software` reference `patterns.md` before introducing a named pattern; the fix order is audit policy, not a new design rule.
 
 ### 5. Verify
 
