@@ -1,5 +1,19 @@
 # @adbayb/stack
 
+## 3.9.0
+
+### Minor Changes
+
+- [#207](https://github.com/adbayb/stack/pull/207) [`3f0c959`](https://github.com/adbayb/stack/commit/3f0c95960aa4a15a24e35dceac6a7dbf8d5a2d47) Thanks [@adbayb](https://github.com/adbayb)! - Link Agent Skills into `.claude/skills` in addition to `.agents/skills` in scaffolded projects so Claude Code discovers them.
+
+- [#209](https://github.com/adbayb/stack/pull/209) [`bcd825f`](https://github.com/adbayb/stack/commit/bcd825fec9dda3065ec8f3d9ea360a40c2add30d) Thanks [@adbayb](https://github.com/adbayb)! - Add `stack migrate` to bump `@adbayb/stack` to its latest version and 3-way merge its template changes into the project, and a `template` check (part of `stack check`) that fails while those changes are pending.
+
+### Patch Changes
+
+- [#211](https://github.com/adbayb/stack/pull/211) [`76a23b0`](https://github.com/adbayb/stack/commit/76a23b0189ce169c345e71961070c9e0620ade90) Thanks [@adbayb](https://github.com/adbayb)! - Fix the conventional commit workflow in repositories whose default workflow token is read-only: declare the `pull-requests: read` permission the title check needs, and drop the error comment steps, since the failed check already reports the error in its log.
+
+- [#210](https://github.com/adbayb/stack/pull/210) [`f4b0003`](https://github.com/adbayb/stack/commit/f4b0003e89ad92dc47c7d2ab0f9fc09ad7eeea53) Thanks [@adbayb](https://github.com/adbayb)! - Allow `set` in the `software-design` naming convention for plain value assignment, while domain state changes keep intention verbs (`refundOrder`, not `setStatus`).
+
 ## 3.8.2
 
 ### Patch Changes
