@@ -8,7 +8,6 @@ jobs:
     main:
         timeout-minutes: 5
         runs-on: ubuntu-latest
-        # Declared explicitly since the default token may not grant access to pull requests.
         permissions:
             pull-requests: read
         steps:
