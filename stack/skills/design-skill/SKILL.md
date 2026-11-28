@@ -1,14 +1,14 @@
 ---
-name: skill-design
+name: design-skill
 description: "Design and write Agent Skills and the agent instructions that route to them, so every skill follows one anatomy and one set of writing rules. Use whenever creating or editing a skill (SKILL.md, references, scripts, frontmatter, or description), turning a workflow into a skill, splitting or merging skills, or editing agent instruction files such as AGENTS.md, even for a small trigger, step, or rule tweak. Owns skill anatomy, trigger writing, rule ownership, progressive disclosure, and scenario checks."
 license: MIT
 metadata:
     author: adbayb
     repository: adbayb/stack
-    version: "1.1.0"
+    version: "1.0.0"
 ---
 
-# Skill Design
+# Design Skill
 
 Design and write skills with one shared anatomy, and all agent instructions, including files such as `AGENTS.md`, with one set of writing rules. This skill owns how instructions are shaped, worded, placed, and checked, including which work moves to a skill's `scripts/` and how `SKILL.md` calls it; domain rules stay with the skills that own them. Application code, including the code inside `scripts/`, is out of scope. Repo rules override this skill; references win over this file on rule conflicts.
 

@@ -73,12 +73,12 @@ stack release
 
 `@adbayb/stack` ships six [Agent Skills](https://agentskills.io/specification) for coding agents:
 
-- [software-design](https://github.com/adbayb/stack/blob/main/stack/skills/software-design/): design and write clean, testable code; the single source of the design rules and glossary.
-- [software-audit](https://github.com/adbayb/stack/blob/main/stack/skills/software-audit/): audit code or pull requests against the `software-design` rules (depends on `software-design`).
-- [document-design](https://github.com/adbayb/stack/blob/main/stack/skills/document-design/): create project documentation from the embedded README template; requires the [`makespec`](https://github.com/adbayb/makespec) skill for ADR, RFC, and PDR work.
-- [document-audit](https://github.com/adbayb/stack/blob/main/stack/skills/document-audit/): audit project documentation, including ADR, RFC, and PDR records (requires `document-design` and [`makespec`](https://github.com/adbayb/makespec)).
-- [skill-design](https://github.com/adbayb/stack/blob/main/stack/skills/skill-design/): design and write skills with one shared anatomy, plus agent instructions such as `AGENTS.md`; the single source of the writing rules.
-- [skill-audit](https://github.com/adbayb/stack/blob/main/stack/skills/skill-audit/): audit and score skills and agent instructions such as `AGENTS.md` against the `skill-design` rules (depends on `skill-design` and Anthropic `skill-creator` for skill evaluation).
+- [design-software](https://github.com/adbayb/stack/blob/main/stack/skills/design-software/): design and write clean, testable code; the single source of the design rules and glossary.
+- [audit-software](https://github.com/adbayb/stack/blob/main/stack/skills/audit-software/): audit code or pull requests against the `design-software` rules (depends on `design-software`).
+- [design-document](https://github.com/adbayb/stack/blob/main/stack/skills/design-document/): create project documentation from the embedded README template; requires the [`makespec`](https://github.com/adbayb/makespec) skill for ADR, RFC, and PDR work.
+- [audit-document](https://github.com/adbayb/stack/blob/main/stack/skills/audit-document/): audit project documentation, including ADR, RFC, and PDR records (requires `design-document` and [`makespec`](https://github.com/adbayb/makespec)).
+- [design-skill](https://github.com/adbayb/stack/blob/main/stack/skills/design-skill/): design and write skills with one shared anatomy, plus agent instructions such as `AGENTS.md`; the single source of the writing rules.
+- [audit-skill](https://github.com/adbayb/stack/blob/main/stack/skills/audit-skill/): audit and score skills and agent instructions such as `AGENTS.md` against the `design-skill` rules (depends on `design-skill` and Anthropic `skill-creator` for skill evaluation).
 
 With [pnpm 12.11.0 or later](https://pnpm.io/agent-skills), install the package as a direct dependency and approve its skills:
 
@@ -98,17 +98,17 @@ skills:
 
 Projects scaffolded with `stack create` ship this configuration.
 
-Links use names such as `pnpm-@adbayb+stack-software-design`. Global installs and `pnpm dlx` do not link skills.
+Links use names such as `pnpm-@adbayb+stack-design-software`. Global installs and `pnpm dlx` do not link skills.
 
 For older pnpm versions or global installation, install from the repository with:
 
 ```bash
-pnpm dlx skills add adbayb/stack --skill software-design -g
-pnpm dlx skills add adbayb/stack --skill software-audit -g
-pnpm dlx skills add adbayb/stack --skill document-design -g
-pnpm dlx skills add adbayb/stack --skill document-audit -g
-pnpm dlx skills add adbayb/stack --skill skill-design -g
-pnpm dlx skills add adbayb/stack --skill skill-audit -g
+pnpm dlx skills add adbayb/stack --skill design-software -g
+pnpm dlx skills add adbayb/stack --skill audit-software -g
+pnpm dlx skills add adbayb/stack --skill design-document -g
+pnpm dlx skills add adbayb/stack --skill audit-document -g
+pnpm dlx skills add adbayb/stack --skill design-skill -g
+pnpm dlx skills add adbayb/stack --skill audit-skill -g
 ```
 
 Use `pnpm dlx` rather than `npx`: the repo's `devEngines` gate accepts pnpm only.

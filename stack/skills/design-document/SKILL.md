@@ -1,5 +1,5 @@
 ---
-name: document-design
+name: design-document
 description: "Create or update project documentation and missing READMEs using the embedded template; delegate ADR, RFC, PDR, and Makespec record work to its skill. Use when users ask to write or improve docs or README files, or mention or request an ADR, RFC, PDR, or Makespec record, even without naming Makespec. Requires the `makespec` skill."
 license: MIT
 metadata:
@@ -7,10 +7,10 @@ metadata:
     repository: adbayb/stack
     requires:
         - "makespec >=1.1.2"
-    version: "1.0.1"
+    version: "1.0.0"
 ---
 
-# Document Design
+# Design Document
 
 Create project documentation grounded in inspected sources. Application code and documentation audits are out of scope. This skill owns general writing rules and README creation; the `makespec` skill owns formal decision and specification records. Repository rules override this skill, and its references win over this file on documentation-rule conflicts.
 

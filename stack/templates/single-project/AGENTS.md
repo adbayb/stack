@@ -44,18 +44,18 @@ Focused: `pnpm check --filter <code|formatting> [files...]` (files only apply to
 
 - Use Vitest with its `expect` assertions and `vi` mocking APIs.
 - Run `pnpm check` and `pnpm test` before finishing; fix regressions, report pre-existing failures.
-- Test design and baseline handling: `software-design` reference `testing-refactoring.md`.
+- Test design and baseline handling: `design-software` reference `testing-refactoring.md`.
 
 ## Code style guidelines
 
 Use `pnpm fix` for formatting and lint autofixes; never hand-format.
 
-Design/style defaults: the `software-design` skill (SKILL.md + references). Load the repo copy when present; otherwise ask before installing it (`pnpm dlx skills add adbayb/stack --skill software-design -g`). Add repo-specific rules here; if it cannot load, follow local conventions and ask before structural changes.
+Design/style defaults: the `design-software` skill (SKILL.md + references). Load the repo copy when present; otherwise ask before installing it (`pnpm dlx skills add adbayb/stack --skill design-software -g`). Add repo-specific rules here; if it cannot load, follow local conventions and ask before structural changes.
 
 ## Security considerations
 
 - Never commit secrets; use env vars, keep `.env*` ignored, and never log/print them.
-- Code-level security rules: `software-design` reference `security.md`.
+- Code-level security rules: `design-software` reference `security.md`.
 - Pin devDependencies exactly (`saveExact`, `workspace:*` locally); use caret for `dependencies` and `peerDependencies` (`workspace:^` for local deps); peer ranges stay explicit. `stack check` enforces; review Renovate.
 
 ## PR instructions

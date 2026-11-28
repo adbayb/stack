@@ -33,7 +33,7 @@ metadata:
 ---
 ```
 
-- `name`: at most 64 lowercase letters, digits, and single hyphens, with no leading or trailing hyphen.
+- `name`: at most 64 lowercase letters, digits, and single hyphens, with no leading or trailing hyphen. Make it verb-first, `<verb>-<object>`, so the name states the task the skill performs, for example `design-report` and `audit-report`. Match the folder name, the title (`# Design Report`), and any slash command to it.
 - `description`: at most 1024 characters in a double-quoted scalar, so colons stay valid; write it per `writing.md`. Drop the "Requires" sentence when there is no prerequisite.
 - `license`, `metadata.author`, and `metadata.repository`: always set, so installed copies stay attributable.
 - `metadata.version`: a semantic version, bumped on contract changes per the repository's versioning rule.

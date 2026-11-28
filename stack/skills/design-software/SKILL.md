@@ -1,14 +1,14 @@
 ---
-name: software-design
+name: design-software
 description: "Design and write readable, maintainable, testable clean code. Use whenever creating or changing code, APIs, classes, modules, features, or project structure, even when the user never mentions architecture, SOLID, design patterns, hexagonal, vertical slice, or clean code. Enforces minimal API surface, SOLID/GRASP, cohesion/coupling, justified patterns, and one owner per piece of knowledge."
 license: MIT
 metadata:
     author: adbayb
     repository: adbayb/stack
-    version: "1.3.0"
+    version: "1.0.0"
 ---
 
-# Software Design
+# Design Software
 
 Apply to every non-trivial code change, not only when the user asks for architecture. Non-trivial means a behavior, API, structure, dependency, security, or business-rule change; mechanical edits, formatting, and config-only changes without behavior impact are exempt. Repo rules override this skill; references win over this file on rule conflicts.
 
