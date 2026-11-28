@@ -1,9 +1,26 @@
-import { createError, getStackCommand } from "../../helpers";
-import { migrateTemplate } from "../../template";
+import { createError, getStackCommand, logger } from "../../helpers";
+import { TemplateSourceError, getPendingTemplateChanges } from "../../template";
 
-/** Fail when template changes from the installed `@adbayb/stack` version are not merged yet. */
+/**
+ * Fail when template changes from the installed `@adbayb/stack` version are not merged yet. Warn
+ * and skip when the template sources cannot be reached (offline, no `origin` remote).
+ */
 export const checkTemplate = async () => {
-	const changes = await migrateTemplate({ isDryRun: true });
+	let changes: Awaited<ReturnType<typeof getPendingTemplateChanges>>;
+
+	try {
+		changes = await getPendingTemplateChanges();
+	} catch (error) {
+		if (error instanceof TemplateSourceError) {
+			logger.warn(
+				`Template compliance skipped: its sources cannot be reached.\n${error.message}`,
+			);
+
+			return;
+		}
+
+		throw error;
+	}
 
 	if (changes.length > 0) {
 		throw createError(

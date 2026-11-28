@@ -155,9 +155,10 @@ Projects stay in sync with their template through a 3-way merge. `stack migrate`
 
 - Template changes apply, local edits stay, and overlapping edits get conflict markers to resolve.
 - New template files are added; files removed locally stay removed; files dropped by the template are removed only without local edits.
+- Template variables (project name, description, repository, license year, and engine versions) are read back from the project: the library folder targeted by the root `README.md` symlink, its `package.json` `description`, the `origin` remote, `LICENSE`, and `devEngines`.
 - The base template is downloaded with `npm pack`; pass `--from <version>` to choose the base version, for example for the first migration of a project created before `stack migrate` existed.
 
-`stack check` (or `stack check --filter template`) runs the same merge without writing and fails while template changes are pending, so an upgrade cannot land unsynced. It only fetches the remote default branch tip and skips when its `@adbayb/stack` version matches the installed one.
+`stack check` (or `stack check --filter template`) fails while template changes are pending, so an upgrade cannot land unsynced: files still holding the base template that the new template changes, and files with unresolved migration conflict markers. Merged files, including template hunks declined while resolving conflicts, pass. It only fetches the remote default branch tip, skips when its `@adbayb/stack` version matches the installed one, and warns instead of failing when the remote or the npm registry cannot be reached.
 
 <br>
 

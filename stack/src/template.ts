@@ -1,8 +1,8 @@
 import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
-import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, readdir, readlink, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { dirname, join, relative } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 import { exec } from "termost";
 import { VERSION } from "./constants";
 import {
@@ -15,25 +15,52 @@ import type { PackageJson } from "./types";
 
 export type Template = "multi-projects" | "single-project";
 
-/** A pending template change: the merged content to write, or `undefined` to remove the file. */
+/**
+ * A pending template change: the merged content to write, or `undefined` to remove the file.
+ *
+ * `type` tells how the change was computed: `add` for a new template file, `remove` for a file
+ * dropped by the template, `update` for a file without local edits, and `merge` for a 3-way merge
+ * with local edits.
+ */
 export type TemplateChange = {
 	content: string | undefined;
 	hasConflict: boolean;
 	path: string;
+	type: "add" | "merge" | "remove" | "update";
 };
 
-export type TemplateModel = Partial<Record<string, string>>;
+/** The variables rendered into `{{key}}` template placeholders (contents and paths). */
+export type TemplateModel = Record<
+	| "licenseYear"
+	| "nodeVersion"
+	| "pnpmVersion"
+	| "projectDescription"
+	| "projectName"
+	| "projectUrl"
+	| "repoId",
+	string
+>;
 
 type RootPackageJson = Partial<Pick<PackageJson, "devDependencies">> & {
 	devEngines?: Partial<Record<"packageManager" | "runtime", { version?: string }>>;
 };
 
-export const REPOSITORY_REGEXP =
-	/^(?:git@.*:|https?:\/\/.*\/)(?<repoOwner>[^/]+)\/(?<repoName>[^/]+)\.git$/u;
+/** Thrown when the template sources (git remote, npm registry) cannot be reached. */
+export class TemplateSourceError extends Error {
+	public override name = "TemplateSourceError";
+}
+
+const REPOSITORY_REGEXP =
+	/^(?:[a-z][\w+.-]*:\/\/[^/]+\/(?:.+\/)?|(?:[\w.-]+@)?[\w.-]+:)(?<repoOwner>[^/:]+)\/(?<repoName>[^/]+?)(?:\.git)?\/?$/u;
 
 const TEMPLATE_VARIABLE_MATCHER = /\{\{(.*?)\}\}/giu;
-const EXACT_VERSION_REGEXP = /^\d+\.\d+\.\d+(?:-[\w.]+)?$/u;
+const VERSION_REGEXP = /^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<prerelease>[\w.]+))?$/u;
 const PUBLISHED_SUFFIX_REGEXP = /\.tmpl$/u;
+const LICENSE_YEAR_REGEXP = /^Copyright \(c\) (?<year>\d{4})/mu;
+// Only match markers written by `mergeFile` to avoid flagging unrelated `>>>>>>>` lines.
+const CONFLICT_MARKER_REGEXP = /^>{7} @adbayb\/stack@\S+ template$/mu;
+// `git merge-file` exits with the conflict count (capped at 127) and with 255 on error.
+const MERGE_FILE_MAX_CONFLICT_STATUS = 127;
 
 /**
  * Replace `{{key}}` template variables with their model value, keeping unknown ones as is.
@@ -42,9 +69,9 @@ const PUBLISHED_SUFFIX_REGEXP = /\.tmpl$/u;
  * @param model - The variable values.
  * @returns The rendered content.
  */
-export const renderTemplate = (content: string, model: TemplateModel) => {
+export const renderTemplate = (content: string, model: Partial<TemplateModel>) => {
 	return content.replaceAll(TEMPLATE_VARIABLE_MATCHER, (match, key: string) => {
-		return model[key] ?? match;
+		return model[key as keyof TemplateModel] ?? match;
 	});
 };
 
@@ -66,19 +93,44 @@ export const hasTemplateVariable = (input: string) => {
 };
 
 /**
+ * Map a published template path to its project path: `.tmpl` files are published under another name
+ * since npm drops some files (such as `.gitignore`) from packages.
+ *
+ * @param path - The published template path.
+ * @returns The project path.
+ */
+export const toProjectPath = (path: string) => {
+	return path.replace(PUBLISHED_SUFFIX_REGEXP, "");
+};
+
+/**
+ * Extract the `owner/name` repository identifier from a git remote URL.
+ *
+ * @param url - The git remote URL (SSH, SCP-like, or HTTP(S), with or without `.git`).
+ * @returns The repository identifier, or `undefined` if the URL cannot be parsed.
+ */
+export const getRepositoryId = (url: string) => {
+	const { repoName, repoOwner } = REPOSITORY_REGEXP.exec(url.trim())?.groups ?? {};
+
+	return repoOwner && repoName ? `${repoOwner}/${repoName}` : undefined;
+};
+
+/**
  * Bump `@adbayb/stack` to its latest published version.
  *
- * @returns The version installed before the bump, or `undefined` when already up to date or when
- *   the project is not pinned to a published version.
+ * @returns The version pinned before the bump, or `undefined` when already up to date (including
+ *   newer prerelease pins) or when the project is not pinned to a published version.
  */
 export const bumpStack = async () => {
-	if (!isExactVersion(getStackVersion(await readPackageJson()))) {
+	const pinnedVersion = getStackVersion(await readPackageJson());
+
+	if (!isExactVersion(pinnedVersion)) {
 		return undefined;
 	}
 
 	const latestVersion = await exec("pnpm view @adbayb/stack version");
 
-	if (latestVersion === VERSION) {
+	if (!isExactVersion(latestVersion) || compareVersions(latestVersion, pinnedVersion) <= 0) {
 		return undefined;
 	}
 
@@ -87,7 +139,7 @@ export const bumpStack = async () => {
 		{ hasLiveOutput: true },
 	);
 
-	return VERSION;
+	return pinnedVersion;
 };
 
 /**
@@ -99,6 +151,7 @@ export const bumpStack = async () => {
  * @param options.fromVersion - The base version, read from the remote default branch by default.
  * @param options.isDryRun - Compute the changes without writing them.
  * @returns The pending (or applied) changes; empty when the project is up to date.
+ * @throws {TemplateSourceError} When the git remote or the npm registry cannot be reached.
  */
 export const migrateTemplate = async (options: {
 	fromVersion?: string | undefined;
@@ -106,15 +159,24 @@ export const migrateTemplate = async (options: {
 }) => {
 	const { fromVersion, isDryRun } = options;
 	const packageJson = await readPackageJson();
+	const pinnedVersion = getStackVersion(packageJson);
 
 	// Projects not pinned to a published version (such as this repository) have nothing to migrate.
-	if (!isExactVersion(getStackVersion(packageJson))) {
+	if (!isExactVersion(pinnedVersion)) {
 		return [];
+	}
+
+	// The next template ships with the running binary: it must be the project's pinned one.
+	if (pinnedVersion !== VERSION) {
+		throw createError(
+			"stack migrate",
+			`The running \`@adbayb/stack@${VERSION}\` differs from the project's pinned \`${pinnedVersion}\`. Install dependencies and run the project's binary (\`pnpm stack\`).`,
+		);
 	}
 
 	const baseVersion = fromVersion ?? (await getDefaultBranchStackVersion());
 
-	if (!isExactVersion(baseVersion) || baseVersion === VERSION) {
+	if (!isExactVersion(baseVersion) || baseVersion === pinnedVersion) {
 		return [];
 	}
 
@@ -122,13 +184,14 @@ export const migrateTemplate = async (options: {
 		? "multi-projects"
 		: "single-project";
 
+	const model = await getTemplateModel(packageJson);
 	const temporaryDirectory = await mkdtemp(join(tmpdir(), "stack-migrate-"));
 
 	try {
 		const changes = await getTemplateChanges(
 			await downloadTemplate(baseVersion, template, temporaryDirectory),
 			resolveFromPackageDirectory("templates", template),
-			await getTemplateModel(packageJson),
+			model,
 		);
 
 		if (!isDryRun) {
@@ -142,6 +205,31 @@ export const migrateTemplate = async (options: {
 };
 
 /**
+ * List the template changes not migrated yet. Changes a migration leaves to the project are not
+ * pending: merged files (including declined template hunks), new template files removed locally,
+ * and dropped template files kept locally.
+ *
+ * @returns The pending changes: files still holding the base template that the template updates,
+ *   and files with unresolved migration conflict markers.
+ * @throws {TemplateSourceError} When the git remote or the npm registry cannot be reached.
+ */
+export const getPendingTemplateChanges = async () => {
+	const changes = await migrateTemplate({ isDryRun: true });
+	const pendingChanges: TemplateChange[] = [];
+
+	for (const change of changes) {
+		if (
+			change.type === "update" ||
+			(change.type === "merge" && (await hasConflictMarkers(change.path)))
+		) {
+			pendingChanges.push(change);
+		}
+	}
+
+	return pendingChanges;
+};
+
+/**
  * Compute the changes moving the working directory from the base template to the next one.
  *
  * @param basePath - The template the project was last migrated with.
@@ -152,7 +240,7 @@ export const migrateTemplate = async (options: {
 export const getTemplateChanges = async (
 	basePath: string,
 	nextPath: string,
-	model: TemplateModel,
+	model: Partial<TemplateModel>,
 ) => {
 	const [baseFiles, nextFiles] = await Promise.all([
 		readTemplate(basePath, model),
@@ -173,7 +261,7 @@ export const getTemplateChanges = async (
 		if (current === undefined) {
 			// A file present in the base template but missing locally was removed on purpose.
 			if (base === undefined) {
-				changes.push({ content: next, hasConflict: false, path });
+				changes.push({ content: next, hasConflict: false, path, type: "add" });
 			}
 
 			continue;
@@ -182,20 +270,24 @@ export const getTemplateChanges = async (
 		if (next === undefined) {
 			// Only remove a file dropped by the template if it holds no local edits.
 			if (current === base) {
-				changes.push({ content: undefined, hasConflict: false, path });
+				changes.push({ content: undefined, hasConflict: false, path, type: "remove" });
 			}
 
 			continue;
 		}
 
-		const merge =
-			current === base
-				? { content: next, hasConflict: false }
-				: await mergeFile(path, base ?? "", next);
+		if (current === base) {
+			changes.push({ content: next, hasConflict: false, path, type: "update" });
+
+			continue;
+		}
+
+		// Merge a new template file colliding with a local one against an empty base: Git narrows the conflict to the differing lines.
+		const merge = await mergeFile(path, base ?? "", next);
 
 		// Skip template changes the project already holds.
 		if (merge.content !== current) {
-			changes.push({ path, ...merge });
+			changes.push({ path, ...merge, type: "merge" });
 		}
 	}
 
@@ -215,7 +307,7 @@ const applyTemplateChanges = async (changes: TemplateChange[]) => {
 	}
 };
 
-const readTemplate = async (root: string, model: TemplateModel) => {
+const readTemplate = async (root: string, model: Partial<TemplateModel>) => {
 	const entries = await readdir(root, { recursive: true, withFileTypes: true });
 	const files = new Map<string, string>();
 
@@ -225,12 +317,9 @@ const readTemplate = async (root: string, model: TemplateModel) => {
 		}
 
 		const path = join(entry.parentPath, entry.name);
+		const renderedPath = renderTemplate(relative(root, path), model);
 
-		// `.tmpl` files are published under another name (npm drops `.gitignore` files).
-		files.set(
-			renderTemplate(relative(root, path), model).replace(PUBLISHED_SUFFIX_REGEXP, ""),
-			renderTemplate(await readFile(path, "utf8"), model),
-		);
+		files.set(toProjectPath(renderedPath), renderTemplate(await readFile(path, "utf8"), model));
 	}
 
 	return files;
@@ -245,8 +334,7 @@ const mergeFile = async (path: string, base: string, next: string) => {
 
 		await Promise.all([writeFile(basePath, base), writeFile(nextPath, next)]);
 
-		// Exit status: 0 for a clean merge, the conflict count otherwise, and negative on error.
-		const { error, status, stdout } = spawnSync(
+		const { error, status, stderr, stdout } = spawnSync(
 			"git",
 			[
 				"merge-file",
@@ -264,8 +352,11 @@ const mergeFile = async (path: string, base: string, next: string) => {
 			{ encoding: "utf8" },
 		);
 
-		if (error !== undefined || status === null || status < 0) {
-			throw createError("git merge-file", error ?? `Failed to merge \`${path}\`.`);
+		if (error !== undefined || status === null || status > MERGE_FILE_MAX_CONFLICT_STATUS) {
+			throw createError(
+				"git merge-file",
+				error ?? (stderr.trim() || `Failed to merge \`${path}\`.`),
+			);
 		}
 
 		return { content: stdout, hasConflict: status > 0 };
@@ -275,40 +366,113 @@ const mergeFile = async (path: string, base: string, next: string) => {
 };
 
 const getDefaultBranchStackVersion = async () => {
-	const isShallow = (await exec("git rev-parse --is-shallow-repository")) === "true";
-
 	try {
+		const isShallow = (await exec("git rev-parse --is-shallow-repository")) === "true";
+
 		// Fetch only the remote default branch tip (`HEAD`), keeping shallow CI clones shallow.
 		await exec(`git fetch --no-tags ${isShallow ? "--depth=1 " : ""}origin HEAD`);
 
 		return getStackVersion(await exec("git show FETCH_HEAD:package.json"));
 	} catch (error) {
-		throw createError("git", error instanceof Error ? error : new Error(String(error)));
+		throw toTemplateSourceError("git", error);
 	}
 };
 
 const downloadTemplate = async (version: string, template: Template, directory: string) => {
-	// Run outside the project: npm rejects the project's pnpm `devEngines.packageManager`.
-	await exec(`npm pack ${toShellArgument(`@adbayb/stack@${version}`)}`, { cwd: directory });
+	try {
+		// Run outside the project: npm rejects the project's pnpm `devEngines.packageManager`.
+		await exec(`npm pack ${toShellArgument(`@adbayb/stack@${version}`)}`, { cwd: directory });
+	} catch (error) {
+		throw toTemplateSourceError("npm", error);
+	}
+
 	await exec(`tar -xzf adbayb-stack-${version}.tgz`, { cwd: directory });
 
 	return join(directory, "package", "templates", template);
 };
 
+/**
+ * Resolve the variables `stack create` rendered the project with, from the project itself so that
+ * later local edits (such as a renamed library folder) are followed.
+ *
+ * @param packageJson - The root `package.json` content.
+ * @returns The template model.
+ */
 const getTemplateModel = async (packageJson: string): Promise<TemplateModel> => {
-	const projectUrl = await exec("git remote get-url origin");
-	const { repoName, repoOwner } = REPOSITORY_REGEXP.exec(projectUrl)?.groups ?? {};
+	let projectUrl: string;
+
+	try {
+		projectUrl = await exec("git remote get-url origin");
+	} catch (error) {
+		throw toTemplateSourceError("git", error);
+	}
+
+	const projectPath = await getProjectPath();
 	const { devEngines } = JSON.parse(packageJson) as RootPackageJson;
 
-	return {
-		licenseYear: new Date().getFullYear().toString(),
+	const { description } = JSON.parse(
+		(await readOptionalFile(resolveFromWorkingDirectory(projectPath, "package.json"))) ?? "{}",
+	) as { description?: string };
+
+	const license = (await readOptionalFile(resolveFromWorkingDirectory("LICENSE"))) ?? "";
+
+	const model: Record<keyof TemplateModel, string | undefined> = {
+		licenseYear:
+			LICENSE_YEAR_REGEXP.exec(license)?.groups?.year ?? new Date().getFullYear().toString(),
 		nodeVersion: devEngines?.runtime?.version,
 		pnpmVersion: devEngines?.packageManager?.version,
-		// `stack create` names the project after the repository.
-		projectName: repoName,
+		projectDescription: description,
+		projectName: basename(projectPath),
 		projectUrl,
-		repoId: repoOwner && repoName ? `${repoOwner}/${repoName}` : undefined,
+		repoId: getRepositoryId(projectUrl),
 	};
+
+	const missingKeys = Object.entries(model)
+		.filter(([, value]) => {
+			return !value;
+		})
+		.map(([key]) => {
+			return key;
+		});
+
+	if (missingKeys.length > 0) {
+		throw createError(
+			"stack migrate",
+			`The \`${missingKeys.join("`, `")}\` template variable(s) cannot be resolved from the project. Check the \`origin\` remote URL, the root \`package.json\` \`devEngines\`, and the \`description\` field of \`${projectPath}/package.json\`.`,
+		);
+	}
+
+	return model as TemplateModel;
+};
+
+/**
+ * Locate the library folder, named after the project, through the root `README.md` symlink that
+ * `stack create` points at it.
+ *
+ * @returns The library folder path relative to the working directory.
+ */
+const getProjectPath = async () => {
+	try {
+		// Fails when `README.md` is missing or is not a symlink.
+		return dirname(await readlink(resolveFromWorkingDirectory("README.md")));
+	} catch {
+		throw createError(
+			"stack migrate",
+			"The root `README.md` must be a symlink to the library `README.md` (as created by `stack create`) to locate the project folder.",
+		);
+	}
+};
+
+const toTemplateSourceError = (bin: string, error: unknown) => {
+	const cause = error instanceof Error ? error : new Error(String(error));
+
+	return new TemplateSourceError(createError(bin, cause).message);
+};
+
+const hasConflictMarkers = async (path: string) => {
+	const content = await readOptionalFile(resolveFromWorkingDirectory(path));
+
+	return CONFLICT_MARKER_REGEXP.test(content ?? "");
 };
 
 const getStackVersion = (packageJson: string) => {
@@ -316,7 +480,36 @@ const getStackVersion = (packageJson: string) => {
 };
 
 const isExactVersion = (version: string | undefined): version is string => {
-	return version !== undefined && EXACT_VERSION_REGEXP.test(version);
+	return version !== undefined && VERSION_REGEXP.test(version);
+};
+
+/**
+ * Compare two exact semver versions; a release is greater than its prereleases.
+ *
+ * @param versionA - The first version.
+ * @param versionB - The second version.
+ * @returns A negative number, zero, or a positive number if `versionA` is lower, equal, or greater.
+ */
+const compareVersions = (versionA: string, versionB: string) => {
+	const groupsA = VERSION_REGEXP.exec(versionA)?.groups ?? {};
+	const groupsB = VERSION_REGEXP.exec(versionB)?.groups ?? {};
+
+	for (const key of ["major", "minor", "patch"]) {
+		const difference = Number(groupsA[key]) - Number(groupsB[key]);
+
+		if (difference !== 0) {
+			return difference;
+		}
+	}
+
+	const { prerelease: prereleaseA } = groupsA;
+	const { prerelease: prereleaseB } = groupsB;
+
+	if (prereleaseA === undefined || prereleaseB === undefined) {
+		return Number(prereleaseA === undefined) - Number(prereleaseB === undefined);
+	}
+
+	return prereleaseA.localeCompare(prereleaseB, "en", { numeric: true });
 };
 
 const readPackageJson = async () => {

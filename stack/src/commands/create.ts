@@ -13,24 +13,13 @@ import {
 	setPackageManager,
 	toShellArgument,
 } from "../helpers";
-import { REPOSITORY_REGEXP, hasTemplateVariable, renderTemplate } from "../template";
-import type { Template } from "../template";
+import { getRepositoryId, hasTemplateVariable, renderTemplate, toProjectPath } from "../template";
+import type { Template, TemplateModel } from "../template";
 import type { CommandFactory } from "../types";
 
 type CommandContext = {
 	canRemoveExistingDirectoryInput: boolean;
-	data: Record<
-		| "licenseYear"
-		| "nodeVersion"
-		| "pnpmVersion"
-		| "projectDescription"
-		| "projectName"
-		| "projectUrl"
-		| "repoId"
-		| "templatePath"
-		| "workingPath",
-		string
-	>;
+	data: Record<"templatePath" | "workingPath", string> & TemplateModel;
 	inputDescription: string;
 	inputName: string;
 	inputTemplate: Template;
@@ -90,12 +79,12 @@ export const createCreateCommand: CommandFactory = (program) => {
 					);
 				}
 
-				const { repoName, repoOwner } = REPOSITORY_REGEXP.exec(inputUrl)?.groups ?? {};
+				const repoId = getRepositoryId(inputUrl);
 
-				if (!repoOwner || !repoName) {
+				if (!repoId) {
 					throw createError(
 						"git",
-						"The owner and repository name cannot be extracted. Please make sure to follow either `/^git@.*:(?<repoOwner>.*)/(?<repoName>.*).git$/` or `/^https?://.*/(?<repoOwner>.*)/(?<repoName>.*).git$/` pattern.",
+						"The owner and repository name cannot be extracted. Please provide a git remote URL such as `git@github.com:owner/name.git` or `https://github.com/owner/name.git`.",
 					);
 				}
 
@@ -129,7 +118,7 @@ export const createCreateCommand: CommandFactory = (program) => {
 					projectDescription: toCapitalLetter(inputDescription),
 					projectName,
 					projectUrl: inputUrl,
-					repoId: `${repoOwner}/${repoName}`,
+					repoId,
 					templatePath: resolveFromPackageDirectory("templates", inputTemplate),
 					workingPath: resolveFromWorkingDirectory(projectName),
 				};
@@ -303,7 +292,7 @@ type TemplateEntry = {
 
 type TemplateMetadata = {
 	projectName: string;
-	templateModel: Record<string, string>;
+	templateModel: TemplateModel;
 	templateName: string;
 	templatePath: string;
 };
@@ -322,11 +311,14 @@ const createTemplateEngine = async (
 		recursive: true,
 	});
 
-	// Rename back `.gitignore` if available (since NPM prevents its inclusion during publication: https://docs.npmjs.com/cli/v10/using-npm/developers#keeping-files-out-of-your-package)
-	const gitignoreFile = join(workingPath, ".gitignore.tmpl");
+	// Rename back published files (since NPM prevents some inclusions such as `.gitignore` during publication: https://docs.npmjs.com/cli/v10/using-npm/developers#keeping-files-out-of-your-package)
+	for (const entry of await readdir(workingPath, { recursive: true, withFileTypes: true })) {
+		const path = join(entry.parentPath, entry.name);
+		const projectPath = toProjectPath(path);
 
-	if (existsSync(gitignoreFile)) {
-		await rename(gitignoreFile, join(workingPath, ".gitignore"));
+		if (entry.isFile() && projectPath !== path) {
+			await rename(path, projectPath);
+		}
 	}
 
 	const templateEntries = await getTemplateEntries(workingPath);
