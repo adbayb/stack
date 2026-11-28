@@ -2,4 +2,4 @@
 "@adbayb/stack": patch
 ---
 
-Grant `pull-requests: write` to the conventional commit workflow so the title check and its comment work in repositories whose default workflow token is read-only.
+Fix the conventional commit workflow in repositories whose default workflow token is read-only: declare the `pull-requests: read` permission the title check needs, and drop the error comment steps, since the failed check already reports the error in its log.
