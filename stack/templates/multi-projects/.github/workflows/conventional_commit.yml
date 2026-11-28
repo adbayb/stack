@@ -8,6 +8,11 @@ jobs:
     main:
         timeout-minutes: 5
         runs-on: ubuntu-latest
+        # Declared explicitly so the job also works in repositories whose default token is read-only
+        # (the default for repositories created since February 2023): the title check reads the pull
+        # request, and the sticky comment steps create or delete a comment on it.
+        permissions:
+            pull-requests: write
         steps:
             - uses: amannn/action-semantic-pull-request@v6
               id: check_pr_rule
